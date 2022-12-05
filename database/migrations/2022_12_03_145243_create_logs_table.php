@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductTypesTable extends Migration
+class CreateLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateProductTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_types', function (Blueprint $table) {
+        Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_types_id')->nullable()->constrained();
-            $table->string("name");
-            $table->string("description")->nullable();
+            $table->foreignId("shop_id")->constrained("shops");
+            $table->string("user_name")->constrained("users");
+            $table->string("description");
+            $table->datetime("date");
         });
     }
 
@@ -28,6 +29,6 @@ class CreateProductTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_types');
+        Schema::dropIfExists('logs');
     }
 }

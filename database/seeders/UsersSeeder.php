@@ -18,8 +18,7 @@ class UsersSeeder extends Seeder
             [
                 'id' => 1,
                 'email' => "admin@localhost",
-                'first_name' => "Teszt",
-                'last_name' => "Elek",
+                'name' => "Teszt Elek",
                 'password' => "admin",
                 'permission' => 10,
                 'postal_code' => 9730,
@@ -28,8 +27,7 @@ class UsersSeeder extends Seeder
             [
                 'id' => 2,
                 'email' => "vasarlo@localhost",
-                'first_name' => "Balázs",
-                'last_name' => "Benedek",
+                'name' => "Balázs Benedek",
                 'password' => "asd123",
                 'permission' => 0,
                 'postal_code' => 9730
@@ -37,12 +35,19 @@ class UsersSeeder extends Seeder
             [
                 'id' => 3,
                 'email' => "dolgozo@localhost",
-                'first_name' => "Tamás",
-                'last_name' => "Nagy",
+                'name' => "Nagy Tamás",
                 'password' => "asd123",
                 'permission' => 1,
                 'postal_code' => 9730,
                 'shop_id' => 1
+            ],
+            [
+                'id' => 4,
+                'email' => "vasarlo2@localhost",
+                'name' => "Kiss János",
+                'password' => "asd123",
+                'permission' => 0,
+                'postal_code' => 9730
             ]
         ];
         foreach ($data as $item) {

@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
             ShopTypesSeeder::class,
             ShopsSeeder::class,
             UsersSeeder::class,
+            LogsSeeder::class,
+            ProductsSeeder::class,
+            StorageSeeder::class,
         ]);
     }
 }

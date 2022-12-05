@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string("name");
             $table->string("packaging");
             $table->string("unit_of_measure");
-            $table->foreignId('product_types_id')->constrained();
+            $table->string('type');
         });
     }
 

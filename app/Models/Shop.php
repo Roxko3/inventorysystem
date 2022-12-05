@@ -16,6 +16,16 @@ class Shop extends Model
         return $this->hasMany(User::class, 'shop_id', 'id');
     }
 
+    public function logs()
+    {
+        return $this->hasMany(Log::class, 'shop_id', 'id');
+    }
+
+    public function storages()
+    {
+        return $this->hasMany(Storage::class, 'shop_id', 'id');
+    }
+
     public function shopType()
     {
         return $this->belongsTo(ShopType::class, 'shop_types_id', 'id');

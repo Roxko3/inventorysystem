@@ -14,8 +14,8 @@ class CreateStorageTable extends Migration
     public function up()
     {
         Schema::create('storage', function (Blueprint $table) {
-            $table->foreignId('shops_id')->constrained()->key();
-            $table->foreignId('products_id')->constrained()->key();
+            $table->foreignId('shop_id')->constrained("shops")->key();
+            $table->foreignId('product_id')->constrained("products")->key();
             $table->Integer("amount");
             $table->Integer("prize");
             $table->datetime("expiration")->nullable();
