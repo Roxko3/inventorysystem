@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string("password");
             $table->Integer("permission");
             $table->Integer("postal_code")->nullable();
-            $table->foreignId("shops_id")->constrained("shops")->nullable();
+            $table->foreignId("shop_id")->nullable()->constrained("shops");
         });
     }
 

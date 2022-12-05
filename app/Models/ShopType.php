@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class ShopType extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
 
-    public function shop()
+    public function shops()
     {
-        return $this->belongsTo(Shop::class, 'shop_id', 'id');
+        return $this->hasMany(Shop::class, 'shop_types_id', 'id');
     }
 }
