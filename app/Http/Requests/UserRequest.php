@@ -15,7 +15,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => "required|unique", //unique valszeg rossz lesz
+            'email' => "required",
             'name' => "required",
             'password' => "required",
             'permission' => "numeric",
