@@ -14,5 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome',[
+        'path' => ''
+    ]);
 });
+
+Route::get('/{path}', function($path) {
+    return view('welcome',[
+        'path' => $path
+    ]);
+})->where('path',"^((?!api).)*$");
