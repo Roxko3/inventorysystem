@@ -1,10 +1,11 @@
+import { Button, Paper, TextField } from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 import React from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function Login(){
     return( 
-            <Row className="justify-content-center">
+            /*<Row className="justify-content-center">
                 <Col md={5} sm={5} xs={8}>
                 <h1>Belépés</h1>
                 <Form>
@@ -21,7 +22,23 @@ function Login(){
                 <Link to="/register"><Button variant="link">Regisztráció</Button></Link>
                 <Link to="/forgotpass"><Button variant="link">Elfelejtett jelszó</Button></Link>
                 </Col>
-            </Row>
+            </Row>*/
+            <Grid2 container spacing={2} direction="column" alignItems="center" justifyContent="center">
+            <Paper>
+                <Grid2> 
+                    <h1>Bejelentkezés</h1>                                 
+                </Grid2>
+                <Grid2>
+                    <TextField required label="Email cím" variant="outlined" />      
+                </Grid2>
+                <Grid2>
+                    <TextField required label="Jelszó" type="password" variant="outlined" />
+                </Grid2>
+                <Grid2>
+                    <Button variant="contained">Bejelentkezés</Button>
+                </Grid2>
+            </Paper>
+            </Grid2>
     )
 }
 
