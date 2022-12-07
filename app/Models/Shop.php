@@ -28,6 +28,6 @@ class Shop extends Model
 
     public function shopType()
     {
-        return $this->belongsTo(ShopType::class, 'shop_types_id', 'id');
+        return $this->belongsTo(ShopType::class, 'shop_type_id', 'id');
     }
 }

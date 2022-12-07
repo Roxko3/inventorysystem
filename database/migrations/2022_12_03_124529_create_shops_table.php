@@ -13,10 +13,11 @@ class CreateShopsTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->foreignId('shop_type_id')->constrained("shop_types");
+            $table->foreignId("shop_type_id")->constrained("shop_types");
             $table->string("address");
             $table->string("owner");
             $table->Integer("postal_code");

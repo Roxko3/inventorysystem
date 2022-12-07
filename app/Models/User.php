@@ -15,6 +15,7 @@ class User extends Model
     {
         return $this->belongsTo(Shop::class, 'shop_id', 'id');
     }
+   
 
     public function logs()
     {

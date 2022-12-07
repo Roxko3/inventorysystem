@@ -13,6 +13,7 @@ class CreateShopTypesTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('shop_types', function (Blueprint $table) {
             $table->id();
             $table->string("name");
