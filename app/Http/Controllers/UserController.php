@@ -55,9 +55,9 @@ class UserController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return ["error" => "Email vagy jelszó nem egyezik"];
+            return response("Sikertelen bejelentkezés", 201);
         };
         $user->password = null;
-        return response($user);
+        return response()->json($user);
     }
 }
