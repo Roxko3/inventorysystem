@@ -26,9 +26,10 @@ class StorageRequest extends FormRequest
         return [
             'shop_id' => "required",
             'product_id' => "required",
-            'amount' => "numeric",
-            'prize' => "numeric",
+            'amount' => "required|numeric",
+            'prize' => "required|numeric",
             'expiration' => "date",
+            "is_deleted" => "boolean"
         ];
     }
 }

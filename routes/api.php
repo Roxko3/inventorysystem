@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Shop_TypeController;
+use App\Http\Controllers\ShopTypeController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\StorageController;
 use Illuminate\Http\Request;
@@ -38,10 +38,10 @@ Route::group(['prefix' => '/shops'], function () {
     Route::delete("/{shop}", [ShopController::class, "delete"])->name("deleteShop");
 });
 Route::group(['prefix' => '/shoptypes'], function () {
-    Route::get("/", [Shop_TypeController::class, "indextype"])->name("getShoptypes");
-    Route::post("/create", [Shop_TypeController::class, "createtype"])->name("createShoptype");
-    Route::put("/{shoptype}", [Shop_TypeController::class, "update"])->name("updateShoptype");
-    Route::delete("/{shoptype}", [Shop_TypeController::class, "delete"])->name("deleteshoptype");
+    Route::get("/", [ShopTypeController::class, "indextype"])->name("getShoptypes");
+    Route::post("/create", [ShopTypeController::class, "createtype"])->name("createShoptype");
+    Route::put("/{shoptype}", [ShopTypeController::class, "update"])->name("updateShoptype");
+    Route::delete("/{shoptype}", [ShopTypeController::class, "delete"])->name("deleteshoptype");
 });
 Route::group(['prefix' => '/logs'], function () {
     Route::get("/", [LogController::class, "indexlog"])->name("getlogs");
@@ -60,3 +60,4 @@ Route::group(['prefix' => '/storage'], function () {
     Route::put("/{storage}", [StorageController::class, "updatestorage"])->name("updatestorage");
     Route::delete("/{storage}", [StorageController::class, "deletestorage"])->name("deletestorage");
 });
+Route::post("/login", [UserController::class, "login"])->name("login");

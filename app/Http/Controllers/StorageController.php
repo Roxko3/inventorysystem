@@ -10,34 +10,34 @@ class StorageController extends Controller
 {
     public function indexstorage()
     {
-        $Storage = Storage::with("product","shop")->get();
-        return response()->json($Storage);
+        $storage = Storage::with("product", "shop")->get();
+        return response()->json($storage);
     }
     public function createstorage(StorageRequest $request)
     {
-        $Storage = new Storage();
-        $Storage->shop_id = $request->get("shop_id");
-        $Storage->product_id = $request->get("product_id");
-        $Storage->amount= $request->get("amount");
-        $Storage->prize= $request->get("prize");
-        $Storage->expiration= $request->get("expiration");
-        $Storage->save();
-        return response()->json($Storage->id);
+        $storage = new Storage();
+        $storage->shop_id = $request->get("shop_id");
+        $storage->product_id = $request->get("product_id");
+        $storage->amount = $request->get("amount");
+        $storage->prize = $request->get("prize");
+        $storage->expiration = $request->get("expiration");
+        $storage->save();
+        return response()->json($storage->shop_id);
     }
-    public function updatestorage(Storage $Storage, StorageRequest $request)
+    public function updatestorage(Storage $storage, StorageRequest $request)
     {
-        
-        $Storage->shop_id = $request->get("shop_id");
-        $Storage->product_id = $request->get("product_id");
-        $Storage->amount= $request->get("amount");
-        $Storage->prize= $request->get("prize");
-        $Storage->expiration= $request->get("expiration");
-        $Storage->save();
-        return response()->json($Storage->toArray());
+
+        $storage->shop_id = $request->get("shop_id");
+        $storage->product_id = $request->get("product_id");
+        $storage->amount = $request->get("amount");
+        $storage->prize = $request->get("prize");
+        $storage->expiration = $request->get("expiration");
+        $storage->save();
+        return response()->json($storage->toArray());
     }
-    public function deletestorage(Storage $Storage)
+    public function deletestorage(Storage $storage)
     {
-        $Storage->delete();
+        $storage->delete();
         return response()->json("OK");
     }
 }
