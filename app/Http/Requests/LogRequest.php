@@ -24,11 +24,10 @@ class LogRequest extends FormRequest
     public function rules()
     {
         return [
-            'shop_id'=> "numeric",
-            'user_name'=> "required",
-            'description'=> "required",
-            'date'=> "date",
-
+            'shop_id' => "required|numeric",
+            'user_id' => "required|numeric",
+            'description' => "required",
+            'date' => "date_format:Y-m-d H:i:s",
         ];
     }
 }

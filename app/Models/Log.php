@@ -17,12 +17,11 @@ class Log extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_name', 'name');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shop_id', 'id');
     }
-    
 }

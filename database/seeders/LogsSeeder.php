@@ -18,28 +18,28 @@ class LogsSeeder extends Seeder
         $data = [
             [
                 'id' => 1,
-                'user_name' => "Nagy Tamás",
+                'user_id' => 1,
                 'shop_id' => 1,
                 'description' => "Egy almát törölt a rendszerből, mert megromlott",
                 'date' => Carbon::parse("2022-12-05"),
             ],
             [
                 'id' => 2,
-                'user_name' => "Nagy Tamás",
+                'user_id' => 1,
                 'shop_id' => 1,
                 'description' => "Hozzáadott egy almát rendszerhez, mert mégsem megromlott",
                 'date' => Carbon::parse("2022-12-06"),
             ],
             [
                 'id' => 3,
-                'user_name' => "Nagy Tamás",
+                'user_id' => 1,
                 'shop_id' => 1,
                 'description' => "Egy almát törölt a rendszerből, mert mégis megromlott",
                 'date' => Carbon::parse("2022-12-07"),
             ],
             [
                 'id' => 4,
-                'user_name' => "Nagy Tamás",
+                'user_id' => 1,
                 'shop_id' => 1,
                 'description' => "Egy almát törölt a rendszerből, mert igazából mégsem romlott meg",
                 'date' => Carbon::parse("2022-12-08"),
@@ -49,11 +49,11 @@ class LogsSeeder extends Seeder
             $log = Log::firstOrNew([
                 'id' => $item['id']
             ]);
-    
+
             foreach ($item as $key => $value) {
-               $log->{$key} = $value;
+                $log->{$key} = $value;
             };
-    
+
             $log->save();
         }
     }
