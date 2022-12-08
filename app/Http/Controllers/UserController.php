@@ -58,6 +58,6 @@ class UserController extends Controller
             return ["error" => "Email vagy jelszó nem egyezik"];
         };
         $user->password = null;
-        return response("Bejelentkezve!");
+        return response($user);
     }
 }
