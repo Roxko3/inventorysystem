@@ -1,4 +1,4 @@
-import { Button, Paper, TextField } from "@mui/material";
+import { Box, Button, Paper, Stack, TextField, Typography } from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import React from "react";
 import { Link } from "react-router-dom";
@@ -23,10 +23,13 @@ function Login(){
                 <Link to="/forgotpass"><Button variant="link">Elfelejtett jelszó</Button></Link>
                 </Col>
             </Row>*/
+
             <Grid2 container spacing={2} direction="column" alignItems="center" justifyContent="center">
             <Paper>
                 <Grid2> 
-                    <h1>Bejelentkezés</h1>                                 
+                <Typography variant="h4">
+                    Bejelentkezés
+                </Typography>                                
                 </Grid2>
                 <Grid2>
                     <TextField required label="Email cím" variant="outlined" />      
