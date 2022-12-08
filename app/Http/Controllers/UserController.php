@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -21,7 +23,7 @@ class UserController extends Controller
 
         $user->email = $request->get("email");
         $user->name = $request->get("name");
-        $user->password = $request->get("password");
+        $user->password = Hash::make($request->get("password"));
         $user->permission = $request->has("permission") ? $request->get("permission") : null;
         $user->postal_code = $request->has("postal_code") ? $request->get("postal_code") : null;
         $user->shop_id = $request->has("shop_id") ? $request->get("shop_id") : null;
@@ -34,7 +36,7 @@ class UserController extends Controller
     {
         $user->email = $request->get("email");
         $user->name = $request->get("name");
-        $user->password = $request->get("password");
+        $user->password = Hash::make($request->get("password"));
         $user->permission = $request->has("permission") ? $request->get("permission") : null;
         $user->postal_code = $request->has("postal_code") ? $request->get("postal_code") : null;
         $user->shop_id = $request->has("shop_id") ? $request->get("shop_id") : null;
@@ -47,5 +49,15 @@ class UserController extends Controller
     {
         $user->delete();
         return response()->json("OK");
+    }
+
+    public function login(LoginRequest $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return ["error" => "Email vagy jelszó nem egyezik"];
+        };
+        $user->password = null;
+        return response("Bejelentkezve!");
     }
 }

@@ -11,7 +11,7 @@ class ShopType extends Model
 
     public $timestamps = false;
 
-    public function shop()
+    public function shops()
     {
         return $this->hasMany(Shop::class, 'shop_type_id', 'id');
     }

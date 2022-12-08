@@ -26,6 +26,7 @@ class StorageSeeder extends Seeder
                 'amount' => 20,
                 "prize" => 200,
                 'expiration' => Carbon::parse("2022-12-30"),
+                "is_deleted" => true
             ],
             [
                 'shop_id' => 1,
@@ -42,20 +43,20 @@ class StorageSeeder extends Seeder
             ],
         ];
 
-        
+
         foreach ($data as $item) {
             $storage = Storage::firstOrNew([
                 'shop_id' => $item['shop_id'],
                 'product_id' => $item['product_id']
             ]);
-    
+
             foreach ($item as $key => $value) {
-               $storage->{$key} = $value;
+                $storage->{$key} = $value;
             };
-    
+
             $storage->save();
         }
-        
+
 
         /*DB::table('Storage')->insert([
             'shop_id' => 1,

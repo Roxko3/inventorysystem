@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->Integer("permission")->nullable();
             $table->Integer("postal_code")->nullable();
             $table->foreignId("shop_id")->nullable()->constrained("shops");
+            $table->boolean("verified")->default(false);
         });
     }
 

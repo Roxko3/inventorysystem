@@ -13,7 +13,6 @@ class CreateShopsTable extends Migration
      */
     public function up()
     {
-        
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
             $table->string("name");
@@ -21,6 +20,7 @@ class CreateShopsTable extends Migration
             $table->string("address");
             $table->string("owner");
             $table->Integer("postal_code");
+            $table->string("image")->nullable();
         });
     }
 

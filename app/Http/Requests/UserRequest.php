@@ -32,6 +32,7 @@ class UserRequest extends FormRequest
             'permission' => "numeric",
             'postal_code' => "numeric",
             'shop_id' => "numeric",
+            'verified' => "boolean"
         ];
     }
 

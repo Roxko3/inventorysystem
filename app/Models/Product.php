@@ -11,7 +11,7 @@ class Product extends Model
 
     public $timestamps = false;
 
-    public function storage()
+    public function storages()
     {
         return $this->hasMany(Storage::class, 'product_id', 'id');
     }

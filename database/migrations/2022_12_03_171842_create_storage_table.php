@@ -19,6 +19,7 @@ class CreateStorageTable extends Migration
             $table->Integer("amount");
             $table->Integer("prize");
             $table->datetime("expiration")->nullable();
+            $table->boolean("is_deleted")->default(false);
         });
     }
 
