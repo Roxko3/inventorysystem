@@ -22,9 +22,9 @@ function Login() {
     const [emailErrorMessage, setEmailErrorMessage] = useState("");
     const [passwordErrorMessage, setpasswordErrorMessage] = useState("");
     const [alertMessage, setalertMessage] = useState("");
-    const [severity, setseverity] = useState("");
+    const [severity, setseverity] = useState("error");
 
-    const login = () => {
+    const login = async () => {
         if (email.current.value === "") {
             setEmailError(true);
             setEmailErrorMessage("Nem lehet üres!");
@@ -33,7 +33,7 @@ function Login() {
             setPasswordError(true);
             setpasswordErrorMessage("Nem lehet üres!");
         } else {
-            axios
+            await axios
                 .post("http://127.0.0.1/InventorySystem/public/api/login", {
                     email: email.current.value,
                     password: password.current.value,
@@ -45,11 +45,12 @@ function Login() {
                         setalertMessage("Sikeres bejelentkezés!");
                         setseverity("success");
                         setOpen(true);
-                    } else {
-                        setalertMessage("Hibás felhasználónév vagy jelszó!");
-                        setseverity("error");
-                        setOpen(true);
                     }
+                })
+                .catch((response) => {
+                    setalertMessage(response.response.data.error);
+                    setseverity("error");
+                    setOpen(true);
                 });
         }
     };

@@ -55,7 +55,7 @@ class UserController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response("Sikertelen bejelentkezés", 201);
+            return response()->json(['error' => "Hibás felhasználónév vagy jelszó!"], 401);
         };
         $user->password = null;
         return response()->json($user);
