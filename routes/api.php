@@ -61,3 +61,4 @@ Route::group(['prefix' => '/storage'], function () {
     Route::delete("/{storage}", [StorageController::class, "deletestorage"])->name("deletestorage");
 });
 Route::post("/login", [UserController::class, "login"])->name("login");
+Route::post("/register", [UserController::class, "register"])->name("register");

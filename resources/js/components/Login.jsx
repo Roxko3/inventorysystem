@@ -12,7 +12,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Image from 'mui-image';
+import Image from "mui-image";
 
 function Login() {
     const email = useRef("");
@@ -27,18 +27,29 @@ function Login() {
     const navigate = useNavigate();
 
     const login = async () => {
-        setEmailError(false);
-        setEmailErrorMessage("");
-        setPasswordError(false);
-        setpasswordErrorMessage("");
-        if (email.current.value.trim() === "") {
-            setEmailError(true);
-            setEmailErrorMessage("Nem lehet üres!");              
-        }
-        if (password.current.value.trim() === "") {
-            setPasswordError(true);
-            setpasswordErrorMessage("Nem lehet üres!"); 
+        if (
+            email.current.value.trim() === "" ||
+            password.current.value.trim() === ""
+        ) {
+            if (email.current.value.trim() === "") {
+                setEmailError(true);
+                setEmailErrorMessage("Nem lehet üres!");
+            } else {
+                setEmailError(false);
+                setEmailErrorMessage("");
+            }
+            if (password.current.value.trim() === "") {
+                setPasswordError(true);
+                setpasswordErrorMessage("Nem lehet üres!");
+            } else {
+                setPasswordError(false);
+                setpasswordErrorMessage("");
+            }
         } else {
+            setEmailError(false);
+            setEmailErrorMessage("");
+            setPasswordError(false);
+            setpasswordErrorMessage("");
             await axios
                 .post("http://127.0.0.1/InventorySystem/public/api/login", {
                     email: email.current.value,
@@ -51,7 +62,7 @@ function Login() {
                         setalertMessage("Sikeres bejelentkezés!");
                         setseverity("success");
                         setOpen(true);
-                        navigate("/register");
+                        //navigate("/register");
                     }
                 })
                 .catch((response) => {
@@ -72,7 +83,7 @@ function Login() {
         setOpen(false);
     };
 
-    return (      
+    return (
         <Grid2
             container
             spacing={2}
@@ -81,7 +92,11 @@ function Login() {
             justifyContent="center"
         >
             <Grid2>
-            <Image src="./images/logo.png" duration={1500} alt="Inventory System Logo"/>
+                <Image
+                    src="./images/logo.png"
+                    duration={1500}
+                    alt="Inventory System Logo"
+                />
             </Grid2>
             <Paper elevation={8}>
                 <Grid2>

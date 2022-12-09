@@ -1,0 +1,712 @@
+{
+	"info": {
+		"_postman_id": "e2587e18-017f-46eb-a613-3e9fbad95bf8",
+		"name": "InventorySystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "getUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "Nagy@Tamás",
+									"type": "default"
+								},
+								{
+									"key": "name",
+									"value": "Nagy Tamás",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "createplease",
+									"type": "default"
+								},
+								{
+									"key": "permission",
+									"value": "2",
+									"type": "default"
+								},
+								{
+									"key": "postal_code",
+									"value": "9730",
+									"type": "default"
+								},
+								{
+									"key": "shop_id",
+									"value": "3",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/users/create",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "update@teszt",
+									"type": "default"
+								},
+								{
+									"key": "name",
+									"value": "UpdateTeszt",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "updateplease",
+									"type": "default"
+								},
+								{
+									"key": "permission",
+									"value": "3",
+									"type": "default"
+								},
+								{
+									"key": "postal_code",
+									"value": "9735",
+									"type": "default"
+								},
+								{
+									"key": "shop_id",
+									"value": "2",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/users/7",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/users/8",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shops",
+			"item": [
+				{
+					"name": "getShops",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shops",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createShop",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "create teszt2222",
+									"type": "default"
+								},
+								{
+									"key": "shop_type_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "address",
+									"value": "createplease",
+									"type": "default"
+								},
+								{
+									"key": "owner",
+									"value": "createowner",
+									"type": "default"
+								},
+								{
+									"key": "postal_code",
+									"value": "9730",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/shops/create",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateShop",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Update teszt",
+									"type": "default"
+								},
+								{
+									"key": "shop_type_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "address",
+									"value": "createplease",
+									"type": "default"
+								},
+								{
+									"key": "owner",
+									"value": "createowner",
+									"type": "default"
+								},
+								{
+									"key": "postal_code",
+									"value": "9730",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/shops/5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteShop",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shops/6",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ShopTypes",
+			"item": [
+				{
+					"name": "getShopTypes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shoptypes",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shoptypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createShopType",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "create",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "create",
+									"type": "default"
+								},
+								{
+									"key": "size",
+									"value": "10cm2",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/shoptypes/create",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shoptypes",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateShopType",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "update",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "update",
+									"type": "default"
+								},
+								{
+									"key": "size",
+									"value": "2cm",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/shops/5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteShops",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shoptypes/5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shoptypes",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logs",
+			"item": [
+				{
+					"name": "getLogs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/logs",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"logs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createLog",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "shop_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "user_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "teszt",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/logs/create",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"logs",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteLog",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/logs/6",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"logs",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "getProducts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{URL}}/products",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "termektipus",
+									"type": "default"
+								},
+								{
+									"key": "packaging",
+									"value": "valami",
+									"type": "default"
+								},
+								{
+									"key": "unit_of_measure",
+									"value": "valami",
+									"type": "default"
+								},
+								{
+									"key": "type",
+									"value": "pontolyan",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/products/create",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "update",
+									"type": "default"
+								},
+								{
+									"key": "packaging",
+									"value": "update",
+									"type": "default"
+								},
+								{
+									"key": "unit_of_measure",
+									"value": "update",
+									"type": "default"
+								},
+								{
+									"key": "type",
+									"value": "update",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/products/4",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProduct",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/products/5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "admin@localhosta",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/register?email=teszt@localhost2&name=Teszt&password=teszt&postal_code=9730",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"register"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "teszt@localhost2"
+						},
+						{
+							"key": "name",
+							"value": "Teszt"
+						},
+						{
+							"key": "password",
+							"value": "teszt"
+						},
+						{
+							"key": "postal_code",
+							"value": "9730"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://127.0.0.1/InventorySystem/public/api\n",
+			"type": "default"
+		}
+	]
+}

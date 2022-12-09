@@ -60,4 +60,17 @@ class UserController extends Controller
         $user->password = null;
         return response()->json($user);
     }
+
+    public function register(UserRequest $request)
+    {
+        $user = new User();
+
+        $user->email = $request->get("email");
+        $user->name = $request->get("name");
+        $user->password = Hash::make($request->get("password"));
+        $user->postal_code = $request->has("postal_code") ? $request->get("postal_code") : null;
+
+        $user->save();
+        return response()->json($user->id);
+    }
 }
