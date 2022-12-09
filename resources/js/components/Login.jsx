@@ -11,7 +11,8 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2";
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Image from 'mui-image';
 
 function Login() {
     const email = useRef("");
@@ -23,15 +24,20 @@ function Login() {
     const [passwordErrorMessage, setpasswordErrorMessage] = useState("");
     const [alertMessage, setalertMessage] = useState("");
     const [severity, setseverity] = useState("error");
+    const navigate = useNavigate();
 
     const login = async () => {
-        if (email.current.value === "") {
+        setEmailError(false);
+        setEmailErrorMessage("");
+        setPasswordError(false);
+        setpasswordErrorMessage("");
+        if (email.current.value.trim() === "") {
             setEmailError(true);
-            setEmailErrorMessage("Nem lehet üres!");
+            setEmailErrorMessage("Nem lehet üres!");              
         }
-        if (password.current.value === "") {
+        if (password.current.value.trim() === "") {
             setPasswordError(true);
-            setpasswordErrorMessage("Nem lehet üres!");
+            setpasswordErrorMessage("Nem lehet üres!"); 
         } else {
             await axios
                 .post("http://127.0.0.1/InventorySystem/public/api/login", {
@@ -45,9 +51,12 @@ function Login() {
                         setalertMessage("Sikeres bejelentkezés!");
                         setseverity("success");
                         setOpen(true);
+                        navigate("/register");
                     }
                 })
                 .catch((response) => {
+                    email.current.value = "";
+                    password.current.value = "";
                     setalertMessage(response.response.data.error);
                     setseverity("error");
                     setOpen(true);
@@ -63,23 +72,24 @@ function Login() {
         setOpen(false);
     };
 
-    return (
+    return (      
         <Grid2
             container
             spacing={2}
             direction="column"
             alignItems="center"
             justifyContent="center"
-            sx={{ mt: 30 }}
         >
-            <Paper>
+            <Grid2>
+            <Image src="./images/logo.png" duration={1500} alt="Inventory System Logo"/>
+            </Grid2>
+            <Paper elevation={8}>
                 <Grid2>
                     <Typography variant="h4">Bejelentkezés</Typography>
                 </Grid2>
                 <Grid2>
                     <TextField
                         error={emailError}
-                        required
                         label="Email cím"
                         variant="outlined"
                         inputRef={email}
@@ -89,7 +99,6 @@ function Login() {
                 <Grid2>
                     <TextField
                         error={passwordError}
-                        required
                         label="Jelszó"
                         type="password"
                         variant="outlined"
@@ -106,8 +115,7 @@ function Login() {
                     <Link to="/register">
                         <Button variant="text">Regisztráció</Button>
                     </Link>
-                </Grid2>
-                <Grid2>
+                    <br />
                     <Link to="/forgotpass">
                         <Button variant="text">Elfelejtett jelszó</Button>
                     </Link>
