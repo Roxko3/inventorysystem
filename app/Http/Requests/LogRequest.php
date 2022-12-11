@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator as Validator;
+use Illuminate\Validation\ValidationException;
 
 class LogRequest extends FormRequest
 {
@@ -29,5 +31,10 @@ class LogRequest extends FormRequest
             'description' => "required",
             'date' => "date_format:Y-m-d H:i:s",
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw (new ValidationException($validator, response()->json($validator->errors(), 422)));
     }
 }

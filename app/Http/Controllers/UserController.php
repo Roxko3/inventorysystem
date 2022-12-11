@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -61,8 +64,24 @@ class UserController extends Controller
         return response()->json($user);
     }
 
-    public function register(UserRequest $request)
+    public function register(RegisterRequest $request)
     {
+        /*$request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', Password::defaults()->min(8)->mixedCase()->numbers()]
+        ]);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'password' => Password::defaults()->min(8)->mixedCase()->numbers()
+        ]);
+
+        if ($validator->fails()) {
+            return response($validator->errors());
+        }*/
+
         $user = new User();
 
         $user->email = $request->get("email");

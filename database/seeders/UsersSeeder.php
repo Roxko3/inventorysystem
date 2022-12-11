@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -24,7 +25,7 @@ class UsersSeeder extends Seeder
                 'permission' => 10,
                 'postal_code' => 9730,
                 'shop_id' => 1,
-                'verified' => true
+                'email_verified_at' => Carbon::parse("2022-12-30")
             ],
             [
                 'id' => 2,
@@ -33,7 +34,7 @@ class UsersSeeder extends Seeder
                 'password' => Hash::make("password"),
                 'permission' => 0,
                 'postal_code' => 9730,
-                'verified' => true
+                'email_verified_at' => Carbon::parse("2022-12-30")
             ],
             [
                 'id' => 3,

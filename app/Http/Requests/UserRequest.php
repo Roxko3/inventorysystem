@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator as Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException  as ValidationException;
+use Illuminate\Validation\ValidationException;
 
 class UserRequest extends FormRequest
 {
@@ -32,7 +32,7 @@ class UserRequest extends FormRequest
             'permission' => "numeric",
             'postal_code' => "numeric",
             'shop_id' => "numeric",
-            'verified' => "boolean"
+            'email_verified_at' => "datetime"
         ];
     }
 
