@@ -1,12 +1,15 @@
 import { Button, Paper, TextField, Typography } from "@mui/material"
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from 'mui-image'
 
 function Forgotpass(){
     const [emailSent,setEmailSent] = useState(false)
     const [email,setEmail] = useState("")
 
+    useEffect(()=>{
+        document.title = "Elfelejtett jelszó"
+    }, [])
 
     return(
         <Grid2

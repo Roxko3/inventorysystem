@@ -2,7 +2,7 @@ import { Alert, Button, Paper, Snackbar, TextField, Typography } from "@mui/mate
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2"
 import { Link } from "react-router-dom"
 import Image from 'mui-image'
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import axios from "axios"
 
 function Register(){
@@ -61,6 +61,10 @@ function Register(){
         setOpen(false)
     }
 
+    useEffect(()=>{
+        document.title = "Regisztráció"
+    }, [])
+
     return(
         <Grid2 container spacing={2} direction="column" alignItems="center" justifyContent="center">
             <Grid2>
@@ -82,7 +86,7 @@ function Register(){
                     <TextField required fullWidth label="Jelszó" type="password" variant="outlined" inputRef={password} helperText={errors.password}/>
                 </Grid2>
                 <Grid2>
-                    <TextField required fullWidth label="Jelszó újra" type="password" variant="outlined" inputRef={password}/>
+                    <TextField required fullWidth label="Jelszó újra" type="password" variant="outlined"/>
                 </Grid2>
                 <Grid2>
                     <TextField label="Irányítószám" fullWidth  variant="outlined" inputRef={postalCode}/>

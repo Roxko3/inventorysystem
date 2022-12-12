@@ -8,7 +8,7 @@ import {
 } from "@mui/material"
 import Grid2 from "@mui/material/Unstable_Grid2"
 import axios from "axios"
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Image from 'mui-image'
 
@@ -60,6 +60,10 @@ function Login() {
 
         setOpen(false)
     }
+
+    useEffect(()=>{
+        document.title = "Bejelentkezés"
+    }, [])
 
     return (      
         <Grid2
