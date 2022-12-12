@@ -1,55 +1,28 @@
 import {
     Alert,
-    Box,
     Button,
     Paper,
     Snackbar,
-    Stack,
     TextField,
     Typography,
-} from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
-import axios from "axios";
-import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Image from "mui-image";
+} from "@mui/material"
+import Grid2 from "@mui/material/Unstable_Grid2"
+import axios from "axios"
+import React, { useRef, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import Image from 'mui-image'
+
 
 function Login() {
-    const email = useRef("");
-    const password = useRef("");
-    const [open, setOpen] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [emailErrorMessage, setEmailErrorMessage] = useState("");
-    const [passwordErrorMessage, setpasswordErrorMessage] = useState("");
-    const [alertMessage, setalertMessage] = useState("");
-    const [severity, setseverity] = useState("error");
-    const navigate = useNavigate();
+    const email = useRef("")
+    const password = useRef("")
+    const [open, setOpen] = useState(false)
+    const [alertMessage, setalertMessage] = useState("")
+    const [severity, setseverity] = useState("error")
+    const navigate = useNavigate()
+    const [errors,setErrors] = useState([])
 
-    const login = async () => {
-        if (
-            email.current.value.trim() === "" ||
-            password.current.value.trim() === ""
-        ) {
-            if (email.current.value.trim() === "") {
-                setEmailError(true);
-                setEmailErrorMessage("Nem lehet üres!");
-            } else {
-                setEmailError(false);
-                setEmailErrorMessage("");
-            }
-            if (password.current.value.trim() === "") {
-                setPasswordError(true);
-                setpasswordErrorMessage("Nem lehet üres!");
-            } else {
-                setPasswordError(false);
-                setpasswordErrorMessage("");
-            }
-        } else {
-            setEmailError(false);
-            setEmailErrorMessage("");
-            setPasswordError(false);
-            setpasswordErrorMessage("");
+    const login = async () => {       
             await axios
                 .post("http://127.0.0.1/InventorySystem/public/api/login", {
                     email: email.current.value,
@@ -57,33 +30,38 @@ function Login() {
                 })
                 .then((response) => {
                     if (response.status === 200) {
-                        email.current.value = "";
-                        password.current.value = "";
-                        setalertMessage("Sikeres bejelentkezés!");
-                        setseverity("success");
-                        setOpen(true);
+                        email.current.value = ""
+                        password.current.value = ""
+                        setalertMessage("Sikeres bejelentkezés!")
+                        setseverity("success")
+                        setErrors([])
+                        setOpen(true)
                         //navigate("/register");
                     }
                 })
                 .catch((response) => {
-                    email.current.value = "";
-                    password.current.value = "";
-                    setalertMessage(response.response.data.error);
-                    setseverity("error");
-                    setOpen(true);
-                });
+                    if(response.response.status === 422){
+                        setErrors(response.response.data)
+                    }
+                    else {
+                        email.current.value = ""
+                        password.current.value = ""
+                        setalertMessage(response.response.data.error)
+                        setseverity("error")
+                        setOpen(true)
+                    }                  
+                })
         }
-    };
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
-            return;
+            return
         }
 
-        setOpen(false);
-    };
+        setOpen(false)
+    }
 
-    return (
+    return (      
         <Grid2
             container
             spacing={2}
@@ -92,34 +70,17 @@ function Login() {
             justifyContent="center"
         >
             <Grid2>
-                <Image
-                    src="./images/logo.png"
-                    duration={1500}
-                    alt="Inventory System Logo"
-                />
+            <Image src="./images/logo.png" duration={1500} alt="Inventory System Logo"/>
             </Grid2>
             <Paper elevation={8}>
                 <Grid2>
                     <Typography variant="h4">Bejelentkezés</Typography>
                 </Grid2>
                 <Grid2>
-                    <TextField
-                        error={emailError}
-                        label="Email cím"
-                        variant="outlined"
-                        inputRef={email}
-                        helperText={emailErrorMessage}
-                    />
+                    <TextField label="Email cím" fullWidth variant="outlined" inputRef={email} helperText={errors.email} />
                 </Grid2>
                 <Grid2>
-                    <TextField
-                        error={passwordError}
-                        label="Jelszó"
-                        type="password"
-                        variant="outlined"
-                        inputRef={password}
-                        helperText={passwordErrorMessage}
-                    />
+                    <TextField label="Jelszó" fullWidth type="password" variant="outlined" inputRef={password} helperText={errors.password}/>
                 </Grid2>
                 <Grid2>
                     <Button variant="contained" onClick={login}>
@@ -146,7 +107,7 @@ function Login() {
                 </Alert>
             </Snackbar>
         </Grid2>
-    );
+    )
 }
 
-export default Login;
+export default Login

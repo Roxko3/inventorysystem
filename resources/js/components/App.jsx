@@ -1,9 +1,9 @@
-import { Route, Routes } from "react-router-dom";
-import Forgotpass from "./Forgotpass";
-import Home from "./Home";
-import Login from "./Login";
-import Notfound from "./Notfound";
-import Register from "./Register";
+import { Route, Routes } from "react-router-dom"
+import Forgotpass from "./Forgotpass"
+import Home from "./Home"
+import Login from "./Login"
+import Notfound from "./Notfound"
+import Register from "./Register"
 
 function App() {
     return (
@@ -17,4 +17,4 @@ function App() {
     );
 }
 
-export default App;
+export default App

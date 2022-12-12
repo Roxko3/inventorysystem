@@ -1,12 +1,13 @@
-import { Button, Paper, TextField, Typography } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useState } from "react";
-import Image from 'mui-image';
+import { Button, Paper, TextField, Typography } from "@mui/material"
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2"
+import { useRef, useState } from "react"
+import Image from 'mui-image'
 
 function Forgotpass(){
-    const [emailSent,setEmailSent] = useState(false);
+    const [emailSent,setEmailSent] = useState(false)
+    const [email,setEmail] = useState("")
 
-    
+
     return(
         <Grid2
         container
@@ -25,16 +26,16 @@ function Forgotpass(){
                 {emailSent ?
                     <>      
                     <Grid2>
-                        <Typography variant="p">Email elküldve: admin@localhost címre</Typography>
+                        <Typography variant="p">Email elküldve: {email} címre</Typography>
                     </Grid2>              
                     <Grid2>
-                        <TextField variant="outlined" label="Kód"/>
+                        <TextField fullWidth variant="outlined" label="Kód"/>
                     </Grid2>
                     <Grid2>
-                        <TextField variant="outlined" type="password" label="Új jelszó"/>
+                        <TextField fullWidth variant="outlined" type="password" label="Új jelszó"/>
                     </Grid2>
                     <Grid2>
-                        <TextField variant="outlined" type="password" label="Új jelszó újra"/>
+                        <TextField fullWidth variant="outlined" type="password" label="Új jelszó újra"/>
                     </Grid2>
                     <Grid2>
                         <Button variant="contained">Megváltoztatás</Button>
@@ -43,7 +44,7 @@ function Forgotpass(){
                     :
                     <>                    
                     <Grid2>
-                        <TextField variant="outlined" label="Email cím"/>
+                        <TextField fullWidth variant="outlined" label="Email cím" onChange={()=>setEmail(event.target.value)}/>
                     </Grid2>
                     <Grid2>
                         <Button variant="contained" onClick={()=>setEmailSent(true)}>Küldés</Button>
@@ -55,4 +56,4 @@ function Forgotpass(){
     )
 }
 
-export default Forgotpass;
+export default Forgotpass

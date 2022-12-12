@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 function Notfound(){
 
@@ -7,4 +7,4 @@ function Notfound(){
     )
 }
 
-export default Notfound;
+export default Notfound
