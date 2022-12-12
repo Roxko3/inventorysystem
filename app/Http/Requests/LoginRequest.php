@@ -31,6 +31,14 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'email.required' => 'Email megadása kötelező!',
+            'password.required' => 'Jelszó megadása kötelező!',
+        ];
+    }
+
     public function failedValidation(Validator $validator)
     {
         throw (new ValidationException($validator, response()->json($validator->errors(), 422)));
