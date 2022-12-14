@@ -53,7 +53,7 @@ function Register(){
         })
     }
 
-    const handleClose = (event, reason) => {
+    const handleClose = (reason) => {
         if (reason === "clickaway") {
             return
         }

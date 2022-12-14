@@ -35,7 +35,7 @@ function Login() {
                         setalertMessage("Sikeres bejelentkezés!")
                         setseverity("success")
                         setErrors([])
-                        setOpen(true)
+                        setOpen(true)                 
                         //navigate("/register");
                     }
                 })
@@ -53,7 +53,7 @@ function Login() {
                 })
         }
 
-    const handleClose = (event, reason) => {
+    const handleClose = (reason) => {
         if (reason === "clickaway") {
             return
         }
