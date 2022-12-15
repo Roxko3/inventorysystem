@@ -11,7 +11,7 @@ import axios from "axios"
 import React, { useEffect, useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Image from 'mui-image'
-
+import {Link as MuiLink} from "@mui/material" 
 
 function Login() {
     const email = useRef("")
@@ -36,7 +36,7 @@ function Login() {
                         setseverity("success")
                         setErrors([])
                         setOpen(true)                 
-                        //navigate("/register");
+                        navigate("/");
                     }
                 })
                 .catch((response) => {
@@ -62,7 +62,7 @@ function Login() {
     }
 
     useEffect(()=>{
-        document.title = "Bejelentkezés"
+        document.title = "Inventory System - Bejelentkezés"
     }, [])
 
     return (      

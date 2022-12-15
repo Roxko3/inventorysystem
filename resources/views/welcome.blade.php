@@ -12,6 +12,8 @@
         <style>
             body {
                 font-family: 'Roboto', sans-serif;
+                margin: 0; /*navbar touches the sides of the screen*/
+                overflow-x: hidden; /*scrollbar doesnt appear at bottom of page */
             }
         </style>
         <link

@@ -62,7 +62,7 @@ function Register(){
     }
 
     useEffect(()=>{
-        document.title = "Regisztráció"
+        document.title = "Inventory System - Regisztráció"
     }, [])
 
     return(

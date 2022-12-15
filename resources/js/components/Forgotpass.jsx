@@ -8,7 +8,7 @@ function Forgotpass(){
     const [email,setEmail] = useState("")
 
     useEffect(()=>{
-        document.title = "Elfelejtett jelszó"
+        document.title = "Inventory System - Elfelejtett jelszó"
     }, [])
 
     return(
