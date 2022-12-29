@@ -12,6 +12,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Image from 'mui-image'
 import {Link as MuiLink} from "@mui/material" 
+import { ErrorSharp } from "@mui/icons-material"
 
 function Login() {
     const email = useRef("")
@@ -81,7 +82,7 @@ function Login() {
                     <Typography variant="h4">Bejelentkezés</Typography>
                 </Grid2>
                 <Grid2>
-                    <TextField label="Email cím" fullWidth variant="outlined" inputRef={email} helperText={errors.email} />
+                    <TextField label="Email cím" fullWidth variant="outlined" inputRef={email} helperText={errors.email}  />
                 </Grid2>
                 <Grid2>
                     <TextField label="Jelszó" fullWidth type="password" variant="outlined" inputRef={password} helperText={errors.password}/>
