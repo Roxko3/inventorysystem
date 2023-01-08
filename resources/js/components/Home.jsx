@@ -41,7 +41,6 @@ function Home() {
 
     return (
         <Box>
-            <Navbar name="Gyarmati Levente" />
             <Grid2
                 container
                 alignItems="center"
@@ -54,7 +53,7 @@ function Home() {
                         <Typography variant="h4">Te boltod</Typography>
                         <Card variant="outlined" sx={{ m: 2 }}>
                             <Link
-                                to="/yourshop"
+                                to="yourshop"
                                 style={{ textDecoration: "none" }}
                             >
                                 <CardActionArea>
