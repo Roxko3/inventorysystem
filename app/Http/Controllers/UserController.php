@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UserRequest;
-use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Password;
+
 
 class UserController extends Controller
 {
@@ -56,32 +54,22 @@ class UserController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['error' => "Hibás felhasználónév vagy jelszó!"], 401);
-        };
-        $user->password = null;
-        return response()->json($user);
+        $credentials = $request->validated();
+        if (!Auth::attempt($credentials)) {
+            return response([
+                'message' => 'Provided email or password is incorrect'
+            ], 422);
+        }
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user['password'] = null;
+        $token = $user->createToken('main')->plainTextToken;
+        return response(compact('user', 'token'));
     }
 
     public function register(RegisterRequest $request)
     {
-        /*$request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', Password::defaults()->min(8)->mixedCase()->numbers()]
-        ]);
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
-            'password' => Password::defaults()->min(8)->mixedCase()->numbers()
-        ]);
-
-        if ($validator->fails()) {
-            return response($validator->errors());
-        }*/
-
         $user = new User();
 
         $user->email = $request->get("email");
