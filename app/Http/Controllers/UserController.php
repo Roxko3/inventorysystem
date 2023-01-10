@@ -51,33 +51,4 @@ class UserController extends Controller
         $user->delete();
         return response()->json("OK");
     }
-
-    public function login(LoginRequest $request)
-    {
-        $credentials = $request->validated();
-        if (!Auth::attempt($credentials)) {
-            return response([
-                'message' => 'Provided email or password is incorrect'
-            ], 422);
-        }
-
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        $user['password'] = null;
-        $token = $user->createToken('main')->plainTextToken;
-        return response(compact('user', 'token'));
-    }
-
-    public function register(RegisterRequest $request)
-    {
-        $user = new User();
-
-        $user->email = $request->get("email");
-        $user->name = $request->get("name");
-        $user->password = Hash::make($request->get("password"));
-        $user->postal_code = $request->has("postal_code") ? $request->get("postal_code") : null;
-
-        $user->save();
-        return response()->json($user->id);
-    }
 }
