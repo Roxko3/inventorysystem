@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Shop;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -25,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('update-shop', function (User $user, Shop $shop) {
+            return $user->shop_id === $shop->id;
+        });
     }
 }

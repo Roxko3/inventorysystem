@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\PasswordMixedCase;
+use App\Rules\PasswordNumber;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Contracts\Validation\Validator as Validator;
@@ -28,22 +30,25 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
-            'password' => ['required', 'min:8', Password::defaults()->numbers()->mixedCase()],
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => ['required', 'min:8', new PasswordMixedCase, new PasswordNumber],
+            'password-repeat' => 'required|same:password'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Név megadása kötelező!',
-            'name.max' => 'Név maximum 255 karakter hosszúságú!',
-            'email.required' => 'Email megadása kötelező!',
-            'email.email' => 'Helytelen Email!',
-            'email.max' => 'Emmail maximum 255 karakter hosszúságú!',
-            'password.required' => 'Jelszó megadása kötelező!',
-            'password.min' => 'Jelszó legalább 8 karakter hosszúságú!',
-            'password' => 'Helytelen jelszó!',
+            'name.required' => 'Név megadása kötelező.',
+            'name.max' => 'Név maximum 255 karakter hosszúságú.',
+            'email.required' => 'Email megadása kötelező.',
+            'email.email' => 'Helytelen Email.',
+            'email.max' => 'Az email maximum 255 karakter hosszúságú.',
+            'email.unique' => 'A megadott email már használt.',
+            'password.required' => 'Jelszó megadása kötelező.',
+            'password.min' => 'Jelszó legalább 8 karakter hosszúságú.',
+            'password-repeat.required' => 'Jelszó ismétlés megadása kötelező.',
+            'password-repeat.same' => 'Jelszó ismétlés nem eggyezik.'
         ];
     }
 

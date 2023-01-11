@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class UsersSeeder extends Seeder
 {
@@ -21,7 +20,7 @@ class UsersSeeder extends Seeder
                 'id' => 1,
                 'email' => "admin@localhost",
                 'name' => "Teszt Elek",
-                'password' => Hash::make('admin'),
+                'password' => bcrypt('admin'),
                 'permission' => 10,
                 'postal_code' => 9730,
                 'shop_id' => 1,
@@ -31,7 +30,7 @@ class UsersSeeder extends Seeder
                 'id' => 2,
                 'email' => "vasarlo@localhost",
                 'name' => "Balázs Benedek",
-                'password' => Hash::make("password"),
+                'password' => bcrypt("password"),
                 'permission' => 0,
                 'postal_code' => 9730,
                 'email_verified_at' => Carbon::parse("2022-12-30")
@@ -40,7 +39,7 @@ class UsersSeeder extends Seeder
                 'id' => 3,
                 'email' => "dolgozo@localhost",
                 'name' => "Nagy Tamás",
-                'password' => Hash::make("asd123"),
+                'password' => bcrypt("asd123"),
                 'permission' => 1,
                 'postal_code' => 9730,
                 'shop_id' => 1
@@ -49,7 +48,7 @@ class UsersSeeder extends Seeder
                 'id' => 4,
                 'email' => "vasarlo2@localhost",
                 'name' => "Kiss János",
-                'password' => Hash::make("asd123"),
+                'password' => bcrypt("asd123"),
                 'permission' => 0,
                 'postal_code' => 9730
             ]

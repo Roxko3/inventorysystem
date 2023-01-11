@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string("email")->unique();
             $table->string("name");
             $table->string("password");
-            $table->Integer("permission")->nullable();
+            $table->Integer("permission")->nullable()->default(0);
             $table->Integer("postal_code")->nullable();
             $table->foreignId("shop_id")->nullable()->constrained("shops");
             $table->datetime("email_verified_at")->nullable();

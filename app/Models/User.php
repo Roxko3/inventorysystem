@@ -13,6 +13,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
         'email',
@@ -27,7 +29,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public $timestamps = false;
 
     public function shop()
     {
