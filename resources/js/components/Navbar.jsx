@@ -135,10 +135,10 @@ function Navbar(props) {
                 </Typography>
                 <Divider sx={{ display: { xs: "block", sm: "none" } }} />
                 <Link to="/profile">
-                    <MenuItem>Profil</MenuItem>
+                    <MenuItem onClick={handleClose}>Profil</MenuItem>
                 </Link>
                 <Link to="/login">
-                    <MenuItem>Kijelentkezés</MenuItem>
+                    <MenuItem onClick={handleClose}>Kijelentkezés</MenuItem>
                 </Link>
             </Menu>
         </AppBar>

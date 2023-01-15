@@ -15,6 +15,10 @@
                 margin: 0; /*navbar touches the sides of the screen*/
                 overflow-x: hidden; /*scrollbar doesnt appear at bottom of page */
             }
+            a {
+                text-decoration: none;
+                color: inherit
+            }
         </style>
         <link
             rel="stylesheet"

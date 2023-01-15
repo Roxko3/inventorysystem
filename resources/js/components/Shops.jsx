@@ -69,10 +69,7 @@ function Shops() {
                                 sx={{ m: 2 }}
                                 key={shops.id}
                             >
-                                <Link
-                                    to={`/shops/${shops.id}`}
-                                    style={{ textDecoration: "none" }}
-                                >
+                                <Link to={`/shops/${shops.id}`}>
                                     <CardActionArea>
                                         <CardMedia
                                             component="img"

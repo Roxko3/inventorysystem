@@ -10,6 +10,7 @@ import Shop from "./Shop";
 import Yourshop from "./Yourshop";
 import Navbar from "./Navbar";
 import { Box } from "@mui/material";
+import Map from "./Map";
 
 function App() {
     return (

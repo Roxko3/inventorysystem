@@ -1,72 +1,77 @@
 import {
     Alert,
     Button,
+    IconButton,
+    InputAdornment,
     Paper,
     Snackbar,
     TextField,
     Typography,
-} from "@mui/material"
-import Grid2 from "@mui/material/Unstable_Grid2"
-import axios from "axios"
-import React, { useEffect, useRef, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import Image from 'mui-image'
-import {Link as MuiLink} from "@mui/material" 
-import { ErrorSharp } from "@mui/icons-material"
+} from "@mui/material";
+import Grid2 from "@mui/material/Unstable_Grid2";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Image from "mui-image";
+import { Link as MuiLink } from "@mui/material";
+import { ErrorSharp, Visibility, VisibilityOff } from "@mui/icons-material";
 
 function Login() {
-    const email = useRef("")
-    const password = useRef("")
-    const [open, setOpen] = useState(false)
-    const [alertMessage, setalertMessage] = useState("")
-    const [severity, setseverity] = useState("error")
-    const navigate = useNavigate()
-    const [errors,setErrors] = useState([])
+    const email = useRef("");
+    const password = useRef("");
+    const [open, setOpen] = useState(false);
+    const [alertMessage, setalertMessage] = useState("");
+    const [severity, setseverity] = useState("error");
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState([]);
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
-    const login = async () => {       
-            await axios
-                .post("http://127.0.0.1/InventorySystem/public/api/login", {
-                    email: email.current.value,
-                    password: password.current.value,
-                })
-                .then((response) => {
-                    if (response.status === 200) {
-                        email.current.value = ""
-                        password.current.value = ""
-                        setalertMessage("Sikeres bejelentkezés!")
-                        setseverity("success")
-                        setErrors([])
-                        setOpen(true)                 
-                        navigate("/");
-                    }
-                })
-                .catch((response) => {
-                    if(response.response.status === 422){
-                        setErrors(response.response.data)
-                    }
-                    else {
-                        email.current.value = ""
-                        password.current.value = ""
-                        setalertMessage(response.response.data.error)
-                        setseverity("error")
-                        setOpen(true)
-                    }                  
-                })
-        }
+    const login = async () => {
+        await axios
+            .post("http://127.0.0.1/InventorySystem/public/api/login", {
+                email: email.current.value,
+                password: password.current.value,
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    email.current.value = "";
+                    password.current.value = "";
+                    setalertMessage("Sikeres bejelentkezés!");
+                    setseverity("success");
+                    setErrors([]);
+                    setOpen(true);
+                    navigate("/");
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    setErrors(response.response.data);
+                } else {
+                    email.current.value = "";
+                    password.current.value = "";
+                    setalertMessage(response.response.data.error);
+                    setseverity("error");
+                    setOpen(true);
+                    setErrors([]);
+                }
+            });
+    };
 
     const handleClose = (reason) => {
         if (reason === "clickaway") {
-            return
+            return;
         }
 
-        setOpen(false)
-    }
+        setOpen(false);
+    };
 
-    useEffect(()=>{
-        document.title = "Inventory System - Bejelentkezés"
-    }, [])
+    useEffect(() => {
+        document.title = "Inventory System - Bejelentkezés";
+    }, []);
 
-    return (      
+    return (
         <Grid2
             container
             spacing={2}
@@ -75,17 +80,52 @@ function Login() {
             justifyContent="center"
         >
             <Grid2>
-            <Image src="./images/logo.png" duration={1500} alt="Inventory System Logo"/>
+                <Image
+                    src="./images/logo.png"
+                    duration={1500}
+                    alt="Inventory System Logo"
+                />
             </Grid2>
             <Paper elevation={8}>
                 <Grid2>
                     <Typography variant="h4">Bejelentkezés</Typography>
                 </Grid2>
                 <Grid2>
-                    <TextField label="Email cím" fullWidth variant="outlined" inputRef={email} helperText={errors.email}  />
+                    <TextField
+                        label="Email cím"
+                        fullWidth
+                        variant="outlined"
+                        inputRef={email}
+                        helperText={errors.email}
+                        error={errors.email != null}
+                    />
                 </Grid2>
                 <Grid2>
-                    <TextField label="Jelszó" fullWidth type="password" variant="outlined" inputRef={password} helperText={errors.password}/>
+                    <TextField
+                        label="Jelszó"
+                        fullWidth
+                        type={showPassword ? "text" : "password"}
+                        variant="outlined"
+                        inputRef={password}
+                        helperText={errors.password}
+                        error={errors.password != null}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                    >
+                                        {showPassword ? (
+                                            <Visibility />
+                                        ) : (
+                                            <VisibilityOff />
+                                        )}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
                 </Grid2>
                 <Grid2>
                     <Button variant="contained" onClick={login}>
@@ -112,7 +152,7 @@ function Login() {
                 </Alert>
             </Snackbar>
         </Grid2>
-    )
+    );
 }
 
-export default Login
+export default Login;
