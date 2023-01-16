@@ -16,15 +16,13 @@ class ShopController extends Controller
         return response()->json($shops);
     }
 
-    /*public function get(int  $id)
+    public function get(Shop $shop)
     {
-        $shop = new Shop();
-        $shop = DB::table('shops')->select('*')->where('id', $id)->first();
-        if (!Gate::allows('my-shop', $shop)) {
+        if (Gate::denies('update-shop', $shop)) {
             abort(403);
-        };
+        }
         return response()->json($shop);
-    }*/
+    }
 
     public function create(ShopRequest $request)
     {
