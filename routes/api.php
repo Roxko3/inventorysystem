@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopTypeController;
@@ -7,7 +8,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\StorageController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
-
+use App\Models\Shop;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,17 @@ use Illuminate\Support\Facades\Route;
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/getShop/{shop}', [ShopController::class, 'get']);
+    Route::put("/myShop/{shop}", [ShopController::class, "update"])->name("updateShop");
+    Route::post("/myShop/{shop}/uploadImage", [ShopController::class, "uploadImage"])->name("uploadImage");
+});
+
+Route::post("/login", [AuthController::class, "login"])->name("login");
+Route::post("/register", [AuthController::class, "register"])->name("register");
 
 Route::group(['prefix' => '/users'], function () {
     Route::get("/", [UserController::class, "index"])->name("getUsers");
@@ -60,5 +72,3 @@ Route::group(['prefix' => '/storage'], function () {
     Route::put("/{storage}", [StorageController::class, "updatestorage"])->name("updatestorage");
     Route::delete("/{storage}", [StorageController::class, "deletestorage"])->name("deletestorage");
 });
-Route::post("/login", [UserController::class, "login"])->name("login");
-Route::post("/register", [UserController::class, "register"])->name("register");

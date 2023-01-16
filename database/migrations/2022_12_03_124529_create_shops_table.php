@@ -20,6 +20,7 @@ class CreateShopsTable extends Migration
             $table->string("address");
             $table->string("owner");
             $table->Integer("postal_code");
+            $table->string("image_path")->nullable();
             $table->string("image")->nullable();
         });
     }
