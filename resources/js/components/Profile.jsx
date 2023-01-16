@@ -69,9 +69,11 @@ function Profile() {
                                 <IconButton
                                     color="default"
                                     sx={{
-                                        border: "2px solid",
-                                        backgroundColor: "gray",
-                                        ":hover": { backgroundColor: "grey" },
+                                        border: "1px solid",
+                                        backgroundColor: "lightgrey",
+                                        ":hover": {
+                                            backgroundColor: "grey",
+                                        },
                                     }}
                                     size="small"
                                     onClick={handleClick}
