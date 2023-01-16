@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImageRequest;
 use App\Http\Requests\ShopRequest;
 use Illuminate\Http\Request;
 use App\Models\Shop;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+
 
 class ShopController extends Controller
 {
@@ -34,6 +36,22 @@ class ShopController extends Controller
         $shop->postal_code = $request->get("postal_code");
         $shop->save();
         return response()->json($shop->id);
+    }
+
+    public function uploadImage(Shop $shop, ImageRequest $request)
+    {
+        if (Gate::denies('update-shop', $shop)) {
+            abort(403);
+        }
+        $newImageName = time() .
+            '-' .
+            $request->file('image')->getClientOriginalName();
+        $request->file("image")
+            ->move(public_path('images'), $newImageName);
+        $shop->image_path = $newImageName;
+        $shop->save();
+
+        return response()->json("Kép feltöltés sikeres!");
     }
 
     public function update(Shop $shop, ShopRequest $request)
