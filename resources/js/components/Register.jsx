@@ -1,6 +1,8 @@
 import {
     Alert,
     Button,
+    IconButton,
+    InputAdornment,
     Paper,
     Snackbar,
     TextField,
@@ -11,6 +13,7 @@ import { Link } from "react-router-dom";
 import Image from "mui-image";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function Register() {
     const email = useRef("");
@@ -21,6 +24,9 @@ function Register() {
     const [alertMessage, setalertMessage] = useState("");
     const [severity, setseverity] = useState("error");
     const [errors, setErrors] = useState([]);
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
     const register = async () => {
         await axios
@@ -114,11 +120,27 @@ function Register() {
                         required
                         fullWidth
                         label="Jelszó"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         variant="outlined"
                         inputRef={password}
                         helperText={errors.password}
                         error={errors.password != null}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                    >
+                                        {showPassword ? (
+                                            <Visibility />
+                                        ) : (
+                                            <VisibilityOff />
+                                        )}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                 </Grid2>
                 <Grid2>
@@ -126,8 +148,24 @@ function Register() {
                         required
                         fullWidth
                         label="Jelszó újra"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         variant="outlined"
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                    >
+                                        {showPassword ? (
+                                            <Visibility />
+                                        ) : (
+                                            <VisibilityOff />
+                                        )}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                 </Grid2>
                 <Grid2>

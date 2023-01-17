@@ -1,11 +1,15 @@
-import { Button, Paper, TextField, Typography } from "@mui/material"
+import { Button, IconButton, InputAdornment, Paper, TextField, Typography } from "@mui/material"
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2"
 import { useEffect, useRef, useState } from "react"
 import Image from 'mui-image'
+import { Visibility, VisibilityOff } from "@mui/icons-material"
 
 function Forgotpass(){
     const [emailSent,setEmailSent] = useState(false)
     const [email,setEmail] = useState("")
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
     useEffect(()=>{
         document.title = "Inventory System - Elfelejtett jelszó"
@@ -35,10 +39,44 @@ function Forgotpass(){
                         <TextField fullWidth variant="outlined" label="Kód"/>
                     </Grid2>
                     <Grid2>
-                        <TextField fullWidth variant="outlined" type="password" label="Új jelszó"/>
+                        <TextField fullWidth variant="outlined" type={showPassword ? "text" : "password"} label="Új jelszó"
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton
+                                                                onClick={handleClickShowPassword}
+                                                                onMouseDown={handleMouseDownPassword}
+                                                            >
+                                                                {showPassword ? (
+                                                                    <Visibility />
+                                                                ) : (
+                                                                    <VisibilityOff />
+                                                                )}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                        />
                     </Grid2>
                     <Grid2>
-                        <TextField fullWidth variant="outlined" type="password" label="Új jelszó újra"/>
+                        <TextField fullWidth variant="outlined" type={showPassword ? "text" : "password"} label="Új jelszó újra"
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <IconButton
+                                                                onClick={handleClickShowPassword}
+                                                                onMouseDown={handleMouseDownPassword}
+                                                            >
+                                                                {showPassword ? (
+                                                                    <Visibility />
+                                                                ) : (
+                                                                    <VisibilityOff />
+                                                                )}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                        />
                     </Grid2>
                     <Grid2>
                         <Button variant="contained">Megváltoztatás</Button>
