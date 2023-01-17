@@ -19,6 +19,7 @@
                 text-decoration: none;
                 color: inherit
             }
+            #map { height: 180px; }
         </style>
         <link
             rel="stylesheet"
@@ -26,9 +27,15 @@
         />
         <link rel="stylesheet" href="{{'css/app.css'}}" />
         <link rel="icon" href="{{ URL::asset('favicon.ico') }}" type="image/x-icon"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
     </head>
     <body class="antialiased">
         <div id="app"></div>
         <script src="{{asset('js/app.js')}}"></script>
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
     </body>
 </html>

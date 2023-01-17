@@ -1,58 +1,23 @@
-import { useEffect, useMemo, useState } from "react";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import { Button, CircularProgress } from "@mui/material";
+import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 
 function Map() {
-    const [coords, setCoords] = useState([]);
-
-    const getCoords = async () => {
-        await axios
-            .get(
-                "https://maps.googleapis.com/maps/api/geocode/json?address=9730hu&key=AIzaSyAtHEbpGIWq2uv-YKbSOftzZhpxy4TCr-4"
-            )
-            .then((response) => {
-                if (response.status === 200) {
-                    setCoords(response.data.results);
-                }
-            });
-    };
-
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "AIzaSyAtHEbpGIWq2uv-YKbSOftzZhpxy4TCr-4",
-    });
-
-    const containerStyle = {
-        width: "400px",
-        height: "400px",
-    };
-
-    useEffect(() => {
-        getCoords();
-    }, []);
-
-    if (!isLoaded) return <CircularProgress />;
-
     return (
-        <>
-            {coords.map((coords) => (
-                <GoogleMap
-                    key={coords.place_id}
-                    zoom={13}
-                    center={{
-                        lat: coords.geometry.location.lat,
-                        lng: coords.geometry.location.lng,
-                    }}
-                    mapContainerStyle={containerStyle}
-                >
-                    <Marker
-                        position={{
-                            lat: coords.geometry.location.lat,
-                            lng: coords.geometry.location.lng,
-                        }}
-                    />
-                </GoogleMap>
-            ))}
-        </>
+        <MapContainer
+            center={[51.505, -0.09]}
+            zoom={13}
+            scrollWheelZoom={false}
+            style={{ height: 300, width: 300 }}
+        >
+            <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={[51.505, -0.09]}>
+                <Popup>
+                    A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+            </Marker>
+        </MapContainer>
     );
 }
 
