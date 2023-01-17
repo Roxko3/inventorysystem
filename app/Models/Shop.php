@@ -16,6 +16,11 @@ class Shop extends Model
         return $this->hasMany(User::class, 'shop_id', 'id');
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class, 'shop_id', 'id');
+    }
+
     public function logs()
     {
         return $this->hasMany(Log::class, 'shop_id', 'id');

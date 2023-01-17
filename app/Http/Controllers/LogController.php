@@ -9,12 +9,12 @@ use Carbon\Carbon;
 
 class LogController extends Controller
 {
-    public function indexlog()
+    public function index()
     {
         $logs = Log::with("user", "shop")->get();
         return response()->json($logs);
     }
-    public function createlog(LogRequest $request)
+    public function create(LogRequest $request)
     {
         $logs = new Log();
         $logs->shop_id = $request->get("shop_id");
@@ -24,7 +24,7 @@ class LogController extends Controller
         $logs->save();
         return response()->json($logs->id);
     }
-    public function deletelog(Log $log)
+    public function delete(Log $log)
     {
         $log->delete();
         return response()->json("OK");

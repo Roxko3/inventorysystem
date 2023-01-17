@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 
 class ShopTypeController extends Controller
 {
-    public function indextype()
+    public function index()
     {
         $shopstype = ShopType::all();
         return response()->json($shopstype);
     }
-    public function createtype(ShopTypeRequest $request)
+    public function create(ShopTypeRequest $request)
     {
         $shopstype = new ShopType();
         $shopstype->name = $request->get("name");
