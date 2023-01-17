@@ -26,8 +26,8 @@ class RatingRequest extends FormRequest
     public function rules()
     {
         return [
-            'rating' => 'required|numeric|min:1|max:5',
-            'shop_id' => 'numeric|exists:shops,id'
+            'rating' => 'required|numeric|min:0|max:5',
+            'shop_id' => 'required|numeric|exists:shops,id'
         ];
     }
 
@@ -38,6 +38,7 @@ class RatingRequest extends FormRequest
             'rating.numeric' => 'Az értékelés csak szám lehet!',
             'rating.min' => 'Az értékelés értéke minimum 1!',
             'rating.max' => 'Az értékelés értéke maximum 5!',
+            'shop_id.required' => 'A bolt megadása kötelező!',
             'shop_id.numeric' => 'A bolt azonosítója csak szám lehet!',
             'shop_id.exists' => 'A megadott bolt nem létezik!',
         ];

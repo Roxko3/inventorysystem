@@ -11,6 +11,12 @@ class Rating extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'shop_id',
+        'user_id'
+    ];
+
+
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shop_id', 'id');

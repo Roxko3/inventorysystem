@@ -34,16 +34,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put("/myShop/{shop}", [ShopController::class, "update"])->name("updateShop");
     Route::post("/myShop/{shop}/uploadImage", [ShopController::class, "uploadImage"])->name("uploadImage");
 
-    Route::group(['prefix' => '/ratings'], function () {
-        Route::get("/", [RatingController::class, "index"])->name("getRatings");
-        Route::post("/create", [RatingController::class, "create"])->name("createRating");
-        Route::put("/{rating}", [RatingController::class, "update"])->name("updateRating");
-        Route::delete("/{rating}", [RatingController::class, "delete"])->name("deleteRating");
+    Route::group(['prefix' => '/shops'], function () {
+        Route::post("/create", [ShopController::class, "create"])->name("createShop");
+        Route::put("/{shop}", [ShopController::class, "update"])->name("updateShop");
+        Route::delete("/{shop}", [ShopController::class, "delete"])->name("deleteShop");
+        Route::post("/rate", [RatingController::class, "rate"])->name("rateShop");
     });
 });
 
 Route::post("/login", [AuthController::class, "login"])->name("login");
 Route::post("/register", [AuthController::class, "register"])->name("register");
+
+Route::get("/shops", [ShopController::class, "index"])->name("getShops");
 
 Route::group(['prefix' => '/users'], function () {
     Route::get("/", [UserController::class, "index"])->name("getUsers");
@@ -51,12 +53,7 @@ Route::group(['prefix' => '/users'], function () {
     Route::put("/{user}", [UserController::class, "update"])->name("updateUser");
     Route::delete("/{user}", [UserController::class, "delete"])->name("deleteUser");
 });
-Route::group(['prefix' => '/shops'], function () {
-    Route::get("/", [ShopController::class, "index"])->name("getShops");
-    Route::post("/create", [ShopController::class, "create"])->name("createShop");
-    Route::put("/{shop}", [ShopController::class, "update"])->name("updateShop");
-    Route::delete("/{shop}", [ShopController::class, "delete"])->name("deleteShop");
-});
+
 Route::group(['prefix' => '/shoptypes'], function () {
     Route::get("/", [ShopTypeController::class, "index"])->name("getShoptypes");
     Route::post("/create", [ShopTypeController::class, "create"])->name("createShoptype");
