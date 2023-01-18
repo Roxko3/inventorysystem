@@ -11,6 +11,7 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import Map from "./Map";
 
 function CreateShop() {
     const name = useRef("");
@@ -114,16 +115,16 @@ function CreateShop() {
             </Grid2>
             <Grid2>
                 <TextField
-                    label="Cím"
-                    inputRef={address}
-                    helperText={errors.address}
+                    label="Tulajdonos"
+                    inputRef={owner}
+                    helperText={errors.owner}
                 />
             </Grid2>
             <Grid2>
                 <TextField
-                    label="Tulajdonos"
-                    inputRef={owner}
-                    helperText={errors.owner}
+                    label="Cím"
+                    inputRef={address}
+                    helperText={errors.address}
                 />
             </Grid2>
             <Grid2>
@@ -132,6 +133,9 @@ function CreateShop() {
                     inputRef={postalCode}
                     helperText={errors.postal_code}
                 />
+            </Grid2>
+            <Grid2>
+                <Map />
             </Grid2>
             <Grid2>
                 <Button onClick={createShop} variant="contained">

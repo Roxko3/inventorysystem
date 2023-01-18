@@ -33,7 +33,7 @@ import Navbar from "./Navbar";
 import TabPanel from "./TabPanel";
 
 function Home() {
-    const [hasShop, setHasShop] = useState(true);
+    const [hasShop, setHasShop] = useState(false);
 
     useEffect(() => {
         document.title = "Inventory System - Home";

@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
+import Map from "./Map";
 
 function ShopData() {
     const [shopTypes, setShopTypes] = useState([]);
@@ -116,7 +117,7 @@ function ShopData() {
                             <InputLabel>Bolt típus</InputLabel>
                             <Select
                                 onChange={handleChange}
-                                value={type}
+                                value={1}
                                 label="Bolt típus"
                             >
                                 {shopTypes.map((shopTypes) => (
@@ -129,6 +130,20 @@ function ShopData() {
                                 ))}
                             </Select>
                         </FormControl>
+                    </Grid2>
+                    <Grid2>
+                        <TextField label="Tulajdonos" />
+                    </Grid2>
+                </Grid2>
+                <Grid2 container direction="column" alignItems="center">
+                    <Grid2>
+                        <TextField label="Cím" />
+                    </Grid2>
+                    <Grid2>
+                        <TextField label="Irányítószám" />
+                    </Grid2>
+                    <Grid2>
+                        <Map />
                     </Grid2>
                 </Grid2>
             </Grid2>
