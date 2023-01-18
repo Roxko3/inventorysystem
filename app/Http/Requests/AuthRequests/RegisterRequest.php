@@ -29,8 +29,8 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
             'password' => ['required', 'min:8', new PasswordMixedCase, new PasswordNumber],
             'password-repeat' => 'required|same:password'
         ];
@@ -39,16 +39,16 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Név megadása kötelező.',
-            'name.max' => 'Név maximum 255 karakter hosszúságú.',
-            'email.required' => 'Email megadása kötelező.',
-            'email.email' => 'Helytelen Email.',
-            'email.max' => 'Az email maximum 255 karakter hosszúságú.',
-            'email.unique' => 'A megadott email már használt.',
-            'password.required' => 'Jelszó megadása kötelező.',
-            'password.min' => 'Jelszó legalább 8 karakter hosszúságú.',
-            'password-repeat.required' => 'Jelszó ismétlés megadása kötelező.',
-            'password-repeat.same' => 'Jelszó ismétlés nem eggyezik.'
+            'name.required' => 'Név megadása kötelező!',
+            'name.max' => 'Név maximum 255 karakter hosszúságú!',
+            'email.required' => 'Email megadása kötelező!',
+            'email.email' => 'Helytelen email!',
+            'email.max' => 'Az email maximum 255 karakter hosszúságú!',
+            'email.unique' => 'A megadott email már használt!',
+            'password.required' => 'Jelszó megadása kötelező!',
+            'password.min' => 'Jelszó legalább 8 karakter hosszúságú!',
+            'password-repeat.required' => 'Jelszó ismétlés megadása kötelező!',
+            'password-repeat.same' => 'Jelszó ismétlés nem eggyezik!'
         ];
     }
 

@@ -14,15 +14,13 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $shops = Shop::with("shopType")->get();
+        $shops = Shop::with("shopType", "ratings")->get();
         return response()->json($shops);
     }
 
     public function get(Shop $shop)
     {
-        if (Gate::denies('update-shop', $shop)) {
-            abort(403);
-        }
+        $shop = Shop::with("shopType", "ratings")->where("id", $shop->id)->get();
         return response()->json($shop);
     }
 
@@ -40,7 +38,7 @@ class ShopController extends Controller
 
     public function uploadImage(Shop $shop, ImageRequest $request)
     {
-        if (Gate::denies('update-shop', $shop)) {
+        if (Gate::denies('shop-access', $shop)) {
             abort(403);
         }
         $newImageName = time() .
@@ -56,7 +54,7 @@ class ShopController extends Controller
 
     public function update(Shop $shop, ShopRequest $request)
     {
-        if (Gate::denies('update-shop', $shop)) {
+        if (Gate::denies('shop-access', $shop)) {
             abort(403);
         }
         $shop->name = $request->get("name");
@@ -71,6 +69,6 @@ class ShopController extends Controller
     public function delete(Shop $shop)
     {
         $shop->delete();
-        return response()->json("OK");
+        return response()->json("Bolt sikeresen törölve!");
     }
 }

@@ -26,11 +26,30 @@ class ShopRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => "required",
-            'shop_type_id' => "numeric",
-            'address' => "required",
-            'owner' => "required",
-            'postal_code' => "required|numeric",
+            'name' => "required|max:255",
+            'shop_type_id' => "required|numeric|exists:shop_types,id",
+            'address' => "required|max:255",
+            'owner' => "required|max:255",
+            'postal_code' => "required|numeric|min:1000|max:9999",
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => "Név megadása kötelező!",
+            'name.max' => "Név maximum 255 karakter hosszúságú!",
+            'shop_type_id.required' => "Bolt típus megadása kötelező!",
+            'shop_type_id.numeric' => "A bolt típus csak szám lehet!",
+            'shop_type_id.exists' => "A megadott bolt típus nem létezik!",
+            'address.required' => "Cím megadása kötelező!",
+            'address.max' => "Cím maximum 255 karakter hosszúságú!",
+            'owner.required' => "Tulajdonos megadása kötelező!",
+            'owner.max' => "Tulajdonos maximum 255 karakter hosszúságú!",
+            'postal_code.required' => "Irányítószám megadása kötelező!",
+            'postal_code.numeric' => "Az irányítószám csak szám lehet!",
+            'postal_code.min' => "Az irányítószám 1000 és 9999 közötti szám min!",
+            'postal_code.max' => "Az irányítószám 1000 és 9999 közötti szám max!",
         ];
     }
 
