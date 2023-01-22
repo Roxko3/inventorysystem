@@ -29,7 +29,12 @@ function Yourshop() {
         <Box>
             <Box sx={{ width: "100%" }}>
                 <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                    <Tabs value={value} onChange={handleChange}>
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        variant="scrollable"
+                        scrollButtons="auto"
+                    >
                         <Tab label="Adatok"></Tab>
                         <Tab label="Termékek"></Tab>
                         <Tab label="Raktár"></Tab>

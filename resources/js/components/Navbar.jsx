@@ -19,7 +19,7 @@ import Image from "mui-image";
 import { useEffect, useState } from "react";
 import TabPanel from "./TabPanel";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { deepOrange } from "@mui/material/colors";
 import MenuIcon from "@mui/icons-material/Menu";
 import MyAvatar from "./MyAvatar";
@@ -57,91 +57,100 @@ function Navbar(props) {
         */
 
     return (
-        <AppBar position="sticky">
-            <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-                <IconButton
-                    sx={{
-                        color: "white",
-                        display: { xs: "block", sm: "none" },
-                    }}
+        <>
+            <AppBar position="sticky">
+                <Toolbar
+                    sx={{ display: "flex", justifyContent: "space-between" }}
                 >
-                    <MenuIcon />
-                </IconButton>
-                <Link to="/">
-                    <Image
-                        src="./images/logo.png"
-                        width="150px"
-                        duration={500}
-                    />
-                </Link>
-                <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                    <Link to="/shops">
-                        <Button sx={{ color: "white" }}>Boltok</Button>
-                    </Link>
-                    <Link to="/login">
-                        <Button
-                            sx={{
-                                color: "white",
-                                display: isAdmin ? "inline" : "none",
-                            }}
-                        >
-                            Termékek
-                        </Button>
-                    </Link>
-                </Box>
-                <Box
-                    sx={{ display: "flex", alignItems: "center", gap: "20px" }}
-                >
-                    <Badge badgeContent={2} color="error">
-                        <Notifications />
-                    </Badge>
-                    <Box
-                        onClick={handleClick}
+                    <IconButton
                         sx={{
-                            ":hover": { cursor: "pointer" },
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
+                            color: "white",
+                            display: { xs: "block", sm: "none" },
                         }}
                     >
-                        <MyAvatar name={props.name} />
-                        <Typography
-                            variant="p"
-                            sx={{ display: { xs: "none", sm: "block" } }}
-                        >
-                            {props.name}
-                        </Typography>
+                        <MenuIcon />
+                    </IconButton>
+                    <Link to="/">
+                        <Image
+                            src="./images/logo.png"
+                            width="150px"
+                            duration={500}
+                        />
+                    </Link>
+                    <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                        <Link to="/shops">
+                            <Button sx={{ color: "white" }}>Boltok</Button>
+                        </Link>
+                        <Link to="/login">
+                            <Button
+                                sx={{
+                                    color: "white",
+                                    display: isAdmin ? "inline" : "none",
+                                }}
+                            >
+                                Termékek
+                            </Button>
+                        </Link>
                     </Box>
-                </Box>
-            </Toolbar>
-            <Menu
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
-                transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
-            >
-                <Typography
-                    variant="body1"
-                    sx={{ display: { xs: "block", sm: "none" } }}
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "20px",
+                        }}
+                    >
+                        <Badge badgeContent={2} color="error">
+                            <Notifications />
+                        </Badge>
+                        <Box
+                            onClick={handleClick}
+                            sx={{
+                                ":hover": { cursor: "pointer" },
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "10px",
+                            }}
+                        >
+                            <MyAvatar name={props.name} />
+                            <Typography
+                                variant="p"
+                                sx={{ display: { xs: "none", sm: "block" } }}
+                            >
+                                {props.name}
+                            </Typography>
+                        </Box>
+                    </Box>
+                </Toolbar>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                    }}
+                    transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                    }}
                 >
-                    {props.name}
-                </Typography>
-                <Divider sx={{ display: { xs: "block", sm: "none" } }} />
-                <Link to="/profile">
-                    <MenuItem onClick={handleClose}>Profil</MenuItem>
-                </Link>
-                <Link to="/login">
-                    <MenuItem onClick={handleClose}>Kijelentkezés</MenuItem>
-                </Link>
-            </Menu>
-        </AppBar>
+                    <Typography
+                        variant="body1"
+                        sx={{ display: { xs: "block", sm: "none" } }}
+                    >
+                        {props.name}
+                    </Typography>
+                    <Divider sx={{ display: { xs: "block", sm: "none" } }} />
+                    <Link to="/profile">
+                        <MenuItem onClick={handleClose}>Profil</MenuItem>
+                    </Link>
+                    <Link to="/login">
+                        <MenuItem onClick={handleClose}>Kijelentkezés</MenuItem>
+                    </Link>
+                </Menu>
+            </AppBar>
+            <Outlet />
+        </>
     );
 }
 

@@ -7,14 +7,17 @@ import {
     InputLabel,
     Menu,
     MenuItem,
+    Rating,
     Select,
     TextField,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Map from "./Map";
 
 function ShopData() {
+    const address = useRef("");
+    const postalCode = useRef("");
     const [shopTypes, setShopTypes] = useState([]);
     const [type, setType] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
@@ -110,10 +113,14 @@ function ShopData() {
                 </Grid2>
                 <Grid2 container direction="column" alignItems="center">
                     <Grid2>
-                        <TextField label="Név" defaultValue="Tesco" />
+                        <TextField
+                            label="Név"
+                            defaultValue="Tesco"
+                            size="small"
+                        />
                     </Grid2>
                     <Grid2>
-                        <FormControl sx={{ minWidth: 120 }}>
+                        <FormControl size="small">
                             <InputLabel>Bolt típus</InputLabel>
                             <Select
                                 onChange={handleChange}
@@ -132,18 +139,35 @@ function ShopData() {
                         </FormControl>
                     </Grid2>
                     <Grid2>
-                        <TextField label="Tulajdonos" />
+                        <TextField label="Tulajdonos" size="small" />
+                    </Grid2>
+                    <Grid2>
+                        <Rating name="read-only" value={3} readOnly />
                     </Grid2>
                 </Grid2>
                 <Grid2 container direction="column" alignItems="center">
                     <Grid2>
-                        <TextField label="Cím" />
+                        <TextField
+                            label="Cím"
+                            size="small"
+                            inputRef={address}
+                        />
                     </Grid2>
                     <Grid2>
-                        <TextField label="Irányítószám" />
+                        <TextField
+                            label="Irányítószám"
+                            size="small"
+                            inputRef={postalCode}
+                        />
                     </Grid2>
                     <Grid2>
-                        <Map />
+                        <Map
+                            location={
+                                address.current.value +
+                                "+" +
+                                postalCode.current.value
+                            }
+                        />
                     </Grid2>
                 </Grid2>
             </Grid2>

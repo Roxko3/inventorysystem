@@ -135,7 +135,7 @@ function CreateShop() {
                 />
             </Grid2>
             <Grid2>
-                <Map />
+                <Map location="tesco+koszeg" />
             </Grid2>
             <Grid2>
                 <Button onClick={createShop} variant="contained">

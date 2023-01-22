@@ -14,20 +14,18 @@ import Map from "./Map";
 
 function App() {
     return (
-        <Box>
-            <Navbar name="Gyarmati Levente" />
-            <Routes>
-                <Route path="*" element={<Notfound />} />
+        <Routes>
+            <Route element={<Navbar name="Gyarmati Levente" />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgotpass" element={<Forgotpass />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/shops" element={<Shops />} />
                 <Route path="/shops/:id" element={<Shop />} />
-                <Route path="/yourshop" element={<Yourshop />} />
-            </Routes>
-        </Box>
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgotpass" element={<Forgotpass />} />
+            <Route path="*" element={<Notfound />} />
+        </Routes>
     );
 }
 

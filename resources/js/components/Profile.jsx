@@ -20,12 +20,13 @@ import {
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Map from "./Map";
 import MyAvatar from "./MyAvatar";
 import Navbar from "./Navbar";
 
 function Profile() {
+    const [postalCode, setPostalCode] = useState("9730");
     const [showPassword, setShowPassword] = useState("");
     const [btnDisable, setBtnDisable] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -146,7 +147,11 @@ function Profile() {
                     <Grid2>
                         <TextField
                             label="Régi jelszó"
-                            type={showPassword === "old" ? "text" : "password"}
+                            type={
+                                showPassword.includes("old")
+                                    ? "text"
+                                    : "password"
+                            }
                             variant="outlined"
                             size="small"
                             InputProps={{
@@ -154,13 +159,22 @@ function Profile() {
                                     <InputAdornment position="end">
                                         <IconButton
                                             onClick={
-                                                showPassword !== "old"
+                                                !showPassword.includes("old")
                                                     ? () =>
-                                                          setShowPassword("old")
-                                                    : () => setShowPassword("")
+                                                          setShowPassword(
+                                                              showPassword +
+                                                                  "old"
+                                                          )
+                                                    : () =>
+                                                          setShowPassword(
+                                                              showPassword.replace(
+                                                                  "old",
+                                                                  ""
+                                                              )
+                                                          )
                                             }
                                         >
-                                            {showPassword === "old" ? (
+                                            {showPassword.includes("old") ? (
                                                 <Visibility />
                                             ) : (
                                                 <VisibilityOff />
@@ -174,7 +188,11 @@ function Profile() {
                     <Grid2>
                         <TextField
                             label="Új jelszó"
-                            type={showPassword === "new" ? "text" : "password"}
+                            type={
+                                showPassword.includes("new")
+                                    ? "text"
+                                    : "password"
+                            }
                             variant="outlined"
                             size="small"
                             InputProps={{
@@ -182,13 +200,22 @@ function Profile() {
                                     <InputAdornment position="end">
                                         <IconButton
                                             onClick={
-                                                showPassword !== "new"
+                                                !showPassword.includes("new")
                                                     ? () =>
-                                                          setShowPassword("new")
-                                                    : () => setShowPassword("")
+                                                          setShowPassword(
+                                                              showPassword +
+                                                                  "new"
+                                                          )
+                                                    : () =>
+                                                          setShowPassword(
+                                                              showPassword.replace(
+                                                                  "new",
+                                                                  ""
+                                                              )
+                                                          )
                                             }
                                         >
-                                            {showPassword === "new" ? (
+                                            {showPassword.includes("new") ? (
                                                 <Visibility />
                                             ) : (
                                                 <VisibilityOff />
@@ -203,7 +230,9 @@ function Profile() {
                         <TextField
                             label="Új jelszó újra"
                             type={
-                                showPassword === "again" ? "text" : "password"
+                                showPassword.includes("again")
+                                    ? "text"
+                                    : "password"
                             }
                             variant="outlined"
                             size="small"
@@ -212,15 +241,22 @@ function Profile() {
                                     <InputAdornment position="end">
                                         <IconButton
                                             onClick={
-                                                showPassword !== "again"
+                                                !showPassword.includes("again")
                                                     ? () =>
                                                           setShowPassword(
-                                                              "again"
+                                                              showPassword +
+                                                                  "again"
                                                           )
-                                                    : () => setShowPassword("")
+                                                    : () =>
+                                                          setShowPassword(
+                                                              showPassword.replace(
+                                                                  "again",
+                                                                  ""
+                                                              )
+                                                          )
                                             }
                                         >
-                                            {showPassword === "again" ? (
+                                            {showPassword.includes("again") ? (
                                                 <Visibility />
                                             ) : (
                                                 <VisibilityOff />
@@ -240,16 +276,16 @@ function Profile() {
                 <Grid2>
                     <TextField
                         label="Irányítószám"
-                        defaultValue="9730"
                         size="small"
-                        onChange={handleChange}
+                        defaultValue={postalCode}
+                        onChange={() => setPostalCode()}
                     />
                 </Grid2>
                 <Grid2>
-                    <Map />
+                    <Map location={postalCode} />
                 </Grid2>
                 <Grid2>
-                    <Button variant="contained" disabled={true}>
+                    <Button variant="contained" disabled={false}>
                         Irányítószám megváltoztatása
                     </Button>
                 </Grid2>

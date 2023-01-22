@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
 
 function Storage() {
     const [storage, setStorage] = useState([]);
@@ -32,6 +33,39 @@ function Storage() {
         getStorage();
     }, []);
 
+    const columns = [
+        {
+            field: "id",
+            headerName: "ID",
+            width: 10,
+        },
+        {
+            field: "shopName",
+            headerName: "Bolt",
+        },
+        {
+            field: "productName",
+            headerName: "Termék",
+        },
+        {
+            field: "amount",
+            headerName: "Mennyiség",
+        },
+        {
+            field: "prize",
+            headerName: "Ár",
+        },
+        {
+            field: "expiration",
+            headerName: "Lejárat",
+            width: 200,
+        },
+        {
+            field: "is_deleted",
+            headerName: "Törölt",
+        },
+    ];
+
     return (
         <Grid2>
             {loading ? (
@@ -40,40 +74,24 @@ function Storage() {
                     sx={{ animationDuration: "300ms" }}
                 />
             ) : (
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Bolt</TableCell>
-                                <TableCell>Termék</TableCell>
-                                <TableCell>Mennyiség</TableCell>
-                                <TableCell>Ár</TableCell>
-                                <TableCell>Lejárat</TableCell>
-                                <TableCell>Törölt</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {storage.map((storage) => (
-                                <TableRow
-                                    key={storage.shop_id + storage.product_id}
-                                >
-                                    <TableCell>{storage.shop.name}</TableCell>
-                                    <TableCell>
-                                        {storage.product.name}
-                                    </TableCell>
-                                    <TableCell>{storage.amount}</TableCell>
-                                    <TableCell>{storage.prize}</TableCell>
-                                    <TableCell>{storage.expiration}</TableCell>
-                                    <TableCell>
-                                        {storage.is_deleted === 1
-                                            ? "igen"
-                                            : "nem"}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <Box sx={{ height: 400 }}>
+                    <DataGrid
+                        rows={storage.map((storage) => ({
+                            id: storage.shop_id + storage.product_id,
+                            shopName: storage.shop.name,
+                            productName: storage.product.name,
+                            amount: storage.amount,
+                            prize: storage.prize,
+                            expiration: storage.expiration,
+                            is_deleted:
+                                storage.is_deleted === 1 ? "igen" : "nem",
+                        }))}
+                        columns={columns}
+                        disableSelectionOnClick
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                    />
+                </Box>
             )}
         </Grid2>
     );
