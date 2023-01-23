@@ -31,7 +31,7 @@ class RegisterRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email',
-            'password' => ['required', 'min:8', new PasswordMixedCase, new PasswordNumber],
+            'password' => ['required', 'min:8', 'max:255', new PasswordMixedCase, new PasswordNumber],
             'password-repeat' => 'required|same:password'
         ];
     }
@@ -47,6 +47,7 @@ class RegisterRequest extends FormRequest
             'email.unique' => 'A megadott email már használt!',
             'password.required' => 'Jelszó megadása kötelező!',
             'password.min' => 'Jelszó legalább 8 karakter hosszúságú!',
+            'password.max' => 'Jelszó maximum 255 karakter hosszúságú!',
             'password-repeat.required' => 'Jelszó ismétlés megadása kötelező!',
             'password-repeat.same' => 'Jelszó ismétlés nem eggyezik!'
         ];

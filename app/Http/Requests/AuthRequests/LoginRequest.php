@@ -26,8 +26,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => "required",
-            'password' => "required"
+            'email' => "required|email|max:255",
+            'password' => "required|max:255"
         ];
     }
 
@@ -35,7 +35,10 @@ class LoginRequest extends FormRequest
     {
         return [
             'email.required' => 'Email megadása kötelező!',
+            'email.email' => 'Helytelen email!',
+            'email.max' => 'Email maximum 255 karakter hosszúságú!',
             'password.required' => 'Jelszó megadása kötelező!',
+            'password.max' => 'Jelszó maximum 255 karakter hosszúságú!',
         ];
     }
 
