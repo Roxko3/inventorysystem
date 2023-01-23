@@ -1,4 +1,4 @@
-import { Edit } from "@mui/icons-material";
+import { Edit, Search } from "@mui/icons-material";
 import {
     Avatar,
     Badge,
@@ -16,8 +16,8 @@ import { useEffect, useRef, useState } from "react";
 import Map from "./Map";
 
 function ShopData() {
-    const address = useRef("");
-    const postalCode = useRef("");
+    const [address, setAddress] = useState("Pogányi út 7");
+    const [postalCode, setPostalCode] = useState("9730");
     const [shopTypes, setShopTypes] = useState([]);
     const [type, setType] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
@@ -56,8 +56,13 @@ function ShopData() {
             alignItems="center"
             justifyContent="center"
         >
-            <Grid2 container direction="row" alignItems="center">
-                <Grid2>
+            <Grid2
+                container
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+            >
+                <Grid2 container direction="column" alignItems="center">
                     <Badge
                         badgeContent={
                             <IconButton
@@ -110,8 +115,7 @@ function ShopData() {
                             Fotó eltávolítása
                         </MenuItem>
                     </Menu>
-                </Grid2>
-                <Grid2 container direction="column" alignItems="center">
+
                     <Grid2>
                         <TextField
                             label="Név"
@@ -146,27 +150,41 @@ function ShopData() {
                     </Grid2>
                 </Grid2>
                 <Grid2 container direction="column" alignItems="center">
-                    <Grid2>
-                        <TextField
-                            label="Cím"
-                            size="small"
-                            inputRef={address}
-                        />
-                    </Grid2>
-                    <Grid2>
-                        <TextField
-                            label="Irányítószám"
-                            size="small"
-                            inputRef={postalCode}
-                        />
+                    <Grid2 container direction="row">
+                        <Grid2>
+                            <TextField
+                                id="txfAddress"
+                                label="Cím"
+                                size="small"
+                                defaultValue={address}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <TextField
+                                id="txfPostalCode"
+                                label="Irányítószám"
+                                size="small"
+                                defaultValue={postalCode}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <IconButton
+                                color="primary"
+                                onClick={() => {
+                                    setPostalCode(txfPostalCode.value);
+                                    setAddress(txfAddress.value);
+                                }}
+                            >
+                                <Search />
+                            </IconButton>
+                        </Grid2>
                     </Grid2>
                     <Grid2>
                         <Map
-                            location={
-                                address.current.value +
-                                "+" +
-                                postalCode.current.value
-                            }
+                            key={postalCode}
+                            location={`${address}+${postalCode}`}
+                            width={500}
+                            height={300}
                         />
                     </Grid2>
                 </Grid2>

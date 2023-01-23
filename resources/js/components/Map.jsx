@@ -1,6 +1,17 @@
-import { Button, CircularProgress } from "@mui/material";
+import { Error } from "@mui/icons-material";
+import { Button, CircularProgress, Typography } from "@mui/material";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
+import {
+    MapContainer,
+    TileLayer,
+    useMap,
+    Marker,
+    Popup,
+    FeatureGroup,
+    Rectangle,
+    Tooltip,
+} from "react-leaflet";
 
 function Map(props) {
     const [coords, setCoords] = useState([]);
@@ -27,6 +38,20 @@ function Map(props) {
 
     if (loading) return <CircularProgress />;
 
+    if (coords == null)
+        return (
+            <Grid2 container direction="row">
+                <Error color="error" />
+                <Typography sx={{ color: "red" }}>Hiba!</Typography>
+            </Grid2>
+        );
+
+    const rectangle = [
+        [coords.boundingbox[0], coords.boundingbox[2]],
+        [coords.boundingbox[1], coords.boundingbox[3]],
+    ];
+    const purpleOptions = { color: "purple" };
+
     return (
         <>
             <MapContainer
@@ -34,8 +59,8 @@ function Map(props) {
                 zoom={15}
                 scrollWheelZoom={false}
                 style={{
-                    height: 300,
-                    width: 300,
+                    height: props.height,
+                    width: props.width,
                     border: "1px black solid",
                     borderRadius: 15,
                 }}
@@ -46,6 +71,7 @@ function Map(props) {
                 />
                 <Marker position={[coords.lat, coords.lon]}>
                     <Popup>Itt vagy</Popup>
+                    <Tooltip>Tooltip for Marker</Tooltip>
                 </Marker>
             </MapContainer>
         </>

@@ -1,4 +1,9 @@
-import { Inventory, Notifications } from "@mui/icons-material";
+import {
+    DarkMode,
+    Inventory,
+    LightMode,
+    Notifications,
+} from "@mui/icons-material";
 import {
     AppBar,
     Avatar,
@@ -99,9 +104,19 @@ function Navbar(props) {
                             gap: "20px",
                         }}
                     >
-                        <Badge badgeContent={2} color="error">
-                            <Notifications />
-                        </Badge>
+                        <IconButton
+                            onClick={() =>
+                                props.setMode(
+                                    props.mode === "light" ? "dark" : "light"
+                                )
+                            }
+                        >
+                            {props.mode === "light" ? (
+                                <LightMode />
+                            ) : (
+                                <DarkMode />
+                            )}
+                        </IconButton>
                         <Box
                             onClick={handleClick}
                             sx={{

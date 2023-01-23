@@ -3,6 +3,7 @@ import {
     Edit,
     EditOff,
     PhotoCamera,
+    Search,
     Visibility,
     VisibilityOff,
 } from "@mui/icons-material";
@@ -16,6 +17,7 @@ import {
     InputAdornment,
     Menu,
     MenuItem,
+    Paper,
     TextField,
     Typography,
 } from "@mui/material";
@@ -275,14 +277,30 @@ function Profile() {
                 </Grid2>
                 <Grid2>
                     <TextField
+                        id="txfPostalCode"
                         label="Irányítószám"
                         size="small"
                         defaultValue={postalCode}
-                        onChange={() => setPostalCode()}
+                        InputProps={{
+                            endAdornment: (
+                                <IconButton
+                                    onClick={() =>
+                                        setPostalCode(txfPostalCode.value)
+                                    }
+                                >
+                                    <Search />
+                                </IconButton>
+                            ),
+                        }}
                     />
                 </Grid2>
                 <Grid2>
-                    <Map location={postalCode} />
+                    <Map
+                        key={postalCode}
+                        location={postalCode}
+                        width={300}
+                        height={300}
+                    />
                 </Grid2>
                 <Grid2>
                     <Button variant="contained" disabled={false}>

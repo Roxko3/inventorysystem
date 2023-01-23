@@ -10,6 +10,9 @@
         </style>-->
 
         <style>
+            html, body, #app, #app>div {
+                height: 100%;
+            }
             body {
                 font-family: 'Roboto', sans-serif;
                 margin: 0; /*navbar touches the sides of the screen*/
