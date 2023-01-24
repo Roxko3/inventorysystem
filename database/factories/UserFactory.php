@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Shop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -15,11 +16,13 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'email' => $this->faker->unique()->email(),
+            'name' => $this->faker->unique()->name(),
+            'password' => bcrypt($this->faker->word()),
+            'permission' => $this->faker->numberBetween(0,10),
+            'postal_code' =>$this->faker->randomNumber(4 ,true),
+            'shop_id' => Shop::all()->random()->id,
+            'email_verified_at' => $this->faker->optional($weight = 70)->dateTimeBetween('-1 years', '+8 years'),
         ];
     }
 
