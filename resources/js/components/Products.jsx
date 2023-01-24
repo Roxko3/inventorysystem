@@ -74,6 +74,9 @@ function Products() {
                             type: products.type,
                         }))}
                         columns={columns}
+                        columnVisibilityModel={{
+                            id: false,
+                        }}
                     />
                 </Box>
             )}

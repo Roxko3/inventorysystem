@@ -2,6 +2,7 @@ import { Edit, Search } from "@mui/icons-material";
 import {
     Avatar,
     Badge,
+    Button,
     FormControl,
     IconButton,
     InputLabel,
@@ -16,9 +17,11 @@ import { useEffect, useRef, useState } from "react";
 import Map from "./Map";
 
 function ShopData() {
+    const [isAdmin, setIsAdmin] = useState(false);
     const [address, setAddress] = useState("Pogányi út 7");
     const [postalCode, setPostalCode] = useState("9730");
     const [shopTypes, setShopTypes] = useState([]);
+    const [isDisabled, setIsDisabled] = useState(true);
     const [type, setType] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -63,6 +66,9 @@ function ShopData() {
                 justifyContent="center"
             >
                 <Grid2 container direction="column" alignItems="center">
+                    <Grid2>
+                        <Rating name="read-only" value={3} readOnly />
+                    </Grid2>
                     <Badge
                         badgeContent={
                             <IconButton
@@ -74,6 +80,7 @@ function ShopData() {
                                 }}
                                 size="small"
                                 onClick={handleClick}
+                                disabled={isDisabled}
                             >
                                 <Edit />
                             </IconButton>
@@ -121,6 +128,7 @@ function ShopData() {
                             label="Név"
                             defaultValue="Tesco"
                             size="small"
+                            disabled={isDisabled}
                         />
                     </Grid2>
                     <Grid2>
@@ -130,6 +138,7 @@ function ShopData() {
                                 onChange={handleChange}
                                 value={1}
                                 label="Bolt típus"
+                                disabled={isDisabled}
                             >
                                 {shopTypes.map((shopTypes) => (
                                     <MenuItem
@@ -143,10 +152,12 @@ function ShopData() {
                         </FormControl>
                     </Grid2>
                     <Grid2>
-                        <TextField label="Tulajdonos" size="small" />
-                    </Grid2>
-                    <Grid2>
-                        <Rating name="read-only" value={3} readOnly />
+                        <TextField
+                            label="Tulajdonos"
+                            size="small"
+                            defaultValue="Tesco"
+                            disabled={isDisabled}
+                        />
                     </Grid2>
                 </Grid2>
                 <Grid2 container direction="column" alignItems="center">
@@ -157,6 +168,7 @@ function ShopData() {
                                 label="Cím"
                                 size="small"
                                 defaultValue={address}
+                                disabled={isDisabled}
                             />
                         </Grid2>
                         <Grid2>
@@ -165,6 +177,7 @@ function ShopData() {
                                 label="Irányítószám"
                                 size="small"
                                 defaultValue={postalCode}
+                                disabled={isDisabled}
                             />
                         </Grid2>
                         <Grid2>
@@ -174,6 +187,7 @@ function ShopData() {
                                     setPostalCode(txfPostalCode.value);
                                     setAddress(txfAddress.value);
                                 }}
+                                disabled={isDisabled}
                             >
                                 <Search />
                             </IconButton>
@@ -187,6 +201,23 @@ function ShopData() {
                             height={300}
                         />
                     </Grid2>
+                </Grid2>
+            </Grid2>
+            <Grid2
+                container
+                direction="row"
+                sx={{ display: isAdmin ? "flex" : "none" }}
+            >
+                <Grid2>
+                    <Button
+                        variant="contained"
+                        onClick={() => setIsDisabled(!isDisabled)}
+                    >
+                        Szerkesztés
+                    </Button>
+                </Grid2>
+                <Grid2>
+                    <Button variant="contained">Változtatások mentése</Button>
                 </Grid2>
             </Grid2>
         </Grid2>
