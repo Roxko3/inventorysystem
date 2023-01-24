@@ -47,7 +47,7 @@ class ShopController extends Controller
             '-' .
             $request->file('image')->getClientOriginalName();
         $request->file("image")
-            ->move(public_path('images'), $newImageName);
+            ->move(storage_path('images'), $newImageName);
         $shop->image_path = $newImageName;
         $shop->save();
 

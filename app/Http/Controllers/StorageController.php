@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 
 class StorageController extends Controller
 {
-    public function indexstorage()
+    public function index()
     {
         $storage = Storage::with("product", "shop")->get();
         return response()->json($storage);
     }
-    public function createstorage(StorageRequest $request)
+    public function create(StorageRequest $request)
     {
         $storage = new Storage();
         $storage->shop_id = $request->get("shop_id");
@@ -24,7 +24,7 @@ class StorageController extends Controller
         $storage->save();
         return response()->json($storage->shop_id);
     }
-    public function updatestorage(Storage $storage, StorageRequest $request)
+    public function update(Storage $storage, StorageRequest $request)
     {
 
         $storage->shop_id = $request->get("shop_id");
@@ -35,7 +35,7 @@ class StorageController extends Controller
         $storage->save();
         return response()->json($storage->toArray());
     }
-    public function deletestorage(Storage $storage)
+    public function delete(Storage $storage)
     {
         $storage->delete();
         return response()->json("OK");
