@@ -21,24 +21,27 @@ class StorageSeeder extends Seeder
     {
         $data = [
             [
+                'id' => 1,
                 'shop_id' => 1,
                 'product_id' => 1,
                 'amount' => 20,
-                "prize" => 200,
+                "price" => 200,
                 'expiration' => Carbon::parse("2022-12-30"),
                 "is_deleted" => true
             ],
             [
+                'id' => 2,
                 'shop_id' => 1,
                 'product_id' => 2,
                 'amount' => 10,
-                "prize" => 600
+                "price" => 600
             ],
             [
+                'id' => 3,
                 'shop_id' => 1,
                 'product_id' => 3,
                 'amount' => 50,
-                "prize" => 50,
+                "price" => 50,
                 'expiration' => Carbon::parse("2022-12-6"),
             ],
         ];
@@ -46,8 +49,7 @@ class StorageSeeder extends Seeder
 
         foreach ($data as $item) {
             $storage = Storage::firstOrNew([
-                'shop_id' => $item['shop_id'],
-                'product_id' => $item['product_id']
+                'id' => $item['id']
             ]);
 
             foreach ($item as $key => $value) {

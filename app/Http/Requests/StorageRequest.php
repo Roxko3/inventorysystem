@@ -29,7 +29,7 @@ class StorageRequest extends FormRequest
             'shop_id' => "required",
             'product_id' => "required",
             'amount' => "required|numeric",
-            'prize' => "required|numeric",
+            'price' => "required|numeric",
             'expiration' => "date",
             "is_deleted" => "boolean"
         ];

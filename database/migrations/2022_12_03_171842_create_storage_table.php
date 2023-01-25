@@ -13,11 +13,14 @@ class CreateStorageTable extends Migration
      */
     public function up()
     {
-        Schema::create('storage', function (Blueprint $table) {
-            $table->foreignId('shop_id')->constrained("shops")->key();
-            $table->foreignId('product_id')->constrained("products")->key();
+        Schema::create('storages', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('shop_id')->constrained("shops");
+            $table->foreignId('product_id')->constrained("products");
             $table->Integer("amount");
-            $table->Integer("prize");
+            $table->Integer("price");
+            $table->datetime("created_at");
+            $table->datetime("updated_at");
             $table->datetime("expiration")->nullable();
             $table->boolean("is_deleted")->default(false);
         });
