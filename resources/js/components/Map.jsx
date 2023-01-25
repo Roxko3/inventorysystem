@@ -53,7 +53,7 @@ function Map(props) {
     const purpleOptions = { color: "purple" };
 
     return (
-        <>
+        <Grid2 container>
             <MapContainer
                 center={[coords.lat, coords.lon]}
                 zoom={15}
@@ -74,7 +74,7 @@ function Map(props) {
                     <Tooltip>Tooltip for Marker</Tooltip>
                 </Marker>
             </MapContainer>
-        </>
+        </Grid2>
     );
 }
 

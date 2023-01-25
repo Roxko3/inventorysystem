@@ -41,6 +41,7 @@ function Products() {
         {
             field: "name",
             headerName: "Név",
+            width: 150,
         },
         {
             field: "packaging",
@@ -64,7 +65,7 @@ function Products() {
                     sx={{ animationDuration: "300ms" }}
                 />
             ) : (
-                <Box sx={{ height: 400 }}>
+                <Box sx={{ height: 735 }}>
                     <DataGrid
                         rows={products.map((products) => ({
                             id: products.id,
@@ -77,6 +78,9 @@ function Products() {
                         columnVisibilityModel={{
                             id: false,
                         }}
+                        autoHeight={true}
+                        autoPageSize={true}
+                        pageSize={12}
                     />
                 </Box>
             )}

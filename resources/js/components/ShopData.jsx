@@ -66,9 +66,9 @@ function ShopData() {
                 justifyContent="center"
             >
                 <Grid2 container direction="column" alignItems="center">
-                    <Grid2>
+                    {/*<Grid2>
                         <Rating name="read-only" value={3} readOnly />
-                    </Grid2>
+    </Grid2>*/}
                     <Badge
                         badgeContent={
                             <IconButton

@@ -69,7 +69,7 @@ function Log() {
                     sx={{ animationDuration: "300ms" }}
                 />
             ) : (
-                <Box sx={{ height: 400 }}>
+                <Box sx={{ height: 735 }}>
                     <DataGrid
                         rows={logs.map((logs) => ({
                             id: logs.id,
@@ -79,6 +79,9 @@ function Log() {
                             date: logs.date,
                         }))}
                         columns={columns}
+                        autoHeight={true}
+                        autoPageSize={true}
+                        pageSize={12}
                     />
                 </Box>
             )}

@@ -65,7 +65,12 @@ function Profile() {
                 <Grid2>
                     <Typography variant="h4">Profil beállítások</Typography>
                 </Grid2>
-                <Grid2 container direction="row" alignItems="center">
+                <Grid2
+                    container
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="center"
+                >
                     <Grid2>
                         <Badge
                             badgeContent={
@@ -135,145 +140,162 @@ function Profile() {
                                 onChange={handleChange}
                             />
                         </Grid2>
+                        <Grid2>
+                            <Button variant="contained" disabled={btnDisable}>
+                                Változtatások mentése
+                            </Button>
+                        </Grid2>
                     </Grid2>
-                </Grid2>
-                <Grid2>
-                    <Button variant="contained" disabled={btnDisable}>
-                        Változtatások mentése
-                    </Button>
-                </Grid2>
-                <Grid2>
-                    <Typography variant="h5">Jelszó</Typography>
-                </Grid2>
-                <Grid2 container direction="column">
-                    <Grid2>
-                        <TextField
-                            label="Régi jelszó"
-                            type={
-                                showPassword.includes("old")
-                                    ? "text"
-                                    : "password"
-                            }
-                            variant="outlined"
-                            size="small"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={
-                                                !showPassword.includes("old")
-                                                    ? () =>
-                                                          setShowPassword(
-                                                              showPassword +
-                                                                  "old"
-                                                          )
-                                                    : () =>
-                                                          setShowPassword(
-                                                              showPassword.replace(
-                                                                  "old",
-                                                                  ""
+                    <Grid2
+                        container
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
+                        {/*<Grid2>
+                            <Typography variant="h5">Jelszó</Typography>
+                        </Grid2>*/}
+                        <Grid2>
+                            <TextField
+                                label="Régi jelszó"
+                                type={
+                                    showPassword.includes("old")
+                                        ? "text"
+                                        : "password"
+                                }
+                                variant="outlined"
+                                size="small"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={
+                                                    !showPassword.includes(
+                                                        "old"
+                                                    )
+                                                        ? () =>
+                                                              setShowPassword(
+                                                                  showPassword +
+                                                                      "old"
                                                               )
-                                                          )
-                                            }
-                                        >
-                                            {showPassword.includes("old") ? (
-                                                <Visibility />
-                                            ) : (
-                                                <VisibilityOff />
-                                            )}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </Grid2>
-                    <Grid2>
-                        <TextField
-                            label="Új jelszó"
-                            type={
-                                showPassword.includes("new")
-                                    ? "text"
-                                    : "password"
-                            }
-                            variant="outlined"
-                            size="small"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={
-                                                !showPassword.includes("new")
-                                                    ? () =>
-                                                          setShowPassword(
-                                                              showPassword +
-                                                                  "new"
-                                                          )
-                                                    : () =>
-                                                          setShowPassword(
-                                                              showPassword.replace(
-                                                                  "new",
-                                                                  ""
+                                                        : () =>
+                                                              setShowPassword(
+                                                                  showPassword.replace(
+                                                                      "old",
+                                                                      ""
+                                                                  )
                                                               )
-                                                          )
-                                            }
-                                        >
-                                            {showPassword.includes("new") ? (
-                                                <Visibility />
-                                            ) : (
-                                                <VisibilityOff />
-                                            )}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </Grid2>
-                    <Grid2>
-                        <TextField
-                            label="Új jelszó újra"
-                            type={
-                                showPassword.includes("again")
-                                    ? "text"
-                                    : "password"
-                            }
-                            variant="outlined"
-                            size="small"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={
-                                                !showPassword.includes("again")
-                                                    ? () =>
-                                                          setShowPassword(
-                                                              showPassword +
-                                                                  "again"
-                                                          )
-                                                    : () =>
-                                                          setShowPassword(
-                                                              showPassword.replace(
-                                                                  "again",
-                                                                  ""
+                                                }
+                                            >
+                                                {showPassword.includes(
+                                                    "old"
+                                                ) ? (
+                                                    <Visibility />
+                                                ) : (
+                                                    <VisibilityOff />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <TextField
+                                label="Új jelszó"
+                                type={
+                                    showPassword.includes("new")
+                                        ? "text"
+                                        : "password"
+                                }
+                                variant="outlined"
+                                size="small"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={
+                                                    !showPassword.includes(
+                                                        "new"
+                                                    )
+                                                        ? () =>
+                                                              setShowPassword(
+                                                                  showPassword +
+                                                                      "new"
                                                               )
-                                                          )
-                                            }
-                                        >
-                                            {showPassword.includes("again") ? (
-                                                <Visibility />
-                                            ) : (
-                                                <VisibilityOff />
-                                            )}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
+                                                        : () =>
+                                                              setShowPassword(
+                                                                  showPassword.replace(
+                                                                      "new",
+                                                                      ""
+                                                                  )
+                                                              )
+                                                }
+                                            >
+                                                {showPassword.includes(
+                                                    "new"
+                                                ) ? (
+                                                    <Visibility />
+                                                ) : (
+                                                    <VisibilityOff />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <TextField
+                                label="Új jelszó újra"
+                                type={
+                                    showPassword.includes("again")
+                                        ? "text"
+                                        : "password"
+                                }
+                                variant="outlined"
+                                size="small"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={
+                                                    !showPassword.includes(
+                                                        "again"
+                                                    )
+                                                        ? () =>
+                                                              setShowPassword(
+                                                                  showPassword +
+                                                                      "again"
+                                                              )
+                                                        : () =>
+                                                              setShowPassword(
+                                                                  showPassword.replace(
+                                                                      "again",
+                                                                      ""
+                                                                  )
+                                                              )
+                                                }
+                                            >
+                                                {showPassword.includes(
+                                                    "again"
+                                                ) ? (
+                                                    <Visibility />
+                                                ) : (
+                                                    <VisibilityOff />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <Button variant="contained" disabled={true}>
+                                Jelszó megváltoztatása
+                            </Button>
+                        </Grid2>
                     </Grid2>
-                </Grid2>
-                <Grid2>
-                    <Button variant="contained" disabled={true}>
-                        Jelszó megváltoztatása
-                    </Button>
                 </Grid2>
                 <Grid2>
                     <TextField

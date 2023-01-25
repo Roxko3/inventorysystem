@@ -77,7 +77,7 @@ function Users() {
                     sx={{ animationDuration: "300ms" }}
                 />
             ) : (
-                <Box>
+                <Box sx={{ height: 735 }}>
                     <DataGrid
                         rows={users.map((users) => ({
                             id: users.id,
@@ -91,13 +91,12 @@ function Users() {
                         }))}
                         columns={columns}
                         disableSelectionOnClick
-                        pageSize={5}
                         columnVisibilityModel={{
                             id: false,
                         }}
                         autoHeight={true}
                         autoPageSize={true}
-                        density="compact"
+                        pageSize={12}
                     />
                 </Box>
             )}

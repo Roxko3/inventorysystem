@@ -1,6 +1,8 @@
 import {
     Box,
+    Button,
     CircularProgress,
+    IconButton,
     Paper,
     Table,
     TableBody,
@@ -13,6 +15,8 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { Add, Delete, Edit } from "@mui/icons-material";
+import Searchbar from "./Searchbar";
 
 function Storage() {
     const [storage, setStorage] = useState([]);
@@ -37,7 +41,7 @@ function Storage() {
         {
             field: "id",
             headerName: "ID",
-            width: 10,
+            width: 70,
         },
         {
             field: "shopName",
@@ -74,24 +78,44 @@ function Storage() {
                     sx={{ animationDuration: "300ms" }}
                 />
             ) : (
-                <Box sx={{ height: 400 }}>
-                    <DataGrid
-                        rows={storage.map((storage) => ({
-                            id: storage.shop_id + storage.product_id,
-                            shopName: storage.shop.name,
-                            productName: storage.product.name,
-                            amount: storage.amount,
-                            prize: storage.prize,
-                            expiration: storage.expiration,
-                            is_deleted:
-                                storage.is_deleted === 1 ? "igen" : "nem",
-                        }))}
-                        columns={columns}
-                        disableSelectionOnClick
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
-                    />
-                </Box>
+                <Grid2>
+                    <Grid2
+                        container
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="left"
+                    >
+                        <IconButton>
+                            <Add />
+                        </IconButton>
+                        <IconButton>
+                            <Edit />
+                        </IconButton>
+                        <IconButton>
+                            <Delete />
+                        </IconButton>
+                        <Searchbar />
+                    </Grid2>
+                    <Box sx={{ height: 710 }}>
+                        <DataGrid
+                            rows={storage.map((storage) => ({
+                                id: `${storage.shop_id}-${storage.product_id}`,
+                                shopName: storage.shop.name,
+                                productName: storage.product.name,
+                                amount: storage.amount,
+                                prize: storage.prize,
+                                expiration: storage.expiration,
+                                is_deleted:
+                                    storage.is_deleted === 1 ? "igen" : "nem",
+                            }))}
+                            columns={columns}
+                            disableSelectionOnClick
+                            autoHeight={true}
+                            autoPageSize={true}
+                            pageSize={12}
+                        />
+                    </Box>
+                </Grid2>
             )}
         </Grid2>
     );
