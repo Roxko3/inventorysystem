@@ -35,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("/myShop/{shop}/uploadImage", [ShopController::class, "uploadImage"])->name("uploadImage");
 
     Route::group(['prefix' => '/shops'], function () {
+        Route::get('/getStorage/{shop}', [ShopController::class, 'getStorage'])->name("getStorage");
         Route::post("/create", [ShopController::class, "create"])->name("createShop");
         Route::put("/{shop}", [ShopController::class, "update"])->name("updateShop");
         Route::delete("/{shop}", [ShopController::class, "delete"])->name("deleteShop");
@@ -71,9 +72,9 @@ Route::group(['prefix' => '/products'], function () {
     Route::put("/{product}", [ProductController::class, "update"])->name("updateproduct");
     Route::delete("/{product}", [ProductController::class, "delete"])->name("deleteproduct");
 });
-Route::group(['prefix' => '/storage'], function () {
+Route::group(['prefix' => '/storages'], function () {
     Route::get("/", [StorageController::class, "index"])->name("getstorages");
-    Route::post("/create", [StorageController::class, "create"])->name("createstorage");
+    Route::post("/add", [StorageController::class, "add"])->name("addItem");
     Route::put("/{storage}", [StorageController::class, "update"])->name("updatestorage");
     Route::delete("/{storage}", [StorageController::class, "delete"])->name("deletestorage");
 });

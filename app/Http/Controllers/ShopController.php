@@ -6,6 +6,7 @@ use App\Http\Requests\ImageRequest;
 use App\Http\Requests\ShopRequest;
 use Illuminate\Http\Request;
 use App\Models\Shop;
+use App\Models\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,7 +15,7 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $shops = Shop::with("shopType", "ratings")->get();
+        $shops = Shop::with("shopType", "ratings")->paginate(10);
         return response()->json($shops);
     }
 
@@ -22,6 +23,12 @@ class ShopController extends Controller
     {
         $shop = Shop::with("shopType", "ratings")->where("id", $shop->id)->get();
         return response()->json($shop);
+    }
+
+    public function getStorage(Shop $shop)
+    {
+        $storage = Storage::with("product")->where("shop_id", $shop->id)->paginate(20);
+        return response()->json($storage);
     }
 
     public function create(ShopRequest $request)

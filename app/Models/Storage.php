@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Storage extends Model
 {
-    public $table = 'storage';
     use HasFactory;
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function product()
     {
