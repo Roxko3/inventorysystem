@@ -12,6 +12,8 @@
         <style>
             html, body, #app, #app>div {
                 height: 100%;
+                margin: 0;
+                padding: 0;
             }
             body {
                 font-family: 'Roboto', sans-serif;

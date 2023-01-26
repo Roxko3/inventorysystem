@@ -66,32 +66,38 @@ function Shops() {
                         {shops.map((shops) => (
                             <Card
                                 variant="outlined"
-                                sx={{ m: 2 }}
+                                sx={{ m: 2, width: 400, height: 400 }}
                                 key={shops.id}
                             >
                                 <Link to={`/shops/${shops.id}`}>
                                     <CardActionArea>
-                                        <CardMedia
-                                            component="img"
-                                            image="./images/template.png"
-                                            sx={{ width: 150 }}
-                                        />
+                                        <Grid2
+                                            container
+                                            alignItems="center"
+                                            justifyContent="center"
+                                        >
+                                            <CardMedia
+                                                component="img"
+                                                image="./images/shop.png"
+                                                sx={{
+                                                    width: 300,
+                                                }}
+                                            />
+                                        </Grid2>
                                         <CardContent>
-                                            <Typography
-                                                variant="h6"
-                                                sx={{ m: 1 }}
-                                            >
-                                                {shops.name}
+                                            <Typography variant="h6">
+                                                {
+                                                    shops.name /*shops.name.length <= 19
+                                                    ? shops.name
+                                                    : shops.name.substr(0, 19) +
+                                            "..."*/
+                                                }
                                             </Typography>
                                             <Typography variant="legend">
-                                                {shops.postal_code},{" "}
-                                                {shops.address}
+                                                {shops.postal_code}
                                             </Typography>
-                                            <Rating
-                                                value={2}
-                                                readOnly
-                                                sx={{ mt: 1 }}
-                                            />
+                                            <br />
+                                            <Rating value={2} readOnly />
                                         </CardContent>
                                     </CardActionArea>
                                 </Link>

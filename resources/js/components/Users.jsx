@@ -14,6 +14,8 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import SearchButtons from "./SearchButtons";
+import BasicModal from "./BasicModal";
 
 function Users() {
     const [users, setUsers] = useState([]);
@@ -55,13 +57,8 @@ function Users() {
             headerName: "Rang",
         },
         {
-            field: "potal_code",
+            field: "postal_code",
             headerName: "Irányítószám",
-        },
-        {
-            field: "shop_id",
-            headerName: "Bolt",
-            width: 150,
         },
         {
             field: "verified",
@@ -77,28 +74,29 @@ function Users() {
                     sx={{ animationDuration: "300ms" }}
                 />
             ) : (
-                <Box sx={{ height: 735 }}>
-                    <DataGrid
-                        rows={users.map((users) => ({
-                            id: users.id,
-                            email: users.email,
-                            name: users.name,
-                            permission: users.permission,
-                            potal_code: users.potal_code,
-                            shop_id:
-                                users.shop_id !== null ? users.shop.name : "",
-                            verified: users.verified === 1 ? "Igen" : "Nem",
-                        }))}
-                        columns={columns}
-                        disableSelectionOnClick
-                        columnVisibilityModel={{
-                            id: false,
-                        }}
-                        autoHeight={true}
-                        autoPageSize={true}
-                        pageSize={12}
-                    />
-                </Box>
+                <Grid2>
+                    <BasicModal />
+                    <Box sx={{ height: 735 }}>
+                        <DataGrid
+                            rows={users.map((users) => ({
+                                id: users.id,
+                                email: users.email,
+                                name: users.name,
+                                permission: users.permission,
+                                postal_code: users.postal_code,
+                                verified: users.verified === 1 ? "Igen" : "Nem",
+                            }))}
+                            columns={columns}
+                            disableSelectionOnClick
+                            columnVisibilityModel={{
+                                id: false,
+                            }}
+                            autoHeight={true}
+                            autoPageSize={true}
+                            pageSize={12}
+                        />
+                    </Box>
+                </Grid2>
             )}
         </Grid2>
     );

@@ -13,6 +13,7 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import Searchbar from "./Searchbar";
 
 function Log() {
     const [logs, setLogs] = useState([]);
@@ -40,11 +41,6 @@ function Log() {
             width: 10,
         },
         {
-            field: "shopName",
-            headerName: "Bolt",
-            width: 150,
-        },
-        {
             field: "userName",
             headerName: "Dolgozó",
             width: 200,
@@ -69,21 +65,23 @@ function Log() {
                     sx={{ animationDuration: "300ms" }}
                 />
             ) : (
-                <Box sx={{ height: 735 }}>
-                    <DataGrid
-                        rows={logs.map((logs) => ({
-                            id: logs.id,
-                            shopName: logs.shop.name,
-                            userName: logs.user.name,
-                            description: logs.description,
-                            date: logs.date,
-                        }))}
-                        columns={columns}
-                        autoHeight={true}
-                        autoPageSize={true}
-                        pageSize={12}
-                    />
-                </Box>
+                <Grid2>
+                    <Searchbar />
+                    <Box sx={{ height: 735 }}>
+                        <DataGrid
+                            rows={logs.map((logs) => ({
+                                id: logs.id,
+                                userName: logs.user.name,
+                                description: logs.description,
+                                date: logs.date,
+                            }))}
+                            columns={columns}
+                            autoHeight={true}
+                            autoPageSize={true}
+                            pageSize={12}
+                        />
+                    </Box>
+                </Grid2>
             )}
         </Grid2>
     );

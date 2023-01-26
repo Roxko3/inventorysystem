@@ -12,17 +12,23 @@ import {
     Badge,
     Box,
     Button,
+    Card,
+    CardActionArea,
+    CardContent,
+    CardMedia,
     Divider,
     IconButton,
     InputAdornment,
     Menu,
     MenuItem,
     Paper,
+    Rating,
     TextField,
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Map from "./Map";
 import MyAvatar from "./MyAvatar";
 import Navbar from "./Navbar";
@@ -297,37 +303,98 @@ function Profile() {
                         </Grid2>
                     </Grid2>
                 </Grid2>
-                <Grid2>
-                    <TextField
-                        id="txfPostalCode"
-                        label="Irányítószám"
-                        size="small"
-                        defaultValue={postalCode}
-                        InputProps={{
-                            endAdornment: (
-                                <IconButton
-                                    onClick={() =>
-                                        setPostalCode(txfPostalCode.value)
-                                    }
-                                >
-                                    <Search />
-                                </IconButton>
-                            ),
-                        }}
-                    />
-                </Grid2>
-                <Grid2>
-                    <Map
-                        key={postalCode}
-                        location={postalCode}
-                        width={300}
-                        height={300}
-                    />
-                </Grid2>
-                <Grid2>
-                    <Button variant="contained" disabled={false}>
-                        Irányítószám megváltoztatása
-                    </Button>
+                <Grid2
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <Grid2
+                        container
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
+                        <Card
+                            variant="outlined"
+                            sx={{ m: 1, width: 300, height: 300 }}
+                            key={1}
+                        >
+                            <Link to={`/shops/teszt`}>
+                                <CardActionArea>
+                                    <Grid2
+                                        container
+                                        alignItems="center"
+                                        justifyContent="center"
+                                    >
+                                        <CardMedia
+                                            component="img"
+                                            image="./images/shop.png"
+                                            sx={{
+                                                width: 200,
+                                            }}
+                                        />
+                                    </Grid2>
+                                    <CardContent>
+                                        <Typography variant="h6">
+                                            {
+                                                "teszt név" /*shops.name.length <= 19
+                                                    ? shops.name
+                                                    : shops.name.substr(0, 19) +
+                                            "..."*/
+                                            }
+                                        </Typography>
+                                        <Typography variant="legend">
+                                            9730
+                                        </Typography>
+                                        <br />
+                                        <Rating value={2} readOnly />
+                                    </CardContent>
+                                </CardActionArea>
+                            </Link>
+                        </Card>
+                    </Grid2>
+                    <Grid2
+                        container
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Grid2>
+                            <TextField
+                                id="txfPostalCode"
+                                label="Irányítószám"
+                                size="small"
+                                defaultValue={postalCode}
+                                InputProps={{
+                                    endAdornment: (
+                                        <IconButton
+                                            onClick={() =>
+                                                setPostalCode(
+                                                    txfPostalCode.value
+                                                )
+                                            }
+                                        >
+                                            <Search />
+                                        </IconButton>
+                                    ),
+                                }}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <Map
+                                key={postalCode}
+                                location={postalCode}
+                                width={300}
+                                height={300}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <Button variant="contained" disabled={false}>
+                                Irányítószám megváltoztatása
+                            </Button>
+                        </Grid2>
+                    </Grid2>
                 </Grid2>
             </Grid2>
         </Box>

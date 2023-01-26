@@ -17,6 +17,8 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import Searchbar from "./Searchbar";
+import SearchButtons from "./SearchButtons";
+import BasicModal from "./BasicModal";
 
 function Storage() {
     const [storage, setStorage] = useState([]);
@@ -42,10 +44,6 @@ function Storage() {
             field: "id",
             headerName: "ID",
             width: 70,
-        },
-        {
-            field: "shopName",
-            headerName: "Bolt",
         },
         {
             field: "productName",
@@ -79,28 +77,11 @@ function Storage() {
                 />
             ) : (
                 <Grid2>
-                    <Grid2
-                        container
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="left"
-                    >
-                        <IconButton>
-                            <Add />
-                        </IconButton>
-                        <IconButton>
-                            <Edit />
-                        </IconButton>
-                        <IconButton>
-                            <Delete />
-                        </IconButton>
-                        <Searchbar />
-                    </Grid2>
+                    <BasicModal />
                     <Box sx={{ height: 710 }}>
                         <DataGrid
                             rows={storage.map((storage) => ({
                                 id: `${storage.shop_id}-${storage.product_id}`,
-                                shopName: storage.shop.name,
                                 productName: storage.product.name,
                                 amount: storage.amount,
                                 prize: storage.prize,

@@ -53,7 +53,7 @@ function Map(props) {
     const purpleOptions = { color: "purple" };
 
     return (
-        <Grid2 container>
+        <Grid2>
             <MapContainer
                 center={[coords.lat, coords.lon]}
                 zoom={15}

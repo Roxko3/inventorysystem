@@ -50,7 +50,7 @@ function Searchbar() {
             <SearchIconWrapper>
                 <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase placeholder="Search…" />
+            <StyledInputBase placeholder="Keresés…" />
         </Search>
     );
 }

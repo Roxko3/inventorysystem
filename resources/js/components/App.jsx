@@ -21,7 +21,11 @@ function App() {
     });
     return (
         <ThemeProvider theme={darkTheme}>
-            <Box bgcolor={"background.default"} color={"text.primary"}>
+            <Box
+                bgcolor={"background.default"}
+                color={"text.primary"}
+                sx={{ overflow: "hidden", overflowY: "auto" }}
+            >
                 <Routes>
                     <Route
                         element={
