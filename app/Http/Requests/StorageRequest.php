@@ -26,14 +26,36 @@ class StorageRequest extends FormRequest
     public function rules()
     {
         return [
-            'shop_id' => "required",
-            'product_id' => "required",
-            'amount' => "required|numeric",
-            'price' => "required|numeric",
+            'shop_id' => "required|numeric|exists:shops, id",
+            'product_id' => "required|numeric|exists:products, id",
+            'amount' => "required|numeric|min:0|max:9999",
+            'price' => "required|numeric|min:1|max:99999999",
             'expiration' => "date",
             "is_deleted" => "boolean"
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'shop_id.required' => "Bolt megadása kötelező!",
+            'shop_id.numeric' => "A bolt csak szám lehet!",
+            'shop_id.exist' => "A megadott bolt nem létezik!",
+            'product_id.required' => "Termék megadása kötelező!",
+            'product_id.numeric' => "A termék csak szám lehet!",
+            'product_id.exist' => "A megadott termék nem létezik!",
+            'amount.required' => "Mennyiség megadása kötelező!",
+            'amount.numeric' => "A mennyiség csak szám lehet!",
+            'amount.min' => "Mennyiség minimum értéke 0!",
+            'amount.max' => "Mennyiség maximum értéke 9999!",
+            'price.required' => "Ár megadása kötelező!",
+            'price.numeric' => "Az ár csak szám lehet!",
+            'price.min' => "Ár minimum értéke 0!",
+            'price.max' => "Ár maximum értéke 99999999!",
+            'expiration.date' => "A lejárati mező értéke csak dátum lehet!"
+        ];
+    }
+
 
     public function failedValidation(Validator $validator)
     {

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorageRequest;
+use App\Models\Log;
+use App\Models\Shop;
 use App\Models\Storage;
 use Illuminate\Http\Request;
 
@@ -13,6 +15,13 @@ class StorageController extends Controller
         $storage = Storage::with("shop", "product")->get();
         return response()->json($storage);
     }
+
+    public function getStorage(Shop $shop)
+    {
+        $storage = Storage::with("product")->where("shop_id", $shop->id)->paginate(20);
+        return response()->json($storage);
+    }
+
     public function add(StorageRequest $request)
     {
         $storage = new Storage();

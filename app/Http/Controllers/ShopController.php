@@ -25,12 +25,6 @@ class ShopController extends Controller
         return response()->json($shop);
     }
 
-    public function getStorage(Shop $shop)
-    {
-        $storage = Storage::with("product")->where("shop_id", $shop->id)->paginate(20);
-        return response()->json($storage);
-    }
-
     public function create(ShopRequest $request)
     {
         $shop = new Shop();
