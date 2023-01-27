@@ -19,7 +19,7 @@ class StorageFactory extends Factory
             'shop_id' => Shop::all()->random()->id,
             'product_id' => Product::all()->random()->id,
             'amount' => $this->faker->randomNumber(4, false),
-            'prize' => $this->faker->randomNumber(5, false),
+            'price' => $this->faker->randomNumber(5, false),
             'expiration' => $this->faker->optional($weight = 80)->dateTimeBetween('-1 week', '+8 years'),
             'is_deleted' => $this->faker->boolean(50),
         ];
