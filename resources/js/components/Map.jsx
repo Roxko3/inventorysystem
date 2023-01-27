@@ -1,58 +1,80 @@
-import { useEffect, useMemo, useState } from "react";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import { Button, CircularProgress } from "@mui/material";
+import { Error } from "@mui/icons-material";
+import { Button, CircularProgress, Typography } from "@mui/material";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { useEffect, useState } from "react";
+import {
+    MapContainer,
+    TileLayer,
+    useMap,
+    Marker,
+    Popup,
+    FeatureGroup,
+    Rectangle,
+    Tooltip,
+} from "react-leaflet";
 
-function Map() {
+function Map(props) {
     const [coords, setCoords] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const getCoords = async () => {
         await axios
             .get(
-                "https://maps.googleapis.com/maps/api/geocode/json?address=9730hu&key=AIzaSyAtHEbpGIWq2uv-YKbSOftzZhpxy4TCr-4"
+                `https://nominatim.openstreetmap.org/search?q=${props.location}&format=json&polygon=1&addressdetails=1`
             )
             .then((response) => {
                 if (response.status === 200) {
-                    setCoords(response.data.results);
+                    setCoords(response.data[0]);
+                    console.log(response.data);
+                    setLoading(false);
+                    console.log(props.location);
                 }
             });
-    };
-
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "AIzaSyAtHEbpGIWq2uv-YKbSOftzZhpxy4TCr-4",
-    });
-
-    const containerStyle = {
-        width: "400px",
-        height: "400px",
     };
 
     useEffect(() => {
         getCoords();
     }, []);
 
-    if (!isLoaded) return <CircularProgress />;
+    if (loading) return <CircularProgress />;
+
+    if (coords == null)
+        return (
+            <Grid2 container direction="row">
+                <Error color="error" />
+                <Typography sx={{ color: "red" }}>Hiba!</Typography>
+            </Grid2>
+        );
+
+    const rectangle = [
+        [coords.boundingbox[0], coords.boundingbox[2]],
+        [coords.boundingbox[1], coords.boundingbox[3]],
+    ];
+    const purpleOptions = { color: "purple" };
 
     return (
-        <>
-            {coords.map((coords) => (
-                <GoogleMap
-                    key={coords.place_id}
-                    zoom={13}
-                    center={{
-                        lat: coords.geometry.location.lat,
-                        lng: coords.geometry.location.lng,
-                    }}
-                    mapContainerStyle={containerStyle}
-                >
-                    <Marker
-                        position={{
-                            lat: coords.geometry.location.lat,
-                            lng: coords.geometry.location.lng,
-                        }}
-                    />
-                </GoogleMap>
-            ))}
-        </>
+        <Grid2>
+            <MapContainer
+                center={[coords.lat, coords.lon]}
+                zoom={15}
+                scrollWheelZoom={false}
+                style={{
+                    height: props.height,
+                    width: props.width,
+                    border: "1px black solid",
+                    borderRadius: 15,
+                }}
+            >
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker position={[coords.lat, coords.lon]}>
+                    <Popup>Itt vagy</Popup>
+                    <Tooltip>Tooltip for Marker</Tooltip>
+                </Marker>
+            </MapContainer>
+        </Grid2>
     );
 }
 

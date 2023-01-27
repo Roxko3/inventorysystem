@@ -3,6 +3,7 @@ import {
     Edit,
     EditOff,
     PhotoCamera,
+    Search,
     Visibility,
     VisibilityOff,
 } from "@mui/icons-material";
@@ -11,21 +12,29 @@ import {
     Badge,
     Box,
     Button,
+    Card,
+    CardActionArea,
+    CardContent,
+    CardMedia,
     Divider,
     IconButton,
     InputAdornment,
     Menu,
     MenuItem,
+    Paper,
+    Rating,
     TextField,
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Map from "./Map";
 import MyAvatar from "./MyAvatar";
 import Navbar from "./Navbar";
 
 function Profile() {
+    const [postalCode, setPostalCode] = useState("9730");
     const [showPassword, setShowPassword] = useState("");
     const [btnDisable, setBtnDisable] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -62,7 +71,12 @@ function Profile() {
                 <Grid2>
                     <Typography variant="h4">Profil beállítások</Typography>
                 </Grid2>
-                <Grid2 container direction="row" alignItems="center">
+                <Grid2
+                    container
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="center"
+                >
                     <Grid2>
                         <Badge
                             badgeContent={
@@ -132,126 +146,255 @@ function Profile() {
                                 onChange={handleChange}
                             />
                         </Grid2>
+                        <Grid2>
+                            <Button variant="contained" disabled={btnDisable}>
+                                Változtatások mentése
+                            </Button>
+                        </Grid2>
+                    </Grid2>
+                    <Grid2
+                        container
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
+                        {/*<Grid2>
+                            <Typography variant="h5">Jelszó</Typography>
+                        </Grid2>*/}
+                        <Grid2>
+                            <TextField
+                                label="Régi jelszó"
+                                type={
+                                    showPassword.includes("old")
+                                        ? "text"
+                                        : "password"
+                                }
+                                variant="outlined"
+                                size="small"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={
+                                                    !showPassword.includes(
+                                                        "old"
+                                                    )
+                                                        ? () =>
+                                                              setShowPassword(
+                                                                  showPassword +
+                                                                      "old"
+                                                              )
+                                                        : () =>
+                                                              setShowPassword(
+                                                                  showPassword.replace(
+                                                                      "old",
+                                                                      ""
+                                                                  )
+                                                              )
+                                                }
+                                            >
+                                                {showPassword.includes(
+                                                    "old"
+                                                ) ? (
+                                                    <Visibility />
+                                                ) : (
+                                                    <VisibilityOff />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <TextField
+                                label="Új jelszó"
+                                type={
+                                    showPassword.includes("new")
+                                        ? "text"
+                                        : "password"
+                                }
+                                variant="outlined"
+                                size="small"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={
+                                                    !showPassword.includes(
+                                                        "new"
+                                                    )
+                                                        ? () =>
+                                                              setShowPassword(
+                                                                  showPassword +
+                                                                      "new"
+                                                              )
+                                                        : () =>
+                                                              setShowPassword(
+                                                                  showPassword.replace(
+                                                                      "new",
+                                                                      ""
+                                                                  )
+                                                              )
+                                                }
+                                            >
+                                                {showPassword.includes(
+                                                    "new"
+                                                ) ? (
+                                                    <Visibility />
+                                                ) : (
+                                                    <VisibilityOff />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <TextField
+                                label="Új jelszó újra"
+                                type={
+                                    showPassword.includes("again")
+                                        ? "text"
+                                        : "password"
+                                }
+                                variant="outlined"
+                                size="small"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={
+                                                    !showPassword.includes(
+                                                        "again"
+                                                    )
+                                                        ? () =>
+                                                              setShowPassword(
+                                                                  showPassword +
+                                                                      "again"
+                                                              )
+                                                        : () =>
+                                                              setShowPassword(
+                                                                  showPassword.replace(
+                                                                      "again",
+                                                                      ""
+                                                                  )
+                                                              )
+                                                }
+                                            >
+                                                {showPassword.includes(
+                                                    "again"
+                                                ) ? (
+                                                    <Visibility />
+                                                ) : (
+                                                    <VisibilityOff />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <Button variant="contained" disabled={true}>
+                                Jelszó megváltoztatása
+                            </Button>
+                        </Grid2>
                     </Grid2>
                 </Grid2>
-                <Grid2>
-                    <Button variant="contained" disabled={btnDisable}>
-                        Változtatások mentése
-                    </Button>
-                </Grid2>
-                <Grid2>
-                    <Typography variant="h5">Jelszó</Typography>
-                </Grid2>
-                <Grid2 container direction="column">
-                    <Grid2>
-                        <TextField
-                            label="Régi jelszó"
-                            type={showPassword === "old" ? "text" : "password"}
+                <Grid2
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <Grid2
+                        container
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
+                        <Card
                             variant="outlined"
-                            size="small"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
+                            sx={{ m: 1, width: 300, height: 300 }}
+                            key={1}
+                        >
+                            <Link to={`/shops/teszt`}>
+                                <CardActionArea>
+                                    <Grid2
+                                        container
+                                        alignItems="center"
+                                        justifyContent="center"
+                                    >
+                                        <CardMedia
+                                            component="img"
+                                            image="./images/template.png"
+                                            sx={{
+                                                width: 200,
+                                            }}
+                                        />
+                                    </Grid2>
+                                    <CardContent>
+                                        <Typography variant="h6">
+                                            {
+                                                "teszt név" /*shops.name.length <= 19
+                                                    ? shops.name
+                                                    : shops.name.substr(0, 19) +
+                                            "..."*/
+                                            }
+                                        </Typography>
+                                        <Typography variant="legend">
+                                            9730
+                                        </Typography>
+                                        <br />
+                                        <Rating value={2} readOnly />
+                                    </CardContent>
+                                </CardActionArea>
+                            </Link>
+                        </Card>
+                    </Grid2>
+                    <Grid2
+                        container
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Grid2>
+                            <TextField
+                                id="txfPostalCode"
+                                label="Irányítószám"
+                                size="small"
+                                defaultValue={postalCode}
+                                InputProps={{
+                                    endAdornment: (
                                         <IconButton
-                                            onClick={
-                                                showPassword !== "old"
-                                                    ? () =>
-                                                          setShowPassword("old")
-                                                    : () => setShowPassword("")
+                                            onClick={() =>
+                                                setPostalCode(
+                                                    txfPostalCode.value
+                                                )
                                             }
                                         >
-                                            {showPassword === "old" ? (
-                                                <Visibility />
-                                            ) : (
-                                                <VisibilityOff />
-                                            )}
+                                            <Search />
                                         </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
+                                    ),
+                                }}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <Map
+                                key={postalCode}
+                                location={postalCode}
+                                width={300}
+                                height={300}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <Button variant="contained" disabled={false}>
+                                Irányítószám megváltoztatása
+                            </Button>
+                        </Grid2>
                     </Grid2>
-                    <Grid2>
-                        <TextField
-                            label="Új jelszó"
-                            type={showPassword === "new" ? "text" : "password"}
-                            variant="outlined"
-                            size="small"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={
-                                                showPassword !== "new"
-                                                    ? () =>
-                                                          setShowPassword("new")
-                                                    : () => setShowPassword("")
-                                            }
-                                        >
-                                            {showPassword === "new" ? (
-                                                <Visibility />
-                                            ) : (
-                                                <VisibilityOff />
-                                            )}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </Grid2>
-                    <Grid2>
-                        <TextField
-                            label="Új jelszó újra"
-                            type={
-                                showPassword === "again" ? "text" : "password"
-                            }
-                            variant="outlined"
-                            size="small"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={
-                                                showPassword !== "again"
-                                                    ? () =>
-                                                          setShowPassword(
-                                                              "again"
-                                                          )
-                                                    : () => setShowPassword("")
-                                            }
-                                        >
-                                            {showPassword === "again" ? (
-                                                <Visibility />
-                                            ) : (
-                                                <VisibilityOff />
-                                            )}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </Grid2>
-                </Grid2>
-                <Grid2>
-                    <Button variant="contained" disabled={true}>
-                        Jelszó megváltoztatása
-                    </Button>
-                </Grid2>
-                <Grid2>
-                    <TextField
-                        label="Irányítószám"
-                        defaultValue="9730"
-                        size="small"
-                        onChange={handleChange}
-                    />
-                </Grid2>
-                <Grid2>
-                    <Map />
-                </Grid2>
-                <Grid2>
-                    <Button variant="contained" disabled={true}>
-                        Irányítószám megváltoztatása
-                    </Button>
                 </Grid2>
             </Grid2>
         </Box>

@@ -12,6 +12,10 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import SearchButtons from "./SearchButtons";
+import BasicModal from "./BasicModal";
 
 function Users() {
     const [users, setUsers] = useState([]);
@@ -32,6 +36,36 @@ function Users() {
         getUsers();
     }, []);
 
+    const columns = [
+        {
+            field: "id",
+            headerName: "ID",
+            width: 10,
+        },
+        {
+            field: "email",
+            headerName: "Email",
+            width: 200,
+        },
+        {
+            field: "name",
+            headerName: "Név",
+            width: 200,
+        },
+        {
+            field: "permission",
+            headerName: "Rang",
+        },
+        {
+            field: "postal_code",
+            headerName: "Irányítószám",
+        },
+        {
+            field: "verified",
+            headerName: "Hitelesített",
+        },
+    ];
+
     return (
         <Grid2>
             {loading ? (
@@ -40,36 +74,29 @@ function Users() {
                     sx={{ animationDuration: "300ms" }}
                 />
             ) : (
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Email</TableCell>
-                                <TableCell>Név</TableCell>
-                                <TableCell>Rang</TableCell>
-                                <TableCell>Irányítószám</TableCell>
-                                <TableCell>Bolt</TableCell>
-                                <TableCell>Hitelesített</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {users.map((users) => (
-                                <TableRow key={users.id}>
-                                    <TableCell>{users.email}</TableCell>
-                                    <TableCell>{users.name}</TableCell>
-                                    <TableCell>{users.permission}</TableCell>
-                                    <TableCell>{users.potal_code}</TableCell>
-                                    <TableCell>
-                                        {users.shop_id !== null
-                                            ? users.shop.name
-                                            : ""}
-                                    </TableCell>
-                                    <TableCell>{users.verified}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <Grid2>
+                    <BasicModal />
+                    <Box sx={{ height: 735 }}>
+                        <DataGrid
+                            rows={users.map((users) => ({
+                                id: users.id,
+                                email: users.email,
+                                name: users.name,
+                                permission: users.permission,
+                                postal_code: users.postal_code,
+                                verified: users.verified === 1 ? "Igen" : "Nem",
+                            }))}
+                            columns={columns}
+                            disableSelectionOnClick
+                            columnVisibilityModel={{
+                                id: false,
+                            }}
+                            autoHeight={true}
+                            autoPageSize={true}
+                            pageSize={12}
+                        />
+                    </Box>
+                </Grid2>
             )}
         </Grid2>
     );

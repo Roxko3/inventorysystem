@@ -1,20 +1,27 @@
-import { Edit } from "@mui/icons-material";
+import { Edit, Search } from "@mui/icons-material";
 import {
     Avatar,
     Badge,
+    Button,
     FormControl,
     IconButton,
     InputLabel,
     Menu,
     MenuItem,
+    Rating,
     Select,
     TextField,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Map from "./Map";
 
 function ShopData() {
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [address, setAddress] = useState("Pogányi út 7");
+    const [postalCode, setPostalCode] = useState("9730");
     const [shopTypes, setShopTypes] = useState([]);
+    const [isDisabled, setIsDisabled] = useState(true);
     const [type, setType] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -52,8 +59,16 @@ function ShopData() {
             alignItems="center"
             justifyContent="center"
         >
-            <Grid2 container direction="row" alignItems="center">
-                <Grid2>
+            <Grid2
+                container
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+            >
+                <Grid2 container direction="column" alignItems="center">
+                    {/*<Grid2>
+                        <Rating name="read-only" value={3} readOnly />
+    </Grid2>*/}
                     <Badge
                         badgeContent={
                             <IconButton
@@ -65,6 +80,7 @@ function ShopData() {
                                 }}
                                 size="small"
                                 onClick={handleClick}
+                                disabled={isDisabled}
                             >
                                 <Edit />
                             </IconButton>
@@ -106,18 +122,23 @@ function ShopData() {
                             Fotó eltávolítása
                         </MenuItem>
                     </Menu>
-                </Grid2>
-                <Grid2 container direction="column" alignItems="center">
+
                     <Grid2>
-                        <TextField label="Név" defaultValue="Tesco" />
+                        <TextField
+                            label="Név"
+                            defaultValue="Tesco"
+                            size="small"
+                            disabled={isDisabled}
+                        />
                     </Grid2>
                     <Grid2>
-                        <FormControl sx={{ minWidth: 120 }}>
+                        <FormControl size="small">
                             <InputLabel>Bolt típus</InputLabel>
                             <Select
                                 onChange={handleChange}
-                                value={type}
+                                value={1}
                                 label="Bolt típus"
+                                disabled={isDisabled}
                             >
                                 {shopTypes.map((shopTypes) => (
                                     <MenuItem
@@ -130,6 +151,73 @@ function ShopData() {
                             </Select>
                         </FormControl>
                     </Grid2>
+                    <Grid2>
+                        <TextField
+                            label="Tulajdonos"
+                            size="small"
+                            defaultValue="Tesco"
+                            disabled={isDisabled}
+                        />
+                    </Grid2>
+                </Grid2>
+                <Grid2 container direction="column" alignItems="center">
+                    <Grid2 container direction="row">
+                        <Grid2>
+                            <TextField
+                                id="txfAddress"
+                                label="Cím"
+                                size="small"
+                                defaultValue={address}
+                                disabled={isDisabled}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <TextField
+                                id="txfPostalCode"
+                                label="Irányítószám"
+                                size="small"
+                                defaultValue={postalCode}
+                                disabled={isDisabled}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <IconButton
+                                color="primary"
+                                onClick={() => {
+                                    setPostalCode(txfPostalCode.value);
+                                    setAddress(txfAddress.value);
+                                }}
+                                disabled={isDisabled}
+                            >
+                                <Search />
+                            </IconButton>
+                        </Grid2>
+                    </Grid2>
+                    <Grid2 sx={{ width: { xs: 100, sm: 500 } }}>
+                        <Map
+                            key={postalCode}
+                            location={`${address}+${postalCode}`}
+                            width={500}
+                            height={300}
+                        />
+                    </Grid2>
+                </Grid2>
+            </Grid2>
+            <Grid2
+                container
+                direction="row"
+                sx={{ display: isAdmin ? "flex" : "none" }}
+            >
+                <Grid2>
+                    <Button
+                        variant="contained"
+                        onClick={() => setIsDisabled(!isDisabled)}
+                    >
+                        Szerkesztés
+                    </Button>
+                </Grid2>
+                <Grid2>
+                    <Button variant="contained">Változtatások mentése</Button>
                 </Grid2>
             </Grid2>
         </Grid2>

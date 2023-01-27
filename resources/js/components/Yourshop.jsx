@@ -29,9 +29,14 @@ function Yourshop() {
         <Box>
             <Box sx={{ width: "100%" }}>
                 <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                    <Tabs value={value} onChange={handleChange}>
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        variant="scrollable"
+                        scrollButtons="auto"
+                    >
                         <Tab label="Adatok"></Tab>
-                        <Tab label="Termékek"></Tab>
+                        {/*<Tab label="Termékek"></Tab>*/}
                         <Tab label="Raktár"></Tab>
                         <Tab label="Dolgozók"></Tab>
                         <Tab label="Logok"></Tab>
@@ -40,16 +45,16 @@ function Yourshop() {
                 <TabPanel value={value} index={0}>
                     <ShopData />
                 </TabPanel>
-                <TabPanel value={value} index={1}>
+                {/*<TabPanel value={value} index={1}>
                     <Products />
-                </TabPanel>
-                <TabPanel value={value} index={2}>
+    </TabPanel>*/}
+                <TabPanel value={value} index={1}>
                     <Storage />
                 </TabPanel>
-                <TabPanel value={value} index={3}>
+                <TabPanel value={value} index={2}>
                     <Users />
                 </TabPanel>
-                <TabPanel value={value} index={4}>
+                <TabPanel value={value} index={3}>
                     <Log />
                 </TabPanel>
             </Box>

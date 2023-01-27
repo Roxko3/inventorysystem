@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import Searchbar from "./Searchbar";
 
 function Log() {
     const [logs, setLogs] = useState([]);
@@ -32,6 +34,29 @@ function Log() {
         getlogs();
     }, []);
 
+    const columns = [
+        {
+            field: "id",
+            headerName: "ID",
+            width: 10,
+        },
+        {
+            field: "userName",
+            headerName: "Dolgozó",
+            width: 200,
+        },
+        {
+            field: "description",
+            headerName: "Leírás",
+            width: 500,
+        },
+        {
+            field: "date",
+            headerName: "Dátum",
+            width: 200,
+        },
+    ];
+
     return (
         <Grid2>
             {loading ? (
@@ -40,28 +65,23 @@ function Log() {
                     sx={{ animationDuration: "300ms" }}
                 />
             ) : (
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Bolt</TableCell>
-                                <TableCell>Dolgozó</TableCell>
-                                <TableCell>Leírás</TableCell>
-                                <TableCell>Dátum</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {logs.map((logs) => (
-                                <TableRow key={logs.id}>
-                                    <TableCell>{logs.shop.name}</TableCell>
-                                    <TableCell>{logs.user.name}</TableCell>
-                                    <TableCell>{logs.description}</TableCell>
-                                    <TableCell>{logs.date}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <Grid2>
+                    <Searchbar />
+                    <Box sx={{ height: 735 }}>
+                        <DataGrid
+                            rows={logs.map((logs) => ({
+                                id: logs.id,
+                                userName: logs.user.name,
+                                description: logs.description,
+                                date: logs.date,
+                            }))}
+                            columns={columns}
+                            autoHeight={true}
+                            autoPageSize={true}
+                            pageSize={12}
+                        />
+                    </Box>
+                </Grid2>
             )}
         </Grid2>
     );

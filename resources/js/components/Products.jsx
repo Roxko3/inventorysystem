@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
 
 function Products() {
     const [products, setProducts] = useState([]);
@@ -32,6 +33,30 @@ function Products() {
         getProducts();
     }, []);
 
+    const columns = [
+        {
+            field: "id",
+            headerName: "ID",
+        },
+        {
+            field: "name",
+            headerName: "Név",
+            width: 150,
+        },
+        {
+            field: "packaging",
+            headerName: "Csomagolás",
+        },
+        {
+            field: "unit_of_measure",
+            headerName: "Mérték",
+        },
+        {
+            field: "type",
+            headerName: "Típus",
+        },
+    ];
+
     return (
         <Grid2>
             {loading ? (
@@ -40,30 +65,24 @@ function Products() {
                     sx={{ animationDuration: "300ms" }}
                 />
             ) : (
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Név</TableCell>
-                                <TableCell>Csomagolás</TableCell>
-                                <TableCell>Mérték</TableCell>
-                                <TableCell>Típus</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {products.map((products) => (
-                                <TableRow key={products.id}>
-                                    <TableCell>{products.name}</TableCell>
-                                    <TableCell>{products.packaging}</TableCell>
-                                    <TableCell>
-                                        {products.unit_of_measure}
-                                    </TableCell>
-                                    <TableCell>{products.type}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <Box sx={{ height: 735 }}>
+                    <DataGrid
+                        rows={products.map((products) => ({
+                            id: products.id,
+                            name: products.name,
+                            packaging: products.packaging,
+                            unit_of_measure: products.unit_of_measure,
+                            type: products.type,
+                        }))}
+                        columns={columns}
+                        columnVisibilityModel={{
+                            id: false,
+                        }}
+                        autoHeight={true}
+                        autoPageSize={true}
+                        pageSize={12}
+                    />
+                </Box>
             )}
         </Grid2>
     );

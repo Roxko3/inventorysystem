@@ -46,15 +46,13 @@ function Login() {
                 }
             })
             .catch((response) => {
-                if (response.response.status === 422) {
-                    setErrors(response.response.data);
-                } else {
-                    email.current.value = "";
-                    password.current.value = "";
-                    setalertMessage(response.response.data.error);
+                if (response.response.status === 422 && response.response.data.message ==null) {
+                    setErrors(response.response.data);                   
+                } else{
+                    setalertMessage(response.response.data.message);
                     setseverity("error");
                     setOpen(true);
-                    setErrors([]);
+                    setErrors([])
                 }
             });
     };
