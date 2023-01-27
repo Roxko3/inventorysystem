@@ -83,28 +83,12 @@ class ShopsSeeder extends Seeder
                 'id' => 9,
                 'name' => "TESCO expressz",
                 'shop_type_id' => "3",
-                'address' => "József A. u 1",
-                'owner' => "Tesco PLC",
-                'postal_code' => 9400
-            ],
-            [
-                'id' => 10,
-                'name' => "TESCO expressz",
-                'shop_type_id' => "3",
-                'address' => "Lackner Kristóf u. 11",
-                'owner' => "Tesco PLC",
-                'postal_code' => 9400
-            ],
-            [
-                'id' => 11,
-                'name' => "TESCO expressz",
-                'shop_type_id' => "3",
                 'address' => "Végfordulat 9",
                 'owner' => " Peter Gazik",
                 'postal_code' => 9400
             ],
             [
-                'id' => 12,
+                'id' => 10,
                 'name' => "Yettel",
                 'shop_type_id' => "3",
                 'address' => " Ipar krt. 30",

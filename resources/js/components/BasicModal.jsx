@@ -12,6 +12,7 @@ const style = {
     transform: "translate(-50%, -50%)",
     width: 400,
     bgcolor: "background.paper",
+    color: "text.primary",
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
@@ -25,12 +26,7 @@ export default function BasicModal() {
     return (
         <div>
             <SearchButtons onClick={handleOpen} />
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
+            <Modal open={open} onClose={handleClose}>
                 <Box sx={style}>
                     <Typography
                         id="modal-modal-title"

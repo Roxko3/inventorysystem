@@ -329,7 +329,7 @@ function Profile() {
                                     >
                                         <CardMedia
                                             component="img"
-                                            image="./images/shop.png"
+                                            image="./images/template.png"
                                             sx={{
                                                 width: 200,
                                             }}

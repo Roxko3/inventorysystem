@@ -1,4 +1,8 @@
+import { ExpandMore, Search } from "@mui/icons-material";
 import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Button,
     Card,
     CardActionArea,
@@ -6,9 +10,12 @@ import {
     CardMedia,
     CircularProgress,
     Divider,
+    IconButton,
     List,
     ListItem,
+    Pagination,
     Rating,
+    TextField,
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -16,11 +23,13 @@ import { Box } from "@mui/system";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import Map from "./Map";
 import Navbar from "./Navbar";
 
 function Shops() {
     const [shops, setShops] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [postalCode, setPostalCode] = useState("9730");
 
     const getShops = async () => {
         await axios
@@ -48,9 +57,6 @@ function Shops() {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Grid2>
-                    <Typography variant="h3">Boltok</Typography>
-                </Grid2>
                 {loading ? (
                     <CircularProgress
                         disableShrink
@@ -63,10 +69,63 @@ function Shops() {
                         alignItems="center"
                         justifyContent="center"
                     >
+                        <Grid2
+                            container
+                            alignItems="center"
+                            justifyContent="center"
+                            sx={{ width: "90%" }}
+                        >
+                            <Accordion>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMore />}
+                                    aria-controls="panel1a-content"
+                                    id="panel1a-header"
+                                >
+                                    <Typography>Térkép</Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Grid2
+                                        container
+                                        alignItems="center"
+                                        justifyContent="center"
+                                    >
+                                        <TextField
+                                            id="txfPostalCode"
+                                            label="Irányítószám"
+                                            size="small"
+                                            defaultValue={postalCode}
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <IconButton
+                                                        onClick={() =>
+                                                            setPostalCode(
+                                                                txfPostalCode.value
+                                                            )
+                                                        }
+                                                    >
+                                                        <Search />
+                                                    </IconButton>
+                                                ),
+                                            }}
+                                        />
+                                    </Grid2>
+                                    <Map
+                                        key={postalCode}
+                                        location={postalCode}
+                                        width={300}
+                                        height={300}
+                                    />
+                                </AccordionDetails>
+                            </Accordion>
+                        </Grid2>
                         {shops.map((shops) => (
                             <Card
                                 variant="outlined"
-                                sx={{ m: 2, width: 400, height: 400 }}
+                                sx={{
+                                    m: 2,
+                                    width: { xs: 240, md: 340 },
+                                    height: { xs: 240, md: 340 },
+                                }}
                                 key={shops.id}
                             >
                                 <Link to={`/shops/${shops.id}`}>
@@ -78,9 +137,13 @@ function Shops() {
                                         >
                                             <CardMedia
                                                 component="img"
-                                                image="./images/shop.png"
+                                                image={
+                                                    shops.image_path == null
+                                                        ? "./images/template.png"
+                                                        : shops.image_path
+                                                }
                                                 sx={{
-                                                    width: 300,
+                                                    width: { xs: 140, md: 240 },
                                                 }}
                                             />
                                         </Grid2>
@@ -103,6 +166,14 @@ function Shops() {
                                 </Link>
                             </Card>
                         ))}
+                        <Grid2
+                            container
+                            alignItems="center"
+                            justifyContent="center"
+                            sx={{ width: "90%" }}
+                        >
+                            <Pagination count={10} />
+                        </Grid2>
                     </Grid2>
                 )}
             </Grid2>
