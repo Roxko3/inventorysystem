@@ -25,7 +25,7 @@ class PasswordMixedCase implements Rule
      */
     public function passes($attribute, $value)
     {
-        return (strtolower($value) === $value && strtoupper($value) === $value);
+        return (strtolower($value) != $value && strtoupper($value) != $value);
     }
 
     /**
