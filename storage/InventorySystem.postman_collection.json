@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e2587e18-017f-46eb-a613-3e9fbad95bf8",
+		"_postman_id": "76279e34-6d12-41b7-b9df-52ec4d6ae40a",
 		"name": "InventorySystem",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -172,8 +172,46 @@
 					"response": []
 				},
 				{
+					"name": "getShop/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|ytoaVmU8uHQDHJGqaoeafT1CVeTkU1n5me1pwGMp",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/getShop/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"getShop",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "createShop",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|r5lnMBx2PCwJU8gU65WFZljA9bA8hefYdwIIAzCR",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -280,6 +318,149 @@
 							"path": [
 								"shops",
 								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateMyShop/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|LTAQ4SSZfkngMPbw741QJZaB398URKpXV1YduCeZ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Update teszt",
+									"type": "default"
+								},
+								{
+									"key": "shop_type_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "address",
+									"value": "createplease",
+									"type": "default"
+								},
+								{
+									"key": "owner",
+									"value": "createowner",
+									"type": "default"
+								},
+								{
+									"key": "postal_code",
+									"value": "9730",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/myShop/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myShop",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadImage",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|b56lQxjE59nXGDNTpezfX6m9gDWk4H21yvoZYnRb",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/D:/AModok/ahegao.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/myShop/1/uploadImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myShop",
+								"1",
+								"uploadImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RateShop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|73GvlflER1f3HwQSce1ucjoIea4mCb1zlNR2ZAYO",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "shop_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "rating",
+									"value": "5",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/shops/rate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"rate"
 							]
 						}
 					},
@@ -615,6 +796,143 @@
 			]
 		},
 		{
+			"name": "Storage",
+			"item": [
+				{
+					"name": "GetStorage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/storages/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"storages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddItem",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "shop_id",
+									"value": "3",
+									"type": "default"
+								},
+								{
+									"key": "product_id",
+									"value": "3",
+									"type": "default"
+								},
+								{
+									"key": "amount",
+									"value": "50",
+									"type": "default"
+								},
+								{
+									"key": "price",
+									"value": "54325661",
+									"type": "default"
+								},
+								{
+									"key": "expiration",
+									"value": "2022-12-30 00:00:02",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/storages/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"storages",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateItem",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "shop_id",
+									"value": "3",
+									"type": "default"
+								},
+								{
+									"key": "product_id",
+									"value": "3",
+									"type": "default"
+								},
+								{
+									"key": "amount",
+									"value": "50",
+									"type": "default"
+								},
+								{
+									"key": "price",
+									"value": "5432566",
+									"type": "default"
+								},
+								{
+									"key": "expiration",
+									"value": "2022-12-30 00:00:01",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/storages/12",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"storages",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteItem",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/storages/12",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"storages",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Login",
 			"request": {
 				"method": "POST",
@@ -624,7 +942,7 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "admin@localhosta",
+							"value": "admin@localhost",
 							"type": "default"
 						},
 						{
@@ -647,35 +965,154 @@
 			"response": []
 		},
 		{
-			"name": "Register",
+			"name": "Login2",
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "vasarlo@localhost",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "default"
+						}
+					]
+				},
 				"url": {
-					"raw": "{{URL}}/register?email=teszt@localhost2&name=Teszt&password=teszt&postal_code=9730",
+					"raw": "{{URL}}/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teszt@localhost1",
+							"type": "default"
+						},
+						{
+							"key": "name",
+							"value": "Teszt",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "TESZTELEk1",
+							"type": "default"
+						},
+						{
+							"key": "password-repeat",
+							"value": "TESZTELEk1",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/register",
 					"host": [
 						"{{URL}}"
 					],
 					"path": [
 						"register"
-					],
-					"query": [
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
 						{
-							"key": "email",
-							"value": "teszt@localhost2"
-						},
-						{
-							"key": "name",
-							"value": "Teszt"
-						},
-						{
-							"key": "password",
-							"value": "teszt"
-						},
-						{
-							"key": "postal_code",
-							"value": "9730"
+							"key": "token",
+							"value": "1|b56lQxjE59nXGDNTpezfX6m9gDWk4H21yvoZYnRb",
+							"type": "string"
 						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://127.0.0.1/20230112_HaszonK/public/api/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"20230112_HaszonK",
+						"public",
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MyShop",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "4|mzdVWzrmMTrQgAWQPXxN3oegjNKH1GVkrMjSGd2O",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{URL}}/getMyShop/3",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"getMyShop",
+						"3"
 					]
 				}
 			},
@@ -705,7 +1142,7 @@
 	"variable": [
 		{
 			"key": "URL",
-			"value": "http://127.0.0.1/InventorySystem/public/api\n",
+			"value": "http://127.0.0.1/InventorySystem/public/api",
 			"type": "default"
 		}
 	]

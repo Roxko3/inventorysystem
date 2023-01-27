@@ -26,12 +26,11 @@ class StorageRequest extends FormRequest
     public function rules()
     {
         return [
-            'shop_id' => "required|numeric|exists:shops, id",
-            'product_id' => "required|numeric|exists:products, id",
-            'amount' => "required|numeric|min:0|max:9999",
+            'shop_id' => "required|numeric|exists:shops,id",
+            'product_id' => "required|numeric|exists:shops,id",
+            'amount' => "required|numeric|min:1|max:9999",
             'price' => "required|numeric|min:1|max:99999999",
-            'expiration' => "date",
-            "is_deleted" => "boolean"
+            'expiration' => "date|date_format:Y-m-d H:i:s"
         ];
     }
 
@@ -40,19 +39,20 @@ class StorageRequest extends FormRequest
         return [
             'shop_id.required' => "Bolt megadása kötelező!",
             'shop_id.numeric' => "A bolt csak szám lehet!",
-            'shop_id.exist' => "A megadott bolt nem létezik!",
+            'shop_id.exists' => "A megadott bolt nem létezik!",
             'product_id.required' => "Termék megadása kötelező!",
             'product_id.numeric' => "A termék csak szám lehet!",
-            'product_id.exist' => "A megadott termék nem létezik!",
+            'product_id.exists' => "A megadott termék nem létezik!",
             'amount.required' => "Mennyiség megadása kötelező!",
             'amount.numeric' => "A mennyiség csak szám lehet!",
             'amount.min' => "Mennyiség minimum értéke 0!",
             'amount.max' => "Mennyiség maximum értéke 9999!",
             'price.required' => "Ár megadása kötelező!",
             'price.numeric' => "Az ár csak szám lehet!",
-            'price.min' => "Ár minimum értéke 0!",
+            'price.min' => "Ár minimum értéke 1!",
             'price.max' => "Ár maximum értéke 99999999!",
-            'expiration.date' => "A lejárati mező értéke csak dátum lehet!"
+            'expiration.date' => "A lejárati dátum értéke csak dátum lehet!",
+            'expiration.date_format' => "A lejárati dátum formátuma nem megfelelő (É-h-n Ó:p:m)!"
         ];
     }
 

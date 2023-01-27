@@ -24,28 +24,32 @@ class StorageController extends Controller
 
     public function add(StorageRequest $request)
     {
-        $storage = new Storage();
-        $storage->shop_id = $request->get("shop_id");
-        $storage->product_id = $request->get("product_id");
-        $storage->amount = $request->get("amount");
+        $storage = Storage::firstOrNew([
+            'shop_id' =>  $request->get("shop_id"),
+            'product_id' => $request->get("product_id"),
+            'expiration' => $request->get("expiration")
+        ]);
+        if ($storage->price != $request->get("price")) {
+            return response()->json("A megadott termék már szerepel a boltban más árral, amennyiben ezen változtatni szeretne, használja a szerkesztés lehetőséget.");
+        }
         $storage->price = $request->get("price");
-        $storage->expiration = $request->has("expiration") ? $request->get("expiration") : null;
+        $storage->amount += $request->get("amount");
+        $storage->is_deleted = false;
+        $storage->expiration = $request->get("expiration");
         $storage->save();
         return response()->json($storage->id);
     }
     public function update(Storage $storage, StorageRequest $request)
     {
-        $storage->shop_id = $request->get("shop_id");
-        $storage->product_id = $request->get("product_id");
         $storage->amount = $request->get("amount");
         $storage->price = $request->get("price");
-        $storage->updated_at = now();
         $storage->expiration = $request->get("expiration");
         $storage->save();
         return response()->json($storage->toArray());
     }
     public function delete(Storage $storage)
     {
+        $storage->amount = 0;
         $storage->is_deleted = true;
         $storage->save();
         return response()->json("Áru törölve!");

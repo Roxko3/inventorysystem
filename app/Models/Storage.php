@@ -11,6 +11,16 @@ class Storage extends Model
 
     public $timestamps = true;
 
+    protected $fillable = [
+        'shop_id',
+        'product_id',
+        'expriration',
+    ];
+
+    protected $casts = [
+        'expriration' => 'timestamp'
+    ];
+
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
