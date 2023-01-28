@@ -16,6 +16,12 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    public function get()
+    {
+        $user = auth()->user();
+        return response()->json($user);
+    }
+
     public function create(UserRequest $request)
     {
         $user = new User();
