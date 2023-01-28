@@ -36,7 +36,7 @@ function Shops() {
             .get("http://127.0.0.1/InventorySystem/public/api/shops")
             .then((response) => {
                 if (response.status === 200) {
-                    setShops(response.data);
+                    setShops(response.data.data);
                     setLoading(false);
                 }
             });

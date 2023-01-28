@@ -27,14 +27,15 @@ import {
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, propsef, useState } from "react";
 import { Link } from "react-router-dom";
 import Map from "./Map";
 import MyAvatar from "./MyAvatar";
 import Navbar from "./Navbar";
+import Cookies from "js-cookie";
 
-function Profile() {
-    const [postalCode, setPostalCode] = useState("9730");
+function Profile(props) {
+    const [postalCode, setPostalCode] = useState(props.user.postal_code);
     const [showPassword, setShowPassword] = useState("");
     const [btnDisable, setBtnDisable] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -53,6 +54,8 @@ function Profile() {
             setBtnDisable(false);
         }
     };
+
+    const cookie = Cookies.get("token");
 
     useEffect(() => {
         document.title = "Inventory System - Profil";
@@ -104,7 +107,7 @@ function Profile() {
                             <MyAvatar
                                 width={100}
                                 height={100}
-                                name="Gyarmati Levente"
+                                name={props.user.name}
                             />
                         </Badge>
                         <Menu
@@ -133,7 +136,7 @@ function Profile() {
                         <Grid2>
                             <TextField
                                 label="Név"
-                                defaultValue="Gyarmati Levente"
+                                defaultValue={props.user.name}
                                 size="small"
                                 onChange={handleChange}
                             />
@@ -141,7 +144,7 @@ function Profile() {
                         <Grid2>
                             <TextField
                                 label="Email cím"
-                                defaultValue="gyarmatilevi@gmail.com"
+                                defaultValue={props.user.email}
                                 size="small"
                                 onChange={handleChange}
                             />
@@ -320,7 +323,7 @@ function Profile() {
                             sx={{ m: 1, width: 300, height: 300 }}
                             key={1}
                         >
-                            <Link to={`/shops/teszt`}>
+                            <Link to={`/shops/${props.user.shop_id}`}>
                                 <CardActionArea>
                                     <Grid2
                                         container

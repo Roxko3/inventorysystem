@@ -26,7 +26,7 @@ function Storage() {
 
     const getStorage = async () => {
         await axios
-            .get("http://127.0.0.1/InventorySystem/public/api/storage")
+            .get("http://127.0.0.1/InventorySystem/public/api/storages")
             .then((response) => {
                 if (response.status === 200) {
                     setStorage(response.data);

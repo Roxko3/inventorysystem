@@ -105,11 +105,19 @@ function Navbar(props) {
                         }}
                     >
                         <IconButton
-                            onClick={() =>
+                            onClick={() => {
                                 props.setMode(
                                     props.mode === "light" ? "dark" : "light"
-                                )
-                            }
+                                );
+                                localStorage.setItem(
+                                    "mode",
+                                    JSON.stringify(
+                                        props.mode === "light"
+                                            ? "dark"
+                                            : "light"
+                                    )
+                                );
+                            }}
                         >
                             {props.mode === "light" ? (
                                 <LightMode />

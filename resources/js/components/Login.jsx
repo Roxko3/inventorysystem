@@ -15,8 +15,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Image from "mui-image";
 import { Link as MuiLink } from "@mui/material";
 import { ErrorSharp, Visibility, VisibilityOff } from "@mui/icons-material";
+import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 
 function Login() {
+    //const [cookies, setCookie] = useCookies();
     const email = useRef("");
     const password = useRef("");
     const [open, setOpen] = useState(false);
@@ -42,17 +45,28 @@ function Login() {
                     setseverity("success");
                     setErrors([]);
                     setOpen(true);
-                    navigate("/");
+                    //navigate("/");
+                    console.log(response.data.user);
+                    Cookies.set("token", response.data.token, {
+                        expires: 7,
+                        path: "/",
+                    });
+                    //setCookie("token", response.data.token, { path: "/" });
                 }
             })
             .catch((response) => {
-                if (response.response.status === 422 && response.response.data.message ==null) {
-                    setErrors(response.response.data);                   
-                } else{
+                if (
+                    response.response.status === 422 &&
+                    response.response.data.message == null
+                ) {
+                    setErrors(response.response.data);
+                    console.log(response.response.data);
+                } else {
                     setalertMessage(response.response.data.message);
                     setseverity("error");
                     setOpen(true);
-                    setErrors([])
+                    setErrors([]);
+                    console.log(response.response.data);
                 }
             });
     };
