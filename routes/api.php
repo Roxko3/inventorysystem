@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/myProfile', [UserController::class, 'get'])->name("myProfile");
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/changePassword', [AuthController::class, 'changePassword'])->name("changePassword");
     Route::get('/getShop/{shop}', [ShopController::class, 'get']);
     Route::put("/myShop/{shop}", [ShopController::class, "update"])->name("updateShop");
     Route::post("/myShop/{shop}/uploadImage", [ShopController::class, "uploadImage"])->name("uploadImage");

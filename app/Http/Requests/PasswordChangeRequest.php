@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator as Validator;
 use Illuminate\Validation\ValidationException;
 
-class RegisterRequest extends FormRequest
+class PasswordChangeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,22 +28,15 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => ['required', 'min:8', 'max:255', new PasswordMixedCase, new PasswordNumber],
-            'password-repeat' => 'required|same:password'
+            'old-password' => 'required',
+            'new-password' => ['required', 'min:8', 'max:255', new PasswordMixedCase, new PasswordNumber],
+            'new-password-repeat' => 'required|same:new-password'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Név megadása kötelező!',
-            'name.max' => 'Név maximum 255 karakter hosszúságú!',
-            'email.required' => 'Email megadása kötelező!',
-            'email.email' => 'Helytelen email!',
-            'email.max' => 'Az email maximum 255 karakter hosszúságú!',
-            'email.unique' => 'A megadott email már használt!',
             'password.required' => 'Jelszó megadása kötelező!',
             'password.min' => 'Jelszó legalább 8 karakter hosszúságú!',
             'password.max' => 'Jelszó maximum 255 karakter hosszúságú!',
