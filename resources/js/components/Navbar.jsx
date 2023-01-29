@@ -21,15 +21,18 @@ import {
     Typography,
 } from "@mui/material";
 import Image from "mui-image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TabPanel from "./TabPanel";
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { deepOrange } from "@mui/material/colors";
 import MenuIcon from "@mui/icons-material/Menu";
 import MyAvatar from "./MyAvatar";
+import Cookies from "js-cookie";
+import { UserContext } from "./App";
 
 function Navbar(props) {
+    const user = useContext(UserContext);
     const [isAdmin, setIsAdmin] = useState(false);
     const [value, setValue] = useState(0);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -75,7 +78,7 @@ function Navbar(props) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Link to="/">
+                    <Link to="/home">
                         <Image
                             src="./images/logo.png"
                             width="150px"
@@ -134,12 +137,12 @@ function Navbar(props) {
                                 gap: "10px",
                             }}
                         >
-                            <MyAvatar name={props.name} />
+                            <MyAvatar name={user.name} />
                             <Typography
                                 variant="p"
                                 sx={{ display: { xs: "none", sm: "block" } }}
                             >
-                                {props.name}
+                                {user.name}
                             </Typography>
                         </Box>
                     </Box>
@@ -161,14 +164,16 @@ function Navbar(props) {
                         variant="body1"
                         sx={{ display: { xs: "block", sm: "none" } }}
                     >
-                        {props.name}
+                        {user.name}
                     </Typography>
                     <Divider sx={{ display: { xs: "block", sm: "none" } }} />
                     <Link to="/profile">
                         <MenuItem onClick={handleClose}>Profil</MenuItem>
                     </Link>
                     <Link to="/login">
-                        <MenuItem onClick={handleClose}>Kijelentkezés</MenuItem>
+                        <MenuItem onClick={() => Cookies.remove("token")}>
+                            Kijelentkezés
+                        </MenuItem>
                     </Link>
                 </Menu>
             </AppBar>

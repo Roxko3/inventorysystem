@@ -13,11 +13,15 @@ import {
     TextField,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { UserContext } from "./App";
 import Map from "./Map";
 
 function ShopData() {
-    const [isAdmin, setIsAdmin] = useState(false);
+    const user = useContext(UserContext);
+    const [isAdmin, setIsAdmin] = useState(
+        user.permission == 10 ? true : false
+    );
     const [address, setAddress] = useState("Pogányi út 7");
     const [postalCode, setPostalCode] = useState("9730");
     const [shopTypes, setShopTypes] = useState([]);

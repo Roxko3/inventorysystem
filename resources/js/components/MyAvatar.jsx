@@ -1,6 +1,9 @@
 import { Avatar } from "@mui/material";
+import { useContext } from "react";
+import { UserContext } from "./App";
 
 function MyAvatar(props) {
+    const user = useContext(UserContext);
     function stringToColor(string) {
         let hash = 0;
         let i;
@@ -33,7 +36,7 @@ function MyAvatar(props) {
     }
 
     return (
-        <Avatar {...stringAvatar(props.name)} src="https://picsu.photos/200" />
+        <Avatar {...stringAvatar(user.name)} src="https://picsu.photos/200" />
     );
 }
 

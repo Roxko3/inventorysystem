@@ -33,9 +33,12 @@ import Map from "./Map";
 import MyAvatar from "./MyAvatar";
 import Navbar from "./Navbar";
 import Cookies from "js-cookie";
+import { useContext } from "react";
+import { UserContext } from "./App";
 
-function Profile(props) {
-    const [postalCode, setPostalCode] = useState(props.user.postal_code);
+function Profile() {
+    const user = useContext(UserContext);
+    const [postalCode, setPostalCode] = useState(user.postal_code);
     const [showPassword, setShowPassword] = useState("");
     const [btnDisable, setBtnDisable] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -107,7 +110,7 @@ function Profile(props) {
                             <MyAvatar
                                 width={100}
                                 height={100}
-                                name={props.user.name}
+                                name={user.name}
                             />
                         </Badge>
                         <Menu
@@ -136,7 +139,7 @@ function Profile(props) {
                         <Grid2>
                             <TextField
                                 label="Név"
-                                defaultValue={props.user.name}
+                                defaultValue={user.name}
                                 size="small"
                                 onChange={handleChange}
                             />
@@ -144,7 +147,7 @@ function Profile(props) {
                         <Grid2>
                             <TextField
                                 label="Email cím"
-                                defaultValue={props.user.email}
+                                defaultValue={user.email}
                                 size="small"
                                 onChange={handleChange}
                             />
@@ -323,7 +326,7 @@ function Profile(props) {
                             sx={{ m: 1, width: 300, height: 300 }}
                             key={1}
                         >
-                            <Link to={`/shops/${props.user.shop_id}`}>
+                            <Link to={`/shops/${user.shop_id}`}>
                                 <CardActionArea>
                                     <Grid2
                                         container

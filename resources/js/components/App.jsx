@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Forgotpass from "./Forgotpass";
 import Home from "./Home";
 import Login from "./Login";
@@ -14,10 +14,10 @@ import { useCookies } from "react-cookie";
 import Cookies from "js-cookie";
 
 const ColorModeContext = createContext({ toggleColorMode: () => {} });
-const UserContext = createContext([]);
+export const UserContext = createContext();
 
 function App() {
-    const userdata = useContext(UserContext);
+    const navigate = useNavigate();
     const [user, setUser] = useState([]);
     const [loading, setLoading] = useState(true);
     const [mode, setMode] = useState(
@@ -44,6 +44,8 @@ function App() {
         [mode]
     );
 
+    const cookie = Cookies.get("token");
+
     const getUser = async () => {
         await axios
             .get("http://127.0.0.1/InventorySystem/public/api/myProfile", {
@@ -58,10 +60,14 @@ function App() {
                     console.log(response.data);
                     setLoading(false);
                 }
+            })
+            .catch((response) => {
+                if (response.response.status == 401) {
+                    navigate("/login");
+                    setLoading(false);
+                }
             });
     };
-
-    const cookie = Cookies.get("token");
 
     useEffect(() => {
         getUser();
@@ -81,18 +87,11 @@ function App() {
                         <Routes>
                             <Route
                                 element={
-                                    <Navbar
-                                        name={user.name}
-                                        setMode={setMode}
-                                        mode={mode}
-                                    />
+                                    <Navbar setMode={setMode} mode={mode} />
                                 }
                             >
-                                <Route path="/" element={<Home />} />
-                                <Route
-                                    path="/profile"
-                                    element={<Profile user={user} />}
-                                />
+                                <Route path="/home" element={<Home />} />
+                                <Route path="/profile" element={<Profile />} />
                                 <Route path="/shops" element={<Shops />} />
                                 <Route path="/shops/:id" element={<Shop />} />
                             </Route>
