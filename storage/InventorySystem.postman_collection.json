@@ -799,7 +799,7 @@
 			"name": "Storage",
 			"item": [
 				{
-					"name": "GetStorage",
+					"name": "GetStorages",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -811,6 +811,72 @@
 							"path": [
 								"storages",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStorage/{shop}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|k2h4yD6OjI1ySlziEP45B9pbViKtkvib1Jl5VM3A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shops/getStorage/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"getStorage",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchStorage/{shop}/{searchString}",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|k2h4yD6OjI1ySlziEP45B9pbViKtkvib1Jl5VM3A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{URL}}/shops/searchStorage/1/élel",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"searchStorage",
+								"1",
+								"élel"
 							]
 						}
 					},
@@ -947,7 +1013,7 @@
 						},
 						{
 							"key": "password",
-							"value": "admin",
+							"value": "Tesztelek1",
 							"type": "default"
 						}
 					]
@@ -1045,6 +1111,56 @@
 			"response": []
 		},
 		{
+			"name": "changePassword",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|B9pVHSqTtfWqCILsrywrQPoqHQjeXiCfQKgSLqSM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "old-password",
+							"value": "admin",
+							"type": "default"
+						},
+						{
+							"key": "new-password",
+							"value": "Tesztelek1",
+							"type": "default"
+						},
+						{
+							"key": "new-password-repeat",
+							"value": "Tesztelek1",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/changePassword",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"changePassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Logout",
 			"request": {
 				"auth": {
@@ -1077,6 +1193,33 @@
 						"public",
 						"api",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MyProfile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|4X6STHQDXpS3M8xrtNubto4Cbp4YTarqum8qXsBX",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/myProfile",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"myProfile"
 					]
 				}
 			},
