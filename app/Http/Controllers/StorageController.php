@@ -22,6 +22,19 @@ class StorageController extends Controller
         return response()->json($storage);
     }
 
+    public function searchStorage(Shop $shop, $searchString)
+    {
+        $storage = Storage::join('products', 'storages.product_id', '=', 'products.id')
+            ->where([
+                ['name', 'LIKE', '%' . $searchString . '%'],
+                ['shop_id', '=', $shop->id],
+            ])->orWhere([
+                ['type', 'LIKE', '%' . $searchString . '%'],
+                ['shop_id', '=', $shop->id],
+            ])->paginate(20);
+        return response()->json($storage);
+    }
+
     public function add(StorageRequest $request)
     {
         $storage = Storage::firstOrNew([
