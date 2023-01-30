@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRatingsTable extends Migration
+class CreateOpeningHoursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateRatingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ratings', function (Blueprint $table) {
+        Schema::create('Opening_Hours', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shop_id')->constrained("shops");
-            $table->foreignId('user_id')->constrained("users");
-            $table->Integer("rating");
-            $table->unique(['shop_id', 'user_id']);
+            $table->Integer("day");
+            $table->boolean("is_open")->default(false);
+            $table->time("open")->nullable();
+            $table->time("close")->nullable();
+            $table->unique(['shop_id', 'day']);
         });
     }
 
@@ -29,6 +31,6 @@ class CreateRatingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ratings');
+        Schema::dropIfExists('Opening_Hours');
     }
 }
