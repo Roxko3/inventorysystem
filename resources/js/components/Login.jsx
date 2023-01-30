@@ -15,11 +15,9 @@ import { Link, redirect, useNavigate } from "react-router-dom";
 import Image from "mui-image";
 import { Link as MuiLink } from "@mui/material";
 import { ErrorSharp, Visibility, VisibilityOff } from "@mui/icons-material";
-import { useCookies } from "react-cookie";
 import Cookies from "js-cookie";
 
 function Login() {
-    //const [cookies, setCookie] = useCookies();
     const email = useRef("");
     const password = useRef("");
     const [open, setOpen] = useState(false);

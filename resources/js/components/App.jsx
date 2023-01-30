@@ -10,7 +10,6 @@ import Shop from "./Shop";
 import Navbar from "./Navbar";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Box, createTheme, ThemeProvider, useTheme } from "@mui/material";
-import { useCookies } from "react-cookie";
 import Cookies from "js-cookie";
 
 const ColorModeContext = createContext({ toggleColorMode: () => {} });

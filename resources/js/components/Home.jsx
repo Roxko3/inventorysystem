@@ -26,16 +26,41 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import axios from "axios";
 import Image from "mui-image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CreateShop from "./CreateShop";
 import Navbar from "./Navbar";
 import TabPanel from "./TabPanel";
 import Yourshop from "./Yourshop";
 import Cookies from "js-cookie";
+import { UserContext } from "./App";
 
 function Home() {
-    const [hasShop, setHasShop] = useState(true);
+    const user = useContext(UserContext);
+    const [hasShop, setHasShop] = useState(user.shop_id != null);
+    const [shop, setShop] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const cookie = Cookies.get("token");
+
+    const getShop = async () => {
+        await axios
+            .get(
+                `http://127.0.0.1/InventorySystem/public/api/getShop/${user.shop_id}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    setShop(response.data);
+                    console.log(response.data);
+                    setLoading(false);
+                }
+            });
+    };
 
     useEffect(() => {
         document.title = "Inventory System - Home";
