@@ -42,13 +42,13 @@ class ProductsSeeder extends Seeder
             $product = Product::firstOrNew([
                 'id' => $item['id']
             ]);
-    
+
             foreach ($item as $key => $value) {
-               $product->{$key} = $value;
+                $product->{$key} = $value;
             };
-    
+
             $product->save();
         }
-        Product::factory()->count(100)->create();
+        //Product::factory()->count(100)->create();
     }
 }
