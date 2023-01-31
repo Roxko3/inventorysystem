@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorageRequest;
+use App\Http\Requests\UpdateStorageRequest;
 use App\Models\Log;
 use App\Models\Shop;
 use App\Models\Storage;
@@ -57,6 +58,7 @@ class StorageController extends Controller
 
         return response()->json($storage->id);
     }
+
     public function update(Storage $storage, StorageRequest $request)
     {
         $storage->amount = $request->get("amount");
@@ -78,6 +80,7 @@ class StorageController extends Controller
 
         return response()->json($storage->toArray());
     }
+
     public function delete(Storage $storage)
     {
         $storage->amount = 0;
