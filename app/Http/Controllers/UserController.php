@@ -19,7 +19,7 @@ class UserController extends Controller
     public function myProfile()
     {
         $user = auth()->user();
-        $res = User::with('shop')->where('id', '=', $user->id);
+        $res = User::with('shop')->where('id', $user->id)->get();
         return response()->json($res);
     }
 
