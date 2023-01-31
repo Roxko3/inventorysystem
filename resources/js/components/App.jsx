@@ -55,8 +55,8 @@ function App() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    setUser(response.data);
-                    console.log(response.data);
+                    setUser(response.data[0]);
+                    console.log(response.data[0]);
                     setLoading(false);
                 }
             })

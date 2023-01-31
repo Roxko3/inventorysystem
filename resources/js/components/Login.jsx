@@ -11,7 +11,7 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, Navigate, redirect, useNavigate } from "react-router-dom";
 import Image from "mui-image";
 import { Link as MuiLink } from "@mui/material";
 import { ErrorSharp, Visibility, VisibilityOff } from "@mui/icons-material";
@@ -43,14 +43,14 @@ function Login() {
                     setseverity("success");
                     setErrors([]);
                     setOpen(true);
-                    //navigate("/home");
+                    navigate("/home");
                     console.log(response.data.user);
                     Cookies.set("token", response.data.token, {
                         expires: 7,
                         path: "/",
                         sameSite: "strict",
                     });
-                    redirect("/home");
+                    //redirect("/home");
                     //setCookie("token", response.data.token, { path: "/" });
                 }
             })

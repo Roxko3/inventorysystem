@@ -335,7 +335,11 @@ function Profile() {
                                     >
                                         <CardMedia
                                             component="img"
-                                            image="./images/template.png"
+                                            image={
+                                                user.shop.image_path == null
+                                                    ? "./images/template.png"
+                                                    : user.shop.image_path
+                                            }
                                             sx={{
                                                 width: 200,
                                             }}
@@ -344,14 +348,15 @@ function Profile() {
                                     <CardContent>
                                         <Typography variant="h6">
                                             {
-                                                "teszt név" /*shops.name.length <= 19
+                                                user.shop
+                                                    .name /*shops.name.length <= 19
                                                     ? shops.name
                                                     : shops.name.substr(0, 19) +
                                             "..."*/
                                             }
                                         </Typography>
                                         <Typography variant="legend">
-                                            9730
+                                            asd
                                         </Typography>
                                         <br />
                                         <Rating value={2} readOnly />
