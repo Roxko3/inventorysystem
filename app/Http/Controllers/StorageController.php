@@ -61,8 +61,21 @@ class StorageController extends Controller
     {
         $storage->amount = $request->get("amount");
         $storage->price = $request->get("price");
-        $storage->expiration = $request->get("expiration");
+        $storage->expiration = $request->has("expiration") ? $request->get("expiration") : null;
         $storage->save();
+
+        $user = Auth::user();
+        $log = new Log();
+        $product = DB::table("products")->where("id", '=', $request->get("product_id"))->first();
+
+        $log->shop_id = $storage->shop_id;
+        $log->user_id = $user->id;
+        $log->description = "Módosított egy terméket a raktárban: "
+            . $product->name . " (" . $storage->amount . "), ár: "
+            . $storage->price . " Ft, lejárat: " . ($request->get("expiration") == null ?  "nincs" : $request->get("expiration"));
+        $log->date = now();
+        $log->save();
+
         return response()->json($storage->toArray());
     }
     public function delete(Storage $storage)
