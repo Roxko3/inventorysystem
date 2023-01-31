@@ -83,9 +83,25 @@ class StorageController extends Controller
 
     public function delete(Storage $storage)
     {
-        $storage->amount = 0;
-        $storage->is_deleted = true;
-        $storage->save();
-        return response()->json("Áru törölve!");
+        if ($storage->is_deleted == 0) {
+            $user = Auth::user();
+            $log = new Log();
+            $product = DB::table("products")->where("id", '=', $storage->product_id)->first();
+
+            $log->shop_id = $storage->shop_id;
+            $log->user_id = $user->id;
+            $log->description = "Törölt egy terméket a raktárból: "
+                . $product->name . " (" . $storage->amount . "), ár: "
+                . $storage->price . " Ft, lejárat: " . ($storage->expiration == null ?  "nincs" : $storage->expiration);
+            $log->date = now();
+            $log->save();
+
+            $storage->amount = 0;
+            $storage->is_deleted = true;
+            $storage->save();
+            return response()->json("Áru törölve!");
+        } else {
+            return response()->json("Az áru már törölve van a raktárból");
+        }
     }
 }
