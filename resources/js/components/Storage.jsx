@@ -19,17 +19,31 @@ import { Add, Delete, Edit } from "@mui/icons-material";
 import Searchbar from "./Searchbar";
 import SearchButtons from "./SearchButtons";
 import BasicModal from "./BasicModal";
+import { useContext } from "react";
+import { UserContext } from "./App";
+import Cookies from "js-cookie";
 
 function Storage() {
+    const user = useContext(UserContext);
+    const cookie = Cookies.get("token");
     const [storage, setStorage] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const getStorage = async () => {
         await axios
-            .get("http://127.0.0.1/InventorySystem/public/api/storages")
+            .get(
+                `http://127.0.0.1/InventorySystem/public/api/shops/getStorage/${user.shop_id}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
             .then((response) => {
                 if (response.status === 200) {
-                    setStorage(response.data);
+                    setStorage(response.data.data);
+                    console.log(response.data);
                     setLoading(false);
                 }
             });
@@ -54,7 +68,7 @@ function Storage() {
             headerName: "Mennyiség",
         },
         {
-            field: "prize",
+            field: "price",
             headerName: "Ár",
         },
         {
@@ -81,10 +95,10 @@ function Storage() {
                     <Box sx={{ height: 710 }}>
                         <DataGrid
                             rows={storage.map((storage) => ({
-                                id: `${storage.shop_id}-${storage.product_id}`,
+                                id: storage.id,
                                 productName: storage.product.name,
                                 amount: storage.amount,
-                                prize: storage.prize,
+                                price: storage.price,
                                 expiration: storage.expiration,
                                 is_deleted:
                                     storage.is_deleted === 1 ? "igen" : "nem",

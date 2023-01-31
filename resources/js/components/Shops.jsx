@@ -21,15 +21,18 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { Box } from "@mui/system";
 import axios from "axios";
+import { useContext } from "react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "./App";
 import Map from "./Map";
 import Navbar from "./Navbar";
 
 function Shops() {
+    const user = useContext(UserContext);
     const [shops, setShops] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [postalCode, setPostalCode] = useState("9730");
+    const [postalCode, setPostalCode] = useState(user.postal_code);
 
     const getShops = async () => {
         await axios

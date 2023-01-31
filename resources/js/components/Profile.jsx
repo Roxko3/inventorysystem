@@ -315,56 +315,61 @@ function Profile() {
                     justifyContent="center"
                     alignItems="center"
                 >
-                    <Grid2
-                        container
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="center"
-                    >
-                        <Card
-                            variant="outlined"
-                            sx={{ m: 1, width: 300, height: 300 }}
-                            key={1}
+                    {user.shop == null ? (
+                        "Nincs bolt"
+                    ) : (
+                        <Grid2
+                            container
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="center"
                         >
-                            <Link to={`/shops/${user.shop_id}`}>
-                                <CardActionArea>
-                                    <Grid2
-                                        container
-                                        alignItems="center"
-                                        justifyContent="center"
-                                    >
-                                        <CardMedia
-                                            component="img"
-                                            image={
-                                                user.shop.image_path == null
-                                                    ? "./images/template.png"
-                                                    : user.shop.image_path
-                                            }
-                                            sx={{
-                                                width: 200,
-                                            }}
-                                        />
-                                    </Grid2>
-                                    <CardContent>
-                                        <Typography variant="h6">
-                                            {
-                                                user.shop
-                                                    .name /*shops.name.length <= 19
-                                                    ? shops.name
-                                                    : shops.name.substr(0, 19) +
-                                            "..."*/
-                                            }
-                                        </Typography>
-                                        <Typography variant="legend">
-                                            asd
-                                        </Typography>
-                                        <br />
-                                        <Rating value={2} readOnly />
-                                    </CardContent>
-                                </CardActionArea>
-                            </Link>
-                        </Card>
-                    </Grid2>
+                            <Card
+                                variant="outlined"
+                                sx={{ m: 1, width: 300, height: 300 }}
+                                key={1}
+                            >
+                                <Link to={`/shops/${user.shop_id}`}>
+                                    <CardActionArea>
+                                        <Grid2
+                                            container
+                                            alignItems="center"
+                                            justifyContent="center"
+                                        >
+                                            <CardMedia
+                                                component="img"
+                                                image={
+                                                    user.shop.image_path == null
+                                                        ? "./images/template.png"
+                                                        : user.shop.image_path
+                                                }
+                                                sx={{
+                                                    width: 200,
+                                                }}
+                                            />
+                                        </Grid2>
+                                        <CardContent>
+                                            <Typography variant="h6">
+                                                {
+                                                    user.shop
+                                                        .name /*shops.name.length <= 19
+                                                ? shops.name
+                                                : shops.name.substr(0, 19) +
+                                        "..."*/
+                                                }
+                                            </Typography>
+                                            <Typography variant="legend">
+                                                {user.shop.postal_code}
+                                            </Typography>
+                                            <br />
+                                            <Rating value={2} readOnly />
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Link>
+                            </Card>
+                        </Grid2>
+                    )}
+
                     <Grid2
                         container
                         direction="column"
