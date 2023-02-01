@@ -27,7 +27,10 @@ class StorageController extends Controller
 
     public function add(StorageRequest $request)
     {
-        $storage = Storage::where('shop_id', $request->get("shop_id"))
+        $user = Auth::user();
+        $current_shop_id = $user->shop_id;
+
+        $storage = Storage::where('shop_id', $current_shop_id)
             ->where('product_id', $request->get("product_id"))
             ->where('expiration', $request->get("expiration"))
             ->first();
@@ -37,14 +40,14 @@ class StorageController extends Controller
         }
 
         $storage = new Storage();
-        $storage->shop_id = $request->get("shop_id");
+        $storage->shop_id = $current_shop_id;
         $storage->product_id = $request->get("product_id");
         $storage->amount = $request->get("amount");
         $storage->price = $request->get("price");
         $storage->expiration = $request->has("expiration") ? $request->get("expiration") : null;
         $storage->save();
 
-        $user = Auth::user();
+
         $log = new Log();
         $product = DB::table("products")->where("id", '=', $request->get("product_id"))->first();
 
