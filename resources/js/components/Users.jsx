@@ -14,7 +14,6 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-import SearchButtons from "./SearchButtons";
 import BasicModal from "./BasicModal";
 
 function Users() {
@@ -75,7 +74,7 @@ function Users() {
                 />
             ) : (
                 <Grid2>
-                    <BasicModal />
+                    <BasicModal page="users" />
                     <Box sx={{ height: 735 }}>
                         <DataGrid
                             rows={users.map((users) => ({

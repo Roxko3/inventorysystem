@@ -17,7 +17,6 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import Searchbar from "./Searchbar";
-import SearchButtons from "./SearchButtons";
 import BasicModal from "./BasicModal";
 import { useContext } from "react";
 import { UserContext } from "./App";
@@ -91,7 +90,7 @@ function Storage() {
                 />
             ) : (
                 <Grid2>
-                    <BasicModal />
+                    <BasicModal page="storage" />
                     <Box sx={{ height: 710 }}>
                         <DataGrid
                             rows={storage.map((storage) => ({

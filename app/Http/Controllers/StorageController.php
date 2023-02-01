@@ -7,6 +7,7 @@ use App\Models\Log;
 use App\Models\Shop;
 use App\Models\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StorageController extends Controller
 {
@@ -22,15 +23,18 @@ class StorageController extends Controller
         return response()->json($storage);
     }
 
-    public function searchStorage(Shop $shop, $searchString)
+    public function searchStorage($searchString)
     {
+        $user = Auth::user();
+        $current_shop_id = $user->shop_id;
+        
         $storage = Storage::join('products', 'storages.product_id', '=', 'products.id')
             ->where([
                 ['name', 'LIKE', '%' . $searchString . '%'],
-                ['shop_id', '=', $shop->id],
+                ['shop_id', '=', $current_shop_id],
             ])->orWhere([
                 ['type', 'LIKE', '%' . $searchString . '%'],
-                ['shop_id', '=', $shop->id],
+                ['shop_id', '=', $current_shop_id],
             ])->paginate(20);
         return response()->json($storage);
     }
