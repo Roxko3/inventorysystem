@@ -3,14 +3,19 @@ import {
     Button,
     CircularProgress,
     Dialog,
+    FormControl,
     IconButton,
+    InputLabel,
+    MenuItem,
     Paper,
+    Select,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow,
+    TextField,
     Typography,
     useMediaQuery,
 } from "@mui/material";
@@ -24,11 +29,14 @@ import { useContext } from "react";
 import { UserContext } from "./App";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { get } from "lodash";
 
 function Storage() {
     const user = useContext(UserContext);
     const cookie = Cookies.get("token");
     const [storage, setStorage] = useState([]);
+    const [pValue, setPValue] = useState("");
+    const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [editedRow, setEditedRow] = useState({});
     const [deletedRows, setDeletedRows] = useState([]);
@@ -56,8 +64,23 @@ function Storage() {
             });
     };
 
+    const getProducts = async () => {
+        axios
+            .get("http://127.0.0.1/InventorySystem/public/api/products")
+            .then((response) => {
+                if (response.status === 200) {
+                    setProducts(response.data);
+                }
+            });
+    };
+
+    const handleChange = (e) => {
+        setPValue(e.target.value);
+    };
+
     useEffect(() => {
         getStorage();
+        getProducts();
     }, []);
 
     const columns = [
@@ -143,7 +166,7 @@ function Storage() {
                         onCellClick={(e) => {
                             const rowID = e["id"] - 1;
                             const field = e["field"];
-                            if (field == "edit") {
+                            if (field != "__check__") {
                                 setEditedRow(storage[rowID]);
                                 setIsEditing(true);
                             }
@@ -176,7 +199,68 @@ function Storage() {
                             setEditedRow(null);
                         }}
                     >
-                        add
+                        <Grid2
+                            container
+                            spacing={2}
+                            direction="column"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <Grid2>
+                                <Typography variant="h5">
+                                    Termék hozzáadása a raktárhoz
+                                </Typography>
+                            </Grid2>
+                            <Grid2>
+                                <FormControl fullWidth>
+                                    <InputLabel>Termék</InputLabel>
+                                    <Select
+                                        value={pValue}
+                                        label="Termék"
+                                        onChange={handleChange}
+                                    >
+                                        {products.map((products) => (
+                                            <MenuItem
+                                                value={products.id}
+                                                key={products.id}
+                                            >
+                                                {products.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid2>
+                            <Grid2>
+                                <TextField
+                                    fullWidth
+                                    label="Mennyiség"
+                                    variant="outlined"
+                                    type="number"
+                                />
+                            </Grid2>
+                            <Grid2>
+                                <TextField
+                                    fullWidth
+                                    label="Ár"
+                                    variant="outlined"
+                                    type="number"
+                                />
+                            </Grid2>
+                            <Grid2>
+                                <TextField
+                                    fullWidth
+                                    label="Lejárat"
+                                    variant="outlined"
+                                    type="date"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
+                            </Grid2>
+                            <Grid2>
+                                <Button variant="contained">Hozzáadás</Button>
+                            </Grid2>
+                        </Grid2>
                     </Dialog>
                 )}
                 {isEditing && (
@@ -187,7 +271,7 @@ function Storage() {
                             setEditedRow(null);
                         }}
                     >
-                        szerk
+                        {`ID: ${editedRow.id}, Termék: ${editedRow.product_name}, Mennyiség: ${editedRow.amount}, Ár: ${editedRow.price},  Lejárat: ${editedRow.expiration}`}
                     </Dialog>
                 )}
                 {isDeleting && (
