@@ -29,7 +29,7 @@ const style = {
     p: 4,
 };
 
-export default function BasicModal(props) {
+export default function BasicModal({ page, row }) {
     const [open, setOpen] = useState(false);
     const [btn, setBtn] = useState("");
     const handleOpen = () => setOpen(true);
@@ -37,30 +37,30 @@ export default function BasicModal(props) {
 
     const addButton = () => {
         handleOpen();
-        if (props.page === "storage") {
+        if (page === "storage") {
             setBtn("addstorage");
         }
-        if (props.page === "users") {
+        if (page === "users") {
             setBtn("addusers");
         }
     };
 
     const editButton = () => {
         handleOpen();
-        if (props.page === "storage") {
+        if (page === "storage") {
             setBtn("editstorage");
         }
-        if (props.page === "users") {
+        if (page === "users") {
             setBtn("editusers");
         }
     };
 
     const deleteButton = () => {
         handleOpen();
-        if (props.page === "storage") {
+        if (page === "storage") {
             setBtn("deletestorage");
         }
-        if (props.page === "users") {
+        if (page === "users") {
             setBtn("deleteusers");
         }
     };
@@ -89,7 +89,7 @@ export default function BasicModal(props) {
                     {btn === "addstorage" ? (
                         <AddStorage />
                     ) : btn === "editstorage" ? (
-                        <EditStorage />
+                        <EditStorage row={row} />
                     ) : (
                         btn
                     )}
