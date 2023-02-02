@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Models\Shop;
 use App\Models\User;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
@@ -41,6 +43,14 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('shop-owner', function (User $user) {
             return $user->permission >= 10;
+        });
+        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+            $spaUrl = $url;
+
+            return (new MailMessage)
+                ->subject('Verify Email Address')
+                ->line('Click the button below to verify your email address.')
+                ->action('Verify Email Address', $spaUrl);
         });
     }
 }
