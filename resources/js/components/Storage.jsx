@@ -2,6 +2,7 @@ import {
     Box,
     Button,
     CircularProgress,
+    Dialog,
     IconButton,
     Paper,
     Table,
@@ -11,6 +12,7 @@ import {
     TableHead,
     TableRow,
     Typography,
+    useMediaQuery,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
@@ -21,29 +23,35 @@ import BasicModal from "./BasicModal";
 import { useContext } from "react";
 import { UserContext } from "./App";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 function Storage() {
     const user = useContext(UserContext);
     const cookie = Cookies.get("token");
     const [storage, setStorage] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+    const [editedRow, setEditedRow] = useState({});
+    const [deletedRows, setDeletedRows] = useState([]);
+    const [isAdding, setIsAdding] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const getStorage = async () => {
-        await axios
-            .get(
-                `http://127.0.0.1/InventorySystem/public/api/shops/getStorage/${user.shop_id}`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + cookie,
-                    },
-                }
-            )
+        const axiosInstance = axios.create({
+            baseURL: "http://127.0.0.1/InventorySystem/public/api/",
+        });
+        setIsLoading(true);
+        await axiosInstance
+            .get(`shops/getStorage/${user.shop_id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + cookie,
+                },
+            })
             .then((response) => {
                 if (response.status === 200) {
                     setStorage(response.data.data);
-                    console.log(response.data);
-                    setLoading(false);
+                    setIsLoading(false);
                 }
             });
     };
@@ -59,7 +67,7 @@ function Storage() {
             width: 70,
         },
         {
-            field: "productName",
+            field: "product_name",
             headerName: "Termék",
         },
         {
@@ -79,38 +87,121 @@ function Storage() {
             field: "is_deleted",
             headerName: "Törölt",
         },
+        {
+            field: "edit",
+            headerName: "",
+        },
     ];
+
+    if (isLoading) {
+        return (
+            <CircularProgress
+                disableShrink
+                sx={{ animationDuration: "300ms" }}
+            />
+        );
+    }
 
     return (
         <Grid2>
-            {loading ? (
-                <CircularProgress
-                    disableShrink
-                    sx={{ animationDuration: "300ms" }}
-                />
-            ) : (
-                <Grid2>
-                    <BasicModal page="storage" />
-                    <Box sx={{ height: 710 }}>
-                        <DataGrid
-                            rows={storage.map((storage) => ({
-                                id: storage.id,
-                                productName: storage.product.name,
-                                amount: storage.amount,
-                                price: storage.price,
-                                expiration: storage.expiration,
-                                is_deleted:
-                                    storage.is_deleted === 1 ? "igen" : "nem",
-                            }))}
-                            columns={columns}
-                            disableSelectionOnClick
-                            autoHeight={true}
-                            autoPageSize={true}
-                            pageSize={12}
-                        />
-                    </Box>
+            <Grid2>
+                <Grid2
+                    container
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="left"
+                >
+                    <IconButton
+                        onClick={(e) => {
+                            setIsAdding(true);
+                            setEditedRow(false);
+                            setIsDeleting(false);
+                        }}
+                    >
+                        <Add />
+                    </IconButton>
+                    <IconButton
+                        onClick={(e) => {
+                            setIsAdding(false);
+                            setEditedRow(false);
+                            setIsDeleting(true);
+                        }}
+                    >
+                        <Delete />
+                    </IconButton>
+                    <Searchbar />
                 </Grid2>
-            )}
+
+                <Box sx={{ height: 710 }}>
+                    <DataGrid
+                        rows={storage.map((storage, i) => {
+                            storage["id"] = i + 1;
+                            storage["product_name"] = storage["product"].name;
+                            storage["edit"] = "Szerkesztés";
+                            return storage;
+                        })}
+                        onCellClick={(e) => {
+                            const rowID = e["id"] - 1;
+                            const field = e["field"];
+                            if (field == "edit") {
+                                setEditedRow(storage[rowID]);
+                                setIsEditing(true);
+                            }
+                        }}
+                        onSelectionModelChange={(ids) => {
+                            const selectedIDs = [];
+                            for (const id of ids) {
+                                storage.filter((selectedRow) => {
+                                    if (id == selectedRow.id) {
+                                        selectedIDs.push(selectedRow);
+                                    }
+                                });
+                            }
+                            setDeletedRows(selectedIDs);
+                        }}
+                        columns={columns}
+                        disableSelectionOnClick
+                        autoHeight={true}
+                        autoPageSize={true}
+                        pageSize={10}
+                        checkboxSelection
+                    />
+                </Box>
+
+                {isAdding && (
+                    <Dialog
+                        open={isAdding}
+                        onClose={(e) => {
+                            setIsAdding(false);
+                            setEditedRow(null);
+                        }}
+                    >
+                        add
+                    </Dialog>
+                )}
+                {isEditing && (
+                    <Dialog
+                        open={isEditing}
+                        onClose={(e) => {
+                            setIsEditing(false);
+                            setEditedRow(null);
+                        }}
+                    >
+                        szerk
+                    </Dialog>
+                )}
+                {isDeleting && (
+                    <Dialog
+                        open={isDeleting}
+                        onClose={(e) => {
+                            setIsDeleting(false);
+                            setEditedRow(null);
+                        }}
+                    >
+                        törlés
+                    </Dialog>
+                )}
+            </Grid2>
         </Grid2>
     );
 }

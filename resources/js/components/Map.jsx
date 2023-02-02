@@ -59,9 +59,12 @@ function Map(props) {
                 zoom={15}
                 scrollWheelZoom={false}
                 style={{
-                    height: props.height,
-                    width: props.width,
-                    border: "1px black solid",
+                    maxHeight: props.height,
+                    maxWidth: props.width,
+                    height: "100%",
+                    minHeight: "400px",
+                    width: "100%",
+                    border: "0.3px black solid",
                     borderRadius: 15,
                 }}
             >

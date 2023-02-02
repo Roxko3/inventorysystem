@@ -144,8 +144,8 @@ function ShopData() {
                             disabled={isDisabled}
                         />
                     </Grid2>
-                    <Grid2>
-                        <FormControl size="small">
+                    <Grid2 sx={{ width: "100%" }}>
+                        <FormControl size="small" fullWidth>
                             <InputLabel>Bolt típus</InputLabel>
                             <Select
                                 onChange={handleChange}

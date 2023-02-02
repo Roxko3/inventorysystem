@@ -16,8 +16,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { UserContext } from "./App";
 import Cookies from "js-cookie";
+import moment from "moment";
 
-function EditStorage() {
+function EditStorage({ row }) {
     const user = useContext(UserContext);
     const [pValue, setPValue] = useState("");
     const [products, setProducts] = useState([]);
@@ -47,9 +48,7 @@ function EditStorage() {
         console.log(e.target);
     };
 
-    useEffect(() => {
-        getProducts();
-    }, []);
+    useEffect(() => {}, []);
 
     return (
         <Grid2
@@ -59,12 +58,6 @@ function EditStorage() {
             alignItems="center"
             justifyContent="center"
         >
-            {/*<Autocomplete
-                options={products}
-                renderInput={(products) => (
-                    <TextField {...products} label="Termék" />
-                )}
-            />*/}
             <Grid2>
                 <Typography variant="h5">Termék szerkesztése</Typography>
             </Grid2>
@@ -72,6 +65,7 @@ function EditStorage() {
                 <FormControl fullWidth>
                     <InputLabel>Termék</InputLabel>
                     <Select
+                        fullWidth
                         value={pValue}
                         label="Termék"
                         onChange={handleChange}
@@ -106,6 +100,7 @@ function EditStorage() {
                     label="Lejárat"
                     variant="outlined"
                     type="date"
+                    value={moment(row["expiration"]).format("YYYY-MM-DD")}
                     InputLabelProps={{
                         shrink: true,
                     }}
