@@ -9,16 +9,18 @@ import {
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Image from "mui-image";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Cookies from "js-cookie";
 
 function Register() {
     const email = useRef("");
     const name = useRef("");
     const password = useRef("");
+    const password_repeat = useRef("");
     const postalCode = useRef("");
     const [open, setOpen] = useState(false);
     const [alertMessage, setalertMessage] = useState("");
@@ -27,24 +29,32 @@ function Register() {
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
+    const navigate = useNavigate();
 
     const register = async () => {
         await axios
             .post("http://127.0.0.1/InventorySystem/public/api/register", {
                 email: email.current.value,
                 password: password.current.value,
+                password_repeat: password_repeat.current.value,
                 name: name.current.value,
             })
             .then((response) => {
                 if (response.status === 200) {
-                    email.current.value = "";
-                    password.current.value = "";
-                    name.current.value = "";
+                    //email.current.value = "";
+                    //password.current.value = "";
+                    //password_repeat.current.value = "";
+                    //name.current.value = "";
                     setalertMessage("Sikeres regisztráció!");
                     setseverity("success");
                     setErrors([]);
                     setOpen(true);
-                    //navigate("/register");
+                    navigate("/login");
+                    Cookies.set("token", response.data.token, {
+                        expires: 7,
+                        path: "/",
+                        sameSite: "strict",
+                    });
                 }
             })
             .catch((response) => {
@@ -54,6 +64,7 @@ function Register() {
                 } else {
                     email.current.value = "";
                     password.current.value = "";
+                    password_repeat.current.value = "";
                     name.current.value = "";
                     setalertMessage(response.response.data.error);
                     setseverity("error");
@@ -147,9 +158,12 @@ function Register() {
                     <TextField
                         required
                         fullWidth
-                        label="Jelszó újra"
+                        label="Jelszó ismétlés"
                         type={showPassword ? "text" : "password"}
                         variant="outlined"
+                        inputRef={password_repeat}
+                        helperText={errors.password_repeat}
+                        error={errors.password_repeat != null}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">

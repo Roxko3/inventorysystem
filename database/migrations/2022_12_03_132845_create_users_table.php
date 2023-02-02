@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->Integer("postal_code")->nullable();
             $table->foreignId("shop_id")->nullable()->constrained("shops");
             $table->datetime("email_verified_at")->nullable();
+            $table->rememberToken();
         });
     }
 

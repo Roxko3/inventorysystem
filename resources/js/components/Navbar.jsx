@@ -33,6 +33,7 @@ import { UserContext } from "./App";
 
 function Navbar(props) {
     const user = useContext(UserContext);
+    const cookie = Cookies.get("token");
     const [isAdmin, setIsAdmin] = useState(false);
     const [value, setValue] = useState(0);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -63,6 +64,26 @@ function Navbar(props) {
             </TabPanel>
         </Box>
         */
+
+    const logout = async () => {
+        await axios
+            .post(
+                "http://127.0.0.1/InventorySystem/public/api/Logout",
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${cookie}`,
+                    },
+                }
+            )
+            .then((response) => {
+                Cookies.remove("token");
+                console.log("Sikeres kijelentkezés!");
+            })
+            .catch((response) => {
+                console.log("Sikertelen kijelentkezés!");
+            });
+    };
 
     return (
         <>
@@ -171,9 +192,7 @@ function Navbar(props) {
                         <MenuItem onClick={handleClose}>Profil</MenuItem>
                     </Link>
                     <Link to="/login">
-                        <MenuItem onClick={() => Cookies.remove("token")}>
-                            Kijelentkezés
-                        </MenuItem>
+                        <MenuItem onClick={logout}>Kijelentkezés</MenuItem>
                     </Link>
                 </Menu>
             </AppBar>
