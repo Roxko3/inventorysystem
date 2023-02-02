@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ProductController;
@@ -10,7 +11,9 @@ use App\Http\Controllers\StorageController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Models\Shop;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\Sanctum;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +30,8 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 
+Route::post('/email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
+Route::get('/verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -77,3 +82,5 @@ Route::group(['prefix' => '/storage'], function () {
     Route::put("/{storage}", [StorageController::class, "update"])->name("updatestorage");
     Route::delete("/{storage}", [StorageController::class, "delete"])->name("deletestorage");
 });
+
+
