@@ -14,6 +14,7 @@ import {
     MenuItem,
     Paper,
     Select,
+    Switch,
     Table,
     TableBody,
     TableCell,
@@ -21,13 +22,26 @@ import {
     TableHead,
     TableRow,
     TextField,
+    ToggleButton,
+    ToggleButtonGroup,
+    Tooltip,
     Typography,
     useMediaQuery,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Add, Delete, Edit } from "@mui/icons-material";
+import {
+    Add,
+    Check,
+    Delete,
+    DeleteForever,
+    Edit,
+    FilterList,
+    FilterListOff,
+    FilterNone,
+    SelectAll,
+} from "@mui/icons-material";
 import Searchbar from "./Searchbar";
 import BasicModal from "./BasicModal";
 import { useContext } from "react";
@@ -42,7 +56,10 @@ import moment from "moment";
 function Storage() {
     const user = useContext(UserContext);
     const cookie = Cookies.get("token");
-    const [storage, setStorage] = useState([]);
+    const [storage, setStorage] = useState([]); // minden
+    const [storageDeleted, setStorageDeleted] = useState([]); // töröltek
+    const [storageAvailable, setStorageAvailable] = useState([]); // nem töröltek
+    const [filter, setFilter] = useState([]);
     const [pValue, setPValue] = useState("");
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -56,6 +73,22 @@ function Storage() {
     const amount = useRef(-1);
     const price = useRef(-1);
     const expiration = useRef("");
+    const [alignment, setAlignment] = useState("left");
+
+    const handleAlignment = (event, newAlignment) => {
+        if (newAlignment !== null) {
+            if (newAlignment === "left") {
+                setFilter(storage);
+            }
+            if (newAlignment === "center") {
+                setFilter(storageDeleted);
+            }
+            if (newAlignment === "right") {
+                setFilter(storageAvailable);
+            }
+            setAlignment(newAlignment);
+        }
+    };
 
     const getStorage = async () => {
         const axiosInstance = axios.create({
@@ -71,7 +104,13 @@ function Storage() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    setStorage(response.data.data);
+                    const all = response.data.data;
+                    const deleted = all.filter((a) => a.is_deleted == 1);
+                    const available = all.filter((a) => a.is_deleted == 0);
+                    setStorage(all);
+                    setStorageDeleted(deleted);
+                    setStorageAvailable(available);
+                    setFilter(all);
                     setIsLoading(false);
                 }
             });
@@ -222,14 +261,14 @@ function Storage() {
         },
     ];
 
-    if (isLoading) {
+    /*if (isLoading) {
         return (
             <CircularProgress
                 disableShrink
                 sx={{ animationDuration: "300ms" }}
             />
         );
-    }
+    }*/
 
     return (
         <Grid2>
@@ -259,11 +298,32 @@ function Storage() {
                         <Delete />
                     </IconButton>
                     <Searchbar />
+                    <ToggleButtonGroup
+                        value={alignment}
+                        exclusive
+                        onChange={handleAlignment}
+                    >
+                        <Tooltip title="Minden" placement="top" followCursor>
+                            <ToggleButton value="left">
+                                <FilterNone />
+                            </ToggleButton>
+                        </Tooltip>
+                        <Tooltip title="Törölt" placement="top" followCursor>
+                            <ToggleButton value="center">
+                                <FilterListOff />
+                            </ToggleButton>
+                        </Tooltip>
+                        <Tooltip title="Elérhető" placement="top" followCursor>
+                            <ToggleButton value="right">
+                                <FilterList />
+                            </ToggleButton>
+                        </Tooltip>
+                    </ToggleButtonGroup>
                 </Grid2>
 
                 <Box>
                     <DataGrid
-                        rows={storage.map((storage, i) => {
+                        rows={filter.map((storage) => {
                             storage["product_name"] = storage["product"].name;
                             storage["edit"] = "Szerkesztés";
                             return storage;
@@ -279,14 +339,6 @@ function Storage() {
                             }
                         }}
                         onSelectionModelChange={(ids) => {
-                            /*const selectedIDs = [];
-                            for (const id of ids) {
-                                storage.filter((selectedRow) => {
-                                    if (id == selectedRow.id) {
-                                        selectedIDs.push(selectedRow.id);
-                                    }
-                                });
-                            }*/
                             console.log(ids);
                             setDeletedRows(ids);
                         }}
@@ -296,6 +348,7 @@ function Storage() {
                         autoPageSize={true}
                         pageSize={10}
                         checkboxSelection
+                        loading={isLoading}
                     />
                 </Box>
 
