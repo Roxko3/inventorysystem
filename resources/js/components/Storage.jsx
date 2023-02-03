@@ -3,7 +3,11 @@ import {
     Button,
     CircularProgress,
     Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
     FormControl,
+    Grid,
     IconButton,
     InputLabel,
     MenuItem,
@@ -71,6 +75,40 @@ function Storage() {
                 if (response.status === 200) {
                     setProducts(response.data);
                 }
+            });
+    };
+
+    const deleteSelectedRows = () => {
+        console.log(deletedRows);
+        setIsLoading(true);
+        axios
+            .delete(`http://127.0.0.1/InventorySystem/public/api/storages/delete`, {
+                ids: deletedRows,
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + cookie,
+                },
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log("félsiker");
+                    axiosInstance
+                        .get(`shops/ getStorage / ${user.shop_id}`, {
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: "Bearer " + cookie,
+                            },
+                        })
+                        .then((response) => {
+                            if (response.status === 200) {
+                                setStorage(response.data.data);
+                            }
+                        });
+                    setStorage(response.data.data);
+                    setIsLoading(false);
+                }
+            }).catch(() => {
+                console.log("szar van a palacsintában")
             });
     };
 
@@ -176,7 +214,7 @@ function Storage() {
                             for (const id of ids) {
                                 storage.filter((selectedRow) => {
                                     if (id == selectedRow.id) {
-                                        selectedIDs.push(selectedRow);
+                                        selectedIDs.push(selectedRow.id);
                                     }
                                 });
                             }
@@ -271,18 +309,41 @@ function Storage() {
                             setEditedRow(null);
                         }}
                     >
-                        {`ID: ${editedRow.id}, Termék: ${editedRow.product_name}, Mennyiség: ${editedRow.amount}, Ár: ${editedRow.price},  Lejárat: ${editedRow.expiration}`}
+
+                        {`ID: ${editedRow.id}, Termék: ${editedRow.product_name}, Mennyiség: ${editedRow.amount}, Ár: ${editedRow.price}, Lejárat: ${editedRow.expiration}`}
                     </Dialog>
                 )}
                 {isDeleting && (
                     <Dialog
                         open={isDeleting}
-                        onClose={(e) => {
-                            setIsDeleting(false);
-                            setEditedRow(null);
-                        }}
+                        onClose={() => setIsDeleting(false)}
+                        aria-labelledby="confirm-dialog"
                     >
-                        törlés
+                        <DialogTitle id="confirm-dialog">Törlés</DialogTitle>
+                        <DialogContent>Biztosan törölni szeretné a kiválaszott tételeket?</DialogContent>
+                        <DialogActions>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    deleteSelectedRows();
+                                    setIsDeleting(false);
+                                    return;
+                                }}
+                                color="success"
+                            >
+                                Yes
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setIsDeleting(false);
+                                    return;
+                                }}
+                                color="error"
+                            >
+                                No
+                            </Button>
+                        </DialogActions>
                     </Dialog>
                 )}
             </Grid2>

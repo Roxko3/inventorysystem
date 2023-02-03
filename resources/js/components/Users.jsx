@@ -15,14 +15,23 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import BasicModal from "./BasicModal";
+import Cookies from "js-cookie";
+
 
 function Users() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const cookie = Cookies.get("token");
 
-    const getUsers = async () => {
-        await axios
-            .get("http://127.0.0.1/InventorySystem/public/api/users")
+    const getUsers = () => {
+        axios
+            .get("http://127.0.0.1/InventorySystem/public/api/workers",
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                })
             .then((response) => {
                 if (response.status === 200) {
                     setUsers(response.data);

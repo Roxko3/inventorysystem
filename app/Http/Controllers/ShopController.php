@@ -7,6 +7,8 @@ use App\Http\Requests\ShopRequest;
 use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\Storage;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
@@ -23,6 +25,13 @@ class ShopController extends Controller
     {
         $shop = Shop::with("shopType", "ratings")->where("id", $shop->id)->get();
         return response()->json($shop);
+    }
+
+    public function workers()
+    {
+        $user = Auth::user();
+        $workers = User::where("shop_id", $user->shop_id)->get();
+        return response()->json($workers);
     }
 
     public function create(ShopRequest $request)

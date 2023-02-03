@@ -8,6 +8,7 @@ use App\Models\Shop;
 use App\Models\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StorageController extends Controller
 {
@@ -27,7 +28,7 @@ class StorageController extends Controller
     {
         $user = Auth::user();
         $current_shop_id = $user->shop_id;
-        
+
         $storage = Storage::join('products', 'storages.product_id', '=', 'products.id')
             ->where([
                 ['name', 'LIKE', '%' . $searchString . '%'],
@@ -64,11 +65,19 @@ class StorageController extends Controller
         $storage->save();
         return response()->json($storage->toArray());
     }
-    public function delete(Storage $storage)
+    public function delete(Request $request)
     {
-        $storage->amount = 0;
+        try {
+            DB::table('storages')->whereIn('id', $request->ids)->delete();
+
+            return response()->json("Termékek sikeresen törölve a raktárból!");
+        } catch (\Exception $e) {
+            return response()->json("Sirtelen törlés!", 400);
+        }
+
+        /*$storage->amount = 0;
         $storage->is_deleted = true;
         $storage->save();
-        return response()->json("Áru törölve!");
+        return response()->json("Áru törölve!");*/
     }
 }

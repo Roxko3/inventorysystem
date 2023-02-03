@@ -14,14 +14,24 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Searchbar from "./Searchbar";
+import Cookies from "js-cookie";
 
 function Log() {
     const [logs, setLogs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const cookie = Cookies.get("token");
 
-    const getlogs = async () => {
-        await axios
-            .get("http://127.0.0.1/InventorySystem/public/api/logs")
+    const getlogs = () => {
+        axios
+            .get(
+                "http://127.0.0.1/InventorySystem/public/api/logs",
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                },
+            )
             .then((response) => {
                 if (response.status === 200) {
                     setLogs(response.data);
