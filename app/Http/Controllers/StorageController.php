@@ -67,13 +67,12 @@ class StorageController extends Controller
     }
     public function delete(Request $request)
     {
-        try {
-            DB::table('storages')->whereIn('id', $request->ids)->delete();
-
-            return response()->json("Termékek sikeresen törölve a raktárból!");
-        } catch (\Exception $e) {
-            return response()->json("Sirtelen törlés!", 400);
+        foreach ($request->get("ids") as $item) {
+            $storage = Storage::where('id', $item)->first();
+            $storage->is_deleted = true;
+            $storage->save();
         }
+        return response()->json("Termékek sikeresen törölve a raktárból!");
 
         /*$storage->amount = 0;
         $storage->is_deleted = true;
