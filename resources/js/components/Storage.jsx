@@ -7,6 +7,7 @@ import {
     DialogContent,
     DialogTitle,
     FormControl,
+    FormHelperText,
     Grid,
     IconButton,
     InputLabel,
@@ -34,6 +35,9 @@ import { UserContext } from "./App";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { get } from "lodash";
+import { useRef } from "react";
+import { color } from "@mui/system";
+import moment from "moment";
 
 function Storage() {
     const user = useContext(UserContext);
@@ -47,6 +51,11 @@ function Storage() {
     const [isAdding, setIsAdding] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [errors, setErrors] = useState([]);
+    const product = useRef(0);
+    const amount = useRef(-1);
+    const price = useRef(-1);
+    const expiration = useRef("");
 
     const getStorage = async () => {
         const axiosInstance = axios.create({
@@ -78,37 +87,101 @@ function Storage() {
             });
     };
 
+    const addProduct = async () => {
+        axios
+            .post(
+                "http://127.0.0.1/InventorySystem/public/api/storages/add",
+                {
+                    shop_id: user.shop_id,
+                    product_id: product.current.value,
+                    amount: amount.current.value,
+                    price: price.current.value,
+                    expiration: expiration.current.value + " 00:00:00",
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    product.current.value = "";
+                    amount.current.value = "";
+                    price.current.value = "";
+                    expiration.current.value = "";
+                    setErrors([]);
+                    console.log("siker");
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    setErrors(response.response.data);
+                }
+            });
+    };
+
+    const editProduct = async () => {
+        axios
+            .put(
+                `http://127.0.0.1/InventorySystem/public/api/storages/${editedRow.id}`,
+                {
+                    shop_id: user.shop_id,
+                    product_id: product.current.value,
+                    amount: amount.current.value,
+                    price: price.current.value,
+                    expiration: expiration.current.value + " 00:00:00",
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    product.current.value = "";
+                    amount.current.value = "";
+                    price.current.value = "";
+                    expiration.current.value = "";
+                    setErrors([]);
+                    console.log(response.data);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    setErrors(response.response.data);
+                }
+            });
+    };
+
     const deleteSelectedRows = () => {
         console.log(deletedRows);
         setIsLoading(true);
         axios
-            .delete(`http://127.0.0.1/InventorySystem/public/api/storages/delete`, {
-                ids: deletedRows,
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + cookie,
-                },
-            })
+            .delete(
+                `http://127.0.0.1/InventorySystem/public/api/storages/delete`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                    data: {
+                        ids: deletedRows,
+                    },
+                }
+            )
             .then((response) => {
                 if (response.status === 200) {
                     console.log("félsiker");
-                    axiosInstance
-                        .get(`shops/ getStorage / ${user.shop_id}`, {
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: "Bearer " + cookie,
-                            },
-                        })
-                        .then((response) => {
-                            if (response.status === 200) {
-                                setStorage(response.data.data);
-                            }
-                        });
-                    setStorage(response.data.data);
+                    //setStorage(response.data.data);
                     setIsLoading(false);
                 }
-            }).catch(() => {
-                console.log("szar van a palacsintában")
+            })
+            .catch(() => {
+                console.log("szar van a palacsintában");
             });
     };
 
@@ -122,11 +195,6 @@ function Storage() {
     }, []);
 
     const columns = [
-        {
-            field: "id",
-            headerName: "ID",
-            width: 70,
-        },
         {
             field: "product_name",
             headerName: "Termék",
@@ -193,16 +261,17 @@ function Storage() {
                     <Searchbar />
                 </Grid2>
 
-                <Box sx={{ height: 710 }}>
+                <Box>
                     <DataGrid
                         rows={storage.map((storage, i) => {
-                            storage["id"] = i + 1;
                             storage["product_name"] = storage["product"].name;
                             storage["edit"] = "Szerkesztés";
                             return storage;
                         })}
                         onCellClick={(e) => {
-                            const rowID = e["id"] - 1;
+                            const rowID = storage.findIndex(
+                                (a) => a.id == e["id"]
+                            );
                             const field = e["field"];
                             if (field != "__check__") {
                                 setEditedRow(storage[rowID]);
@@ -210,15 +279,16 @@ function Storage() {
                             }
                         }}
                         onSelectionModelChange={(ids) => {
-                            const selectedIDs = [];
+                            /*const selectedIDs = [];
                             for (const id of ids) {
                                 storage.filter((selectedRow) => {
                                     if (id == selectedRow.id) {
                                         selectedIDs.push(selectedRow.id);
                                     }
                                 });
-                            }
-                            setDeletedRows(selectedIDs);
+                            }*/
+                            console.log(ids);
+                            setDeletedRows(ids);
                         }}
                         columns={columns}
                         disableSelectionOnClick
@@ -235,27 +305,22 @@ function Storage() {
                         onClose={(e) => {
                             setIsAdding(false);
                             setEditedRow(null);
+                            setErrors([]);
                         }}
                     >
-                        <Grid2
-                            container
-                            spacing={2}
-                            direction="column"
-                            alignItems="center"
-                            justifyContent="center"
-                        >
-                            <Grid2>
-                                <Typography variant="h5">
-                                    Termék hozzáadása a raktárhoz
-                                </Typography>
-                            </Grid2>
-                            <Grid2>
-                                <FormControl fullWidth>
+                        <DialogTitle>Termék hozzáadása a raktárhoz</DialogTitle>
+                        <DialogContent>
+                            <Grid2 m={2}>
+                                <FormControl
+                                    fullWidth
+                                    error={errors.product_id != null}
+                                >
                                     <InputLabel>Termék</InputLabel>
                                     <Select
                                         value={pValue}
                                         label="Termék"
                                         onChange={handleChange}
+                                        inputRef={product}
                                     >
                                         {products.map((products) => (
                                             <MenuItem
@@ -266,25 +331,34 @@ function Storage() {
                                             </MenuItem>
                                         ))}
                                     </Select>
+                                    <FormHelperText>
+                                        {errors.product_id}
+                                    </FormHelperText>
                                 </FormControl>
                             </Grid2>
-                            <Grid2>
+                            <Grid2 m={2}>
                                 <TextField
                                     fullWidth
                                     label="Mennyiség"
                                     variant="outlined"
                                     type="number"
+                                    inputRef={amount}
+                                    helperText={errors.amount}
+                                    error={errors.amount != null}
                                 />
                             </Grid2>
-                            <Grid2>
+                            <Grid2 m={2}>
                                 <TextField
                                     fullWidth
                                     label="Ár"
                                     variant="outlined"
                                     type="number"
+                                    inputRef={price}
+                                    helperText={errors.price}
+                                    error={errors.price != null}
                                 />
                             </Grid2>
-                            <Grid2>
+                            <Grid2 m={2}>
                                 <TextField
                                     fullWidth
                                     label="Lejárat"
@@ -293,12 +367,28 @@ function Storage() {
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
+                                    inputRef={expiration}
+                                    helperText={errors.expiration}
+                                    error={errors.expiration != null}
                                 />
                             </Grid2>
-                            <Grid2>
-                                <Button variant="contained">Hozzáadás</Button>
-                            </Grid2>
-                        </Grid2>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button variant="contained" onClick={addProduct}>
+                                Hozzáadás
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="error"
+                                onClick={() => {
+                                    setIsAdding(false);
+                                    setEditedRow(null);
+                                    setErrors([]);
+                                }}
+                            >
+                                Mégse
+                            </Button>
+                        </DialogActions>
                     </Dialog>
                 )}
                 {isEditing && (
@@ -309,8 +399,92 @@ function Storage() {
                             setEditedRow(null);
                         }}
                     >
-
-                        {`ID: ${editedRow.id}, Termék: ${editedRow.product_name}, Mennyiség: ${editedRow.amount}, Ár: ${editedRow.price}, Lejárat: ${editedRow.expiration}`}
+                        <DialogTitle>Termék szerkesztése</DialogTitle>
+                        <DialogContent>
+                            <Grid2 m={2}>
+                                <FormControl
+                                    fullWidth
+                                    error={errors.product_id != null}
+                                >
+                                    <InputLabel>Termék</InputLabel>
+                                    <Select
+                                        value={editedRow.product_id}
+                                        label="Termék"
+                                        inputRef={product}
+                                        readOnly
+                                    >
+                                        {products.map((products) => (
+                                            <MenuItem
+                                                value={products.id}
+                                                key={products.id}
+                                            >
+                                                {products.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                    <FormHelperText>
+                                        {errors.product_id}
+                                    </FormHelperText>
+                                </FormControl>
+                            </Grid2>
+                            <Grid2 m={2}>
+                                <TextField
+                                    fullWidth
+                                    label="Mennyiség"
+                                    variant="outlined"
+                                    type="number"
+                                    inputRef={amount}
+                                    defaultValue={editedRow.amount}
+                                    helperText={errors.amount}
+                                    error={errors.amount != null}
+                                />
+                            </Grid2>
+                            <Grid2 m={2}>
+                                <TextField
+                                    fullWidth
+                                    label="Ár"
+                                    variant="outlined"
+                                    type="number"
+                                    inputRef={price}
+                                    defaultValue={editedRow.price}
+                                    helperText={errors.price}
+                                    error={errors.price != null}
+                                />
+                            </Grid2>
+                            <Grid2 m={2}>
+                                <TextField
+                                    fullWidth
+                                    label="Lejárat"
+                                    variant="outlined"
+                                    type="date"
+                                    defaultValue={moment(
+                                        editedRow.expiration
+                                    ).format("YYYY-MM-DD")}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    inputRef={expiration}
+                                    helperText={errors.expiration}
+                                    error={errors.expiration != null}
+                                />
+                            </Grid2>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button variant="contained" onClick={editProduct}>
+                                Szerkesztés
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="error"
+                                onClick={() => {
+                                    setIsEditing(false);
+                                    setEditedRow(null);
+                                    setErrors([]);
+                                }}
+                            >
+                                Mégse
+                            </Button>
+                        </DialogActions>
                     </Dialog>
                 )}
                 {isDeleting && (
@@ -320,7 +494,10 @@ function Storage() {
                         aria-labelledby="confirm-dialog"
                     >
                         <DialogTitle id="confirm-dialog">Törlés</DialogTitle>
-                        <DialogContent>Biztosan törölni szeretné a kiválaszott tételeket?</DialogContent>
+                        <DialogContent>
+                            Biztosan törölni szeretne {deletedRows.length}{" "}
+                            tételt?
+                        </DialogContent>
                         <DialogActions>
                             <Button
                                 variant="contained"
@@ -329,9 +506,8 @@ function Storage() {
                                     setIsDeleting(false);
                                     return;
                                 }}
-                                color="success"
                             >
-                                Yes
+                                Törlés
                             </Button>
                             <Button
                                 variant="contained"
@@ -341,7 +517,7 @@ function Storage() {
                                 }}
                                 color="error"
                             >
-                                No
+                                Mégse
                             </Button>
                         </DialogActions>
                     </Dialog>

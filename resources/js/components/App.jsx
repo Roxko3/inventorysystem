@@ -46,7 +46,7 @@ function App() {
     const cookie = Cookies.get("token");
 
     const getUser = async () => {
-        await axios
+        axios
             .get("http://127.0.0.1/InventorySystem/public/api/myProfile", {
                 headers: {
                     "Content-Type": "application/json",
