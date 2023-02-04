@@ -11,6 +11,11 @@ class Log extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'shop_id',
+        'user_id'
+    ];
+
     protected $cast = [
         'date' => "timestamp"
     ];

@@ -26,7 +26,6 @@ class StorageRequest extends FormRequest
     public function rules()
     {
         return [
-            'shop_id' => "required|numeric|exists:shops,id",
             'product_id' => "required|numeric|exists:shops,id",
             'amount' => "required|numeric|min:1|max:9999",
             'price' => "required|numeric|min:1|max:99999999",
@@ -37,9 +36,6 @@ class StorageRequest extends FormRequest
     public function messages()
     {
         return [
-            'shop_id.required' => "Bolt megadása kötelező!",
-            'shop_id.numeric' => "A bolt csak szám lehet!",
-            'shop_id.exists' => "A megadott bolt nem létezik!",
             'product_id.required' => "Termék megadása kötelező!",
             'product_id.numeric' => "A termék csak szám lehet!",
             'product_id.exists' => "A megadott termék nem létezik!",
