@@ -14,6 +14,7 @@ import {
     MenuItem,
     Paper,
     Select,
+    Snackbar,
     Switch,
     Table,
     TableBody,
@@ -74,6 +75,15 @@ function Storage() {
     const price = useRef(-1);
     const expiration = useRef("");
     const [alignment, setAlignment] = useState("left");
+    const [open, setOpen] = useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     const handleAlignment = (event, newAlignment) => {
         if (newAlignment !== null) {
@@ -122,6 +132,7 @@ function Storage() {
             .then((response) => {
                 if (response.status === 200) {
                     setProducts(response.data);
+                    console.log(response.data);
                 }
             });
     };
@@ -146,17 +157,21 @@ function Storage() {
             )
             .then((response) => {
                 if (response.status === 200) {
+                    setPValue(0);
                     product.current.value = "";
                     amount.current.value = "";
                     price.current.value = "";
                     expiration.current.value = "";
                     setErrors([]);
-                    console.log("siker");
+                    console.log(response);
+                    setIsAdding(false);
+                    setOpen(true);
                 }
             })
             .catch((response) => {
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
+                    console.log(response.response);
                 }
             });
     };
@@ -192,6 +207,7 @@ function Storage() {
             .catch((response) => {
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
+                    console.log(response.response);
                 }
             });
     };
@@ -226,6 +242,7 @@ function Storage() {
 
     const handleChange = (e) => {
         setPValue(e.target.value);
+        console.log(e.target);
     };
 
     useEffect(() => {
@@ -304,17 +321,26 @@ function Storage() {
                         onChange={handleAlignment}
                     >
                         <Tooltip title="Minden" placement="top" followCursor>
-                            <ToggleButton value="left">
+                            <ToggleButton
+                                value="left"
+                                selected={alignment === "left"}
+                            >
                                 <FilterNone />
                             </ToggleButton>
                         </Tooltip>
                         <Tooltip title="Törölt" placement="top" followCursor>
-                            <ToggleButton value="center">
+                            <ToggleButton
+                                value="center"
+                                selected={alignment === "center"}
+                            >
                                 <FilterListOff />
                             </ToggleButton>
                         </Tooltip>
                         <Tooltip title="Elérhető" placement="top" followCursor>
-                            <ToggleButton value="right">
+                            <ToggleButton
+                                value="right"
+                                selected={alignment === "right"}
+                            >
                                 <FilterList />
                             </ToggleButton>
                         </Tooltip>
@@ -359,6 +385,7 @@ function Storage() {
                             setIsAdding(false);
                             setEditedRow(null);
                             setErrors([]);
+                            setPValue(0);
                         }}
                     >
                         <DialogTitle>Termék hozzáadása a raktárhoz</DialogTitle>
@@ -437,6 +464,7 @@ function Storage() {
                                     setIsAdding(false);
                                     setEditedRow(null);
                                     setErrors([]);
+                                    setPValue(0);
                                 }}
                             >
                                 Mégse
@@ -576,6 +604,12 @@ function Storage() {
                     </Dialog>
                 )}
             </Grid2>
+            <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                message="Note archived"
+            />
         </Grid2>
     );
 }
