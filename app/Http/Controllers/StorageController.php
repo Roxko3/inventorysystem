@@ -83,6 +83,9 @@ class StorageController extends Controller
         $storage->amount = $request->get("amount");
         $storage->price = $request->get("price");
         $storage->expiration = $request->has("expiration") ? $request->get("expiration") : null;
+        if ($request->get("amount") > 0) {
+            $storage->is_deleted = false;
+        }
         $storage->save();
 
         $user = Auth::user();
@@ -103,14 +106,23 @@ class StorageController extends Controller
     {
         foreach ($request->get("ids") as $item) {
             $storage = Storage::where('id', $item)->first();
-            $storage->is_deleted = true;
-            $storage->save();
+            if ($storage->is_deleted == 0) {
+                $user = Auth::user();
+                $log = new Log();
+                $product = DB::table("products")->where("id", '=', $storage->product_id)->first();
+                $log->shop_id = $storage->shop_id;
+                $log->user_id = $user->id;
+                $log->description = "Törölt egy terméket a raktárból: "
+                    . $product->name . " (" . $storage->amount . "), ár: "
+                    . $storage->price . " Ft, lejárat: " . ($storage->expiration == null ?  "nincs" : $storage->expiration);
+                $log->date = now();
+                $log->save();
+
+                $storage->amount = 0;
+                $storage->is_deleted = true;
+                $storage->save();
+            };
         }
         return response()->json("Termékek sikeresen törölve a raktárból!");
-
-        /*$storage->amount = 0;
-        $storage->is_deleted = true;
-        $storage->save();
-        return response()->json("Áru törölve!");*/
     }
 }
