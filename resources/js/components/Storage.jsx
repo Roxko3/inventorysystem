@@ -271,6 +271,13 @@ function Storage() {
         {
             field: "is_deleted",
             headerName: "Törölt",
+            renderCell: (params) => {
+                return params.value == 1 ? (
+                    <b style={{ color: "red" }}>Igen</b>
+                ) : (
+                    <b style={{ color: "green" }}>Nem</b>
+                );
+            },
         },
         {
             field: "edit",
@@ -394,6 +401,7 @@ function Storage() {
                                 <FormControl
                                     fullWidth
                                     error={errors.product_id != null}
+                                    required
                                 >
                                     <InputLabel>Termék</InputLabel>
                                     <Select
@@ -425,6 +433,7 @@ function Storage() {
                                     inputRef={amount}
                                     helperText={errors.amount}
                                     error={errors.amount != null}
+                                    required
                                 />
                             </Grid2>
                             <Grid2 m={2}>
@@ -436,6 +445,7 @@ function Storage() {
                                     inputRef={price}
                                     helperText={errors.price}
                                     error={errors.price != null}
+                                    required
                                 />
                             </Grid2>
                             <Grid2 m={2}>

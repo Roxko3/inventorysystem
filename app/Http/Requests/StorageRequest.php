@@ -26,7 +26,7 @@ class StorageRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_id' => "required|numeric|exists:shops,id",
+            'product_id' => "required|numeric|exists:products,id",
             'amount' => "required|numeric|min:1|max:9999",
             'price' => "required|numeric|min:1|max:99999999",
             'expiration' => "date|date_format:Y-m-d H:i:s"
