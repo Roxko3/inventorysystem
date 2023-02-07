@@ -32,7 +32,7 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, huHU } from "@mui/x-data-grid";
 import {
     Add,
     Check,
@@ -172,7 +172,7 @@ function Storage() {
                     expiration.current.value = "";
                     setErrors([]);
                     console.log(response);
-                    getStorage();
+                    getStorage(`shops/getStorage/${user.shop_id}`, alignment);
                     setIsAdding(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen hozzáadva.");
@@ -212,7 +212,7 @@ function Storage() {
                     expiration.current.value = "";
                     setErrors([]);
                     console.log(response.data);
-                    getStorage();
+                    getStorage(`shops/getStorage/${user.shop_id}`, alignment);
                     setIsEditing(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen módosítva.");
@@ -246,7 +246,7 @@ function Storage() {
                 if (response.status === 200) {
                     console.log("félsiker");
                     //setStorage(response.data.data);
-                    getStorage();
+                    getStorage(`shops/getStorage/${user.shop_id}`, alignment);
                     setIsLoading(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen törölve.");
@@ -445,6 +445,10 @@ function Storage() {
                             }
                         }}
                         components={{ Toolbar: CustomToolbar }}
+                        localeText={
+                            huHU.components.MuiDataGrid.defaultProps.localeText
+                        }
+                        disableColumnMenu
                     />
                 </Box>
 

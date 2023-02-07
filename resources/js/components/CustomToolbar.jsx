@@ -14,6 +14,10 @@ function CustomToolbar() {
                 title="Keresés..."
                 placeholder="Keresés..."
             />
+            <GridToolbarFilterButton />
+            <GridToolbarDensitySelector />
+            <GridToolbarColumnsButton />
+            <GridToolbarExport />
         </GridToolbarContainer>
     );
 }
