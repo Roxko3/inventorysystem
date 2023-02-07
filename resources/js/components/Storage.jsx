@@ -32,7 +32,7 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import {
     Add,
     Check,
@@ -54,6 +54,7 @@ import { get } from "lodash";
 import { useRef } from "react";
 import { color } from "@mui/system";
 import moment from "moment";
+import CustomToolbar from "./CustomToolbar";
 
 function Storage() {
     const user = useContext(UserContext);
@@ -62,6 +63,8 @@ function Storage() {
     const [storageDeleted, setStorageDeleted] = useState([]); // töröltek
     const [storageAvailable, setStorageAvailable] = useState([]); // nem töröltek
     const [filter, setFilter] = useState([]);
+    const [pagination, setPagination] = useState({});
+    const [rowCountState, setRowCountState] = useState(pagination.total);
     const [pValue, setPValue] = useState("");
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -75,7 +78,7 @@ function Storage() {
     const amount = useRef(-1);
     const price = useRef(-1);
     const expiration = useRef("");
-    const [alignment, setAlignment] = useState("left");
+    const [alignment, setAlignment] = useState(2);
     const [open, setOpen] = useState(false);
     const [alertMessage, setalertMessage] = useState("");
 
@@ -89,26 +92,26 @@ function Storage() {
 
     const handleAlignment = (event, newAlignment) => {
         if (newAlignment !== null) {
-            if (newAlignment === "left") {
+            if (newAlignment === 2) {
+                setFilter(storageAvailable);
+            }
+            if (newAlignment === 0) {
                 setFilter(storage);
             }
-            if (newAlignment === "center") {
+            if (newAlignment === 1) {
                 setFilter(storageDeleted);
-            }
-            if (newAlignment === "right") {
-                setFilter(storageAvailable);
             }
             setAlignment(newAlignment);
         }
     };
 
-    const getStorage = async () => {
+    const getStorage = async (url, index) => {
         const axiosInstance = axios.create({
             baseURL: "http://127.0.0.1/InventorySystem/public/api/",
         });
         setIsLoading(true);
         await axiosInstance
-            .get(`shops/getStorage/${user.shop_id}`, {
+            .get(url, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + cookie,
@@ -116,13 +119,16 @@ function Storage() {
             })
             .then((response) => {
                 if (response.status === 200) {
+                    console.log(response.data);
+                    setPagination(response.data);
                     const all = response.data.data;
                     const deleted = all.filter((a) => a.is_deleted == 1);
                     const available = all.filter((a) => a.is_deleted == 0);
-                    setStorage(all);
-                    setStorageDeleted(deleted);
-                    setStorageAvailable(available);
-                    setFilter(all);
+                    const options = [all, deleted, available];
+                    setStorage(options[0]);
+                    setStorageDeleted(options[1]);
+                    setStorageAvailable(options[2]);
+                    setFilter(options[index]);
                     setIsLoading(false);
                 }
             });
@@ -257,9 +263,14 @@ function Storage() {
     };
 
     useEffect(() => {
-        getStorage();
+        getStorage(`shops/getStorage/${user.shop_id}`, alignment);
         getProducts();
-    }, []);
+        setRowCountState((prevRowCountState) =>
+            pagination.total !== undefined
+                ? pagination.total
+                : prevRowCountState
+        );
+    }, [setRowCountState]);
 
     const columns = [
         {
@@ -293,17 +304,28 @@ function Storage() {
         {
             field: "edit",
             headerName: "",
+            renderCell: (params) => {
+                return (
+                    <Tooltip
+                        title="Kattintson a sorra szerkesztéshez"
+                        placement="top"
+                        followCursor
+                    >
+                        <b style={{ color: "#1976d2" }}>{params.value}</b>
+                    </Tooltip>
+                );
+            },
         },
     ];
 
-    /*if (isLoading) {
+    if (isLoading) {
         return (
             <CircularProgress
                 disableShrink
                 sx={{ animationDuration: "300ms" }}
             />
         );
-    }*/
+    }
 
     return (
         <Grid2>
@@ -314,52 +336,59 @@ function Storage() {
                     alignItems="center"
                     justifyContent="left"
                 >
-                    <IconButton
-                        onClick={(e) => {
-                            setIsAdding(true);
-                            setEditedRow(false);
-                            setIsDeleting(false);
-                        }}
+                    <Tooltip
+                        title="Termék hozzáadása"
+                        placement="top"
+                        followCursor
                     >
-                        <Add />
-                    </IconButton>
-                    <IconButton
-                        onClick={(e) => {
-                            setIsAdding(false);
-                            setEditedRow(false);
-                            setIsDeleting(true);
-                        }}
+                        <IconButton
+                            color="primary"
+                            onClick={(e) => {
+                                setIsAdding(true);
+                                setEditedRow(false);
+                                setIsDeleting(false);
+                            }}
+                        >
+                            <Add />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip
+                        title="Kijelölt termékek törlése"
+                        placement="top"
+                        followCursor
                     >
-                        <Delete />
-                    </IconButton>
-                    <Searchbar />
+                        <span>
+                            <IconButton
+                                color="primary"
+                                disabled={deletedRows.length === 0}
+                                onClick={(e) => {
+                                    setIsAdding(false);
+                                    setEditedRow(false);
+                                    setIsDeleting(true);
+                                }}
+                            >
+                                <Delete />
+                            </IconButton>
+                        </span>
+                    </Tooltip>
                     <ToggleButtonGroup
                         value={alignment}
                         exclusive
                         onChange={handleAlignment}
                     >
+                        <Tooltip title="Elérhető" placement="top" followCursor>
+                            <ToggleButton value={2} selected={alignment === 2}>
+                                <FilterList />
+                            </ToggleButton>
+                        </Tooltip>
                         <Tooltip title="Minden" placement="top" followCursor>
-                            <ToggleButton
-                                value="left"
-                                selected={alignment === "left"}
-                            >
+                            <ToggleButton value={0} selected={alignment === 0}>
                                 <FilterNone />
                             </ToggleButton>
                         </Tooltip>
                         <Tooltip title="Törölt" placement="top" followCursor>
-                            <ToggleButton
-                                value="center"
-                                selected={alignment === "center"}
-                            >
+                            <ToggleButton value={1} selected={alignment === 1}>
                                 <FilterListOff />
-                            </ToggleButton>
-                        </Tooltip>
-                        <Tooltip title="Elérhető" placement="top" followCursor>
-                            <ToggleButton
-                                value="right"
-                                selected={alignment === "right"}
-                            >
-                                <FilterList />
                             </ToggleButton>
                         </Tooltip>
                     </ToggleButtonGroup>
@@ -390,9 +419,32 @@ function Storage() {
                         disableSelectionOnClick
                         autoHeight={true}
                         autoPageSize={true}
-                        pageSize={10}
+                        pageSize={pagination.per_page}
                         checkboxSelection
-                        loading={isLoading}
+                        page={pagination.current_page - 1}
+                        //loading={isLoading}
+                        isRowSelectable={(params) => params.row.is_deleted != 1}
+                        paginationMode="server"
+                        rowCount={pagination.total}
+                        onPageChange={(e) => {
+                            console.log(filter);
+                            if (pagination.next_page_url == null) {
+                                getStorage(
+                                    pagination.prev_page_url
+                                        .split("api")[1]
+                                        .split("=")[0] + `=${e + 1}`,
+                                    alignment
+                                );
+                            } else {
+                                getStorage(
+                                    pagination.next_page_url
+                                        .split("api")[1]
+                                        .split("=")[0] + `=${e + 1}`,
+                                    alignment
+                                );
+                            }
+                        }}
+                        components={{ Toolbar: CustomToolbar }}
                     />
                 </Box>
 
