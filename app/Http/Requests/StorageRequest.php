@@ -29,7 +29,7 @@ class StorageRequest extends FormRequest
             'product_id' => "required|numeric|exists:products,id",
             'amount' => "required|numeric|min:1|max:9999",
             'price' => "required|numeric|min:1|max:99999999",
-            'expiration' => "date|date_format:Y-m-d H:i:s"
+            'expiration' => "date|date_format:Y-m-d|nullable"
         ];
     }
 
@@ -48,7 +48,7 @@ class StorageRequest extends FormRequest
             'price.min' => "Ár minimum értéke 1!",
             'price.max' => "Ár maximum értéke 99999999!",
             'expiration.date' => "A lejárati dátum értéke csak dátum lehet!",
-            'expiration.date_format' => "A lejárati dátum formátuma nem megfelelő (É-h-n Ó:p:m)!"
+            'expiration.date_format' => "A lejárati dátum formátuma nem megfelelő (É-h-n)!"
         ];
     }
 

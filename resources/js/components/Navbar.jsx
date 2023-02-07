@@ -101,7 +101,7 @@ function Navbar(props) {
                     </IconButton>
                     <Link to="/home">
                         <Image
-                            src="./images/logo.png"
+                            src="/InventorySystem/public/storage/logo.png"
                             width="150px"
                             duration={500}
                         />

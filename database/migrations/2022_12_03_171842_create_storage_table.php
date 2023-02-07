@@ -21,7 +21,7 @@ class CreateStorageTable extends Migration
             $table->Integer("price");
             $table->timestamp("created_at");
             $table->timestamp("updated_at");
-            $table->timestamp("expiration")->nullable();
+            $table->date("expiration")->nullable();
             $table->boolean("is_deleted")->default(false);
             $table->unique(['shop_id', 'product_id', 'expiration']);
         });

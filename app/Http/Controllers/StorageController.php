@@ -25,7 +25,22 @@ class StorageController extends Controller
         return response()->json($storage);
     }
 
-    public function searchStorage($searchString)
+    public function searchStorage(Shop $shop, $searchString)
+    {
+        $current_shop_id = $shop->id;
+
+        $storage = Storage::join('products', 'storages.product_id', '=', 'products.id')
+            ->where([
+                ['name', 'LIKE', '%' . $searchString . '%'],
+                ['shop_id', '=', $current_shop_id],
+            ])->orWhere([
+                ['type', 'LIKE', '%' . $searchString . '%'],
+                ['shop_id', '=', $current_shop_id],
+            ])->paginate(20);
+        return response()->json($storage);
+    }
+
+    public function searchMyStorage($searchString)
     {
         $user = Auth::user();
         $current_shop_id = $user->shop_id;
