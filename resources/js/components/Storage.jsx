@@ -1,4 +1,5 @@
 import {
+    Alert,
     Box,
     Button,
     CircularProgress,
@@ -79,6 +80,7 @@ function Storage() {
     const expiration = useRef("");
     const [alignment, setAlignment] = useState(2);
     const [open, setOpen] = useState(false);
+    const [alertMessage, setalertMessage] = useState("");
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -152,7 +154,7 @@ function Storage() {
                     product_id: product.current.value,
                     amount: amount.current.value,
                     price: price.current.value,
-                    expiration: expiration.current.value + " 00:00:00",
+                    expiration: expiration.current.value,
                 },
                 {
                     headers: {
@@ -170,8 +172,10 @@ function Storage() {
                     expiration.current.value = "";
                     setErrors([]);
                     console.log(response);
+                    getStorage();
                     setIsAdding(false);
                     setOpen(true);
+                    setalertMessage("Termék sikeresen hozzáadva.");
                 }
             })
             .catch((response) => {
@@ -191,7 +195,7 @@ function Storage() {
                     product_id: product.current.value,
                     amount: amount.current.value,
                     price: price.current.value,
-                    expiration: expiration.current.value + " 00:00:00",
+                    expiration: expiration.current.value,
                 },
                 {
                     headers: {
@@ -208,6 +212,10 @@ function Storage() {
                     expiration.current.value = "";
                     setErrors([]);
                     console.log(response.data);
+                    getStorage();
+                    setIsEditing(false);
+                    setOpen(true);
+                    setalertMessage("Termék sikeresen módosítva.");
                 }
             })
             .catch((response) => {
@@ -238,7 +246,10 @@ function Storage() {
                 if (response.status === 200) {
                     console.log("félsiker");
                     //setStorage(response.data.data);
+                    getStorage();
                     setIsLoading(false);
+                    setOpen(true);
+                    setalertMessage("Termék sikeresen törölve.");
                 }
             })
             .catch(() => {
@@ -666,12 +677,15 @@ function Storage() {
                     </Dialog>
                 )}
             </Grid2>
-            <Snackbar
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose}
-                message="Note archived"
-            />
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert
+                    onClose={handleClose}
+                    severity="success"
+                    sx={{ width: "100%" }}
+                >
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
         </Grid2>
     );
 }
