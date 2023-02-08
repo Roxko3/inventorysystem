@@ -24,12 +24,12 @@ class StorageController extends Controller
         $storage = Storage::with("product")->where("shop_id", $shop->id)->paginate(20);
         return response()->json($storage);
     }
-
+    //search ugyanúgy adja vissza a cuccokat mint az első               
     public function searchStorage(Shop $shop, $searchString)
     {
         $current_shop_id = $shop->id;
 
-        $storage = Storage::join('products', 'storages.product_id', '=', 'products.id')
+        $storage = Storage::with("shop", "product")->join('products', 'storages.product_id', '=', 'products.id')
             ->where([
                 ['name', 'LIKE', '%' . $searchString . '%'],
                 ['shop_id', '=', $current_shop_id],
@@ -37,6 +37,7 @@ class StorageController extends Controller
                 ['type', 'LIKE', '%' . $searchString . '%'],
                 ['shop_id', '=', $current_shop_id],
             ])->paginate(20);
+
         return response()->json($storage);
     }
 
@@ -45,7 +46,7 @@ class StorageController extends Controller
         $user = Auth::user();
         $current_shop_id = $user->shop_id;
 
-        $storage = Storage::join('products', 'storages.product_id', '=', 'products.id')
+        $storage = Storage::with("shop", "product")->join('products', 'storages.product_id', '=', 'products.id')
             ->where([
                 ['name', 'LIKE', '%' . $searchString . '%'],
                 ['shop_id', '=', $current_shop_id],
@@ -67,7 +68,7 @@ class StorageController extends Controller
             ->first();
 
         if ($storage != null) {
-            return response()->json("A megadott termék már szerepel a boltban, amennyiben ezen változtatni szeretne, használja a szerkesztés lehetőséget.");
+            return response()->json("A megadott termék már szerepel a boltban, amennyiben ezen változtatni szeretne, használja a szerkesztés lehetőséget.", 409);
         }
 
         $storage = new Storage();
