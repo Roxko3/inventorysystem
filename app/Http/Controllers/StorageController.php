@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
 use App\Http\Requests\StorageRequest;
 use App\Http\Requests\UpdateStorageRequest;
 use App\Models\Log;
 use App\Models\Shop;
 use App\Models\Storage;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,36 +26,42 @@ class StorageController extends Controller
         $storage = Storage::with("product")->where("shop_id", $shop->id)->paginate(20);
         return response()->json($storage);
     }
-    //search ugyanúgy adja vissza a cuccokat mint az első               
-    public function searchStorage(Shop $shop, $searchString)
+
+    public function searchStorage(OrderRequest $request, Shop $shop, $searchString)
     {
         $current_shop_id = $shop->id;
-
         $storage = Storage::with("shop", "product")->join('products', 'storages.product_id', '=', 'products.id')
             ->where([
-                ['name', 'LIKE', '%' . $searchString . '%'],
                 ['shop_id', '=', $current_shop_id],
+                ['name', 'LIKE', '%' . $searchString . '%']
             ])->orWhere([
-                ['type', 'LIKE', '%' . $searchString . '%'],
                 ['shop_id', '=', $current_shop_id],
-            ])->paginate(20);
+                ['type', 'LIKE', '%' . $searchString . '%']
+            ])->orderBy($request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")->paginate(20);
 
         return response()->json($storage);
     }
 
-    public function searchMyStorage($searchString)
+    public function searchMyStorage(OrderRequest $request, $searchString)
     {
         $user = Auth::user();
         $current_shop_id = $user->shop_id;
 
-        $storage = Storage::with("shop", "product")->join('products', 'storages.product_id', '=', 'products.id')
+        $storage = Storage::where('shop_id', '=', $current_shop_id)
+            ->whereHas('product', function (Builder $query) use ($searchString) {
+                $query->where('name', 'like', '%' . $searchString . '%')
+                    ->orWhere('type', 'like', '%' . $searchString . '%');
+            })->orderBy($request->has("column") ?  $request->get("column") : "id", $request->get("order") == "desc" ? "desc" : "asc")->paginate(20);
+
+        /*$storage = Storage::with("product")
             ->where([
-                ['name', 'LIKE', '%' . $searchString . '%'],
                 ['shop_id', '=', $current_shop_id],
+                ['product->name', 'LIKE', '%' . $searchString . '%']
             ])->orWhere([
-                ['type', 'LIKE', '%' . $searchString . '%'],
                 ['shop_id', '=', $current_shop_id],
-            ])->paginate(20);
+                ['product->type', 'LIKE', '%' . $searchString . '%']
+            ])->paginate(20);*/
+
         return response()->json($storage);
     }
 
