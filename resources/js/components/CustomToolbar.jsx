@@ -13,7 +13,12 @@ function CustomToolbar() {
             <GridToolbarQuickFilter
                 title="Keresés..."
                 placeholder="Keresés..."
+                debounceMs={500}
             />
+            <GridToolbarFilterButton />
+            <GridToolbarDensitySelector />
+            <GridToolbarColumnsButton />
+            <GridToolbarExport />
         </GridToolbarContainer>
     );
 }

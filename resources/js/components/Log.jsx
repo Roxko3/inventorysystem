@@ -12,9 +12,10 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, huHU } from "@mui/x-data-grid";
 import Searchbar from "./Searchbar";
 import Cookies from "js-cookie";
+import CustomToolbar from "./CustomToolbar";
 
 function Log() {
     const [logs, setLogs] = useState([]);
@@ -23,15 +24,12 @@ function Log() {
 
     const getlogs = () => {
         axios
-            .get(
-                "http://127.0.0.1/InventorySystem/public/api/logs",
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + cookie,
-                    },
+            .get("http://127.0.0.1/InventorySystem/public/api/logs", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + cookie,
                 },
-            )
+            })
             .then((response) => {
                 if (response.status === 200) {
                     setLogs(response.data);
@@ -76,7 +74,6 @@ function Log() {
                 />
             ) : (
                 <Grid2>
-                    <Searchbar />
                     <Box sx={{ height: 735 }}>
                         <DataGrid
                             rows={logs.map((logs) => ({
@@ -89,6 +86,12 @@ function Log() {
                             autoHeight={true}
                             autoPageSize={true}
                             pageSize={12}
+                            components={{ Toolbar: CustomToolbar }}
+                            localeText={
+                                huHU.components.MuiDataGrid.defaultProps
+                                    .localeText
+                            }
+                            disableColumnMenu
                         />
                     </Box>
                 </Grid2>

@@ -32,7 +32,7 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, huHU } from "@mui/x-data-grid";
 import {
     Add,
     Check,
@@ -109,7 +109,7 @@ function Storage() {
         const axiosInstance = axios.create({
             baseURL: "http://127.0.0.1/InventorySystem/public/api/",
         });
-        setIsLoading(true);
+        //setIsLoading(true);
         await axiosInstance
             .get(url, {
                 headers: {
@@ -172,7 +172,7 @@ function Storage() {
                     expiration.current.value = "";
                     setErrors([]);
                     console.log(response);
-                    getStorage();
+                    getStorage(`shops/getStorage/${user.shop_id}`, alignment);
                     setIsAdding(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen hozzáadva.");
@@ -212,7 +212,7 @@ function Storage() {
                     expiration.current.value = "";
                     setErrors([]);
                     console.log(response.data);
-                    getStorage();
+                    getStorage(`shops/getStorage/${user.shop_id}`, alignment);
                     setIsEditing(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen módosítva.");
@@ -246,7 +246,7 @@ function Storage() {
                 if (response.status === 200) {
                     console.log("félsiker");
                     //setStorage(response.data.data);
-                    getStorage();
+                    getStorage(`shops/getStorage/${user.shop_id}`, alignment);
                     setIsLoading(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen törölve.");
@@ -397,7 +397,7 @@ function Storage() {
                 <Box>
                     <DataGrid
                         rows={filter.map((storage) => {
-                            storage["product_name"] = storage["product"].name;
+                            //storage["product_name"] = storage["product"].name;
                             storage["edit"] = "Szerkesztés";
                             return storage;
                         })}
@@ -445,6 +445,24 @@ function Storage() {
                             }
                         }}
                         components={{ Toolbar: CustomToolbar }}
+                        localeText={
+                            huHU.components.MuiDataGrid.defaultProps.localeText
+                        }
+                        disableColumnMenu
+                        filterMode="server"
+                        onFilterModelChange={(e) =>
+                            getStorage(
+                                `/shops/searchStorage/${user.shop_id}/${e.quickFilterValues}`,
+                                alignment
+                            )
+                        }
+                        sortingMode="server"
+                        onSortModelChange={(e) =>
+                            getStorage(
+                                `shops/getStorage/${user.shop_id}`,
+                                alignment
+                            )
+                        }
                     />
                 </Box>
 
