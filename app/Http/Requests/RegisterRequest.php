@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\PasswordMixedCase;
-use App\Rules\PasswordNumber;
+use App\Rules\PasswordMixedCaseRule;
+use App\Rules\PasswordNumberRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator as Validator;
 use Illuminate\Validation\ValidationException;
@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email',
-            'password' => ['required', 'min:8', 'max:255', new PasswordMixedCase, new PasswordNumber],
+            'password' => ['required', 'min:8', 'max:255', new PasswordMixedCaseRule, new PasswordNumberRule],
             'password_repeat' => 'required|same:password'
         ];
     }

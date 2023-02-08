@@ -2,9 +2,11 @@
 
 namespace App\Rules;
 
+use App\Models\Storage;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Schema;
 
-class PasswordNumber implements Rule
+class CheckColumnRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,8 +27,11 @@ class PasswordNumber implements Rule
      */
     public function passes($attribute, $value)
     {
-        $string = preg_replace('/[^0-9]/', '', $value);
-        return is_numeric($string);
+        if (Schema::hasColumn("storages", $value)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -36,6 +41,6 @@ class PasswordNumber implements Rule
      */
     public function message()
     {
-        return 'A jelszó legalább egy számot tartalmazzon.';
+        return 'A megadott rendezési szempont nem létezik.';
     }
 }
