@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\PasswordMixedCase;
-use App\Rules\PasswordNumber;
+use App\Rules\PasswordMixedCaseRule;
+use App\Rules\PasswordNumberRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator as Validator;
 use Illuminate\Validation\ValidationException;
@@ -29,7 +29,7 @@ class PasswordChangeRequest extends FormRequest
     {
         return [
             'old-password' => 'required',
-            'new-password' => ['required', 'min:8', 'max:255', new PasswordMixedCase, new PasswordNumber],
+            'new-password' => ['required', 'min:8', 'max:255', new PasswordMixedCaseRule, new PasswordNumberRule],
             'new-password-repeat' => 'required|same:new-password'
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator as Validator;
 use Illuminate\Validation\ValidationException;
+use App\Rules\CheckColumnRule;
 
 class OrderRequest extends FormRequest
 {
@@ -26,7 +27,7 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'column' => "nullable",
+            'column' => ["nullable", new CheckColumnRule],
             'order' => "nullable",
         ];
     }

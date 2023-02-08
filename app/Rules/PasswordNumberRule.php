@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class PasswordMixedCase implements Rule
+class PasswordNumberRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,7 +25,8 @@ class PasswordMixedCase implements Rule
      */
     public function passes($attribute, $value)
     {
-        return (strtolower($value) != $value && strtoupper($value) != $value);
+        $string = preg_replace('/[^0-9]/', '', $value);
+        return is_numeric($string);
     }
 
     /**
@@ -35,6 +36,6 @@ class PasswordMixedCase implements Rule
      */
     public function message()
     {
-        return 'A jelszó legalább egy kis és egy nagy betűt tartalmazzon.';
+        return 'A jelszó legalább egy számot tartalmazzon.';
     }
 }
