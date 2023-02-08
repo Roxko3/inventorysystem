@@ -109,7 +109,7 @@ function Storage() {
         const axiosInstance = axios.create({
             baseURL: "http://127.0.0.1/InventorySystem/public/api/",
         });
-        setIsLoading(true);
+        //setIsLoading(true);
         await axiosInstance
             .get(url, {
                 headers: {
@@ -397,7 +397,7 @@ function Storage() {
                 <Box>
                     <DataGrid
                         rows={filter.map((storage) => {
-                            storage["product_name"] = storage["product"].name;
+                            //storage["product_name"] = storage["product"].name;
                             storage["edit"] = "Szerkesztés";
                             return storage;
                         })}
@@ -449,6 +449,20 @@ function Storage() {
                             huHU.components.MuiDataGrid.defaultProps.localeText
                         }
                         disableColumnMenu
+                        filterMode="server"
+                        onFilterModelChange={(e) =>
+                            getStorage(
+                                `/shops/searchStorage/${user.shop_id}/${e.quickFilterValues}`,
+                                alignment
+                            )
+                        }
+                        sortingMode="server"
+                        onSortModelChange={(e) =>
+                            getStorage(
+                                `shops/getStorage/${user.shop_id}`,
+                                alignment
+                            )
+                        }
                     />
                 </Box>
 
