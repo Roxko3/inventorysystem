@@ -81,6 +81,9 @@ function Storage() {
     const [alignment, setAlignment] = useState(2);
     const [open, setOpen] = useState(false);
     const [alertMessage, setalertMessage] = useState("");
+    const [severity, setSeverity] = useState("success");
+    const [column, setColumn] = useState("");
+    const [order, setOrder] = useState("");
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -115,6 +118,9 @@ function Storage() {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + cookie,
+                },
+                params: {
+                    column: column,
                 },
             })
             .then((response) => {
@@ -165,7 +171,7 @@ function Storage() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    setPValue(0);
+                    setPValue("");
                     product.current.value = "";
                     amount.current.value = "";
                     price.current.value = "";
@@ -176,9 +182,15 @@ function Storage() {
                     setIsAdding(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen hozzáadva.");
+                    setSeverity("success");
                 }
             })
             .catch((response) => {
+                if (response.response.status === 409) {
+                    setOpen(true);
+                    setalertMessage(response.response.data);
+                    setSeverity("warning");
+                }
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
                     console.log(response.response);
@@ -216,6 +228,7 @@ function Storage() {
                     setIsEditing(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen módosítva.");
+                    setSeverity("success");
                 }
             })
             .catch((response) => {
@@ -250,6 +263,8 @@ function Storage() {
                     setIsLoading(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen törölve.");
+                    setDeletedRows([]);
+                    setSeverity("success");
                 }
             })
             .catch(() => {
@@ -397,11 +412,12 @@ function Storage() {
                 <Box>
                     <DataGrid
                         rows={filter.map((storage) => {
-                            //storage["product_name"] = storage["product"].name;
+                            storage["product_name"] = storage["product"].name;
                             storage["edit"] = "Szerkesztés";
                             return storage;
                         })}
                         onCellClick={(e) => {
+                            console.log(e);
                             const rowID = storage.findIndex(
                                 (a) => a.id == e["id"]
                             );
@@ -450,19 +466,33 @@ function Storage() {
                         }
                         disableColumnMenu
                         filterMode="server"
-                        onFilterModelChange={(e) =>
-                            getStorage(
-                                `/shops/searchStorage/${user.shop_id}/${e.quickFilterValues}`,
-                                alignment
-                            )
-                        }
+                        onFilterModelChange={(e) => {
+                            if (e.quickFilterValues.length != 0) {
+                                getStorage(
+                                    `/shops/searchStorage/${
+                                        user.shop_id
+                                    }/${e.quickFilterValues
+                                        .toString()
+                                        .replaceAll(",", " ")}`,
+                                    alignment
+                                );
+                            } else {
+                                getStorage(
+                                    `shops/getStorage/${user.shop_id}`,
+                                    alignment
+                                );
+                            }
+                        }}
                         sortingMode="server"
-                        onSortModelChange={(e) =>
+                        onSortModelChange={(e) => {
+                            console.log(e);
+                            setColumn(e.field);
+                            //setOrder(e.sort);
                             getStorage(
                                 `shops/getStorage/${user.shop_id}`,
                                 alignment
-                            )
-                        }
+                            );
+                        }}
                     />
                 </Box>
 
@@ -473,7 +503,7 @@ function Storage() {
                             setIsAdding(false);
                             setEditedRow(null);
                             setErrors([]);
-                            setPValue(0);
+                            setPValue("");
                         }}
                     >
                         <DialogTitle>Termék hozzáadása a raktárhoz</DialogTitle>
@@ -555,7 +585,7 @@ function Storage() {
                                     setIsAdding(false);
                                     setEditedRow(null);
                                     setErrors([]);
-                                    setPValue(0);
+                                    setPValue("");
                                 }}
                             >
                                 Mégse
@@ -698,7 +728,7 @@ function Storage() {
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert
                     onClose={handleClose}
-                    severity="success"
+                    severity={severity}
                     sx={{ width: "100%" }}
                 >
                     {alertMessage}
