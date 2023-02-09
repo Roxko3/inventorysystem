@@ -38,7 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::group(['prefix' => '/shops'], function () {
         Route::get('/getStorage/{shop}', [StorageController::class, 'getStorage'])->name("getStorage");
-        Route::get('/searchStorage/{shop}/{searchString}', [StorageController::class, 'searchStorage'])->name("searchStorage");
+        Route::get('/searchStorage/{shop}', [StorageController::class, 'searchStorage'])->name("searchStorage");
         Route::post("/create", [ShopController::class, "create"])->name("createShop");
         Route::put("/{shop}", [ShopController::class, "update"])->name("updateShop");
         Route::delete("/{shop}", [ShopController::class, "delete"])->name("deleteShop");

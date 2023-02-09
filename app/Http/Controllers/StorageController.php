@@ -27,18 +27,23 @@ class StorageController extends Controller
         return response()->json($storage);
     }
 
-    public function searchStorage(OrderRequest $request, Shop $shop, $searchString)
+    public function searchStorage(OrderRequest $request, Shop $shop)
     {
         $current_shop_id = $shop->id;
-        $storage = Storage::with("shop", "product")->join('products', 'storages.product_id', '=', 'products.id')
-            ->where([
-                ['shop_id', '=', $current_shop_id],
-                ['name', 'LIKE', '%' . $searchString . '%']
-            ])->orWhere([
-                ['shop_id', '=', $current_shop_id],
-                ['type', 'LIKE', '%' . $searchString . '%']
-            ])->orderBy($request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")->paginate(20);
-
+        if ($request->get("searchString") == null) {
+            $storage = Storage::where('shop_id', '=', $current_shop_id)
+                ->with("product")
+                ->orderBy($request->get("column") == null ? "id" : $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
+                ->paginate(20);
+        } else {
+            $storage = Storage::where('shop_id', '=', $current_shop_id)
+                ->whereHas('product', function (Builder $query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->get("searchString") . '%')
+                        ->orWhere('type', 'like', '%' . $request->get("searchString") . '%');
+                })->with("product")
+                ->orderBy($request->get("column") == null ? "id" : $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
+                ->paginate(20);
+        }
         return response()->json($storage);
     }
 
