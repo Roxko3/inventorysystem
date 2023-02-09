@@ -29,6 +29,7 @@ class OrderRequest extends FormRequest
         return [
             'column' => ["nullable", new CheckColumnRule],
             'order' => "nullable",
+            'searchString' => "nullable"
         ];
     }
 

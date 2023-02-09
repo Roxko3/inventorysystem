@@ -483,6 +483,7 @@ function Storage() {
                                 );
                             }
                         }}
+                        //{{URL}}/shops/searchStorage/1?column=price&order=desc&searchString=élel
                         sortingMode="server"
                         onSortModelChange={(e) => {
                             console.log(e);
