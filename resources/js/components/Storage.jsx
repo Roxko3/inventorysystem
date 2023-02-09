@@ -129,7 +129,7 @@ function Storage() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setPagination(response.data);
                     const all = response.data.data;
                     const deleted = all.filter((a) => a.is_deleted == 1);
@@ -151,7 +151,7 @@ function Storage() {
             .then((response) => {
                 if (response.status === 200) {
                     setProducts(response.data);
-                    console.log(response.data);
+                    //console.log(response.data);
                 }
             });
     };
@@ -182,7 +182,7 @@ function Storage() {
                     price.current.value = "";
                     expiration.current.value = "";
                     setErrors([]);
-                    console.log(response);
+                    //console.log(response);
                     getStorage(
                         `shops/searchStorage/${user.shop_id}`,
                         alignment
@@ -201,7 +201,7 @@ function Storage() {
                 }
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
-                    console.log(response.response);
+                    //console.log(response.response);
                 }
             });
     };
@@ -231,7 +231,7 @@ function Storage() {
                     price.current.value = "";
                     expiration.current.value = "";
                     setErrors([]);
-                    console.log(response.data);
+                    //console.log(response.data);
                     getStorage(
                         `shops/searchStorage/${user.shop_id}`,
                         alignment
@@ -245,13 +245,13 @@ function Storage() {
             .catch((response) => {
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
-                    console.log(response.response);
+                    //console.log(response.response);
                 }
             });
     };
 
     const deleteSelectedRows = () => {
-        console.log(deletedRows);
+        //console.log(deletedRows);
         axios
             .delete(
                 `http://127.0.0.1/InventorySystem/public/api/storages/delete`,
@@ -267,7 +267,7 @@ function Storage() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log("félsiker");
+                    //console.log("félsiker");
                     //setStorage(response.data.data);
                     getStorage(
                         `shops/searchStorage/${user.shop_id}`,
@@ -282,13 +282,13 @@ function Storage() {
                 }
             })
             .catch(() => {
-                console.log("szar van a palacsintában");
+                //console.log("szar van a palacsintában");
             });
     };
 
     const handleChange = (e) => {
         setPValue(e.target.value);
-        console.log(e.target);
+        //console.log(e.target);
     };
 
     useEffect(() => {
@@ -431,7 +431,7 @@ function Storage() {
                             return storage;
                         })}
                         onCellClick={(e) => {
-                            console.log(e);
+                            //(e);
                             const rowID = storage.findIndex(
                                 (a) => a.id == e["id"]
                             );
@@ -442,7 +442,7 @@ function Storage() {
                             }
                         }}
                         onSelectionModelChange={(ids) => {
-                            console.log(ids);
+                            //console.log(ids);
                             setDeletedRows(ids);
                         }}
                         columns={columns}
@@ -457,7 +457,7 @@ function Storage() {
                         paginationMode="server"
                         rowCount={pagination.total}
                         onPageChange={(e) => {
-                            console.log(filter);
+                            //console.log(filter);
                             if (pagination.next_page_url == null) {
                                 getStorage(
                                     pagination.prev_page_url
@@ -508,7 +508,7 @@ function Storage() {
                         //{{URL}}/shops/searchStorage/1?column=price&order=desc&searchString=élel
                         sortingMode="server"
                         onSortModelChange={(e) => {
-                            console.log(e);
+                            //console.log(e);
                             if (e.length != 0) {
                                 setOrder(e[0].sort);
                                 setField(e[0].field.replace("name", "id"));
