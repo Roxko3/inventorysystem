@@ -85,6 +85,7 @@ function Storage() {
     const [order, setOrder] = useState("");
     const [field, setField] = useState("");
     const [search, setSearch] = useState("");
+    const [isGridLoading, setIsGridLoading] = useState(true);
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -139,6 +140,7 @@ function Storage() {
                     setStorageAvailable(options[2]);
                     setFilter(options[index]);
                     setIsLoading(false);
+                    setIsGridLoading(false);
                 }
             });
     };
@@ -272,6 +274,7 @@ function Storage() {
                         alignment
                     );
                     setIsLoading(false);
+                    setIsGridLoading(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen törölve.");
                     setDeletedRows([]);
@@ -449,7 +452,7 @@ function Storage() {
                         pageSize={pagination.per_page}
                         checkboxSelection
                         page={pagination.current_page - 1}
-                        //loading={isLoading}
+                        loading={isGridLoading}
                         isRowSelectable={(params) => params.row.is_deleted != 1}
                         paginationMode="server"
                         rowCount={pagination.total}
@@ -470,6 +473,7 @@ function Storage() {
                                     alignment
                                 );
                             }
+                            setIsGridLoading(true);
                         }}
                         components={{ Toolbar: CustomToolbar }}
                         localeText={
@@ -499,6 +503,7 @@ function Storage() {
                                     alignment
                                 );*/
                             }
+                            setIsGridLoading(true);
                         }}
                         //{{URL}}/shops/searchStorage/1?column=price&order=desc&searchString=élel
                         sortingMode="server"
@@ -519,6 +524,7 @@ function Storage() {
                                     alignment
                                 );*/
                             }
+                            setIsGridLoading(true);
                         }}
                     />
                 </Box>
