@@ -82,8 +82,9 @@ function Storage() {
     const [open, setOpen] = useState(false);
     const [alertMessage, setalertMessage] = useState("");
     const [severity, setSeverity] = useState("success");
-    const [column, setColumn] = useState("");
     const [order, setOrder] = useState("");
+    const [field, setField] = useState("");
+    const [search, setSearch] = useState("");
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -120,7 +121,9 @@ function Storage() {
                     Authorization: "Bearer " + cookie,
                 },
                 params: {
-                    column: column,
+                    searchString: search,
+                    order: order,
+                    column: field,
                 },
             })
             .then((response) => {
@@ -178,7 +181,10 @@ function Storage() {
                     expiration.current.value = "";
                     setErrors([]);
                     console.log(response);
-                    getStorage(`shops/getStorage/${user.shop_id}`, alignment);
+                    getStorage(
+                        `shops/searchStorage/${user.shop_id}`,
+                        alignment
+                    );
                     setIsAdding(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen hozzáadva.");
@@ -224,7 +230,10 @@ function Storage() {
                     expiration.current.value = "";
                     setErrors([]);
                     console.log(response.data);
-                    getStorage(`shops/getStorage/${user.shop_id}`, alignment);
+                    getStorage(
+                        `shops/searchStorage/${user.shop_id}`,
+                        alignment
+                    );
                     setIsEditing(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen módosítva.");
@@ -241,7 +250,6 @@ function Storage() {
 
     const deleteSelectedRows = () => {
         console.log(deletedRows);
-        setIsLoading(true);
         axios
             .delete(
                 `http://127.0.0.1/InventorySystem/public/api/storages/delete`,
@@ -259,7 +267,10 @@ function Storage() {
                 if (response.status === 200) {
                     console.log("félsiker");
                     //setStorage(response.data.data);
-                    getStorage(`shops/getStorage/${user.shop_id}`, alignment);
+                    getStorage(
+                        `shops/searchStorage/${user.shop_id}`,
+                        alignment
+                    );
                     setIsLoading(false);
                     setOpen(true);
                     setalertMessage("Termék sikeresen törölve.");
@@ -278,14 +289,14 @@ function Storage() {
     };
 
     useEffect(() => {
-        getStorage(`shops/getStorage/${user.shop_id}`, alignment);
+        getStorage(`shops/searchStorage/${user.shop_id}`, alignment);
         getProducts();
         setRowCountState((prevRowCountState) =>
             pagination.total !== undefined
                 ? pagination.total
                 : prevRowCountState
         );
-    }, [setRowCountState]);
+    }, [order, field, search, setRowCountState]);
 
     const columns = [
         {
@@ -468,31 +479,46 @@ function Storage() {
                         filterMode="server"
                         onFilterModelChange={(e) => {
                             if (e.quickFilterValues.length != 0) {
-                                getStorage(
+                                setSearch(
+                                    e.quickFilterValues
+                                        .toString()
+                                        .replaceAll(",", " ")
+                                );
+                                /*getStorage(
                                     `/shops/searchStorage/${
                                         user.shop_id
-                                    }/${e.quickFilterValues
+                                    }?searchString=${e.quickFilterValues
                                         .toString()
                                         .replaceAll(",", " ")}`,
                                     alignment
-                                );
+                                );*/
                             } else {
-                                getStorage(
+                                setSearch("");
+                                /*getStorage(
                                     `shops/getStorage/${user.shop_id}`,
                                     alignment
-                                );
+                                );*/
                             }
                         }}
                         //{{URL}}/shops/searchStorage/1?column=price&order=desc&searchString=élel
                         sortingMode="server"
                         onSortModelChange={(e) => {
                             console.log(e);
-                            setColumn(e.field);
-                            //setOrder(e.sort);
-                            getStorage(
-                                `shops/getStorage/${user.shop_id}`,
-                                alignment
-                            );
+                            if (e.length != 0) {
+                                setOrder(e[0].sort);
+                                setField(e[0].field.replace("name", "id"));
+                                /*getStorage(
+                                    `shops/searchStorage/${user.shop_id}`,
+                                    alignment
+                                );*/
+                            } else {
+                                setOrder("");
+                                setField("");
+                                /*getStorage(
+                                    `shops/searchStorage/${user.shop_id}`,
+                                    alignment
+                                );*/
+                            }
                         }}
                     />
                 </Box>
