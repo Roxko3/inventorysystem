@@ -27,7 +27,7 @@ import {
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, propsef, useState } from "react";
+import { useEffect, propsef, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Map from "./Map";
 import MyAvatar from "./MyAvatar";
@@ -35,12 +35,19 @@ import Navbar from "./Navbar";
 import Cookies from "js-cookie";
 import { useContext } from "react";
 import { UserContext } from "./App";
+import axios from "axios";
 
 function Profile() {
     const user = useContext(UserContext);
     const [postalCode, setPostalCode] = useState(user.postal_code);
     const [showPassword, setShowPassword] = useState("");
     const [btnDisable, setBtnDisable] = useState(true);
+    const [passDisabled, setPassDisabled] = useState(true);
+    const [postalCodeDisabled, setPostalCodeDisabled] = useState(true);
+    const oldPassword = useRef("");
+    const newPassword = useRef("");
+    const againPassword = useRef("");
+    const [errors, setErrors] = useState([]);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -56,6 +63,55 @@ function Profile() {
         } else {
             setBtnDisable(false);
         }
+    };
+
+    const handlePostalCodeChange = (e) => {
+        if (e.target.value == e.target.defaultValue) {
+            setPostalCodeDisabled(true);
+        } else {
+            setPostalCodeDisabled(false);
+        }
+    };
+
+    const handlePassChange = (e) => {
+        if (e.target.value == "") {
+            setPassDisabled(true);
+        } else {
+            setPassDisabled(false);
+        }
+    };
+
+    const changePassword = async () => {
+        axios
+            .post(
+                "http://127.0.0.1/InventorySystem/public/api/changePassword",
+                {
+                    "old-password": oldPassword.current.value,
+                    "new-password": newPassword.current.value,
+                    "new-password-repeat": againPassword.current.value,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log(response.data);
+                if (response.status === 200) {
+                    oldPassword.current.value = "";
+                    newPassword.current.value = "";
+                    againPassword.current.value = "";
+                    setPassDisabled(true);
+                    setErrors([]);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    setErrors(response.response.data);
+                }
+            });
     };
 
     const cookie = Cookies.get("token");
@@ -169,6 +225,10 @@ function Profile() {
                         </Grid2>*/}
                         <Grid2>
                             <TextField
+                                error={errors["old-password"] != null}
+                                helperText={errors["old-password"]}
+                                inputRef={oldPassword}
+                                onChange={handlePassChange}
                                 label="Régi jelszó"
                                 type={
                                     showPassword.includes("old")
@@ -214,6 +274,10 @@ function Profile() {
                         </Grid2>
                         <Grid2>
                             <TextField
+                                error={errors["new-password"] != null}
+                                helperText={errors["new-password"]}
+                                inputRef={newPassword}
+                                onChange={handlePassChange}
                                 label="Új jelszó"
                                 type={
                                     showPassword.includes("new")
@@ -259,6 +323,10 @@ function Profile() {
                         </Grid2>
                         <Grid2>
                             <TextField
+                                error={errors["new-password-repeat"] != null}
+                                helperText={errors["new-password-repeat"]}
+                                inputRef={againPassword}
+                                onChange={handlePassChange}
                                 label="Új jelszó újra"
                                 type={
                                     showPassword.includes("again")
@@ -303,7 +371,11 @@ function Profile() {
                             />
                         </Grid2>
                         <Grid2>
-                            <Button variant="contained" disabled={true}>
+                            <Button
+                                variant="contained"
+                                disabled={passDisabled}
+                                onClick={changePassword}
+                            >
                                 Jelszó megváltoztatása
                             </Button>
                         </Grid2>
@@ -395,6 +467,7 @@ function Profile() {
                                         </IconButton>
                                     ),
                                 }}
+                                onChange={handlePostalCodeChange}
                             />
                         </Grid2>
                         <Grid2>
@@ -406,7 +479,10 @@ function Profile() {
                             />
                         </Grid2>
                         <Grid2>
-                            <Button variant="contained" disabled={false}>
+                            <Button
+                                variant="contained"
+                                disabled={postalCodeDisabled}
+                            >
                                 Irányítószám megváltoztatása
                             </Button>
                         </Grid2>

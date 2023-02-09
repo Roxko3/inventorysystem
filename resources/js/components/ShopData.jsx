@@ -5,12 +5,15 @@ import {
     Button,
     CircularProgress,
     FormControl,
+    FormControlLabel,
+    FormHelperText,
     IconButton,
     InputLabel,
     Menu,
     MenuItem,
     Rating,
     Select,
+    Switch,
     TextField,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -18,6 +21,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { ShopContext, UserContext } from "./App";
 import Map from "./Map";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 function ShopData() {
     const user = useContext(UserContext);
@@ -29,8 +33,15 @@ function ShopData() {
     const [postalCode, setPostalCode] = useState(user.shop.postal_code);
     const [shopTypes, setShopTypes] = useState([]);
     const [isDisabled, setIsDisabled] = useState(true);
-    const [type, setType] = useState("");
+    const [type, setType] = useState(user.shop.shop_type_id);
     const [anchorEl, setAnchorEl] = useState(null);
+    const shopName = useRef("");
+    const shopType = useRef("");
+    const owner = useRef("");
+    const shopAddress = useRef("");
+    const shopPostalCode = useRef("");
+    const [isChanged, setIsChanged] = useState(false);
+    const [errors, setErrors] = useState([]);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -49,8 +60,54 @@ function ShopData() {
             });
     };
 
+    const updateShop = async () => {
+        axios
+            .put(
+                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}`,
+                {
+                    shop_id: user.shop_id,
+                    name: shopName.current.value,
+                    shop_type_id: shopType.current.value,
+                    owner: owner.current.value,
+                    postal_code: shopPostalCode.current.value,
+                    address: shopAddress.current.value,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    shopName.current.value = "";
+                    shopType.current.value = "";
+                    owner.current.value = "";
+                    shopPostalCode.current.value = "";
+                    shopAddress.current.value = "";
+                    console.log(response.data);
+                    setErrors([]);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    console.log(response.response.data);
+                    setErrors(response.response.data);
+                }
+            });
+    };
+
     const handleChange = (e) => {
         setType(e.target.value);
+    };
+
+    const checkChange = (e) => {
+        if (e.target.value == e.target.defaultValue) {
+            setIsChanged(false);
+        } else {
+            setIsChanged(true);
+        }
     };
 
     useEffect(() => {
@@ -141,17 +198,27 @@ function ShopData() {
                             label="Név"
                             defaultValue={user.shop.name}
                             size="small"
-                            disabled={isDisabled}
+                            InputProps={{
+                                readOnly: isDisabled,
+                            }}
+                            inputRef={shopName}
+                            onChange={checkChange}
+                            helperText={errors.name}
+                            error={errors.name != null}
                         />
                     </Grid2>
                     <Grid2 sx={{ width: "100%" }}>
                         <FormControl size="small" fullWidth>
                             <InputLabel>Bolt típus</InputLabel>
                             <Select
-                                onChange={handleChange}
-                                value={user.shop.shop_type_id}
+                                error={errors.shop_type_id != null}
+                                onChange={(e) => {
+                                    handleChange(e), checkChange(e);
+                                }}
+                                value={type}
                                 label="Bolt típus"
-                                disabled={isDisabled}
+                                readOnly={isDisabled}
+                                inputRef={shopType}
                             >
                                 {shopTypes.map((shopTypes) => (
                                     <MenuItem
@@ -162,6 +229,9 @@ function ShopData() {
                                     </MenuItem>
                                 ))}
                             </Select>
+                            <FormHelperText>
+                                {errors.shop_type_id}
+                            </FormHelperText>
                         </FormControl>
                     </Grid2>
                     <Grid2>
@@ -169,7 +239,13 @@ function ShopData() {
                             label="Tulajdonos"
                             size="small"
                             defaultValue={user.shop.owner}
-                            disabled={isDisabled}
+                            InputProps={{
+                                readOnly: isDisabled,
+                            }}
+                            inputRef={owner}
+                            onChange={checkChange}
+                            helperText={errors.owner}
+                            error={errors.owner != null}
                         />
                     </Grid2>
                 </Grid2>
@@ -181,7 +257,13 @@ function ShopData() {
                                 label="Cím"
                                 size="small"
                                 defaultValue={address}
-                                disabled={isDisabled}
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={shopAddress}
+                                onChange={checkChange}
+                                helperText={errors.address}
+                                error={errors.address != null}
                             />
                         </Grid2>
                         <Grid2>
@@ -190,7 +272,13 @@ function ShopData() {
                                 label="Irányítószám"
                                 size="small"
                                 defaultValue={postalCode}
-                                disabled={isDisabled}
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={shopPostalCode}
+                                onChange={checkChange}
+                                helperText={errors.postal_code}
+                                error={errors.postal_code != null}
                             />
                         </Grid2>
                         <Grid2>
@@ -222,15 +310,23 @@ function ShopData() {
                 sx={{ display: isAdmin ? "flex" : "none" }}
             >
                 <Grid2>
-                    <Button
-                        variant="contained"
-                        onClick={() => setIsDisabled(!isDisabled)}
-                    >
-                        Szerkesztés
-                    </Button>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                onClick={() => setIsDisabled(!isDisabled)}
+                            />
+                        }
+                        label="Szerkesztés"
+                    />
                 </Grid2>
                 <Grid2>
-                    <Button variant="contained">Változtatások mentése</Button>
+                    <Button
+                        variant="contained"
+                        disabled={!isChanged}
+                        onClick={updateShop}
+                    >
+                        Változtatások mentése
+                    </Button>
                 </Grid2>
             </Grid2>
         </Grid2>
