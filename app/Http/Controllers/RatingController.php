@@ -17,7 +17,7 @@ class RatingController extends Controller
                 ->first();
             if ($rating == null) {
                 //Ha 0-ás az értékelés, de nem létezik a felhasználótól értékelés erre a boltra.
-                return response()->json("Nem létezik értékelés ettől a felhasználótól.");
+                return response()->json("Nem létezik értékelés ettől a felhasználótól.", 404);
             }
             //Ha 0-ás az értékelés és van a felhasználótól már értékelés a boltra
             $rating->delete();
