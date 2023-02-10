@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [ProfileController::class, 'myProfile'])->name("myProfile");
         Route::post('/nameEmail', [ProfileController::class, 'nameEmail'])->name("NameOrEmailChange");
         Route::post('/passwordChange', [ProfileController::class, 'passwordChange'])->name("passwordChange");
-        Route::post('/postalcodeChange', [ProfileController::class, 'postalcodeChange'])->name("postalcodeChange");
+        Route::post('/postalCodeChange', [ProfileController::class, 'postalCodeChange'])->name("postalCodeChange");
     });
 
     Route::post('/Logout', [AuthController::class, 'logout'])->name("logout");
