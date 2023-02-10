@@ -42,19 +42,6 @@ class AuthController extends Controller
         return response(compact('user', 'token'));
     }
 
-    public function changePassword(PasswordChangeRequest $request)
-    {
-        if (!Hash::check($request->get("old-password"), auth()->user()->password)) {
-            return response()->json("A régi jelszó nem egyezik az ön jelszavával!");
-        }
-
-        User::whereId(auth()->user()->id)->update([
-            'password' => Hash::make($request->get("new-password"))
-        ]);
-
-        return response()->json("Jelszó sikeresen megváltoztatva!");
-    }
-
     public function logout(Request $request)
     {
         $user = $request->user();
