@@ -48,8 +48,8 @@ class ShopRequest extends FormRequest
             'owner.max' => "Tulajdonos maximum 255 karakter hosszúságú!",
             'postal_code.required' => "Irányítószám megadása kötelező!",
             'postal_code.numeric' => "Az irányítószám csak szám lehet!",
-            'postal_code.min' => "Az irányítószám 1000 és 9999 közötti szám min!",
-            'postal_code.max' => "Az irányítószám 1000 és 9999 közötti szám max!",
+            'postal_code.min' => "Az irányítószám 1000 és 9999 közötti szám!",
+            'postal_code.max' => "Az irányítószám 1000 és 9999 közötti szám!",
         ];
     }
 

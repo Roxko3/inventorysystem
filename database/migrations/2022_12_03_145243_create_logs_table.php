@@ -18,7 +18,7 @@ class CreateLogsTable extends Migration
             $table->foreignId("shop_id")->constrained("shops");
             $table->foreignId("user_id")->constrained("users");
             $table->string("description");
-            $table->timestamp("date");
+            $table->timestamp("date")->default(now());
         });
     }
 

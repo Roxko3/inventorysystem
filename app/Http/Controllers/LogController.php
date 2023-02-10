@@ -6,12 +6,14 @@ use App\Http\Requests\LogRequest;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class LogController extends Controller
 {
     public function index()
     {
-        $logs = Log::with("user")->get();
+        $user = Auth::user();
+        $logs = Log::with("user")->where('shop_id', $user->shop_id)->get();
         return response()->json($logs);
     }
     public function create(LogRequest $request)
