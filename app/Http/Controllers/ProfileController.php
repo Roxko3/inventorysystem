@@ -31,14 +31,14 @@ class ProfileController extends Controller
             $user->save();
             return response()->json("Felhasználói adatok sikeresen módosítva!");
         } else {
-            return response()->json("A megadott email cím már használt!", 409);
+            return response()->json(['email' => 'A megadott email cím már használt!'], 409);
         }
     }
 
     public function passwordChange(PasswordChangeRequest $request)
     {
         if (!Hash::check($request->get("old-password"), auth()->user()->password)) {
-            return response()->json("A régi jelszó nem egyezik az ön jelszavával!", 422);
+            return response()->json(['old-password' => 'A régi jelszó nem egyezik az ön jelszavával!'], 422);
         }
 
         User::whereId(auth()->user()->id)->update([
