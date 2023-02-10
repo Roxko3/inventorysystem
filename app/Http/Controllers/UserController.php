@@ -16,13 +16,6 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    public function myProfile()
-    {
-        $user = auth()->user();
-        $res = User::with('shop')->where('id', $user->id)->get();
-        return response()->json($res);
-    }
-
     public function create(UserRequest $request)
     {
         $user = new User();

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ShopTypeController;
 use App\Http\Controllers\ShopController;
@@ -29,9 +30,14 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/myProfile', [UserController::class, 'myProfile'])->name("myProfile");
+    Route::group(['prefix' => '/myProfile'], function () {
+        Route::get('/', [ProfileController::class, 'myProfile'])->name("myProfile");
+        Route::post('/nameEmail', [ProfileController::class, 'nameEmail'])->name("NameOrEmailChange");
+        Route::post('/passwordChange', [ProfileController::class, 'passwordChange'])->name("passwordChange");
+        Route::post('/postalcodeChange', [ProfileController::class, 'postalcodeChange'])->name("postalcodeChange");
+    });
+
     Route::post('/Logout', [AuthController::class, 'logout'])->name("logout");
-    Route::post('/changePassword', [AuthController::class, 'changePassword'])->name("changePassword");
     Route::get('/getShop/{shop}', [ShopController::class, 'get']);
     Route::put("/myShop/{shop}", [ShopController::class, "update"])->name("updateShop");
     Route::post("/myShop/{shop}/uploadImage", [ShopController::class, "uploadImage"])->name("uploadImage");
