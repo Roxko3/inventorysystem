@@ -8,6 +8,7 @@ import {
     VisibilityOff,
 } from "@mui/icons-material";
 import {
+    Alert,
     Avatar,
     Badge,
     Box,
@@ -23,6 +24,7 @@ import {
     MenuItem,
     Paper,
     Rating,
+    Snackbar,
     TextField,
     Typography,
 } from "@mui/material";
@@ -47,7 +49,12 @@ function Profile() {
     const oldPassword = useRef("");
     const newPassword = useRef("");
     const againPassword = useRef("");
+    const postal_code = useRef("");
+    const name = useRef("");
+    const email = useRef("");
     const [errors, setErrors] = useState([]);
+    const [openAlert, setOpenAlert] = useState(false);
+    const [alertMessage, setalertMessage] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -55,6 +62,14 @@ function Profile() {
     };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+
+        setOpenAlert(false);
     };
 
     const handleChange = (e) => {
@@ -84,7 +99,7 @@ function Profile() {
     const changePassword = async () => {
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/changePassword",
+                "http://127.0.0.1/InventorySystem/public/api/myProfile/passwordChange",
                 {
                     "old-password": oldPassword.current.value,
                     "new-password": newPassword.current.value,
@@ -98,13 +113,80 @@ function Profile() {
                 }
             )
             .then((response) => {
-                console.log(response.data);
                 if (response.status === 200) {
                     oldPassword.current.value = "";
                     newPassword.current.value = "";
                     againPassword.current.value = "";
                     setPassDisabled(true);
                     setErrors([]);
+                    setOpenAlert(true);
+                    setalertMessage(response.data);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    setErrors(response.response.data);
+                }
+            });
+    };
+
+    const changeNameEmail = async () => {
+        axios
+            .post(
+                "http://127.0.0.1/InventorySystem/public/api/myProfile/nameEmail",
+                {
+                    email: email.current.value,
+                    name: name.current.value,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    email.current.value = "";
+                    name.current.value = "";
+                    setPassDisabled(true);
+                    setErrors([]);
+                    setOpenAlert(true);
+                    setalertMessage(response.data);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    setErrors(response.response.data);
+                    console.log(response.response.data);
+                }
+                if (response.response.status === 409) {
+                    setErrors(response.response.data);
+                }
+            });
+    };
+
+    const changePostalCode = async () => {
+        axios
+            .post(
+                "http://127.0.0.1/InventorySystem/public/api/myProfile/postalCodeChange",
+                {
+                    postal_code: postal_code.current.value,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    postal_code.current.value = "";
+                    setPassDisabled(true);
+                    setErrors([]);
+                    setOpenAlert(true);
+                    setalertMessage(response.data);
                 }
             })
             .catch((response) => {
@@ -198,6 +280,9 @@ function Profile() {
                                 defaultValue={user.name}
                                 size="small"
                                 onChange={handleChange}
+                                inputRef={name}
+                                error={errors.name != null}
+                                helperText={errors.name}
                             />
                         </Grid2>
                         <Grid2>
@@ -206,10 +291,17 @@ function Profile() {
                                 defaultValue={user.email}
                                 size="small"
                                 onChange={handleChange}
+                                inputRef={email}
+                                error={errors.email != null}
+                                helperText={errors.email}
                             />
                         </Grid2>
                         <Grid2>
-                            <Button variant="contained" disabled={btnDisable}>
+                            <Button
+                                variant="contained"
+                                disabled={btnDisable}
+                                onClick={changeNameEmail}
+                            >
                                 Változtatások mentése
                             </Button>
                         </Grid2>
@@ -450,6 +542,9 @@ function Profile() {
                     >
                         <Grid2>
                             <TextField
+                                inputRef={postal_code}
+                                error={errors.postal_code != null}
+                                helperText={errors.postal_code}
                                 id="txfPostalCode"
                                 label="Irányítószám"
                                 size="small"
@@ -482,12 +577,26 @@ function Profile() {
                             <Button
                                 variant="contained"
                                 disabled={postalCodeDisabled}
+                                onClick={changePostalCode}
                             >
                                 Irányítószám megváltoztatása
                             </Button>
                         </Grid2>
                     </Grid2>
                 </Grid2>
+                <Snackbar
+                    open={openAlert}
+                    autoHideDuration={6000}
+                    onClose={handleCloseAlert}
+                >
+                    <Alert
+                        onClose={handleCloseAlert}
+                        severity="success"
+                        sx={{ width: "100%" }}
+                    >
+                        {alertMessage}
+                    </Alert>
+                </Snackbar>
             </Grid2>
         </Box>
     );

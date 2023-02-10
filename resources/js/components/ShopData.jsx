@@ -1,5 +1,6 @@
 import { Edit, Search } from "@mui/icons-material";
 import {
+    Alert,
     Avatar,
     Badge,
     Button,
@@ -13,6 +14,7 @@ import {
     MenuItem,
     Rating,
     Select,
+    Snackbar,
     Switch,
     TextField,
 } from "@mui/material";
@@ -42,12 +44,21 @@ function ShopData() {
     const shopPostalCode = useRef("");
     const [isChanged, setIsChanged] = useState(false);
     const [errors, setErrors] = useState([]);
+    const [openAlert, setOpenAlert] = useState(false);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+
+        setOpenAlert(false);
     };
 
     const getTypes = async () => {
@@ -88,6 +99,7 @@ function ShopData() {
                     shopAddress.current.value = "";
                     console.log(response.data);
                     setErrors([]);
+                    setOpenAlert(true);
                 }
             })
             .catch((response) => {
@@ -329,6 +341,19 @@ function ShopData() {
                     </Button>
                 </Grid2>
             </Grid2>
+            <Snackbar
+                open={openAlert}
+                autoHideDuration={6000}
+                onClose={handleCloseAlert}
+            >
+                <Alert
+                    onClose={handleCloseAlert}
+                    severity="success"
+                    sx={{ width: "100%" }}
+                >
+                    Változtatások sikeresen elmentve!
+                </Alert>
+            </Snackbar>
         </Grid2>
     );
 }

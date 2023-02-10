@@ -27,16 +27,23 @@ import { Link } from "react-router-dom";
 import { UserContext } from "./App";
 import Map from "./Map";
 import Navbar from "./Navbar";
+import Cookies from "js-cookie";
 
 function Shops() {
     const user = useContext(UserContext);
     const [shops, setShops] = useState([]);
     const [loading, setLoading] = useState(true);
     const [postalCode, setPostalCode] = useState(user.postal_code);
+    const cookie = Cookies.get("token");
 
     const getShops = async () => {
         await axios
-            .get("http://127.0.0.1/InventorySystem/public/api/shops")
+            .get("http://127.0.0.1/InventorySystem/public/api/shops", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + cookie,
+                },
+            })
             .then((response) => {
                 if (response.status === 200) {
                     setShops(response.data.data);

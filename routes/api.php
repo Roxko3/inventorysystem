@@ -43,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("/myShop/{shop}/uploadImage", [ShopController::class, "uploadImage"])->name("uploadImage");
 
     Route::group(['prefix' => '/shops'], function () {
+        Route::get("/", [ShopController::class, "index"])->name("getShops");
         Route::get('/getStorage/{shop}', [StorageController::class, 'getStorage'])->name("getStorage");
         Route::get('/searchStorage/{shop}', [StorageController::class, 'searchStorage'])->name("searchStorage");
         Route::post("/create", [ShopController::class, "create"])->name("createShop");
@@ -65,7 +66,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post("/login", [AuthController::class, "login"])->name("login");
 Route::post("/register", [AuthController::class, "register"])->name("register");
 
-Route::get("/shops", [ShopController::class, "index"])->name("getShops");
 
 Route::group(['prefix' => '/users'], function () {
     Route::get("/", [UserController::class, "index"])->name("getUsers");
