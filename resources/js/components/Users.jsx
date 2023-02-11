@@ -139,7 +139,7 @@ function Users() {
                     justifyContent="left"
                 >
                     <Tooltip
-                        title="Termék hozzáadása"
+                        title="Dolgozó hozzáadása"
                         placement="top"
                         followCursor
                     >
@@ -155,7 +155,7 @@ function Users() {
                         </IconButton>
                     </Tooltip>
                     <Tooltip
-                        title="Kijelölt termékek törlése"
+                        title="Kijelölt dolgozók eltávolítása"
                         placement="top"
                         followCursor
                     >
@@ -218,44 +218,14 @@ function Users() {
                             setPValue(0);
                         }}
                     >
-                        <DialogTitle>Termék hozzáadása a raktárhoz</DialogTitle>
+                        <DialogTitle>Dolgozó hozzáadása a bolthoz</DialogTitle>
                         <DialogContent>
-                            <Grid2 m={2}>
-                                <FormControl
-                                    fullWidth
-                                    error={errors.product_id != null}
-                                    required
-                                >
-                                    <InputLabel>Termék</InputLabel>
-                                    <Select
-                                        value={pValue}
-                                        label="Termék"
-                                        onChange={handleChange}
-                                        inputRef={product}
-                                    >
-                                        {products.map((products) => (
-                                            <MenuItem
-                                                value={products.id}
-                                                key={products.id}
-                                            >
-                                                {products.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                    <FormHelperText>
-                                        {errors.product_id}
-                                    </FormHelperText>
-                                </FormControl>
-                            </Grid2>
                             <Grid2 m={2}>
                                 <TextField
                                     fullWidth
                                     label="Mennyiség"
                                     variant="outlined"
                                     type="number"
-                                    inputRef={amount}
-                                    helperText={errors.amount}
-                                    error={errors.amount != null}
                                     required
                                 />
                             </Grid2>
@@ -265,9 +235,6 @@ function Users() {
                                     label="Ár"
                                     variant="outlined"
                                     type="number"
-                                    inputRef={price}
-                                    helperText={errors.price}
-                                    error={errors.price != null}
                                     required
                                 />
                             </Grid2>
@@ -276,20 +243,11 @@ function Users() {
                                     fullWidth
                                     label="Lejárat"
                                     variant="outlined"
-                                    type="date"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    inputRef={expiration}
-                                    helperText={errors.expiration}
-                                    error={errors.expiration != null}
                                 />
                             </Grid2>
                         </DialogContent>
                         <DialogActions>
-                            <Button variant="contained" onClick={addProduct}>
-                                Hozzáadás
-                            </Button>
+                            <Button variant="contained">Hozzáadás</Button>
                             <Button
                                 variant="contained"
                                 color="error"
@@ -297,7 +255,6 @@ function Users() {
                                     setIsAdding(false);
                                     setEditedRow(null);
                                     setErrors([]);
-                                    setPValue(0);
                                 }}
                             >
                                 Mégse
@@ -313,80 +270,43 @@ function Users() {
                             setEditedRow(null);
                         }}
                     >
-                        <DialogTitle>Termék szerkesztése</DialogTitle>
+                        <DialogTitle>Rang szerkesztése</DialogTitle>
                         <DialogContent>
                             <Grid2 m={2}>
-                                <FormControl
-                                    fullWidth
-                                    error={errors.product_id != null}
-                                >
-                                    <InputLabel>Termék</InputLabel>
-                                    <Select
-                                        value={editedRow.product_id}
-                                        label="Termék"
-                                        inputRef={product}
-                                        readOnly
-                                    >
-                                        {products.map((products) => (
-                                            <MenuItem
-                                                value={products.id}
-                                                key={products.id}
-                                            >
-                                                {products.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                    <FormHelperText>
-                                        {errors.product_id}
-                                    </FormHelperText>
-                                </FormControl>
-                            </Grid2>
-                            <Grid2 m={2}>
                                 <TextField
                                     fullWidth
-                                    label="Mennyiség"
+                                    label="Email cím"
                                     variant="outlined"
-                                    type="number"
-                                    inputRef={amount}
-                                    defaultValue={editedRow.amount}
-                                    helperText={errors.amount}
-                                    error={errors.amount != null}
+                                    defaultValue={editedRow.email}
                                 />
                             </Grid2>
                             <Grid2 m={2}>
                                 <TextField
                                     fullWidth
-                                    label="Ár"
+                                    label="Név"
                                     variant="outlined"
-                                    type="number"
-                                    inputRef={price}
-                                    defaultValue={editedRow.price}
-                                    helperText={errors.price}
-                                    error={errors.price != null}
+                                    defaultValue={editedRow.name}
                                 />
                             </Grid2>
                             <Grid2 m={2}>
                                 <TextField
                                     fullWidth
-                                    label="Lejárat"
+                                    label="Rang"
                                     variant="outlined"
-                                    type="date"
-                                    defaultValue={moment(
-                                        editedRow.expiration
-                                    ).format("YYYY-MM-DD")}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    inputRef={expiration}
-                                    helperText={errors.expiration}
-                                    error={errors.expiration != null}
+                                    defaultValue={editedRow.permission}
+                                />
+                            </Grid2>
+                            <Grid2 m={2}>
+                                <TextField
+                                    fullWidth
+                                    label="Irányítószám"
+                                    variant="outlined"
+                                    defaultValue={editedRow.postal_code}
                                 />
                             </Grid2>
                         </DialogContent>
                         <DialogActions>
-                            <Button variant="contained" onClick={editProduct}>
-                                Szerkesztés
-                            </Button>
+                            <Button variant="contained">Szerkesztés</Button>
                             <Button
                                 variant="contained"
                                 color="error"
@@ -410,7 +330,7 @@ function Users() {
                         <DialogTitle id="confirm-dialog">Törlés</DialogTitle>
                         <DialogContent>
                             Biztosan törölni szeretne {deletedRows.length}{" "}
-                            tételt?
+                            dolgozót?
                         </DialogContent>
                         <DialogActions>
                             <Button

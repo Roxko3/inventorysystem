@@ -484,52 +484,61 @@ function Profile() {
                     ) : (
                         <Grid2
                             container
-                            direction="row"
+                            direction="column"
                             alignItems="center"
                             justifyContent="center"
                         >
+                            <Typography sx={{ fontWeight: "bold" }}>
+                                Rangod: {user.permission}
+                            </Typography>
                             <Card
                                 variant="outlined"
-                                sx={{ m: 1, width: 300, height: 300 }}
-                                key={1}
+                                key={user.shop.id}
+                                sx={{
+                                    m: 2,
+                                    width: 300,
+                                    height: 300,
+                                }}
                             >
-                                <Link to={`/shops/${user.shop_id}`}>
+                                <Link to={`/shops/${user.shop.id}`}>
                                     <CardActionArea>
-                                        <Grid2
-                                            container
-                                            alignItems="center"
-                                            justifyContent="center"
-                                        >
-                                            <CardMedia
-                                                component="img"
-                                                image={
-                                                    user.shop.image_path == null
-                                                        ? "./images/template.png"
-                                                        : user.shop.image_path
-                                                }
-                                                sx={{
-                                                    width: 200,
-                                                }}
-                                            />
-                                        </Grid2>
-                                        <CardContent>
-                                            <Typography variant="h6">
-                                                {
-                                                    user.shop
-                                                        .name /*shops.name.length <= 19
-                                                ? shops.name
-                                                : shops.name.substr(0, 19) +
-                                        "..."*/
-                                                }
-                                            </Typography>
-                                            <Typography variant="legend">
-                                                {user.shop.postal_code}
-                                            </Typography>
-                                            <br />
-                                            <Rating value={2} readOnly />
-                                        </CardContent>
+                                        <CardMedia
+                                            sx={{
+                                                width: 300,
+                                                height: 200,
+                                            }}
+                                            component="img"
+                                            image={
+                                                user.shop.image_path == null
+                                                    ? "./images/template.png"
+                                                    : user.shop.image_path
+                                            }
+                                            title={user.shop.name}
+                                        />
                                     </CardActionArea>
                                 </Link>
+                                <CardContent>
+                                    <Typography
+                                        gutterBottom
+                                        variant="h5"
+                                        component="h2"
+                                    >
+                                        {user.shop.name}
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        color="textSecondary"
+                                        component="p"
+                                    >
+                                        {user.shop.postal_code},{" "}
+                                        {user.shop.address}
+                                    </Typography>
+                                    <Rating
+                                        name="read-only"
+                                        value={user.shop.rating}
+                                        readOnly
+                                    />
+                                </CardContent>
                             </Card>
                         </Grid2>
                     )}
@@ -565,12 +574,11 @@ function Profile() {
                                 onChange={handlePostalCodeChange}
                             />
                         </Grid2>
-                        <Grid2>
+                        <Grid2 sx={{ width: 330 }}>
                             <Map
                                 key={postalCode}
                                 location={postalCode}
-                                width={300}
-                                height={300}
+                                height={330}
                             />
                         </Grid2>
                         <Grid2>

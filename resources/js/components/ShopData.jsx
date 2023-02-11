@@ -306,11 +306,10 @@ function ShopData() {
                             </IconButton>
                         </Grid2>
                     </Grid2>
-                    <Grid2 sx={{ width: { xs: 100, sm: 500 } }}>
+                    <Grid2 sx={{ width: { xs: 300, sm: 500 } }}>
                         <Map
                             key={postalCode}
                             location={`${address}+${postalCode}`}
-                            width={500}
                             height={300}
                         />
                     </Grid2>

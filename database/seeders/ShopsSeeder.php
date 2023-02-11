@@ -21,7 +21,8 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "2",
                 'address' => "Pogányi út 7",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9730
+                'postal_code' => 9730,
+                'image_path' => "./images/tesco1.jpg"
             ],
             [
                 'id' => 2,

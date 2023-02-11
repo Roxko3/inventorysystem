@@ -1,5 +1,5 @@
 import { Error } from "@mui/icons-material";
-import { Button, CircularProgress, Typography } from "@mui/material";
+import { Button, CircularProgress, Typography, useTheme } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
 import {
@@ -16,6 +16,7 @@ import {
 function Map(props) {
     const [coords, setCoords] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [mapHeight, setMapHeight] = useState(0);
 
     const getCoords = async () => {
         await axios
@@ -53,17 +54,13 @@ function Map(props) {
     const purpleOptions = { color: "purple" };
 
     return (
-        <Grid2>
+        <Grid2 height="100%" sx={{ height: props.height }}>
             <MapContainer
                 center={[coords.lat, coords.lon]}
                 zoom={15}
                 scrollWheelZoom={false}
                 style={{
-                    maxHeight: props.height,
-                    maxWidth: props.width,
                     height: "100%",
-                    minHeight: "400px",
-                    width: "100%",
                     border: "0.3px black solid",
                     borderRadius: 15,
                 }}

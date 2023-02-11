@@ -18,7 +18,7 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $shops = Shop::with("shopType", "ratings")->paginate(10);
+        $shops = Shop::with("shopType", "ratings")->paginate(5);
         return response()->json($shops);
     }
 

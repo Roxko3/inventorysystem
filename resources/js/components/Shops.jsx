@@ -16,6 +16,7 @@ import {
     Pagination,
     Rating,
     TextField,
+    Tooltip,
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -34,11 +35,15 @@ function Shops() {
     const [shops, setShops] = useState([]);
     const [loading, setLoading] = useState(true);
     const [postalCode, setPostalCode] = useState(user.postal_code);
+    const [pagination, setPagination] = useState({});
     const cookie = Cookies.get("token");
 
-    const getShops = async () => {
-        await axios
-            .get("http://127.0.0.1/InventorySystem/public/api/shops", {
+    const getShops = async (url) => {
+        const axiosInstance = axios.create({
+            baseURL: "http://127.0.0.1/InventorySystem/public/api/",
+        });
+        await axiosInstance
+            .get(url, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + cookie,
@@ -47,6 +52,8 @@ function Shops() {
             .then((response) => {
                 if (response.status === 200) {
                     setShops(response.data.data);
+                    setPagination(response.data);
+                    console.log(response.data);
                     setLoading(false);
                 }
             });
@@ -54,7 +61,7 @@ function Shops() {
 
     useEffect(() => {
         document.title = "Inventory System - Boltok";
-        getShops();
+        getShops("shops");
     }, []);
 
     return (
@@ -86,11 +93,7 @@ function Shops() {
                             sx={{ width: "90%" }}
                         >
                             <Accordion>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMore />}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header"
-                                >
+                                <AccordionSummary expandIcon={<ExpandMore />}>
                                     <Typography>Térkép</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
@@ -131,49 +134,69 @@ function Shops() {
                         {shops.map((shops) => (
                             <Card
                                 variant="outlined"
+                                key={shops.id}
                                 sx={{
                                     m: 2,
                                     width: { xs: 240, md: 340 },
                                     height: { xs: 240, md: 340 },
                                 }}
-                                key={shops.id}
                             >
                                 <Link to={`/shops/${shops.id}`}>
                                     <CardActionArea>
-                                        <Grid2
-                                            container
-                                            alignItems="center"
-                                            justifyContent="center"
-                                        >
-                                            <CardMedia
-                                                component="img"
-                                                image={
-                                                    shops.image_path == null
-                                                        ? "./images/template.png"
-                                                        : shops.image_path
-                                                }
-                                                sx={{
-                                                    width: { xs: 140, md: 240 },
-                                                }}
-                                            />
-                                        </Grid2>
-                                        <CardContent>
-                                            <Typography variant="h6">
-                                                {
-                                                    shops.name /*shops.name.length <= 19
-                                                    ? shops.name
-                                                    : shops.name.substr(0, 19) +
-                                            "..."*/
-                                                }
-                                            </Typography>
-                                            <Typography variant="legend">
-                                                {shops.postal_code}
-                                            </Typography>
-                                            <br />
-                                            <Rating value={2} readOnly />
-                                        </CardContent>
+                                        <CardMedia
+                                            sx={{
+                                                width: { xs: 240, md: 340 },
+                                                height: {
+                                                    xs: 120,
+                                                    md: 220,
+                                                },
+                                            }}
+                                            component="img"
+                                            image={
+                                                shops.image_path == null
+                                                    ? "./images/template.png"
+                                                    : shops.image_path
+                                            }
+                                            title="Kattintson ide"
+                                        />
                                     </CardActionArea>
                                 </Link>
+                                <CardContent>
+                                    <Tooltip
+                                        title={shops.name}
+                                        followCursor
+                                        placement="top"
+                                    >
+                                        <Typography
+                                            gutterBottom
+                                            variant="h5"
+                                            component="h2"
+                                            sx={{
+                                                ":hover": {
+                                                    cursor: "default",
+                                                },
+                                                whiteSpace: "nowrap",
+                                                width: { xs: 210, md: 310 },
+                                                overflow: "hidden",
+                                                textOverflow: "ellipsis",
+                                            }}
+                                        >
+                                            {shops.name}
+                                        </Typography>
+                                    </Tooltip>
+                                    <Typography
+                                        variant="body2"
+                                        color="textSecondary"
+                                        component="p"
+                                    >
+                                        {shops.postal_code}, {shops.address}
+                                    </Typography>
+                                    <Rating
+                                        name="read-only"
+                                        value={shops.rating}
+                                        readOnly
+                                    />
+                                </CardContent>
                             </Card>
                         ))}
                         <Grid2
@@ -182,7 +205,26 @@ function Shops() {
                             justifyContent="center"
                             sx={{ width: "90%" }}
                         >
-                            <Pagination count={10} />
+                            <Pagination
+                                page={pagination.current_page}
+                                count={pagination.links.length - 2}
+                                color="primary"
+                                onChange={(e, value) => {
+                                    if (pagination.next_page_url == null) {
+                                        getShops(
+                                            pagination.prev_page_url
+                                                .split("api")[1]
+                                                .split("=")[0] + `=${value}`
+                                        );
+                                    } else {
+                                        getShops(
+                                            pagination.next_page_url
+                                                .split("api")[1]
+                                                .split("=")[0] + `=${value}`
+                                        );
+                                    }
+                                }}
+                            />
                         </Grid2>
                     </Grid2>
                 )}
