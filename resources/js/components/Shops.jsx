@@ -154,7 +154,7 @@ function Shops() {
                                             component="img"
                                             image={
                                                 shops.image_path == null
-                                                    ? "./images/template.png"
+                                                    ? "/InventorySystem/storage/images/template.png"
                                                     : shops.image_path
                                             }
                                             title="Kattintson ide"
