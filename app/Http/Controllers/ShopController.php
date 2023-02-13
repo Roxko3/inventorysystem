@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ImageRequest;
 use App\Http\Requests\ShopRequest;
 use App\Models\Log;
+use App\Models\Rating;
 use App\Models\Shop;
+use App\Models\Storage;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -21,8 +23,18 @@ class ShopController extends Controller
 
     public function get(Shop $shop)
     {
-        $shop = Shop::with("shopType", "ratings")->where("id", $shop->id)->get();
-        return response()->json($shop);
+        $shop = Shop::with("shopType")->where("id", $shop->id)->first();
+        $ratings = Rating::where("shop_id", $shop->id)->get();
+        $rating = 0;
+        foreach ($ratings as $item) {
+            $rating += $item->rating;
+        }
+        $count = $ratings->count();
+        if ($count === 0) {
+            return response()->json([$shop, 0], 200);
+        }
+        $rating = $rating / $ratings->count();
+        return response()->json([$shop, $rating], 200);
     }
 
     public function workers()
@@ -108,13 +120,16 @@ class ShopController extends Controller
         if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-owner')) {
             abort(403);
         }
+
         $workers = User::where('shop_id', $shop->id)->get();
         foreach ($workers as $worker) {
-            $worker->shop_id = 0;
+            $worker->shop_id = null;
             $worker->permission = 0;
             $worker->save();
         }
-        $shop->delete();
+
+        $shop->is_deleted = true;
+        $shop->save();
         return response()->json("Bolt sikeresen törölve!");
     }
 }
