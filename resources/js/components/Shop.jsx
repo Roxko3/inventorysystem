@@ -83,7 +83,7 @@ function Shop() {
         document.title = "Inventory System - Boltok";
         getShop();
         getStorage(`shops/searchStorage/${id}`);
-    }, []);
+    }, [order, field, search]);
 
     const columns = [
         {
