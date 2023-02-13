@@ -10,6 +10,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\StorageController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkerController;
 use App\Models\Shop;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post("/add", [StorageController::class, "add"])->name("addItem");
         Route::put("/{storage}", [StorageController::class, "update"])->name("updatestorage");
         Route::delete("/delete", [StorageController::class, "delete"])->name("deletestorage");
+    });
+
+    Route::group(['prefix' => '/workers'], function () {
+        Route::get('/', [ShopController::class, 'workers'])->name("showWorkers");
+        Route::post('/add', [WorkerController::class, 'add'])->name("addWorker");
+        Route::post('/update', [WorkerController::class, 'update'])->name("updateWorker");
+        Route::post('/delete', [WorkerController::class, 'delete'])->name("deleteWorker");
     });
 
     Route::get("/workers", [ShopController::class, "workers"])->name("showWorkers");

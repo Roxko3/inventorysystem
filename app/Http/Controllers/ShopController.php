@@ -34,6 +34,8 @@ class ShopController extends Controller
 
     public function create(ShopRequest $request)
     {
+        $user = Auth::user();
+        $user = User::where("id", $user->id)->first();
         $shop = new Shop();
         $shop->name = $request->get("name");
         $shop->shop_type_id = $request->get("shop_type_id");
@@ -41,6 +43,8 @@ class ShopController extends Controller
         $shop->owner = $request->get("owner");
         $shop->postal_code = $request->get("postal_code");
         $shop->save();
+        $user->permission = 10;
+        $user->save();
         return response()->json($shop->id);
     }
 
@@ -103,6 +107,12 @@ class ShopController extends Controller
     {
         if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-owner')) {
             abort(403);
+        }
+        $workers = User::where('shop_id', $shop->id)->get();
+        foreach ($workers as $worker) {
+            $worker->shop_id = 0;
+            $worker->permission = 0;
+            $worker->save();
         }
         $shop->delete();
         return response()->json("Bolt sikeresen törölve!");
