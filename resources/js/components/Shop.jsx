@@ -36,7 +36,7 @@ function Shop() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data[0]);
+                    //console.log(response.data[0]);
                     setShop(response.data[0]);
                     setIsFound(true);
                     setLoading(false);
@@ -68,7 +68,7 @@ function Shop() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setPagination(response.data);
                     setStorage(
                         response.data.data.filter((a) => a.is_deleted == 0)

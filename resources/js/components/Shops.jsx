@@ -85,6 +85,7 @@ function Shops() {
                         direction="row"
                         alignItems="center"
                         justifyContent="center"
+                        sx={{ marginX: { xs: 0, sm: 6 } }}
                     >
                         <Grid2
                             container
