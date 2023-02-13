@@ -34,7 +34,7 @@ class ShopController extends Controller
             return response()->json([$shop, 0], 200);
         }
         $rating = $rating / $ratings->count();
-        return response()->json([$shop, $rating], 200);
+        return response()->json(["shop" => $shop, "rating" => $rating], 200);
     }
 
     public function workers()
