@@ -27,8 +27,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('shop-access', function (User $user, Shop $shop) {
-            return $user->shop_id === $shop->id;
+        Gate::define('shop-worker', function (User $user, int $shop) {
+            return $user->shop_id === $shop;
+        });
+
+        Gate::define('shop-cashier', function (User $user) {
+            return $user->permission >= 1;
+        });
+
+        Gate::define('shop-manager', function (User $user) {
+            return $user->permission >= 5;
+        });
+
+        Gate::define('shop-owner', function (User $user) {
+            return $user->permission >= 10;
         });
     }
 }
