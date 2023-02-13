@@ -7,6 +7,7 @@ use App\Models\Log;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class LogController extends Controller
 {
@@ -15,20 +16,5 @@ class LogController extends Controller
         $user = Auth::user();
         $logs = Log::with("user")->where('shop_id', $user->shop_id)->get();
         return response()->json($logs);
-    }
-    public function create(LogRequest $request)
-    {
-        $logs = new Log();
-        $logs->shop_id = $request->get("shop_id");
-        $logs->user_id = $request->get("user_id");
-        $logs->description = $request->get("description");
-        $logs->date = Carbon::now();
-        $logs->save();
-        return response()->json($logs->id);
-    }
-    public function delete(Log $log)
-    {
-        $log->delete();
-        return response()->json("OK");
     }
 }

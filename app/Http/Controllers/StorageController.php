@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateStorageRequest;
 use App\Models\Log;
 use App\Models\Shop;
 use App\Models\Storage;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,6 +74,11 @@ class StorageController extends Controller
     public function add(StorageRequest $request)
     {
         $user = Auth::user();
+
+        if (Gate::denies('shop-cashier')) {
+            abort(403);
+        }
+
         $current_shop_id = $user->shop_id;
 
         $storage = Storage::where('shop_id', $current_shop_id)
@@ -109,6 +115,9 @@ class StorageController extends Controller
 
     public function update(Storage $storage, StorageRequest $request)
     {
+        if (Gate::denies('shop-cashier')) {
+            abort(403);
+        }
         $storage->amount = $request->get("amount");
         $storage->price = $request->get("price");
         $storage->expiration = $request->has("expiration") ? $request->get("expiration") : null;
@@ -133,6 +142,9 @@ class StorageController extends Controller
     }
     public function delete(Request $request)
     {
+        if (Gate::denies('shop-cashier')) {
+            abort(403);
+        }
         foreach ($request->get("ids") as $item) {
             $storage = Storage::where('id', $item)->first();
             if ($storage->is_deleted == 0) {

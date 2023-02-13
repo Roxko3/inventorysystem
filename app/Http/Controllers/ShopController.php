@@ -5,12 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ImageRequest;
 use App\Http\Requests\ShopRequest;
 use App\Models\Log;
-use Illuminate\Http\Request;
 use App\Models\Shop;
-use App\Models\Storage;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 
@@ -49,7 +46,7 @@ class ShopController extends Controller
 
     public function uploadImage(Shop $shop, ImageRequest $request)
     {
-        if (Gate::denies('shop-access', $shop)) {
+        if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-manager')) {
             abort(403);
         }
         $newImageName = time() .
@@ -65,7 +62,7 @@ class ShopController extends Controller
 
     public function update(Shop $shop, ShopRequest $request)
     {
-        if (Gate::denies('shop-access', $shop)) {
+        if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-manager')) {
             abort(403);
         }
         $user = Auth::user();
@@ -104,6 +101,9 @@ class ShopController extends Controller
 
     public function delete(Shop $shop)
     {
+        if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-owner')) {
+            abort(403);
+        }
         $shop->delete();
         return response()->json("Bolt sikeresen törölve!");
     }
