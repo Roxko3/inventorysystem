@@ -17,7 +17,7 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $shops = Shop::with("shopType", "ratings")->paginate(5);
+        $shops = Shop::with("shopType")->paginate(10);
         return response()->json($shops);
     }
 
@@ -25,16 +25,30 @@ class ShopController extends Controller
     {
         $shop = Shop::with("shopType")->where("id", $shop->id)->first();
         $ratings = Rating::where("shop_id", $shop->id)->get();
-        $rating = 0;
+        $ratingarray = [0, 0, 0, 0, 0];
         foreach ($ratings as $item) {
-            $rating += $item->rating;
+            switch ($item->rating) {
+                case 1:
+                    $ratingarray[0] += 1;
+                    break;
+                case 2:
+                    $ratingarray[1] += 1;
+                    break;
+                case 3:
+                    $ratingarray[2] += 1;
+                    break;
+                case 4:
+                    $ratingarray[3] += 1;
+                    break;
+                case 5:
+                    $ratingarray[4] += 1;
+                    break;
+                default:
+                    return response()->json("Szerver hiba!", 500);
+                    break;
+            }
         }
-        $count = $ratings->count();
-        if ($count === 0) {
-            return response()->json([$shop, 0], 200);
-        }
-        $rating = $rating / $ratings->count();
-        return response()->json(["shop" => $shop, "rating" => $rating], 200);
+        return response()->json(["shop" => $shop, "ratings" => ["star1" => $ratingarray[0], "star2" => $ratingarray[1], "star3" => $ratingarray[2], "star4" => $ratingarray[3], "star5" => $ratingarray[4]]], 200);
     }
 
     public function workers()
