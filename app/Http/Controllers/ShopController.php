@@ -62,6 +62,9 @@ class ShopController extends Controller
     {
         $user = Auth::user();
         $user = User::where("id", $user->id)->first();
+        $user->permission = 10;
+        $user->save();
+
         $shop = new Shop();
         $shop->name = $request->get("name");
         $shop->shop_type_id = $request->get("shop_type_id");
@@ -69,8 +72,14 @@ class ShopController extends Controller
         $shop->owner = $request->get("owner");
         $shop->postal_code = $request->get("postal_code");
         $shop->save();
-        $user->permission = 10;
-        $user->save();
+
+        $log = new Log();
+        $log->shop_id = $shop->id;
+        $log->user_id = $user->id;
+        $log->description = $user->name . " sikeresen létrehozta a boltot";
+        $log->date = now();
+        $log->save();
+
         return response()->json($shop->id);
     }
 
@@ -86,6 +95,14 @@ class ShopController extends Controller
             ->move(storage_path('images'), $newImageName);
         $shop->image_path = $newImageName;
         $shop->save();
+
+        $user = Auth::user();
+        $log = new Log();
+        $log->shop_id = $shop->id;
+        $log->user_id = $user->id;
+        $log->description = $user->name . " módosította a bolt képét";
+        $log->date = now();
+        $log->save();
 
         return response()->json("Kép feltöltés sikeres!");
     }
@@ -120,12 +137,15 @@ class ShopController extends Controller
         }
         $shop->save();
 
-        $log = new Log();
-        $log->shop_id = $shop->id;
-        $log->user_id = $user->id;
-        $log->description = "A bolt adatai módosultak:" . $changedDatas;
-        $log->date = now();
-        $log->save();
+        if ($changedDatas != "") {
+            $log = new Log();
+            $log->shop_id = $shop->id;
+            $log->user_id = $user->id;
+            $log->description = $user->name . " módosította a bolt adatait:" . $changedDatas;
+            $log->date = now();
+            $log->save();
+        }
+
         return response()->json($shop->toArray());
     }
 
