@@ -23,6 +23,7 @@ class ShopsSeeder extends Seeder
                 'owner' => "Tesco PLC",
                 'postal_code' => 9730,
                 'image_path' => "./images/tesco1.jpg"
+                'rating' => 4.75
             ],
             [
                 'id' => 2,
@@ -30,7 +31,8 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "1",
                 'address' => "Zanati út 70",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9700
+                'postal_code' => 9700,
+                'rating' => 3.75
             ],
             [
                 'id' => 3,
@@ -38,7 +40,8 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Széchenyi tér 13",
                 'owner' => "Co-op Hungary Zrt.",
-                'postal_code' => 9735
+                'postal_code' => 9735,
+                'rating' => 2.37
             ],
             [
                 'id' => 4,
@@ -46,7 +49,8 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Várkör 16",
                 'owner' => "Bestbyte műszaki",
-                'postal_code' => 9730
+                'postal_code' => 9730,
+                'rating' => 3
             ],
             [
                 'id' => 5,
@@ -54,7 +58,8 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "IV. László király u. 39",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9400
+                'postal_code' => 9400,
+                'rating' => 1
             ],
             [
                 'id' => 6,
@@ -62,7 +67,8 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Király J. u 3",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9400
+                'postal_code' => 9400,
+                'rating' => 4.11
             ],
             [
                 'id' => 7,
@@ -70,7 +76,8 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "2",
                 'address' => "Ipar krt. 30",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9400
+                'postal_code' => 9400,
+                'rating' => 5
             ],
             [
                 'id' => 8,
@@ -78,7 +85,8 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Hátsókapu 10",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9400
+                'postal_code' => 9400,
+                'rating' => 2
             ],
             [
                 'id' => 9,
@@ -86,7 +94,8 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Végfordulat 9",
                 'owner' => " Peter Gazik",
-                'postal_code' => 9400
+                'postal_code' => 9400,
+                'rating' => 5
             ],
             [
                 'id' => 10,
@@ -94,18 +103,19 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => " Ipar krt. 30",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9400
+                'postal_code' => 9400,
+                'rating' => 3.33
             ],
         ];
         foreach ($data as $item) {
             $shop = Shop::firstOrNew([
                 'id' => $item['id']
             ]);
-    
+
             foreach ($item as $key => $value) {
-               $shop->{$key} = $value;
+                $shop->{$key} = $value;
             };
-    
+
             $shop->save();
         }
     }
