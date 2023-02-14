@@ -192,11 +192,20 @@ function Shops() {
                                     >
                                         {shops.postal_code}, {shops.address}
                                     </Typography>
-                                    <Rating
-                                        name="read-only"
-                                        value={shops.rating}
-                                        readOnly
-                                    />
+                                    <Tooltip
+                                        title={shops.rating}
+                                        followCursor
+                                        placement="top"
+                                    >
+                                        <Box>
+                                            <Rating
+                                                name="read-only"
+                                                value={shops.rating}
+                                                readOnly
+                                                precision={0.5}
+                                            />
+                                        </Box>
+                                    </Tooltip>
                                 </CardContent>
                             </Card>
                         ))}

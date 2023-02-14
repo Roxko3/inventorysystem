@@ -317,7 +317,19 @@ function Storage() {
         {
             field: "expiration",
             headerName: "Lejárat",
-            width: 200,
+            width: 100,
+        },
+        {
+            field: "packaging",
+            headerName: "Csomagolás",
+        },
+        {
+            field: "unit_of_measure",
+            headerName: "Mennyiség",
+        },
+        {
+            field: "type",
+            headerName: "Típus",
         },
         {
             field: "is_deleted",
@@ -427,6 +439,10 @@ function Storage() {
                     <DataGrid
                         rows={filter.map((storage) => {
                             storage["product_name"] = storage["product"].name;
+                            storage["packaging"] = storage["product"].packaging;
+                            storage["unit_of_measure"] =
+                                storage["product"].unit_of_measure;
+                            storage["type"] = storage["product"].type;
                             storage["edit"] = "Szerkesztés";
                             return storage;
                         })}

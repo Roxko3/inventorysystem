@@ -28,7 +28,7 @@ import {
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DataGrid, huHU } from "@mui/x-data-grid";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import BasicModal from "./BasicModal";
@@ -52,7 +52,11 @@ function Users() {
     const [isEditing, setIsEditing] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [alertMessage, setalertMessage] = useState("");
+    const [role, setRole] = useState("");
     const [open, setOpen] = useState(false);
+    const [errors, setErrors] = useState([]);
+    const email = useRef("");
+    const permission = useRef("");
     const cookie = Cookies.get("token");
 
     const getUsers = () => {
@@ -72,12 +76,116 @@ function Users() {
             });
     };
 
+    const addWorker = async () => {
+        axios
+            .post(
+                "http://127.0.0.1/InventorySystem/public/api/workers/add",
+                {
+                    email: email.current.value,
+                    permission: permission.current.value,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    setErrors([]);
+                    //console.log(response);
+                    getUsers();
+                    setRole("");
+                    setIsAdding(false);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 409) {
+                    setErrors(response.response.data);
+                }
+                if (response.response.status === 422) {
+                    setErrors(response.response.data);
+                    //console.log(response.response);
+                }
+            });
+    };
+
+    const updateWorker = async () => {
+        axios
+            .post(
+                "http://127.0.0.1/InventorySystem/public/api/workers/update",
+                {
+                    email: email.current.value,
+                    permission: permission.current.value,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    setErrors([]);
+                    //console.log(response);
+                    getUsers();
+                    setIsEditing(false);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 409) {
+                    setErrors(response.response.data);
+                }
+                if (response.response.status === 422) {
+                    setErrors(response.response.data);
+                    //console.log(response.response);
+                }
+            });
+    };
+
+    const deleteSelectedRows = () => {
+        //console.log(deletedRows);
+        axios
+            .post(
+                `http://127.0.0.1/InventorySystem/public/api/workers/delete`,
+                {
+                    email: deletedRows,
+                    permission: 1,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    //console.log("félsiker");
+                    //setStorage(response.data.data);
+                    getUsers();
+                    setIsLoading(false);
+                    setDeletedRows([]);
+                }
+            })
+            .catch(() => {
+                //console.log("szar van a palacsintában");
+            });
+    };
+
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
             return;
         }
 
         setOpen(false);
+    };
+
+    const handleChange = (e) => {
+        setRole(e.target.value);
+        //console.log(e.target);
     };
 
     useEffect(() => {
@@ -187,12 +295,18 @@ function Users() {
                             const field = e["field"];
                             if (field != "__check__") {
                                 setEditedRow(users[rowID]);
+                                setRole(users[rowID].permission);
                                 setIsEditing(true);
                             }
                         }}
                         onSelectionModelChange={(ids) => {
-                            console.log(ids);
-                            setDeletedRows(ids);
+                            let emails = [];
+                            ids.map((id) => {
+                                emails.push(
+                                    users.find((a) => a.id == id).email
+                                );
+                            });
+                            setDeletedRows(emails);
                         }}
                         columns={columns}
                         disableSelectionOnClick
@@ -215,7 +329,7 @@ function Users() {
                             setIsAdding(false);
                             setEditedRow(null);
                             setErrors([]);
-                            setPValue(0);
+                            setRole("");
                         }}
                     >
                         <DialogTitle>Dolgozó hozzáadása a bolthoz</DialogTitle>
@@ -223,31 +337,38 @@ function Users() {
                             <Grid2 m={2}>
                                 <TextField
                                     fullWidth
-                                    label="Mennyiség"
+                                    label="Email"
                                     variant="outlined"
-                                    type="number"
-                                    required
+                                    error={errors.email != null}
+                                    helperText={errors.email}
+                                    inputRef={email}
                                 />
                             </Grid2>
                             <Grid2 m={2}>
-                                <TextField
+                                <FormControl
                                     fullWidth
-                                    label="Ár"
-                                    variant="outlined"
-                                    type="number"
-                                    required
-                                />
-                            </Grid2>
-                            <Grid2 m={2}>
-                                <TextField
-                                    fullWidth
-                                    label="Lejárat"
-                                    variant="outlined"
-                                />
+                                    error={errors.permission != null}
+                                >
+                                    <InputLabel>Rang</InputLabel>
+                                    <Select
+                                        label="Rang"
+                                        value={role}
+                                        onChange={handleChange}
+                                        inputRef={permission}
+                                    >
+                                        <MenuItem value={1}>1</MenuItem>
+                                        <MenuItem value={5}>5</MenuItem>
+                                    </Select>
+                                    <FormHelperText>
+                                        {errors.permission}
+                                    </FormHelperText>
+                                </FormControl>
                             </Grid2>
                         </DialogContent>
                         <DialogActions>
-                            <Button variant="contained">Hozzáadás</Button>
+                            <Button variant="contained" onClick={addWorker}>
+                                Hozzáadás
+                            </Button>
                             <Button
                                 variant="contained"
                                 color="error"
@@ -255,6 +376,7 @@ function Users() {
                                     setIsAdding(false);
                                     setEditedRow(null);
                                     setErrors([]);
+                                    setRole("");
                                 }}
                             >
                                 Mégse
@@ -268,6 +390,7 @@ function Users() {
                         onClose={(e) => {
                             setIsEditing(false);
                             setEditedRow(null);
+                            setRole("");
                         }}
                     >
                         <DialogTitle>Rang szerkesztése</DialogTitle>
@@ -278,6 +401,12 @@ function Users() {
                                     label="Email cím"
                                     variant="outlined"
                                     defaultValue={editedRow.email}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                    inputRef={email}
+                                    error={errors.email != null}
+                                    helperText={errors.email}
                                 />
                             </Grid2>
                             <Grid2 m={2}>
@@ -286,15 +415,30 @@ function Users() {
                                     label="Név"
                                     variant="outlined"
                                     defaultValue={editedRow.name}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
                                 />
                             </Grid2>
                             <Grid2 m={2}>
-                                <TextField
+                                <FormControl
                                     fullWidth
-                                    label="Rang"
-                                    variant="outlined"
-                                    defaultValue={editedRow.permission}
-                                />
+                                    error={errors.permission != null}
+                                >
+                                    <InputLabel>Rang</InputLabel>
+                                    <Select
+                                        label="Rang"
+                                        value={role}
+                                        onChange={handleChange}
+                                        inputRef={permission}
+                                    >
+                                        <MenuItem value={1}>1</MenuItem>
+                                        <MenuItem value={5}>5</MenuItem>
+                                    </Select>
+                                    <FormHelperText>
+                                        {errors.permission}
+                                    </FormHelperText>
+                                </FormControl>
                             </Grid2>
                             <Grid2 m={2}>
                                 <TextField
@@ -302,11 +446,16 @@ function Users() {
                                     label="Irányítószám"
                                     variant="outlined"
                                     defaultValue={editedRow.postal_code}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
                                 />
                             </Grid2>
                         </DialogContent>
                         <DialogActions>
-                            <Button variant="contained">Szerkesztés</Button>
+                            <Button variant="contained" onClick={updateWorker}>
+                                Szerkesztés
+                            </Button>
                             <Button
                                 variant="contained"
                                 color="error"
@@ -314,6 +463,7 @@ function Users() {
                                     setIsEditing(false);
                                     setEditedRow(null);
                                     setErrors([]);
+                                    setRole("");
                                 }}
                             >
                                 Mégse

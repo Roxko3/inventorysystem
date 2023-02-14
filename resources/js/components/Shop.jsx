@@ -36,8 +36,8 @@ function Shop() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    //console.log(response.data[0]);
-                    setShop(response.data[0]);
+                    console.log(response.data);
+                    setShop(response.data.shop);
                     setIsFound(true);
                     setLoading(false);
                 }
@@ -76,6 +76,12 @@ function Shop() {
                     setGridLoading(false);
                     setIsGridLoading(false);
                 }
+            })
+            .catch((response) => {
+                if (response.response.status === 404) {
+                    setIsFound(false);
+                    setGridLoading(false);
+                }
             });
     };
 
@@ -97,7 +103,19 @@ function Shop() {
         {
             field: "expiration",
             headerName: "Lejárat",
-            width: 200,
+            width: 100,
+        },
+        {
+            field: "packaging",
+            headerName: "Csomagolás",
+        },
+        {
+            field: "unit_of_measure",
+            headerName: "Mennyiség",
+        },
+        {
+            field: "type",
+            headerName: "Típus",
         },
     ];
 
@@ -166,9 +184,13 @@ function Shop() {
                         />
                     </Grid2>
                 </Grid2>
-                <Box>
+                <Box mt={1}>
                     <DataGrid
                         rows={storage.map((storage) => {
+                            storage["packaging"] = storage["product"].packaging;
+                            storage["unit_of_measure"] =
+                                storage["product"].unit_of_measure;
+                            storage["type"] = storage["product"].type;
                             storage["product_name"] = storage["product"].name;
                             return storage;
                         })}
