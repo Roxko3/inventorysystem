@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ImageRequest;
 use App\Http\Requests\ShopRequest;
 use App\Models\Log;
-use Illuminate\Http\Request;
+use App\Models\Rating;
 use App\Models\Shop;
 use App\Models\Storage;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 
@@ -24,8 +23,18 @@ class ShopController extends Controller
 
     public function get(Shop $shop)
     {
-        $shop = Shop::with("shopType", "ratings")->where("id", $shop->id)->get();
-        return response()->json($shop);
+        $shop = Shop::with("shopType")->where("id", $shop->id)->first();
+        $ratings = Rating::where("shop_id", $shop->id)->get();
+        $rating = 0;
+        foreach ($ratings as $item) {
+            $rating += $item->rating;
+        }
+        $count = $ratings->count();
+        if ($count === 0) {
+            return response()->json([$shop, 0], 200);
+        }
+        $rating = $rating / $ratings->count();
+        return response()->json(["shop" => $shop, "rating" => $rating], 200);
     }
 
     public function workers()
@@ -37,6 +46,8 @@ class ShopController extends Controller
 
     public function create(ShopRequest $request)
     {
+        $user = Auth::user();
+        $user = User::where("id", $user->id)->first();
         $shop = new Shop();
         $shop->name = $request->get("name");
         $shop->shop_type_id = $request->get("shop_type_id");
@@ -44,12 +55,14 @@ class ShopController extends Controller
         $shop->owner = $request->get("owner");
         $shop->postal_code = $request->get("postal_code");
         $shop->save();
+        $user->permission = 10;
+        $user->save();
         return response()->json($shop->id);
     }
 
     public function uploadImage(Shop $shop, ImageRequest $request)
     {
-        if (Gate::denies('shop-access', $shop)) {
+        if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-manager')) {
             abort(403);
         }
         $newImageName = time() .
@@ -65,7 +78,7 @@ class ShopController extends Controller
 
     public function update(Shop $shop, ShopRequest $request)
     {
-        if (Gate::denies('shop-access', $shop)) {
+        if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-manager')) {
             abort(403);
         }
         $user = Auth::user();
@@ -104,7 +117,19 @@ class ShopController extends Controller
 
     public function delete(Shop $shop)
     {
-        $shop->delete();
+        if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-owner')) {
+            abort(403);
+        }
+
+        $workers = User::where('shop_id', $shop->id)->get();
+        foreach ($workers as $worker) {
+            $worker->shop_id = null;
+            $worker->permission = 0;
+            $worker->save();
+        }
+
+        $shop->is_deleted = true;
+        $shop->save();
         return response()->json("Bolt sikeresen törölve!");
     }
 }
