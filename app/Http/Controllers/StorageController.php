@@ -34,13 +34,20 @@ class StorageController extends Controller
 
     public function searchStorage(OrderRequest $request, Shop $shop)
     {
+        if ($request->get("is_deleted") === 0 || $request->get("is_deleted") === 1) {
+            $delete1 = $request->get("is_deleted");
+            $delete2 = $request->get("is_deleted");
+        } else {
+            $delete1 = 0;
+            $delete2 = 1;
+        }
         if ($request->get("column") == "name" || $request->get("column") == "type" || $request->get("column") == "packaging" || $request->get("column") == "unit_of_measure" || $request->get("column") == "type") {
             $storage = DB::table('storages')
                 ->join('products', 'storages.product_id', '=', 'products.id')
                 ->where('storages.shop_id', $shop->id)
-                ->where(function ($query) use ($request) {
-                    $query->where('storages.is_deleted', $request->get("is_deleted") == 2 ? 0 : $request->get("is_deleted"))
-                        ->orWhere('storages.is_deleted', $request->get("is_deleted") == 2 ? 1 : $request->get("is_deleted"));
+                ->where(function ($query) use ($delete1, $delete2) {
+                    $query->where('storages.is_deleted', $delete1)
+                        ->orWhere('storages.is_deleted', $delete2);
                 })
                 ->where(function ($query) use ($request) {
                     $query->where('products.name', 'like', '%' . $request->get("searchString") . '%')
@@ -63,9 +70,9 @@ class StorageController extends Controller
             $storage = DB::table('storages')
                 ->join('products', 'storages.product_id', '=', 'products.id')
                 ->where('storages.shop_id', $shop->id)
-                ->where(function ($query) use ($request) {
-                    $query->where('storages.is_deleted', $request->get("is_deleted") == 2 ? 0 : $request->get("is_deleted"))
-                        ->orWhere('storages.is_deleted', $request->get("is_deleted") == 2 ? 1 : $request->get("is_deleted"));
+                ->where(function ($query) use ($delete1, $delete2) {
+                    $query->where('storages.is_deleted', $delete1)
+                        ->orWhere('storages.is_deleted', $delete2);
                 })
                 ->where(function ($query) use ($request) {
                     $query->where('products.name', 'like', '%' . $request->get("searchString") . '%')
@@ -80,20 +87,6 @@ class StorageController extends Controller
                 ->orderBy($ordercolumn, $request->get("order") == "desc" ? "desc" : "asc")
                 ->paginate(20);
         }
-        return response()->json($storage);
-    }
-
-    public function searchMyStorage(OrderRequest $request, $searchString)
-    {
-        $user = Auth::user();
-        $current_shop_id = $user->shop_id;
-
-        $storage = Storage::where('shop_id', '=', $current_shop_id)
-            ->whereHas('product', function (Builder $query) use ($searchString) {
-                $query->where('name', 'like', '%' . $searchString . '%')
-                    ->orWhere('type', 'like', '%' . $searchString . '%');
-            })->orderBy($request->has("column") ?  $request->get("column") : "id", $request->get("order") == "desc" ? "desc" : "asc")->paginate(20);
-
         return response()->json($storage);
     }
 

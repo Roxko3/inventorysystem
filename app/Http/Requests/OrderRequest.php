@@ -30,16 +30,7 @@ class OrderRequest extends FormRequest
             'column' => ["nullable", new CheckColumnRule],
             'order' => "nullable",
             'searchString' => "nullable",
-            'is_deleted' => "nullable|number|min:0|max:2"
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'is_deleted.number' => 'A törölt-e mező értéke csak suám lehet!',
-            'is_deleted.min' => 'A törölt-e mező minimum értéke 0!',
-            'is_deleted.max' => 'A törölt-e mező maximum értéke 2!',
+            'is_deleted' => "nullable"
         ];
     }
 
