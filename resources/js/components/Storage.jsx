@@ -129,7 +129,7 @@ function Storage() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    //console.log(response.data);
+                    console.log(response.data);
                     setPagination(response.data);
                     const all = response.data.data;
                     const deleted = all.filter((a) => a.is_deleted == 1);
@@ -521,7 +521,6 @@ function Storage() {
                             }
                             setIsGridLoading(true);
                         }}
-                        //{{URL}}/shops/searchStorage/1?column=price&order=desc&searchString=élel
                         sortingMode="server"
                         onSortModelChange={(e) => {
                             //console.log(e);

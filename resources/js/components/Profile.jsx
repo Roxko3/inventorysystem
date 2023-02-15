@@ -505,7 +505,7 @@ function Profile() {
                                         <CardMedia
                                             sx={{
                                                 width: 300,
-                                                height: 200,
+                                                height: 180,
                                             }}
                                             component="img"
                                             image={
