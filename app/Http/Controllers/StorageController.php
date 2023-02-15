@@ -43,7 +43,7 @@ class StorageController extends Controller
                 })
                 ->select('storages.*', 'products.name', 'products.type')
                 ->orderBy('products.' . $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
-                ->get();
+                ->paginate(20);
         } else {
             $storage = DB::table('storages')
                 ->join('products', 'storages.product_id', '=', 'products.id')
@@ -56,8 +56,8 @@ class StorageController extends Controller
                         ->orWhere('storages.expiration', 'like', '%' . $request->get("searchString") . '%');
                 })
                 ->select('storages.*', 'products.name', 'products.type')
-                ->orderBy('storages.' . $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
-                ->get();
+                ->orderBy('storages.' . $request->get("column") == null ? $request->get("column") : 'id', $request->get("order") == "desc" ? "desc" : "asc")
+                ->paginate(20);
         }
         /*if ($request->get("searchString") == null) {
             if ($request->get("column") == "name") {
