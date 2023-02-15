@@ -30,7 +30,11 @@ class CheckColumnRule implements Rule
         if (Schema::hasColumn("storages", $value)) {
             return true;
         } else {
-            return false;
+            if ($value == "name" || $value == "type") {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
