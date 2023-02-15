@@ -30,13 +30,66 @@ class StorageController extends Controller
 
     public function searchStorage(OrderRequest $request, Shop $shop)
     {
-        $current_shop_id = $shop->id;
-        if ($request->get("searchString") == null) {
-            $storage = Storage::where('shop_id', '=', $current_shop_id)
-                ->with("product")
-                ->orderBy($request->get("column") == null ? "id" : $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
-                ->paginate(20);
+        if ($request->get("column") == "name" || $request->get("column") == "type") {
+            $storage = DB::table('storages')
+                ->join('products', 'storages.product_id', '=', 'products.id')
+                ->where('storages.shop_id', $shop->id)
+                ->where(function ($query) use ($request) {
+                    $query->where('products.name', 'like' . $request->get("searchString") . '%')
+                        ->orWhere('products.type', 'like', '%' . $request->get("searchString") . '%')
+                        ->orWhere('storages.amount', 'like', '%' . $request->get("searchString") . '%')
+                        ->orWhere('storages.price', 'like', '%' . $request->get("searchString") . '%')
+                        ->orWhere('storages.expiration', 'like', '%' . $request->get("searchString") . '%');
+                })
+                ->select('storages.*', 'products.name', 'products.type')
+                ->orderBy('products.' . $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
+                ->get();
         } else {
+            $storage = DB::table('storages')
+                ->join('products', 'storages.product_id', '=', 'products.id')
+                ->where('storages.shop_id', $shop->id)
+                ->where(function ($query) use ($request) {
+                    $query->where('products.name', 'like' . $request->get("searchString") . '%')
+                        ->orWhere('products.type', 'like', '%' . $request->get("searchString") . '%')
+                        ->orWhere('storages.amount', 'like', '%' . $request->get("searchString") . '%')
+                        ->orWhere('storages.price', 'like', '%' . $request->get("searchString") . '%')
+                        ->orWhere('storages.expiration', 'like', '%' . $request->get("searchString") . '%');
+                })
+                ->select('storages.*', 'products.name', 'products.type')
+                ->orderBy('storages.' . $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
+                ->get();
+        }
+        /*if ($request->get("searchString") == null) {
+            if ($request->get("column") == "name") {
+                $storage = DB::table('storages')
+                    ->join('products', 'storages.product_id', '=', 'products.id')
+                    ->select('storages.*', 'products.name')
+                    ->orderBy('products.name', $request->get("order") == "desc" ? "desc" : "asc")
+                    ->paginate(20);
+            } else {
+                $storage = Storage::where('shop_id', '=', $current_shop_id)
+                    ->with("product")
+                    ->orderBy($request->get("column") == null ? "id" : $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
+                    ->paginate(20);
+            }
+        } else {
+            if ($request->get("column") == "name") {
+                $storage = DB::table('storages')
+                    ->join('products', 'storages.product_id', '=', 'products.id')->where('products.name', 'like', '%' . $request->get("searchString") . '%')
+                    ->orWhere('type', 'like', '%' . $request->get("searchString") . '%')
+                    ->select('storages.*', 'products.name', 'products.type')
+                    ->orderBy('products.name', $request->get("order") == "desc" ? "desc" : "asc")
+                    ->get();
+            } else {
+                $storage = Storage::where('shop_id', '=', $current_shop_id)
+                    ->whereHas('product', function (Builder $query) use ($request) {
+                        $query->where('name', 'like', '%' . $request->get("searchString") . '%')
+                            ->orWhere('type', 'like', '%' . $request->get("searchString") . '%');
+                    })->with("product")
+                    ->orderBy($request->get("column") == null ? "id" : $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
+                    ->paginate(20);
+            }
+
             $storage = Storage::where('shop_id', '=', $current_shop_id)
                 ->whereHas('product', function (Builder $query) use ($request) {
                     $query->where('name', 'like', '%' . $request->get("searchString") . '%')
@@ -44,7 +97,7 @@ class StorageController extends Controller
                 })->with("product")
                 ->orderBy($request->get("column") == null ? "id" : $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
                 ->paginate(20);
-        }
+        }*/
         return response()->json($storage);
     }
 
@@ -58,15 +111,6 @@ class StorageController extends Controller
                 $query->where('name', 'like', '%' . $searchString . '%')
                     ->orWhere('type', 'like', '%' . $searchString . '%');
             })->orderBy($request->has("column") ?  $request->get("column") : "id", $request->get("order") == "desc" ? "desc" : "asc")->paginate(20);
-
-        /*$storage = Storage::with("product")
-            ->where([
-                ['shop_id', '=', $current_shop_id],
-                ['product->name', 'LIKE', '%' . $searchString . '%']
-            ])->orWhere([
-                ['shop_id', '=', $current_shop_id],
-                ['product->type', 'LIKE', '%' . $searchString . '%']
-            ])->paginate(20);*/
 
         return response()->json($storage);
     }
