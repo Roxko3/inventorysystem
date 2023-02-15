@@ -52,7 +52,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete("/{shop}", [ShopController::class, "delete"])->name("deleteShop");
         Route::post("/rate", [RatingController::class, "rate"])->name("rateShop");
     });
-    Route::get('/searchMyStorage/{searchString}', [StorageController::class, 'searchMyStorage'])->name("searchMyStorage");
 
     Route::group(['prefix' => '/storages'], function () {
         Route::post("/add", [StorageController::class, "add"])->name("addItem");
