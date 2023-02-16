@@ -95,7 +95,7 @@ class StorageController extends Controller
         $user = Auth::user();
 
         if (Gate::denies('shop-cashier')) {
-            abort(403);
+            return response()->json("Csak a megfelelő jogokkal lehet hozzáadni terméket a bolthoz!", 403);
         }
 
         $current_shop_id = $user->shop_id;
@@ -135,7 +135,7 @@ class StorageController extends Controller
     public function update(Storage $storage, StorageRequest $request)
     {
         if (Gate::denies('shop-cashier')) {
-            abort(403);
+            return response()->json("Csak a megfelelő jogokkal lehet szerkeszteni a bolt termékein!", 403);
         }
         $storage->amount = $request->get("amount");
         $storage->price = $request->get("price");
@@ -162,7 +162,7 @@ class StorageController extends Controller
     public function delete(Request $request)
     {
         if (Gate::denies('shop-cashier')) {
-            abort(403);
+            return response()->json("Csak a megfelelő jogokkal lehet törölni terméket a boltból!", 403);
         }
         foreach ($request->get("ids") as $item) {
             $storage = Storage::where('id', $item)->first();

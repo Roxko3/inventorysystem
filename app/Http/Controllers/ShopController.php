@@ -79,7 +79,7 @@ class ShopController extends Controller
     public function uploadImage(Shop $shop, ImageRequest $request)
     {
         if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-manager')) {
-            abort(403);
+            return response()->json("Csak a megfelelő jogokkal lehet képet feltölteni!", 403);
         }
         $newImageName = time() .
             '-' .
@@ -103,7 +103,7 @@ class ShopController extends Controller
     public function update(Shop $shop, ShopRequest $request)
     {
         if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-manager')) {
-            abort(403);
+            return response()->json("Csak a megfelelő jogokkal lehet módosítani a bolt adatain!", 403);
         }
         $user = Auth::user();
         $changedDatas = "";
@@ -145,7 +145,7 @@ class ShopController extends Controller
     public function delete(Shop $shop)
     {
         if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-owner')) {
-            abort(403);
+            return response()->json("Csak a bolt létrehozója tudja törölni a boltot!", 403);
         }
 
         $workers = User::where('shop_id', $shop->id)->get();
