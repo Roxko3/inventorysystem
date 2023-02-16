@@ -42,6 +42,7 @@ class StorageController extends Controller
             $delete2 = 1;
         }
         if ($request->get("column") == "name" || $request->get("column") == "type" || $request->get("column") == "packaging" || $request->get("column") == "unit_of_measure" || $request->get("column") == "type") {
+            $ordercolumn = "products." . $request->get("column");
             $storage = DB::table('storages')
                 ->select('storages.*')
                 ->join('products', 'storages.product_id', '=', 'products.id')
@@ -59,7 +60,7 @@ class StorageController extends Controller
                         ->orWhere('products.unit_of_measure', 'like', '%' . $request->get("searchString") . '%')
                         ->orWhere('products.type', 'like', '%' . $request->get("searchString") . '%');
                 })
-                ->orderBy('products.' . $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
+                ->orderBy($ordercolumn, $request->get("order") == "desc" ? "desc" : "asc")
                 ->paginate(20);
         } else {
             if ($request->get("column") == null) {
@@ -95,7 +96,7 @@ class StorageController extends Controller
         $user = Auth::user();
 
         if (Gate::denies('shop-cashier')) {
-            abort(403);
+            return response()->json("Csak a megfelelő jogokkal lehet hozzáadni terméket a bolthoz!", 403);
         }
 
         $current_shop_id = $user->shop_id;
@@ -135,7 +136,7 @@ class StorageController extends Controller
     public function update(Storage $storage, StorageRequest $request)
     {
         if (Gate::denies('shop-cashier')) {
-            abort(403);
+            return response()->json("Csak a megfelelő jogokkal lehet szerkeszteni a bolt termékein!", 403);
         }
         $storage->amount = $request->get("amount");
         $storage->price = $request->get("price");
@@ -162,7 +163,7 @@ class StorageController extends Controller
     public function delete(Request $request)
     {
         if (Gate::denies('shop-cashier')) {
-            abort(403);
+            return response()->json("Csak a megfelelő jogokkal lehet törölni terméket a boltból!", 403);
         }
         foreach ($request->get("ids") as $item) {
             $storage = Storage::where('id', $item)->first();

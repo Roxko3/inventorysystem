@@ -50,7 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post("/create", [ShopController::class, "create"])->name("createShop");
         Route::put("/{shop}", [ShopController::class, "update"])->name("updateShop");
         Route::delete("/{shop}", [ShopController::class, "delete"])->name("deleteShop");
-        Route::post("/rate", [RatingController::class, "rate"])->name("rateShop");
+        Route::post("/rate/{shop}", [RatingController::class, "rate"])->name("rateShop");
     });
 
     Route::group(['prefix' => '/storages'], function () {
@@ -67,7 +67,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/delete', [WorkerController::class, 'delete'])->name("deleteWorker");
     });
 
-    Route::get("/logs", [LogController::class, "index"])->name("getlogs");
+    Route::get("/logs/{shop}", [LogController::class, "index"])->name("getlogs");
 });
 
 Route::post("/login", [AuthController::class, "login"])->name("login");

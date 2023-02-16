@@ -16,7 +16,7 @@ class WorkerController extends Controller
     public function workers(Shop $shop)
     {
         if (Gate::denies('shop-worker', $shop->id)) {
-            abort(403);
+            return response()->json("Csak a bolt dolgozói kérhetik le a bolt dolgozóit!", 403);
         }
         $workers = User::where("shop_id", $shop->id)->get();
         return response()->json($workers);
@@ -25,7 +25,7 @@ class WorkerController extends Controller
     public function searchWorkers(WorkerSearchRequest $request, Shop $shop)
     {
         if (Gate::denies('shop-worker', $shop->id)) {
-            abort(403);
+            return response()->json("Csak a bolt dolgozói kérhetik le a bolt dolgozóit!", 403);
         }
         if ($request->get("column") == null) {
             $ordercolumn = "id";
@@ -49,7 +49,7 @@ class WorkerController extends Controller
         $user = Auth::user();
 
         if (Gate::denies('shop-manager')) {
-            abort(403);
+            return response()->json("Csak a megfelelő jogokkal lehet hozzáadni dolgozót a bolthoz!", 403);
         }
 
         if ($user->email == $request->get("email")) {
@@ -84,7 +84,7 @@ class WorkerController extends Controller
         $user = Auth::user();
 
         if (Gate::denies('shop-manager')) {
-            abort(403);
+            return response()->json("Csak a megfelelő jogokkal lehet változatni a dolgozók jogain!", 403);
         }
 
         if ($user->email == $request->get("email")) {
@@ -115,7 +115,7 @@ class WorkerController extends Controller
         $user = Auth::user();
 
         if (Gate::denies('shop-owner')) {
-            abort(403);
+            return response()->json("Csak a bolt létrehozója tud dolgozókat törölni!", 403);
         }
 
         foreach ($request->get("emails") as $item) {
