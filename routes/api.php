@@ -60,7 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::group(['prefix' => '/workers'], function () {
-        Route::get('/', [ShopController::class, 'workers'])->name("showWorkers");
+        Route::get('/{shop}', [WorkerController::class, 'workers'])->name("showWorkers");
         Route::post('/add', [WorkerController::class, 'add'])->name("addWorker");
         Route::post('/update', [WorkerController::class, 'update'])->name("updateWorker");
         Route::post('/delete', [WorkerController::class, 'delete'])->name("deleteWorker");

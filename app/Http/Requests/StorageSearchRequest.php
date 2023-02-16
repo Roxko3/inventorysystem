@@ -5,9 +5,9 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator as Validator;
 use Illuminate\Validation\ValidationException;
-use App\Rules\CheckColumnRule;
+use App\Rules\StorageSearchColumnRule;
 
-class OrderRequest extends FormRequest
+class StorageSearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'column' => ["nullable", new CheckColumnRule],
+            'column' => ["nullable", new StorageSearchColumnRule],
             'order' => "nullable",
             'searchString' => "nullable",
             'is_deleted' => "nullable"
