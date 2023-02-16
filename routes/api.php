@@ -61,12 +61,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::group(['prefix' => '/workers'], function () {
         Route::get('/{shop}', [WorkerController::class, 'workers'])->name("showWorkers");
+        Route::get('/searchWorkers/{shop}', [WorkerController::class, 'searchWorkers'])->name("showWorkers");
         Route::post('/add', [WorkerController::class, 'add'])->name("addWorker");
         Route::post('/update', [WorkerController::class, 'update'])->name("updateWorker");
         Route::post('/delete', [WorkerController::class, 'delete'])->name("deleteWorker");
     });
 
-    Route::get("/workers", [ShopController::class, "workers"])->name("showWorkers");
     Route::get("/logs", [LogController::class, "index"])->name("getlogs");
 });
 
