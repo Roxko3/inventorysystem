@@ -43,6 +43,7 @@ class StorageController extends Controller
         }
         if ($request->get("column") == "name" || $request->get("column") == "type" || $request->get("column") == "packaging" || $request->get("column") == "unit_of_measure" || $request->get("column") == "type") {
             $storage = DB::table('storages')
+                ->select('storages.*')
                 ->join('products', 'storages.product_id', '=', 'products.id')
                 ->where('storages.shop_id', $shop->id)
                 ->where(function ($query) use ($delete1, $delete2) {
@@ -58,7 +59,6 @@ class StorageController extends Controller
                         ->orWhere('products.unit_of_measure', 'like', '%' . $request->get("searchString") . '%')
                         ->orWhere('products.type', 'like', '%' . $request->get("searchString") . '%');
                 })
-                ->select('storages.*', 'products.*')
                 ->orderBy('products.' . $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
                 ->paginate(20);
         } else {
@@ -68,6 +68,7 @@ class StorageController extends Controller
                 $ordercolumn = "storages." . $request->get("column");
             }
             $storage = DB::table('storages')
+                ->select('storages.*')
                 ->join('products', 'storages.product_id', '=', 'products.id')
                 ->where('storages.shop_id', $shop->id)
                 ->where(function ($query) use ($delete1, $delete2) {
@@ -83,7 +84,6 @@ class StorageController extends Controller
                         ->orWhere('products.unit_of_measure', 'like', '%' . $request->get("searchString") . '%')
                         ->orWhere('products.type', 'like', '%' . $request->get("searchString") . '%');
                 })
-                ->select('*')
                 ->orderBy($ordercolumn, $request->get("order") == "desc" ? "desc" : "asc")
                 ->paginate(20);
         }
