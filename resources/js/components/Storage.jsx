@@ -125,6 +125,7 @@ function Storage() {
                     searchString: search,
                     order: order,
                     column: field,
+                    is_deleted: 0,
                 },
             })
             .then((response) => {
@@ -138,7 +139,7 @@ function Storage() {
                     setStorage(options[0]);
                     setStorageDeleted(options[1]);
                     setStorageAvailable(options[2]);
-                    setFilter(options[index]);
+                    setFilter(all);
                     setIsLoading(false);
                     setIsGridLoading(false);
                 }
@@ -292,7 +293,7 @@ function Storage() {
     };
 
     useEffect(() => {
-        getStorage(`shops/searchStorage/${user.shop_id}`, alignment);
+        getStorage(`shops/searchStorage/${user.shop_id}`);
         getProducts();
         setRowCountState((prevRowCountState) =>
             pagination.total !== undefined
@@ -303,7 +304,7 @@ function Storage() {
 
     const columns = [
         {
-            field: "product_name",
+            field: "name",
             headerName: "Termék",
         },
         {
@@ -438,11 +439,6 @@ function Storage() {
                 <Box>
                     <DataGrid
                         rows={filter.map((storage) => {
-                            storage["product_name"] = storage["product"].name;
-                            storage["packaging"] = storage["product"].packaging;
-                            storage["unit_of_measure"] =
-                                storage["product"].unit_of_measure;
-                            storage["type"] = storage["product"].type;
                             storage["edit"] = "Szerkesztés";
                             return storage;
                         })}
