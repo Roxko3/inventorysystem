@@ -51,13 +51,6 @@ class ShopController extends Controller
         return response()->json(["shop" => $shop, "ratings" => ["star1" => $ratingarray[0], "star2" => $ratingarray[1], "star3" => $ratingarray[2], "star4" => $ratingarray[3], "star5" => $ratingarray[4]]], 200);
     }
 
-    public function workers()
-    {
-        $user = Auth::user();
-        $workers = User::where("shop_id", $user->shop_id)->get();
-        return response()->json($workers);
-    }
-
     public function create(ShopRequest $request)
     {
         $user = Auth::user();

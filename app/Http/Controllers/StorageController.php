@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\OrderRequest;
+use App\Http\Requests\StorageSearchRequest;
 use App\Http\Requests\StorageRequest;
 use App\Http\Requests\UpdateStorageRequest;
 use App\Models\Log;
@@ -27,12 +27,12 @@ class StorageController extends Controller
         $storage = DB::table('storages')
             ->join('products', 'storages.product_id', '=', 'products.id')
             ->where('storages.shop_id', $shop->id)
-            ->select('storages.*', 'products.*')
+            ->select('*')
             ->paginate(20);
         return response()->json($storage);
     }
 
-    public function searchStorage(OrderRequest $request, Shop $shop)
+    public function searchStorage(StorageSearchRequest $request, Shop $shop)
     {
         if ($request->get("is_deleted") === 0 || $request->get("is_deleted") === 1) {
             $delete1 = $request->get("is_deleted");

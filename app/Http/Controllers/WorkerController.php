@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkerRequest;
+use App\Http\Requests\WorkerSearchRequest;
 use App\Models\Log;
 use App\Models\Shop;
 use App\Models\User;
@@ -12,6 +13,37 @@ use Illuminate\Support\Facades\Gate;
 
 class WorkerController extends Controller
 {
+    public function workers(Shop $shop)
+    {
+        if (Gate::denies('shop-worker', $shop->id)) {
+            abort(403);
+        }
+        $workers = User::where("shop_id", $shop->id)->get();
+        return response()->json($workers);
+    }
+
+    public function searchWorkers(WorkerSearchRequest $request, Shop $shop)
+    {
+        if (Gate::denies('shop-worker', $shop->id)) {
+            abort(403);
+        }
+        if ($request->get("column") == null) {
+            $ordercolumn = "id";
+        } else {
+            $ordercolumn = $request->get("column");
+        }
+        $workers = User::where('shop_id', $shop->id)
+            ->where(function ($query) use ($request) {
+                $query->where('email', 'like', '%' . $request->get("searchString") . '%')
+                    ->orWhere('name', 'like', '%' . $request->get("searchString") . '%')
+                    ->orWhere('permission', 'like', '%' . $request->get("searchString") . '%')
+                    ->orWhere('postal_code', 'like', '%' . $request->get("searchString") . '%');
+            })
+            ->orderBy($ordercolumn, $request->get("order") == "desc" ? "desc" : "asc")
+            ->paginate(20);
+        return response()->json($workers);
+    }
+
     public function add(WorkerRequest $request)
     {
         $user = Auth::user();

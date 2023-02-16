@@ -6,7 +6,7 @@ use App\Models\Storage;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Schema;
 
-class CheckColumnRule implements Rule
+class StorageSearchColumnRule implements Rule
 {
     /**
      * Create a new rule instance.
