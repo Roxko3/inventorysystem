@@ -42,6 +42,7 @@ class StorageController extends Controller
             $delete2 = 1;
         }
         if ($request->get("column") == "name" || $request->get("column") == "type" || $request->get("column") == "packaging" || $request->get("column") == "unit_of_measure" || $request->get("column") == "type") {
+            $ordercolumn = "products." . $request->get("column");
             $storage = DB::table('storages')
                 ->select('storages.*')
                 ->join('products', 'storages.product_id', '=', 'products.id')
@@ -59,7 +60,7 @@ class StorageController extends Controller
                         ->orWhere('products.unit_of_measure', 'like', '%' . $request->get("searchString") . '%')
                         ->orWhere('products.type', 'like', '%' . $request->get("searchString") . '%');
                 })
-                ->orderBy('products.' . $request->get("column"), $request->get("order") == "desc" ? "desc" : "asc")
+                ->orderBy($ordercolumn, $request->get("order") == "desc" ? "desc" : "asc")
                 ->paginate(20);
         } else {
             if ($request->get("column") == null) {
