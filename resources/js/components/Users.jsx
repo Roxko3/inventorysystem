@@ -28,7 +28,7 @@ import {
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DataGrid, huHU } from "@mui/x-data-grid";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import BasicModal from "./BasicModal";
@@ -42,15 +42,22 @@ import {
 } from "@mui/icons-material";
 import CustomToolbar from "./CustomToolbar";
 import moment from "moment";
+import { UserContext } from "./App";
 
 function Users() {
+    const user = useContext(UserContext);
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [editedRow, setEditedRow] = useState({});
     const [deletedRows, setDeletedRows] = useState([]);
+    const [pagination, setPagination] = useState({});
     const [isAdding, setIsAdding] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isGridLoading, setIsGridLoading] = useState(true);
+    const [search, setSearch] = useState("");
+    const [order, setOrder] = useState("");
+    const [field, setField] = useState("");
     const [alertMessage, setalertMessage] = useState("");
     const [role, setRole] = useState("");
     const [open, setOpen] = useState(false);
@@ -59,19 +66,29 @@ function Users() {
     const permission = useRef("");
     const cookie = Cookies.get("token");
 
-    const getUsers = () => {
-        axios
-            .get("http://127.0.0.1/InventorySystem/public/api/workers", {
+    const getUsers = (url) => {
+        const axiosInstance = axios.create({
+            baseURL: "http://127.0.0.1/InventorySystem/public/api/",
+        });
+        axiosInstance
+            .get(url, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + cookie,
+                },
+                params: {
+                    searchString: search,
+                    order: order,
+                    column: field,
                 },
             })
             .then((response) => {
                 if (response.status === 200) {
                     console.log(response.data);
-                    setUsers(response.data);
+                    setPagination(response.data);
+                    setUsers(response.data.data);
                     setIsLoading(false);
+                    setIsGridLoading(false);
                 }
             });
     };
@@ -95,7 +112,7 @@ function Users() {
                 if (response.status === 200) {
                     setErrors([]);
                     //console.log(response);
-                    getUsers();
+                    getUsers(`workers/searchWorkers/${user.shop_id}`);
                     setRole("");
                     setIsAdding(false);
                 }
@@ -130,7 +147,7 @@ function Users() {
                 if (response.status === 200) {
                     setErrors([]);
                     //console.log(response);
-                    getUsers();
+                    getUsers(`workers/searchWorkers/${user.shop_id}`);
                     setIsEditing(false);
                 }
             })
@@ -151,8 +168,7 @@ function Users() {
             .post(
                 `http://127.0.0.1/InventorySystem/public/api/workers/delete`,
                 {
-                    email: deletedRows,
-                    permission: 1,
+                    emails: deletedRows,
                 },
                 {
                     headers: {
@@ -165,8 +181,9 @@ function Users() {
                 if (response.status === 200) {
                     //console.log("félsiker");
                     //setStorage(response.data.data);
-                    getUsers();
+                    getUsers(`workers/searchWorkers/${user.shop_id}`);
                     setIsLoading(false);
+                    setIsGridLoading(false);
                     setDeletedRows([]);
                 }
             })
@@ -189,8 +206,8 @@ function Users() {
     };
 
     useEffect(() => {
-        getUsers();
-    }, []);
+        getUsers(`workers/searchWorkers/${user.shop_id}`);
+    }, [order, field, search]);
 
     const columns = [
         {
@@ -312,13 +329,57 @@ function Users() {
                         disableSelectionOnClick
                         autoHeight={true}
                         autoPageSize={true}
-                        pageSize={10}
+                        pageSize={pagination.per_page}
                         checkboxSelection
+                        page={pagination.current_page - 1}
+                        loading={isGridLoading}
+                        paginationMode="server"
+                        rowCount={pagination.total}
+                        onPageChange={(e) => {
+                            if (pagination.next_page_url == null) {
+                                getUsers(
+                                    pagination.prev_page_url
+                                        .split("api")[1]
+                                        .split("=")[0] + `=${e + 1}`
+                                );
+                            } else {
+                                getUsers(
+                                    pagination.next_page_url
+                                        .split("api")[1]
+                                        .split("=")[0] + `=${e + 1}`
+                                );
+                            }
+                            setIsGridLoading(true);
+                        }}
                         components={{ Toolbar: CustomToolbar }}
                         localeText={
                             huHU.components.MuiDataGrid.defaultProps.localeText
                         }
                         disableColumnMenu
+                        filterMode="server"
+                        onFilterModelChange={(e) => {
+                            if (e.quickFilterValues.length != 0) {
+                                setSearch(
+                                    e.quickFilterValues
+                                        .toString()
+                                        .replaceAll(",", " ")
+                                );
+                            } else {
+                                setSearch("");
+                            }
+                            setIsGridLoading(true);
+                        }}
+                        sortingMode="server"
+                        onSortModelChange={(e) => {
+                            if (e.length != 0) {
+                                setOrder(e[0].sort);
+                                setField(e[0].field.replace("name", "id"));
+                            } else {
+                                setOrder("");
+                                setField("");
+                            }
+                            setIsGridLoading(true);
+                        }}
                     />
                 </Box>
 

@@ -202,7 +202,7 @@ function Shops() {
                                                 name="read-only"
                                                 value={shops.rating}
                                                 readOnly
-                                                precision={0.5}
+                                                precision={0.1}
                                             />
                                         </Box>
                                     </Tooltip>

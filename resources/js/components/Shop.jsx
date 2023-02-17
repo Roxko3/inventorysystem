@@ -1,7 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Cookies from "js-cookie";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Rating,
+    Typography,
+} from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { Link } from "react-router-dom";
 import Image from "mui-image";
@@ -21,6 +27,8 @@ function Shop() {
     const [order, setOrder] = useState("");
     const [field, setField] = useState("");
     const [search, setSearch] = useState("");
+    const [rating, setRating] = useState([]);
+    const [value, setValue] = useState(null);
     const [isGridLoading, setIsGridLoading] = useState(true);
     const [gridLoading, setGridLoading] = useState(true);
     const { id } = useParams();
@@ -38,6 +46,7 @@ function Shop() {
                 if (response.status === 200) {
                     console.log(response.data);
                     setShop(response.data.shop);
+                    setRating(response.data.ratings);
                     setIsFound(true);
                     setLoading(false);
                 }
@@ -64,15 +73,14 @@ function Shop() {
                     searchString: search,
                     order: order,
                     column: field,
+                    is_deleted: 0,
                 },
             })
             .then((response) => {
                 if (response.status === 200) {
-                    //console.log(response.data);
+                    console.log(response.data);
                     setPagination(response.data);
-                    setStorage(
-                        response.data.data.filter((a) => a.is_deleted == 0)
-                    );
+                    setStorage(response.data.data);
                     setGridLoading(false);
                     setIsGridLoading(false);
                 }
@@ -85,6 +93,12 @@ function Shop() {
             });
     };
 
+    const rate = () => {
+        axios.post(
+            `http://127.0.0.1/InventorySystem/public/api/shops/rate/${id}`
+        );
+    };
+
     useEffect(() => {
         document.title = "Inventory System - Boltok";
         getShop();
@@ -93,7 +107,7 @@ function Shop() {
 
     const columns = [
         {
-            field: "product_name",
+            field: "name",
             headerName: "Termék",
         },
         {
@@ -153,38 +167,106 @@ function Shop() {
                 <Typography variant="subtitle2">
                     {shop.postal_code}, {shop.address}
                 </Typography>
+                <Grid2 container direction="column" mt={2}>
+                    <Rating
+                        value={value}
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }}
+                    />
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Rating value={shop.rating} readOnly precision={0.1} />
+                        <Box sx={{ ml: 2 }}>{shop.rating}</Box>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Rating value={5} readOnly />
+                        <Box sx={{ ml: 2 }}>{rating.star5} db</Box>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Rating value={4} readOnly />
+                        <Box sx={{ ml: 2 }}>{rating.star4} db</Box>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Rating value={3} readOnly />
+                        <Box sx={{ ml: 2 }}>{rating.star3} db</Box>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Rating value={2} readOnly />
+                        <Box sx={{ ml: 2 }}>{rating.star2} db</Box>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Rating value={1} readOnly />
+                        <Box sx={{ ml: 2 }}>{rating.star1} db</Box>
+                    </Box>
+                </Grid2>
                 <Grid2
                     mt={2}
                     container
-                    direction="row"
+                    direction={{ sm: "column", md: "row" }}
                     alignItems="center"
                     justifyContent="center"
                 >
-                    <Grid2 sx={{ width: { xs: 300, sm: 400 } }}>
-                        <Image
-                            src={
-                                shop.image_path == null
-                                    ? "/InventorySystem/storage/images/template.png"
-                                    : shop.image_path
-                            }
-                            duration={1500}
-                            alt="Bolt képe"
-                            style={{
-                                border: "1px solid black",
-                                borderRadius: 16,
-                            }}
-                            height={290}
-                        />
+                    <Grid2
+                        container
+                        direction={{ sm: "row", md: "column" }}
+                        alignItems="center"
+                        justifyContent="center"
+                        m={2}
+                    >
+                        <Grid2 sx={{ width: { xs: 300, sm: 376, lg: 500 } }}>
+                            <Image
+                                src={
+                                    shop.image_path == null
+                                        ? "/InventorySystem/storage/images/template.png"
+                                        : shop.image_path
+                                }
+                                duration={1500}
+                                alt="Bolt képe"
+                                style={{
+                                    border: "1px solid black",
+                                    borderRadius: 16,
+                                }}
+                                height={330}
+                            />
+                        </Grid2>
+                        <Grid2 sx={{ width: { xs: 300, sm: 376, lg: 500 } }}>
+                            <Map
+                                key={shop.postal_code}
+                                location={`${shop.address}+${shop.postal_code}`}
+                                height={330}
+                            />
+                        </Grid2>
                     </Grid2>
-                    <Grid2 sx={{ width: { xs: 300, sm: 500 } }}>
-                        <Map
-                            key={shop.postal_code}
-                            location={`${shop.address}+${shop.postal_code}`}
-                            height={300}
-                        />
-                    </Grid2>
-                </Grid2>
-                <Box mt={1}>
                     <DataGrid
                         rows={storage.map((storage) => {
                             return storage;
@@ -245,7 +327,7 @@ function Shop() {
                             setIsGridLoading(true);
                         }}
                     />
-                </Box>
+                </Grid2>
             </Grid2>
         </Grid2>
     );

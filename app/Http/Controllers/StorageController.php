@@ -86,7 +86,7 @@ class StorageController extends Controller
                         ->orWhere('products.type', 'like', '%' . $request->get("searchString") . '%');
                 })
                 ->orderBy($ordercolumn, $request->get("order") == "desc" ? "desc" : "asc")
-                ->paginate(20);
+                ->paginate(10);
         }
         return response()->json($storage);
     }

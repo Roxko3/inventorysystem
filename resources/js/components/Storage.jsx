@@ -78,7 +78,7 @@ function Storage() {
     const amount = useRef(-1);
     const price = useRef(-1);
     const expiration = useRef("");
-    const [alignment, setAlignment] = useState(2);
+    const [alignment, setAlignment] = useState(0);
     const [open, setOpen] = useState(false);
     const [alertMessage, setalertMessage] = useState("");
     const [severity, setSeverity] = useState("success");
@@ -97,7 +97,7 @@ function Storage() {
 
     const handleAlignment = (event, newAlignment) => {
         if (newAlignment !== null) {
-            if (newAlignment === 2) {
+            /*if (newAlignment === 2) {
                 setFilter(storageAvailable);
             }
             if (newAlignment === 0) {
@@ -105,8 +105,9 @@ function Storage() {
             }
             if (newAlignment === 1) {
                 setFilter(storageDeleted);
-            }
+            }*/
             setAlignment(newAlignment);
+            setIsGridLoading(true);
         }
     };
 
@@ -125,21 +126,21 @@ function Storage() {
                     searchString: search,
                     order: order,
                     column: field,
-                    is_deleted: 2,
+                    is_deleted: index,
                 },
             })
             .then((response) => {
                 if (response.status === 200) {
                     console.log(response.data);
                     setPagination(response.data);
-                    const all = response.data.data;
+                    /*const all = response.data.data;
                     const deleted = all.filter((a) => a.is_deleted == 1);
                     const available = all.filter((a) => a.is_deleted == 0);
                     const options = [all, deleted, available];
                     setStorage(options[0]);
                     setStorageDeleted(options[1]);
-                    setStorageAvailable(options[2]);
-                    setFilter(all);
+                    setStorageAvailable(options[2]);*/
+                    setFilter(response.data.data);
                     setIsLoading(false);
                     setIsGridLoading(false);
                 }
@@ -293,14 +294,14 @@ function Storage() {
     };
 
     useEffect(() => {
-        getStorage(`shops/searchStorage/${user.shop_id}`);
+        getStorage(`shops/searchStorage/${user.shop_id}`, alignment);
         getProducts();
         setRowCountState((prevRowCountState) =>
             pagination.total !== undefined
                 ? pagination.total
                 : prevRowCountState
         );
-    }, [order, field, search, setRowCountState]);
+    }, [order, field, search, alignment, setRowCountState]);
 
     const columns = [
         {
@@ -419,12 +420,12 @@ function Storage() {
                         onChange={handleAlignment}
                     >
                         <Tooltip title="Elérhető" placement="top" followCursor>
-                            <ToggleButton value={2} selected={alignment === 2}>
+                            <ToggleButton value={0} selected={alignment === 0}>
                                 <FilterList />
                             </ToggleButton>
                         </Tooltip>
                         <Tooltip title="Minden" placement="top" followCursor>
-                            <ToggleButton value={0} selected={alignment === 0}>
+                            <ToggleButton value={2} selected={alignment === 2}>
                                 <FilterNone />
                             </ToggleButton>
                         </Tooltip>
@@ -519,10 +520,10 @@ function Storage() {
                         }}
                         sortingMode="server"
                         onSortModelChange={(e) => {
-                            //console.log(e);
+                            //console.log(e[0].field);
                             if (e.length != 0) {
                                 setOrder(e[0].sort);
-                                setField(e[0].field.replace("name", "id"));
+                                setField(e[0].field);
                                 /*getStorage(
                                     `shops/searchStorage/${user.shop_id}`,
                                     alignment
