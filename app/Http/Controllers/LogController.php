@@ -26,7 +26,7 @@ class LogController extends Controller
     {
         if ($request->get("column") == "name") {
             $storage = DB::table('logs')
-                ->select('logs.*')
+                ->select('logs.*', 'users.name')
                 ->join('users', 'logs.user_id', '=', 'users.id')
                 ->where('logs.shop_id', $shop->id)
                 ->where(function ($query) use ($request) {
@@ -43,7 +43,7 @@ class LogController extends Controller
                 $ordercolumn = "logs." . $request->get("column");
             }
             $storage = DB::table('logs')
-                ->select('logs.*')
+                ->select('logs.*', 'users.name')
                 ->join('users', 'logs.user_id', '=', 'users.id')
                 ->where('logs.shop_id', $shop->id)
                 ->where(function ($query) use ($request) {

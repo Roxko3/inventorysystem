@@ -29,7 +29,11 @@ class LogSearchColumnRule implements Rule
         if (Schema::hasColumn("logs", $value)) {
             return true;
         } else {
-            return false;
+            if ($value == 'name') {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

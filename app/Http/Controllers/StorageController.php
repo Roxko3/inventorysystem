@@ -44,7 +44,7 @@ class StorageController extends Controller
         if ($request->get("column") == "name" || $request->get("column") == "type" || $request->get("column") == "packaging" || $request->get("column") == "unit_of_measure" || $request->get("column") == "type") {
             $ordercolumn = "products." . $request->get("column");
             $storage = DB::table('storages')
-                ->select('storages.*')
+                ->select('storages.*', 'products.name', 'products.packaging', 'products.unit_of_measure', 'products.type')
                 ->join('products', 'storages.product_id', '=', 'products.id')
                 ->where('storages.shop_id', $shop->id)
                 ->where(function ($query) use ($delete1, $delete2) {
@@ -69,7 +69,7 @@ class StorageController extends Controller
                 $ordercolumn = "storages." . $request->get("column");
             }
             $storage = DB::table('storages')
-                ->select('storages.*')
+                ->select('storages.*', 'products.name', 'products.packaging', 'products.unit_of_measure', 'products.type')
                 ->join('products', 'storages.product_id', '=', 'products.id')
                 ->where('storages.shop_id', $shop->id)
                 ->where(function ($query) use ($delete1, $delete2) {

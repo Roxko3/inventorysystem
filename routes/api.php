@@ -67,7 +67,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/delete', [WorkerController::class, 'delete'])->name("deleteWorker");
     });
 
-    Route::get("/logs/{shop}", [LogController::class, "index"])->name("getlogs");
+    Route::group(['prefix' => '/logs'], function () {
+        Route::get("/{shop}", [LogController::class, "index"])->name("getlogs");
+        Route::get("/searchLogs/{shop}", [LogController::class, "searchLogs"])->name("searchlogs");
+    });
 });
 
 Route::post("/login", [AuthController::class, "login"])->name("login");
