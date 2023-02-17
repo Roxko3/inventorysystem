@@ -187,11 +187,6 @@ function Shop() {
                 <Box mt={1}>
                     <DataGrid
                         rows={storage.map((storage) => {
-                            storage["packaging"] = storage["product"].packaging;
-                            storage["unit_of_measure"] =
-                                storage["product"].unit_of_measure;
-                            storage["type"] = storage["product"].type;
-                            storage["product_name"] = storage["product"].name;
                             return storage;
                         })}
                         columns={columns}

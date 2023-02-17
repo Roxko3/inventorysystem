@@ -125,11 +125,12 @@ function Storage() {
                     searchString: search,
                     order: order,
                     column: field,
+                    is_deleted: 2,
                 },
             })
             .then((response) => {
                 if (response.status === 200) {
-                    //console.log(response.data);
+                    console.log(response.data);
                     setPagination(response.data);
                     const all = response.data.data;
                     const deleted = all.filter((a) => a.is_deleted == 1);
@@ -138,7 +139,7 @@ function Storage() {
                     setStorage(options[0]);
                     setStorageDeleted(options[1]);
                     setStorageAvailable(options[2]);
-                    setFilter(options[index]);
+                    setFilter(all);
                     setIsLoading(false);
                     setIsGridLoading(false);
                 }
@@ -292,7 +293,7 @@ function Storage() {
     };
 
     useEffect(() => {
-        getStorage(`shops/searchStorage/${user.shop_id}`, alignment);
+        getStorage(`shops/searchStorage/${user.shop_id}`);
         getProducts();
         setRowCountState((prevRowCountState) =>
             pagination.total !== undefined
@@ -303,7 +304,7 @@ function Storage() {
 
     const columns = [
         {
-            field: "product_name",
+            field: "name",
             headerName: "Termék",
         },
         {
@@ -438,11 +439,6 @@ function Storage() {
                 <Box>
                     <DataGrid
                         rows={filter.map((storage) => {
-                            storage["product_name"] = storage["product"].name;
-                            storage["packaging"] = storage["product"].packaging;
-                            storage["unit_of_measure"] =
-                                storage["product"].unit_of_measure;
-                            storage["type"] = storage["product"].type;
                             storage["edit"] = "Szerkesztés";
                             return storage;
                         })}
@@ -521,7 +517,6 @@ function Storage() {
                             }
                             setIsGridLoading(true);
                         }}
-                        //{{URL}}/shops/searchStorage/1?column=price&order=desc&searchString=élel
                         sortingMode="server"
                         onSortModelChange={(e) => {
                             //console.log(e);
