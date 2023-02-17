@@ -125,7 +125,7 @@ function Storage() {
                     searchString: search,
                     order: order,
                     column: field,
-                    is_deleted: 0,
+                    is_deleted: 2,
                 },
             })
             .then((response) => {
