@@ -34,7 +34,7 @@ class StorageController extends Controller
 
     public function searchStorage(StorageSearchRequest $request, Shop $shop)
     {
-        if ($request->get("is_deleted") === 0 || $request->get("is_deleted") === 1) {
+        if ($request->get("is_deleted") === "0" || $request->get("is_deleted") === "1") {
             $delete1 = $request->get("is_deleted");
             $delete2 = $request->get("is_deleted");
         } else {
