@@ -5,6 +5,9 @@ import {
     Box,
     Button,
     CircularProgress,
+    List,
+    ListItem,
+    ListItemText,
     Rating,
     Typography,
 } from "@mui/material";
@@ -93,17 +96,30 @@ function Shop() {
             });
     };
 
-    const rate = () => {
-        axios.post(
-            `http://127.0.0.1/InventorySystem/public/api/shops/rate/${id}`
-        );
+    const rate = (value) => {
+        axios
+            .post(
+                `http://127.0.0.1/InventorySystem/public/api/shops/rate/${id}`,
+                {
+                    rating: value,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log(response.response.data);
+            });
     };
 
     useEffect(() => {
         document.title = "Inventory System - Boltok";
         getShop();
         getStorage(`shops/searchStorage/${id}`);
-    }, [order, field, search]);
+    }, [order, field, search, value]);
 
     const columns = [
         {
@@ -167,67 +183,99 @@ function Shop() {
                 <Typography variant="subtitle2">
                     {shop.postal_code}, {shop.address}
                 </Typography>
-                <Grid2 container direction="column" mt={2}>
-                    <Rating
-                        value={value}
-                        onChange={(event, newValue) => {
-                            setValue(newValue);
-                        }}
-                    />
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Rating value={shop.rating} readOnly precision={0.1} />
-                        <Box sx={{ ml: 2 }}>{shop.rating}</Box>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Rating value={5} readOnly />
-                        <Box sx={{ ml: 2 }}>{rating.star5} db</Box>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Rating value={4} readOnly />
-                        <Box sx={{ ml: 2 }}>{rating.star4} db</Box>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Rating value={3} readOnly />
-                        <Box sx={{ ml: 2 }}>{rating.star3} db</Box>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Rating value={2} readOnly />
-                        <Box sx={{ ml: 2 }}>{rating.star2} db</Box>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Rating value={1} readOnly />
-                        <Box sx={{ ml: 2 }}>{rating.star1} db</Box>
-                    </Box>
+                <Grid2 container direction="row" mt={2}>
+                    <Grid2 container direction="column">
+                        <List dense>
+                            <ListItem disablePadding>
+                                <ListItemText primary="Hétfő 6:00-21:00"></ListItemText>
+                            </ListItem>
+                            <ListItem disablePadding>
+                                <ListItemText primary="Kedd 6:00-21:00"></ListItemText>
+                            </ListItem>
+                            <ListItem disablePadding>
+                                <ListItemText primary="Szerda 6:00-21:00"></ListItemText>
+                            </ListItem>
+                            <ListItem disablePadding>
+                                <ListItemText primary="Csütörtök 6:00-21:00"></ListItemText>
+                            </ListItem>
+                            <ListItem disablePadding>
+                                <ListItemText primary="Péntek 6:00-21:00"></ListItemText>
+                            </ListItem>
+                            <ListItem disablePadding>
+                                <ListItemText primary="Szombat 6:00-21:00"></ListItemText>
+                            </ListItem>
+                            <ListItem disablePadding>
+                                <ListItemText primary="Vasárnap 8:00-18:00"></ListItemText>
+                            </ListItem>
+                        </List>
+                    </Grid2>
+                    <Grid2 container direction="column">
+                        <Rating
+                            value={value}
+                            onChange={(event, newValue) => {
+                                setValue(newValue);
+                                rate(newValue);
+                            }}
+                        />
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Rating
+                                value={shop.rating}
+                                readOnly
+                                precision={0.1}
+                            />
+                            <Box sx={{ ml: 2 }}>{shop.rating}</Box>
+                        </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Rating value={5} readOnly />
+                            <Box sx={{ ml: 2 }}>{rating.star5} db</Box>
+                        </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Rating value={4} readOnly />
+                            <Box sx={{ ml: 2 }}>{rating.star4} db</Box>
+                        </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Rating value={3} readOnly />
+                            <Box sx={{ ml: 2 }}>{rating.star3} db</Box>
+                        </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Rating value={2} readOnly />
+                            <Box sx={{ ml: 2 }}>{rating.star2} db</Box>
+                        </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Rating value={1} readOnly />
+                            <Box sx={{ ml: 2 }}>{rating.star1} db</Box>
+                        </Box>
+                    </Grid2>
                 </Grid2>
                 <Grid2
                     mt={2}
