@@ -444,13 +444,13 @@ function Storage() {
                             return storage;
                         })}
                         onCellClick={(e) => {
-                            //(e);
-                            const rowID = storage.findIndex(
+                            //console.log(e.row);
+                            /*const rowID = storage.findIndex(
                                 (a) => a.id == e["id"]
-                            );
+                            );*/
                             const field = e["field"];
                             if (field != "__check__") {
-                                setEditedRow(storage[rowID]);
+                                setEditedRow(e.row);
                                 setIsEditing(true);
                             }
                         }}
