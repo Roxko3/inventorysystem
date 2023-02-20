@@ -22,7 +22,7 @@ class ShopsSeeder extends Seeder
                 'address' => "Pogányi út 7",
                 'owner' => "Tesco PLC",
                 'postal_code' => 9730,
-                'image_path' => "/InventorySystem/storage/images/tesco1.jpg",
+                'image_path' => "tesco1.jpg",
                 'rating' => 4.75
             ],
             [
@@ -32,7 +32,7 @@ class ShopsSeeder extends Seeder
                 'address' => "Zanati út 70",
                 'owner' => "Tesco PLC",
                 'postal_code' => 9700,
-                'image_path' => "/InventorySystem/storage/images/tesco2.jpg",
+                'image_path' => "tesco2.jpg",
                 'rating' => 3.75
             ],
             [
@@ -41,7 +41,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Széchenyi tér 13",
                 'owner' => "Co-op Hungary Zrt.",
-                'image_path' => "/InventorySystem/storage/images/coop1.jpg",
+                'image_path' => "coop1.jpg",
                 'postal_code' => 9735,
                 'rating' => 2.37
             ],
@@ -51,7 +51,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Várkör 16",
                 'owner' => "Bestbyte műszaki",
-                'image_path' => "/InventorySystem/storage/images/vargapc.jpg",
+                'image_path' => "vargapc.jpg",
                 'postal_code' => 9730,
                 'rating' => 3
             ],

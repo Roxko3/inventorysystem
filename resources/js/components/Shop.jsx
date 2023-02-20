@@ -296,7 +296,7 @@ function Shop() {
                                 src={
                                     shop.image_path == null
                                         ? "/InventorySystem/storage/images/template.png"
-                                        : shop.image_path
+                                        : `/InventorySystem/storage/images/${shop.image_path}`
                                 }
                                 duration={1500}
                                 alt="Bolt képe"

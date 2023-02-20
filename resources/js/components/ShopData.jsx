@@ -45,12 +45,50 @@ function ShopData() {
     const [isChanged, setIsChanged] = useState(false);
     const [errors, setErrors] = useState([]);
     const [openAlert, setOpenAlert] = useState(false);
+    const [alertMessage, setalertMessage] = useState("");
+    const [severity, setSeverity] = useState("success");
+    var formData = new FormData();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const upload = (e) => {
+        handleClose();
+        console.log(e.target.files[0]);
+        formData.append("image", e.target.files[0]);
+        uploadImage();
+    };
+
+    const uploadImage = async () => {
+        axios
+            .post(
+                `http://127.0.0.1/InventorySystem/public/api/myShop/${user.shop_id}/uploadImage`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    setSeverity("success");
+                    setalertMessage("Kép sikeresen megváltoztatva!");
+                    setOpenAlert(true);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    setSeverity("error");
+                    setalertMessage("Valami hiba történt!");
+                    setOpenAlert(true);
+                }
+            });
     };
 
     const handleCloseAlert = (event, reason) => {
@@ -100,6 +138,8 @@ function ShopData() {
                     console.log(response.data);
                     setErrors([]);
                     setOpenAlert(true);
+                    setSeverity("success");
+                    setalertMessage("Változtatások sikeresen elmentve!");
                 }
             })
             .catch((response) => {
@@ -179,7 +219,7 @@ function ShopData() {
                             src={
                                 user.shop.image_path == null
                                     ? "./images/template.png"
-                                    : user.shop.image_path
+                                    : `/InventorySystem/storage/images/${user.shop.image_path}`
                             }
                         />
                     </Badge>
@@ -196,9 +236,14 @@ function ShopData() {
                             horizontal: "left",
                         }}
                     >
-                        <MenuItem onClick={handleClose} component="label">
+                        <MenuItem component="label">
                             Fotó feltöltése
-                            <input hidden accept="image/*" type="file" />
+                            <input
+                                hidden
+                                accept="image/*"
+                                type="file"
+                                onChange={upload}
+                            />
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
                             Fotó eltávolítása
@@ -347,10 +392,10 @@ function ShopData() {
             >
                 <Alert
                     onClose={handleCloseAlert}
-                    severity="success"
+                    severity={severity}
                     sx={{ width: "100%" }}
                 >
-                    Változtatások sikeresen elmentve!
+                    {alertMessage}
                 </Alert>
             </Snackbar>
         </Grid2>
