@@ -25,6 +25,16 @@ function MyAvatar(props) {
     }
 
     function stringAvatar(name) {
+        if (!name.includes(" ")) {
+            return {
+                sx: {
+                    bgcolor: stringToColor(name),
+                    width: props.width,
+                    height: props.height,
+                },
+                children: `${name.charAt(0)}`,
+            };
+        }
         return {
             sx: {
                 bgcolor: stringToColor(name),

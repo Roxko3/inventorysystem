@@ -50,6 +50,7 @@ function Shop() {
                     console.log(response.data);
                     setShop(response.data.shop);
                     setRating(response.data.ratings);
+                    setValue(response.data.your_rating);
                     setIsFound(true);
                     setLoading(false);
                 }
@@ -214,7 +215,11 @@ function Shop() {
                             value={value}
                             onChange={(event, newValue) => {
                                 setValue(newValue);
-                                rate(newValue);
+                                if (newValue == null) {
+                                    rate(0);
+                                } else {
+                                    rate(newValue);
+                                }
                             }}
                         />
                         <Box
