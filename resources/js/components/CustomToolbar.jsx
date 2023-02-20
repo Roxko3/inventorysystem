@@ -15,7 +15,6 @@ function CustomToolbar() {
                 placeholder="Keresés..."
                 debounceMs={500}
             />
-            <GridToolbarFilterButton />
             <GridToolbarDensitySelector />
             <GridToolbarColumnsButton />
             <GridToolbarExport />
