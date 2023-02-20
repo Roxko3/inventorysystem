@@ -31,7 +31,7 @@ class ShopTypesSeeder extends Seeder
                 'id' => 3,
                 'name' => "Kis (vegyes)bolt",
                 'description' => "CBA, egyéb lkáncok: esély a túlélésre, versenyképesebbek",
-                'size' => "400-"
+                'size' => "0-400"
             ]
         ];
         foreach ($data as $item) {

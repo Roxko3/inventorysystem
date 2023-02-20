@@ -48,7 +48,10 @@ class ShopController extends Controller
                     break;
             }
         }
-        return response()->json(["shop" => $shop, "ratings" => ["star1" => $ratingarray[0], "star2" => $ratingarray[1], "star3" => $ratingarray[2], "star4" => $ratingarray[3], "star5" => $ratingarray[4]]], 200);
+        $user = Auth::user();
+        $yourrating = Rating::where("user_id", $user->id)->where("shop_id", $shop->id)->first();
+
+        return response()->json(["shop" => $shop, "ratings" => ["star1" => $ratingarray[0], "star2" => $ratingarray[1], "star3" => $ratingarray[2], "star4" => $ratingarray[3], "star5" => $ratingarray[4]], "your_rating" => $yourrating === null ? 0 : $yourrating->rating], 200);
     }
 
     public function create(ShopRequest $request)
