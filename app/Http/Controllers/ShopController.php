@@ -84,6 +84,10 @@ class ShopController extends Controller
         if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-manager')) {
             return response()->json("Csak a megfelelő jogokkal lehet képet feltölteni!", 403);
         }
+
+        if (file_exists(public_path() . "\\storage\\" . $shop->image_path)) {
+            unlink(public_path() . "\\storage\\" . $shop->image_path);
+        }
         $newImageName = time() .
             '-' .
             $request->file('image')->getClientOriginalName();
