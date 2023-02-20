@@ -40,7 +40,7 @@ class WorkerController extends Controller
                     ->orWhere('postal_code', 'like', '%' . $request->get("searchString") . '%');
             })
             ->orderBy($ordercolumn, $request->get("order") == "desc" ? "desc" : "asc")
-            ->paginate(20);
+            ->paginate(10);
         return response()->json($workers);
     }
 
