@@ -31,7 +31,7 @@ function Log() {
 
     const getlogs = (url) => {
         const axiosInstance = axios.create({
-            baseURL: "http://127.0.0.1/InventorySystem/public/api/logs",
+            baseURL: "http://127.0.0.1/InventorySystem/public/api/",
         });
         axiosInstance
             .get(url, {
@@ -57,7 +57,7 @@ function Log() {
     };
 
     useEffect(() => {
-        getlogs(`/searchLogs/${user.shop_id}`);
+        getlogs(`logs/searchLogs/${user.shop_id}`);
     }, [order, field, search]);
 
     const columns = [
@@ -103,13 +103,13 @@ function Log() {
                             rowCount={pagination.total}
                             onPageChange={(e) => {
                                 if (pagination.next_page_url == null) {
-                                    getLogs(
+                                    getlogs(
                                         pagination.prev_page_url
                                             .split("api")[1]
                                             .split("=")[0] + `=${e + 1}`
                                     );
                                 } else {
-                                    getLogs(
+                                    getlogs(
                                         pagination.next_page_url
                                             .split("api")[1]
                                             .split("=")[0] + `=${e + 1}`
