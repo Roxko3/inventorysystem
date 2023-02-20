@@ -115,6 +115,8 @@ function Users() {
                     getUsers(`workers/searchWorkers/${user.shop_id}`);
                     setRole("");
                     setIsAdding(false);
+                    setOpen(true);
+                    setalertMessage("Dolgozó sikeresen hozzáadva!");
                 }
             })
             .catch((response) => {
@@ -185,6 +187,8 @@ function Users() {
                     setIsLoading(false);
                     setIsGridLoading(false);
                     setDeletedRows([]);
+                    setOpen(true);
+                    setalertMessage("Sikeres törlés!");
                 }
             })
             .catch(() => {
@@ -373,7 +377,7 @@ function Users() {
                         onSortModelChange={(e) => {
                             if (e.length != 0) {
                                 setOrder(e[0].sort);
-                                setField(e[0].field.replace("name", "id"));
+                                setField(e[0].field);
                             } else {
                                 setOrder("");
                                 setField("");

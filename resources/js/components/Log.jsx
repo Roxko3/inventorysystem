@@ -11,45 +11,58 @@ import {
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataGrid, huHU } from "@mui/x-data-grid";
 import Searchbar from "./Searchbar";
 import Cookies from "js-cookie";
 import CustomToolbar from "./CustomToolbar";
+import { UserContext } from "./App";
 
 function Log() {
+    const user = useContext(UserContext);
     const [logs, setLogs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState("");
+    const [order, setOrder] = useState("");
+    const [field, setField] = useState("");
+    const [pagination, setPagination] = useState({});
+    const [isGridLoading, setIsGridLoading] = useState(true);
     const cookie = Cookies.get("token");
 
-    const getlogs = () => {
-        axios
-            .get("http://127.0.0.1/InventorySystem/public/api/logs", {
+    const getlogs = (url) => {
+        const axiosInstance = axios.create({
+            baseURL: "http://127.0.0.1/InventorySystem/public/api/logs",
+        });
+        axiosInstance
+            .get(url, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + cookie,
                 },
+                params: {
+                    searchString: search,
+                    order: order,
+                    column: field,
+                },
             })
             .then((response) => {
                 if (response.status === 200) {
-                    setLogs(response.data);
+                    //console.log(response.data);
+                    setPagination(response.data);
+                    setLogs(response.data.data);
                     setLoading(false);
+                    setIsGridLoading(false);
                 }
             });
     };
 
     useEffect(() => {
-        getlogs();
-    }, []);
+        getlogs(`/searchLogs/${user.shop_id}`);
+    }, [order, field, search]);
 
     const columns = [
         {
-            field: "id",
-            headerName: "ID",
-            width: 10,
-        },
-        {
-            field: "userName",
+            field: "name",
             headerName: "Dolgozó",
             width: 200,
         },
@@ -76,22 +89,64 @@ function Log() {
                 <Grid2>
                     <Box sx={{ height: 735 }}>
                         <DataGrid
-                            rows={logs.map((logs) => ({
-                                id: logs.id,
-                                userName: logs.user.name,
-                                description: logs.description,
-                                date: logs.date,
-                            }))}
+                            rows={logs.map((logs) => {
+                                return logs;
+                            })}
                             columns={columns}
+                            disableSelectionOnClick
                             autoHeight={true}
                             autoPageSize={true}
-                            pageSize={12}
+                            pageSize={pagination.per_page}
+                            page={pagination.current_page - 1}
+                            loading={isGridLoading}
+                            paginationMode="server"
+                            rowCount={pagination.total}
+                            onPageChange={(e) => {
+                                if (pagination.next_page_url == null) {
+                                    getLogs(
+                                        pagination.prev_page_url
+                                            .split("api")[1]
+                                            .split("=")[0] + `=${e + 1}`
+                                    );
+                                } else {
+                                    getLogs(
+                                        pagination.next_page_url
+                                            .split("api")[1]
+                                            .split("=")[0] + `=${e + 1}`
+                                    );
+                                }
+                                setIsGridLoading(true);
+                            }}
                             components={{ Toolbar: CustomToolbar }}
                             localeText={
                                 huHU.components.MuiDataGrid.defaultProps
                                     .localeText
                             }
                             disableColumnMenu
+                            filterMode="server"
+                            onFilterModelChange={(e) => {
+                                if (e.quickFilterValues.length != 0) {
+                                    setSearch(
+                                        e.quickFilterValues
+                                            .toString()
+                                            .replaceAll(",", " ")
+                                    );
+                                } else {
+                                    setSearch("");
+                                }
+                                setIsGridLoading(true);
+                            }}
+                            sortingMode="server"
+                            onSortModelChange={(e) => {
+                                if (e.length != 0) {
+                                    setOrder(e[0].sort);
+                                    setField(e[0].field);
+                                } else {
+                                    setOrder("");
+                                    setField("");
+                                }
+                                setIsGridLoading(true);
+                            }}
                         />
                     </Box>
                 </Grid2>
