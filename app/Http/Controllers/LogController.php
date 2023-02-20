@@ -35,7 +35,7 @@ class LogController extends Controller
                         ->orWhere('logs.date', 'like', '%' . $request->get("searchString") . '%');
                 })
                 ->orderBy('users.name', $request->get("order") == "desc" ? "desc" : "asc")
-                ->paginate(20);
+                ->paginate(10);
         } else {
             if ($request->get("column") == null) {
                 $ordercolumn = "logs.id";
@@ -52,7 +52,7 @@ class LogController extends Controller
                         ->orWhere('logs.date', 'like', '%' . $request->get("searchString") . '%');
                 })
                 ->orderBy($ordercolumn, $request->get("order") == "desc" ? "desc" : "asc")
-                ->paginate(20);
+                ->paginate(10);
         }
         return response()->json($storage);
     }
