@@ -28,6 +28,20 @@ class RatingController extends Controller
             }
             //Ha 0-ás az értékelés és van a felhasználótól már értékelés a boltra
             $rating->delete();
+
+            $ratings = Rating::where("shop_id", $shop->id)->get();
+            $avgrating = 0;
+            foreach ($ratings as $item) {
+                $avgrating += $item->rating;
+            }
+            $count = $ratings->count();
+            if ($count === 0) {
+                $shop->rating = 0;
+            } else {
+                $avgrating = $avgrating / $count;
+                $shop->rating = $avgrating;
+            }
+            $shop->save();
             return response()->json("Értékelés sikeresen törölve.");
         }
         //Ha normális az értékelés (1-5) vagy létrehozza, vagy módosítja
@@ -45,11 +59,16 @@ class RatingController extends Controller
         $count = $ratings->count();
         if ($count === 0) {
             $shop->rating = 0;
+        } else {
+            $avgrating = $avgrating / $count;
+            $shop->rating = $avgrating;
         }
-        $avgrating = $avgrating / $count;
-        $shop->rating = $avgrating;
         $shop->save();
 
         return response()->json("Értékelés sikeresen felvéve.");
+    }
+
+    public function refreshShopRating(Shop $shop)
+    {
     }
 }
