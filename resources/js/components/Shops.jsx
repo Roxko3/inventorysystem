@@ -156,7 +156,7 @@ function Shops() {
                                             image={
                                                 shops.image_path == null
                                                     ? "/InventorySystem/storage/images/template.png"
-                                                    : `/InventorySystem/storage/images/${shops.image_path}`
+                                                    : `/InventorySystem/storage/app/public/${shops.image_path}`
                                             }
                                             title="Kattintson ide"
                                         />

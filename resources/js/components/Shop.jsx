@@ -148,7 +148,6 @@ function Shop() {
         {
             field: "expiration",
             headerName: "Lejárat",
-            width: 100,
         },
         {
             field: "packaging",
@@ -315,7 +314,7 @@ function Shop() {
                                 src={
                                     shop.image_path == null
                                         ? "/InventorySystem/storage/images/template.png"
-                                        : `/InventorySystem/storage/images/${shop.image_path}`
+                                        : `/InventorySystem/storage/app/public/${shop.image_path}`
                                 }
                                 duration={1500}
                                 alt="Bolt képe"
