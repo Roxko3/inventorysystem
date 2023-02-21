@@ -66,7 +66,7 @@ function ShopData() {
     const uploadImage = async () => {
         axios
             .post(
-                `http://127.0.0.1/InventorySystem/public/api/myShop/${user.shop_id}/uploadImage`,
+                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}/uploadImage`,
                 formData,
                 {
                     headers: {
@@ -84,6 +84,35 @@ function ShopData() {
             })
             .catch((response) => {
                 if (response.response.status === 422) {
+                    setSeverity("error");
+                    setalertMessage("Valami hiba történt!");
+                    setOpenAlert(true);
+                }
+            });
+    };
+
+    const removeImage = async () => {
+        axios
+            .delete(
+                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}/deleteImage`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    setSeverity("success");
+                    setalertMessage("Kép sikeresen törölve!");
+                    setOpenAlert(true);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    console.log(response.response.data);
                     setSeverity("error");
                     setalertMessage("Valami hiba történt!");
                     setOpenAlert(true);
@@ -245,7 +274,11 @@ function ShopData() {
                                 onChange={upload}
                             />
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem
+                            onClick={() => {
+                                removeImage(), handleClose();
+                            }}
+                        >
                             Fotó eltávolítása
                         </MenuItem>
                     </Menu>
