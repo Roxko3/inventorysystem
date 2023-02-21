@@ -27,7 +27,9 @@ class ShopController extends Controller
 
     public function get(Shop $shop)
     {
-        $shop = Shop::with("shopType")->where("id", $shop->id)->first();
+        $shop = Shop::with(["shopType", "openingHours" => function ($query) {
+            $query->orderBy('id');
+        }])->where("id", $shop->id)->first();
         $ratings = Rating::where("shop_id", $shop->id)->get();
         $ratingarray = [0, 0, 0, 0, 0];
         foreach ($ratings as $item) {
