@@ -21,6 +21,11 @@ class Shop extends Model
         return $this->hasMany(Rating::class, 'shop_id', 'id');
     }
 
+    public function openingHours()
+    {
+        return $this->hasMany(OpeningHour::class, 'shop_id', 'id');
+    }
+
     public function logs()
     {
         return $this->hasMany(Log::class, 'shop_id', 'id');

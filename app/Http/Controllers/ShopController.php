@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ImageRequest;
+use App\Http\Requests\OpeningHoursRequest;
 use App\Http\Requests\ShopRequest;
 use App\Models\Log;
 use App\Models\Rating;
+use App\Models\OpeningHour;
+use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\Storage;
 use App\Models\User;
@@ -165,6 +168,21 @@ class ShopController extends Controller
 
         return response()->json($shop->toArray());
     }
+
+    public function updateOpeningHours(Shop $shop, OpeningHoursRequest $request)
+    {
+        if (Gate::denies('shop-access', $shop) || Gate::denies('shop-worker', $shop)) {
+            abort(403);
+        }
+        foreach ($request->input('opening_hours') as $day => $hours) {
+            $opening = OpeningHour::where('shop_id', $shop->id)->where('day', $day)->first();
+            $opening->open = $hours['open_time'];
+            $opening->close = $hours['close_time'];
+            $opening->save();
+        }
+    }
+
+
 
     public function delete(Shop $shop)
     {
