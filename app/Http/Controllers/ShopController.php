@@ -85,14 +85,14 @@ class ShopController extends Controller
             return response()->json("Csak a megfelelő jogokkal lehet képet feltölteni!", 403);
         }
 
-        if ($shop->image_path != null) {
+        if ($shop->image_path != null && file_exists(public_path() . "\\storage\\" . $shop->image_path)) {
             unlink(public_path() . "\\storage\\" . $shop->image_path);
         }
         $newImageName = time() .
             '-' .
             $request->file('image')->getClientOriginalName();
         $request->file("image")
-            ->move(storage_path('images'), $newImageName);
+            ->move(storage_path('app/public'), $newImageName);
         $shop->image_path = $newImageName;
         $shop->save();
 
@@ -109,13 +109,12 @@ class ShopController extends Controller
 
     public function deleteImage(Shop $shop)
     {
-        
         if (Gate::denies('shop-worker', $shop->id) || Gate::denies('shop-manager')) {
             return response()->json("Csak a megfelelő jogokkal lehet képet törölni!", 403);
         }
-        
-        if ($shop->image_path !=null) {         
-            unlink(public_path() . "\\storage\\images\\" . $shop->image_path);
+
+        if ($shop->image_path != null && file_exists(public_path() . "\\storage\\" . $shop->image_path)) {
+            unlink(public_path() . "\\storage\\" . $shop->image_path);
             $shop->image_path = null;
             $shop->save();
             return response()->json("Kép sikeresen törölve!");
