@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Cookies from "js-cookie";
 import {
+    Alert,
     Box,
     Button,
     CircularProgress,
@@ -9,6 +10,7 @@ import {
     ListItem,
     ListItemText,
     Rating,
+    Snackbar,
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -32,10 +34,20 @@ function Shop() {
     const [search, setSearch] = useState("");
     const [rating, setRating] = useState([]);
     const [value, setValue] = useState(null);
+    const [openAlert, setOpenAlert] = useState(false);
+    const [alertMessage, setalertMessage] = useState("");
     const [isGridLoading, setIsGridLoading] = useState(true);
     const [gridLoading, setGridLoading] = useState(true);
     const { id } = useParams();
     const cookie = Cookies.get("token");
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+
+        setOpenAlert(false);
+    };
 
     const getShop = async () => {
         await axios
@@ -47,7 +59,7 @@ function Shop() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setShop(response.data.shop);
                     setRating(response.data.ratings);
                     setValue(response.data.your_rating);
@@ -82,7 +94,7 @@ function Shop() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setPagination(response.data);
                     setStorage(response.data.data);
                     setGridLoading(false);
@@ -111,8 +123,10 @@ function Shop() {
                     },
                 }
             )
-            .then((response) => {
-                console.log(response.response.data);
+            .then((response) => {})
+            .catch((response) => {
+                setOpenAlert(true);
+                setalertMessage(response.response.data);
             });
     };
 
@@ -382,6 +396,19 @@ function Shop() {
                     />
                 </Grid2>
             </Grid2>
+            <Snackbar
+                open={openAlert}
+                autoHideDuration={6000}
+                onClose={handleCloseAlert}
+            >
+                <Alert
+                    onClose={handleCloseAlert}
+                    severity="error"
+                    sx={{ width: "100%" }}
+                >
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
         </Grid2>
     );
 }
