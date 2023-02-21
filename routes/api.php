@@ -52,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post("/rate/{shop}", [RatingController::class, "rate"])->name("rateShop");
         Route::post("/{shop}/uploadImage", [ShopController::class, "uploadImage"])->name("uploadImage");
         Route::delete("/{shop}/deleteImage", [ShopController::class, "deleteImage"])->name("deleteImage");
+        Route::post("/{shop}/OpeningHours", [ShopController::class, "OpeningHours"])->name("updateOpeningHours");
     });
 
     Route::group(['prefix' => '/storages'], function () {

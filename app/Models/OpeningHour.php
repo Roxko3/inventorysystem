@@ -11,11 +11,6 @@ class OpeningHour extends Model
 
     public $timestamps = false;
 
-    protected $fillable = [
-        'shop_id'
-    ];
-
-
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shop_id', 'id');
