@@ -16,7 +16,7 @@ class CreateOpeningHoursTable extends Migration
         Schema::create('Opening_Hours', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shop_id')->constrained("shops");
-            $table->Integer("day");
+            $table->string("day");
             $table->boolean("is_open")->default(false);
             $table->time("open")->nullable();
             $table->time("close")->nullable();
