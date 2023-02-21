@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateStorageRequest;
 use App\Models\Log;
 use App\Models\Shop;
 use App\Models\Storage;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -127,7 +128,7 @@ class StorageController extends Controller
         $log->description = "Új terméket rögzített a raktárban: "
             . $product->name . " (" . $storage->amount . "), ár: "
             . $storage->price . " Ft, lejárat: " . ($request->get("expiration") == null ?  "nincs" : $request->get("expiration"));
-        $log->date = now();
+        $log->date = Carbon::now()->addHour(1);
         $log->save();
 
         return response()->json($storage->id);
@@ -155,7 +156,7 @@ class StorageController extends Controller
         $log->description = "Módosított egy terméket a raktárban: "
             . $product->name . " (" . $storage->amount . "), ár: "
             . $storage->price . " Ft, lejárat: " . ($request->get("expiration") == null ?  "nincs" : $request->get("expiration"));
-        $log->date = now();
+        $log->date = Carbon::now()->addHour(1);
         $log->save();
 
         return response()->json($storage->toArray());
@@ -176,7 +177,7 @@ class StorageController extends Controller
                 $log->description = "Törölt egy terméket a raktárból: "
                     . $product->name . " (" . $storage->amount . "), ár: "
                     . $storage->price . " Ft, lejárat: " . ($storage->expiration == null ?  "nincs" : $storage->expiration);
-                $log->date = now();
+                $log->date = Carbon::now()->addHour(1);
                 $log->save();
 
                 $storage->amount = 0;

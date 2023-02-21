@@ -7,6 +7,7 @@ use App\Http\Requests\WorkerSearchRequest;
 use App\Models\Log;
 use App\Models\Shop;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -72,7 +73,7 @@ class WorkerController extends Controller
         $log->user_id = $user->id;
         $log->description = $user->name . " felvett egy felhasználót a boltba: "
             . $worker->name . " - jogosultsága: " . $worker->permission;
-        $log->date = now();
+        $log->date = Carbon::now()->addHour(1);
         $log->save();
 
         $worker->save();
@@ -101,7 +102,7 @@ class WorkerController extends Controller
         $log->user_id = $user->id;
         $log->description = $user->name . " módosította " . $worker->name . " jogosultságait: "
             . $worker->permission . " -> " . $request->get("permission");
-        $log->date = now();
+        $log->date = Carbon::now()->addHour(1);
         $log->save();
 
         $worker->permission = $request->get("permission");
@@ -136,7 +137,7 @@ class WorkerController extends Controller
             $log->user_id = $user->id;
             $log->description = $user->name . " törölt egy felhasználót a boltból: "
                 . $deleteuser->name;
-            $log->date = now();
+            $log->date = Carbon::now()->addHour(1);
             $log->save();
 
             $deleteuser->shop_id = null;
