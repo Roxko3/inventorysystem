@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ShopTypeController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\StorageController;
 use Illuminate\Http\Request;
@@ -32,9 +33,10 @@ use Laravel\Sanctum\Sanctum;
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
-
+Route::post('/reset-password', [ForgotPasswordController::class, 'ResetPassword'])->name('resetPassword');
+Route::post('/forget-password', [ForgotPasswordController::class, 'ForgetPassword'])->name('forgetPassword');
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
-Route::get('/verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
+Route::get('/verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/myProfile'], function () {
