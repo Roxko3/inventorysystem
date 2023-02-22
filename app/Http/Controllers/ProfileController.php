@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImageRequest;
 use App\Http\Requests\NameEmailRequest;
 use App\Http\Requests\PasswordChangeRequest;
 use App\Http\Requests\PostalCodeRequest;
@@ -56,5 +57,39 @@ class ProfileController extends Controller
 
         $user->save();
         return response()->json("Irányítószám sikeresen megváltoztatva!");
+    }
+
+    public function uploadImage(ImageRequest $request)
+    {
+        $user = Auth::user();
+        $user = User::where("id", $user->id)->first();
+
+        if ($user->image_path != null && file_exists(public_path() . "\\storage\\" . $user->image_path)) {
+            unlink(public_path() . "\\storage\\" . $user->image_path);
+        }
+        $newImageName = time() .
+            '-' .
+            $request->file('image')->getClientOriginalName();
+        $request->file("image")
+            ->move(storage_path('app/public'), $newImageName);
+        $user->image_path = $newImageName;
+        $user->save();
+
+        return response()->json("Kép feltöltés sikeres!");
+    }
+
+    public function deleteImage()
+    {
+        $user = Auth::user();
+        $user = User::where("id", $user->id)->first();
+
+        if ($user->image_path != null && file_exists(public_path() . "\\storage\\" . $user->image_path)) {
+            unlink(public_path() . "\\storage\\" . $user->image_path);
+            $user->image_path = null;
+            $user->save();
+            return response()->json("Kép sikeresen törölve!");
+        } else {
+            return response()->json("Nem található kép ennél a felhasználónál!");
+        }
     }
 }

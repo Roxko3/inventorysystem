@@ -248,7 +248,7 @@ function ShopData() {
                             src={
                                 user.shop.image_path == null
                                     ? "./images/template.png"
-                                    : `/InventorySystem/storage/images/${user.shop.image_path}`
+                                    : `/InventorySystem/storage/app/public/${user.shop.image_path}`
                             }
                         />
                     </Badge>
