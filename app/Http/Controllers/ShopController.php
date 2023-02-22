@@ -128,7 +128,7 @@ class ShopController extends Controller
         }
 
         if ($shop->image_path != null) {
-            unlink(public_path() . "\\storage\\images\\" . $shop->image_path);
+            unlink(public_path() . "\\storage\\" . $shop->image_path);
             $shop->image_path = null;
             $shop->save();
             return response()->json("Kép sikeresen törölve!");

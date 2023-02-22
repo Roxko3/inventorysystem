@@ -48,6 +48,20 @@ function ShopData() {
     const [openAlert, setOpenAlert] = useState(false);
     const [alertMessage, setalertMessage] = useState("");
     const [severity, setSeverity] = useState("success");
+    const mondayClose = useRef(null);
+    const mondayOpen = useRef(null);
+    const tuesdayOpen = useRef(null);
+    const tuesdayClose = useRef(null);
+    const wednesdayOpen = useRef(null);
+    const wednesdayClose = useRef(null);
+    const thursdayOpen = useRef(null);
+    const thursdayClose = useRef(null);
+    const fridayOpen = useRef(null);
+    const fridayClose = useRef(null);
+    const saturdayOpen = useRef(null);
+    const saturdayClose = useRef(null);
+    const sundayOpen = useRef(null);
+    const sundayClose = useRef(null);
     var formData = new FormData();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -118,6 +132,56 @@ function ShopData() {
                     setalertMessage("Valami hiba történt!");
                     setOpenAlert(true);
                 }
+            });
+    };
+
+    const openingHours = async () => {
+        console.log(mondayOpen.current.value);
+        console.log(mondayClose.current.value);
+        axios
+            .post(
+                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}/OpeningHours`,
+                {
+                    opening_hours: {
+                        monday: {
+                            open_time: mondayOpen.current.value,
+                            close_time: mondayClose.current.value,
+                        },
+                        tuesday: {
+                            open_time: tuesdayOpen.current.value,
+                            close_time: tuesdayClose.current.value,
+                        },
+                        wednesday: {
+                            open_time: wednesdayOpen.current.value,
+                            close_time: wednesdayClose.current.value,
+                        },
+                        thursday: {
+                            open_time: thursdayOpen.current.value,
+                            close_time: thursdayClose.current.value,
+                        },
+                        friday: {
+                            open_time: fridayOpen.current.value,
+                            close_time: fridayClose.current.value,
+                        },
+                        saturday: {
+                            open_time: saturdayOpen.current.value,
+                            close_time: saturdayClose.current.value,
+                        },
+                        sunday: {
+                            open_time: sundayOpen.current.value,
+                            close_time: sundayClose.current.value,
+                        },
+                    },
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log(response.data);
             });
     };
 
@@ -239,8 +303,8 @@ function ShopData() {
                         <Avatar
                             variant="rounded"
                             sx={{
-                                width: 150,
-                                height: 150,
+                                width: 220,
+                                height: 170,
                                 border: "1px solid black",
                             }}
                             src={
@@ -284,6 +348,7 @@ function ShopData() {
 
                     <Grid2>
                         <TextField
+                            sx={{ mt: 2 }}
                             label="Név"
                             defaultValue={user.shop.name}
                             size="small"
@@ -338,8 +403,226 @@ function ShopData() {
                         />
                     </Grid2>
                 </Grid2>
-                <Grid2 container direction="column" alignItems="center">
-                    <Grid2 container direction="row">
+
+                <Grid2 container direction="column">
+                    <Typography variant="h6">Nyitvatartás</Typography>
+                    <Grid2 item p={0}>
+                        <Grid2
+                            container
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            gap={2}
+                        >
+                            <Typography width={65}>Hétfő</Typography>
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={mondayOpen}
+                            />
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={mondayClose}
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Grid2 item p={0}>
+                        <Grid2
+                            container
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            gap={2}
+                        >
+                            <Typography width={65}>Kedd</Typography>
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={tuesdayOpen}
+                            />
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={tuesdayClose}
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Grid2 item p={0}>
+                        <Grid2
+                            container
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            gap={2}
+                        >
+                            <Typography width={65}>Szerda</Typography>
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={wednesdayOpen}
+                            />
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={wednesdayClose}
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Grid2 item p={0}>
+                        <Grid2
+                            container
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            gap={2}
+                        >
+                            <Typography width={65}>Csütörtök</Typography>
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={thursdayOpen}
+                            />
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={thursdayClose}
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Grid2 item p={0}>
+                        <Grid2
+                            container
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            gap={2}
+                        >
+                            <Typography width={65}>Péntek</Typography>
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={fridayOpen}
+                            />
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={fridayClose}
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Grid2 item p={0}>
+                        <Grid2
+                            container
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            gap={2}
+                        >
+                            <Typography width={65}>Szombat</Typography>
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={saturdayOpen}
+                            />
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={saturdayClose}
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Grid2 item p={0}>
+                        <Grid2
+                            container
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            gap={2}
+                        >
+                            <Typography width={65}>Vasárnap</Typography>
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={sundayOpen}
+                            />
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                                InputProps={{
+                                    readOnly: isDisabled,
+                                }}
+                                inputRef={sundayClose}
+                            />
+                        </Grid2>
+                    </Grid2>
+                </Grid2>
+
+                <Grid2
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                >
+                    <Grid2
+                        container
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
                         <Grid2>
                             <TextField
                                 id="txfAddress"
@@ -391,135 +674,6 @@ function ShopData() {
                         />
                     </Grid2>
                 </Grid2>
-
-                <Grid2 container direction="column">
-                    <Grid2 item>
-                        <Grid2
-                            container
-                            direction="row"
-                            justifyContent="flex-start"
-                            alignItems="center"
-                            gap={2}
-                        >
-                            <Typography>Összes</Typography>
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                            />
-                        </Grid2>
-                    </Grid2>
-                    <Grid2
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Typography sx={{ mr: 2, display: "inline-block" }}>
-                            Hétfő
-                        </Typography>
-                        <TextField
-                            variant="outlined"
-                            size="small"
-                            type="time"
-                        />
-                    </Grid2>
-                    <Grid2
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Typography sx={{ mr: 2, display: "inline-block" }}>
-                            Kedd
-                        </Typography>
-                        <TextField
-                            variant="outlined"
-                            size="small"
-                            type="time"
-                        />
-                    </Grid2>
-                    <Grid2
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Typography sx={{ mr: 2, display: "inline-block" }}>
-                            Szerda
-                        </Typography>
-                        <TextField
-                            variant="outlined"
-                            size="small"
-                            type="time"
-                        />
-                    </Grid2>
-                    <Grid2
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Typography sx={{ mr: 2, display: "inline-block" }}>
-                            Csütörtök
-                        </Typography>
-                        <TextField
-                            variant="outlined"
-                            size="small"
-                            type="time"
-                        />
-                    </Grid2>
-                    <Grid2
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Typography sx={{ mr: 2, display: "inline-block" }}>
-                            Péntek
-                        </Typography>
-                        <TextField
-                            variant="outlined"
-                            size="small"
-                            type="time"
-                        />
-                    </Grid2>
-                    <Grid2
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Typography sx={{ mr: 2, display: "inline-block" }}>
-                            Szombat
-                        </Typography>
-                        <TextField
-                            variant="outlined"
-                            size="small"
-                            type="time"
-                        />
-                    </Grid2>
-                    <Grid2
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Typography
-                            sx={{
-                                mr: 2,
-                                display: "inline-block",
-                            }}
-                        >
-                            Vasárnap
-                        </Typography>
-                        <TextField
-                            variant="outlined"
-                            size="small"
-                            type="time"
-                        />
-                    </Grid2>
-                </Grid2>
             </Grid2>
             <Grid2
                 container
@@ -540,7 +694,9 @@ function ShopData() {
                     <Button
                         variant="contained"
                         disabled={!isChanged}
-                        onClick={updateShop}
+                        onClick={() => {
+                            updateShop(), openingHours();
+                        }}
                     >
                         Változtatások mentése
                     </Button>
