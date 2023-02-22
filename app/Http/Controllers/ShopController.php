@@ -82,7 +82,7 @@ class ShopController extends Controller
         $log->date = Carbon::now()->addHour(1);
         $log->save();
 
-        $daysOfWeek = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
+        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         foreach ($daysOfWeek as $day) {
             $opening = new OpeningHour();
             $opening->shop_id = $shop->id;
@@ -185,7 +185,7 @@ class ShopController extends Controller
             return response()->json("Csak a megfelelő jogokkal lehet módosítani a bolt adatain!", 403);
         }
 
-        $daysOfWeek = ['hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat', 'vasárnap'];
+        $daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
         foreach ($request->get('opening_hours') as $day => $hours) {
             if (!in_array(strtolower($day), $daysOfWeek)) {
@@ -195,9 +195,10 @@ class ShopController extends Controller
             $opening = OpeningHour::where('shop_id', $shop->id)->where('day', 'LIKE', $day)->first();
 
             try {
-                $parsedopen = Carbon::parse($hours['open_time'], 'UTC');
-                $parsedclose = Carbon::parse($hours['close_time'], 'UTC');
-                if ($parsedopen->format('H:i') != $hours['open_time'] || $parsedclose->format('H:i') != $hours['close_time'] || $hours['open_time'] == 0 || $hours['close_time'] == 0) {
+                $parsedopen = Carbon::parse($hours['open_time'], 'UTC')->format('H:i');
+                $parsedclose = Carbon::parse($hours['close_time'], 'UTC')->format('H:i');
+                //$parsedopen->format('H:i') != $hours['open_time'] || $parsedclose->format('H:i') != $hours['close_time'] || 
+                if ($hours['open_time'] == 0 || $hours['close_time'] == 0) {
                     throw new InvalidArgumentException();
                 } else {
                     $opening->is_open = 1;

@@ -19,13 +19,13 @@ class OpeningHoursSeeder extends Seeder
             [
                 'id' => 1,
                 'shop_id' => 1,
-                'day' => "Hétfő",
+                'day' => "Monday",
                 'is_open' => false,
             ],
             [
                 'id' => 2,
                 'shop_id' => 1,
-                'day' => "Kedd",
+                'day' => "Tuesday",
                 'is_open' => true,
                 'open' => "08:00",
                 'close' => "16:00",
@@ -33,7 +33,7 @@ class OpeningHoursSeeder extends Seeder
             [
                 'id' => 3,
                 'shop_id' => 1,
-                'day' => "Szerda",
+                'day' => "Wednesday",
                 'is_open' => true,
                 'open' => "08:00",
                 'close' => "16:00",
@@ -41,7 +41,7 @@ class OpeningHoursSeeder extends Seeder
             [
                 'id' => 4,
                 'shop_id' => 1,
-                'day' => "Csütörtök",
+                'day' => "Thursday",
                 'is_open' => true,
                 'open' => "08:00",
                 'close' => "16:00",
@@ -49,7 +49,7 @@ class OpeningHoursSeeder extends Seeder
             [
                 'id' => 5,
                 'shop_id' => 1,
-                'day' => "Péntek",
+                'day' => "Friday",
                 'is_open' => true,
                 'open' => "08:00",
                 'close' => "16:00",
@@ -57,7 +57,7 @@ class OpeningHoursSeeder extends Seeder
             [
                 'id' => 6,
                 'shop_id' => 1,
-                'day' => "Szombat",
+                'day' => "Saturday",
                 'is_open' => true,
                 'open' => "08:00",
                 'close' => "20:00",
@@ -65,7 +65,7 @@ class OpeningHoursSeeder extends Seeder
             [
                 'id' => 7,
                 'shop_id' => 1,
-                'day' => "Vasárnap",
+                'day' => "Sunday",
                 'is_open' => false
             ]
         ];
