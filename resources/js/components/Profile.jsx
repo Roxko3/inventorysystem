@@ -26,6 +26,7 @@ import {
     Rating,
     Snackbar,
     TextField,
+    Tooltip,
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -56,12 +57,78 @@ function Profile() {
     const [openAlert, setOpenAlert] = useState(false);
     const [alertMessage, setalertMessage] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
+    const [severity, setSeverity] = useState("success");
+    var formData = new FormData();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const upload = (e) => {
+        handleClose();
+        console.log(e.target.files[0]);
+        formData.append("image", e.target.files[0]);
+        uploadImage();
+    };
+
+    const uploadImage = async () => {
+        axios
+            .post(
+                `http://127.0.0.1/InventorySystem/public/api/myProfile/uploadImage`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    setSeverity("success");
+                    setalertMessage("Kép sikeresen megváltoztatva!");
+                    setOpenAlert(true);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    setSeverity("error");
+                    setalertMessage("Valami hiba történt!");
+                    setOpenAlert(true);
+                }
+            });
+    };
+
+    const removeImage = async () => {
+        axios
+            .delete(
+                `http://127.0.0.1/InventorySystem/public/api/myProfile/deleteImage`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    setSeverity("success");
+                    setalertMessage("Kép sikeresen törölve!");
+                    setOpenAlert(true);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    console.log(response.response.data);
+                    setSeverity("error");
+                    setalertMessage("Valami hiba történt!");
+                    setOpenAlert(true);
+                }
+            });
     };
 
     const handleCloseAlert = (event, reason) => {
@@ -120,6 +187,7 @@ function Profile() {
                     setPassDisabled(true);
                     setErrors([]);
                     setOpenAlert(true);
+                    setSeverity("success");
                     setalertMessage(response.data);
                 }
             })
@@ -152,6 +220,7 @@ function Profile() {
                     setPassDisabled(true);
                     setErrors([]);
                     setOpenAlert(true);
+                    setSeverity("success");
                     setalertMessage(response.data);
                 }
             })
@@ -185,6 +254,7 @@ function Profile() {
                     postal_code.current.value = "";
                     setPassDisabled(true);
                     setErrors([]);
+                    setSeverity("success");
                     setOpenAlert(true);
                     setalertMessage(response.data);
                 }
@@ -264,11 +334,21 @@ function Profile() {
                                 horizontal: "left",
                             }}
                         >
-                            <MenuItem onClick={handleClose} component="label">
+                            <MenuItem component="label">
                                 Fotó feltöltése
-                                <input hidden accept="image/*" type="file" />
+                                <input
+                                    hidden
+                                    accept="image/*"
+                                    type="file"
+                                    onChange={upload}
+                                />
                             </MenuItem>
-                            <MenuItem onClick={handleClose}>
+                            <MenuItem
+                                disabled={user.image_path == null}
+                                onClick={() => {
+                                    removeImage(), handleClose();
+                                }}
+                            >
                                 Fotó eltávolítása
                             </MenuItem>
                         </Menu>
@@ -510,21 +590,36 @@ function Profile() {
                                             component="img"
                                             image={
                                                 user.shop.image_path == null
-                                                    ? "./images/template.png"
-                                                    : `/InventorySystem/storage/app/public/${user.shop.image_path}`
+                                                    ? "/InventorySystem/public/storage/template.png"
+                                                    : `/InventorySystem/public/storage/${user.shop.image_path}`
                                             }
                                             title={user.shop.name}
                                         />
                                     </CardActionArea>
                                 </Link>
                                 <CardContent>
-                                    <Typography
-                                        gutterBottom
-                                        variant="h5"
-                                        component="h2"
+                                    <Tooltip
+                                        title={user.shop.name}
+                                        followCursor
+                                        placement="top"
                                     >
-                                        {user.shop.name}
-                                    </Typography>
+                                        <Typography
+                                            gutterBottom
+                                            variant="h5"
+                                            component="h2"
+                                            sx={{
+                                                ":hover": {
+                                                    cursor: "default",
+                                                },
+                                                whiteSpace: "nowrap",
+                                                width: { xs: 210, md: 310 },
+                                                overflow: "hidden",
+                                                textOverflow: "ellipsis",
+                                            }}
+                                        >
+                                            {user.shop.name}
+                                        </Typography>
+                                    </Tooltip>
                                     <Typography
                                         variant="body2"
                                         color="textSecondary"
@@ -599,7 +694,7 @@ function Profile() {
                 >
                     <Alert
                         onClose={handleCloseAlert}
-                        severity="success"
+                        severity={severity}
                         sx={{ width: "100%" }}
                     >
                         {alertMessage}

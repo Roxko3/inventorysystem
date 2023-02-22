@@ -313,8 +313,8 @@ function Shop() {
                             <Image
                                 src={
                                     shop.image_path == null
-                                        ? "/InventorySystem/storage/images/template.png"
-                                        : `/InventorySystem/storage/app/public/${shop.image_path}`
+                                        ? "/InventorySystem/public/storage/template.png"
+                                        : `/InventorySystem/public/storage/${shop.image_path}`
                                 }
                                 duration={1500}
                                 alt="Bolt képe"

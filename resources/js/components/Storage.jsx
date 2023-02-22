@@ -326,10 +326,6 @@ function Storage() {
             headerName: "Csomagolás",
         },
         {
-            field: "unit_of_measure",
-            headerName: "Mennyiség",
-        },
-        {
             field: "type",
             headerName: "Típus",
         },
@@ -440,6 +436,9 @@ function Storage() {
                 <Box>
                     <DataGrid
                         rows={filter.map((storage) => {
+                            storage[
+                                "amount"
+                            ] = `${storage["amount"]} ${storage["unit_of_measure"]}`;
                             storage["edit"] = "Szerkesztés";
                             return storage;
                         })}

@@ -17,6 +17,7 @@ import {
     Snackbar,
     Switch,
     TextField,
+    Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -211,9 +212,6 @@ function ShopData() {
                 justifyContent="center"
             >
                 <Grid2 container direction="column" alignItems="center">
-                    {/*<Grid2>
-                    <Rating name="read-only" value={3} readOnly />
-</Grid2>*/}
                     <Badge
                         badgeContent={
                             <IconButton
@@ -247,8 +245,8 @@ function ShopData() {
                             }}
                             src={
                                 user.shop.image_path == null
-                                    ? "./images/template.png"
-                                    : `/InventorySystem/storage/app/public/${user.shop.image_path}`
+                                    ? "/InventorySystem/public/storage/template.png"
+                                    : `/InventorySystem/public/storage/${user.shop.image_path}`
                             }
                         />
                     </Badge>
@@ -275,6 +273,7 @@ function ShopData() {
                             />
                         </MenuItem>
                         <MenuItem
+                            disabled={user.shop.image_path == null}
                             onClick={() => {
                                 removeImage(), handleClose();
                             }}
@@ -389,6 +388,135 @@ function ShopData() {
                             key={postalCode}
                             location={`${address}+${postalCode}`}
                             height={300}
+                        />
+                    </Grid2>
+                </Grid2>
+
+                <Grid2 container direction="column">
+                    <Grid2 item>
+                        <Grid2
+                            container
+                            direction="row"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            gap={2}
+                        >
+                            <Typography>Összes</Typography>
+                            <TextField
+                                variant="outlined"
+                                size="small"
+                                type="time"
+                            />
+                        </Grid2>
+                    </Grid2>
+                    <Grid2
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Typography sx={{ mr: 2, display: "inline-block" }}>
+                            Hétfő
+                        </Typography>
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            type="time"
+                        />
+                    </Grid2>
+                    <Grid2
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Typography sx={{ mr: 2, display: "inline-block" }}>
+                            Kedd
+                        </Typography>
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            type="time"
+                        />
+                    </Grid2>
+                    <Grid2
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Typography sx={{ mr: 2, display: "inline-block" }}>
+                            Szerda
+                        </Typography>
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            type="time"
+                        />
+                    </Grid2>
+                    <Grid2
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Typography sx={{ mr: 2, display: "inline-block" }}>
+                            Csütörtök
+                        </Typography>
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            type="time"
+                        />
+                    </Grid2>
+                    <Grid2
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Typography sx={{ mr: 2, display: "inline-block" }}>
+                            Péntek
+                        </Typography>
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            type="time"
+                        />
+                    </Grid2>
+                    <Grid2
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Typography sx={{ mr: 2, display: "inline-block" }}>
+                            Szombat
+                        </Typography>
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            type="time"
+                        />
+                    </Grid2>
+                    <Grid2
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Typography
+                            sx={{
+                                mr: 2,
+                                display: "inline-block",
+                            }}
+                        >
+                            Vasárnap
+                        </Typography>
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            type="time"
                         />
                     </Grid2>
                 </Grid2>

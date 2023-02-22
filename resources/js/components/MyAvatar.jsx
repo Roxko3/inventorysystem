@@ -46,7 +46,10 @@ function MyAvatar(props) {
     }
 
     return (
-        <Avatar {...stringAvatar(user.name)} src="https://picsu.photos/200" />
+        <Avatar
+            {...stringAvatar(user.name)}
+            src={`/InventorySystem/public/storage/${user.image_path}`}
+        />
     );
 }
 
