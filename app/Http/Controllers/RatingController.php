@@ -67,8 +67,4 @@ class RatingController extends Controller
 
         return response()->json("Értékelés sikeresen felvéve.");
     }
-
-    public function refreshShopRating(Shop $shop)
-    {
-    }
 }

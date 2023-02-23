@@ -73,7 +73,6 @@ class OpeningHoursController extends Controller
             $opening->save();
         }
 
-
         $log->description = $user->name . " módosította a bolt nyitvatartását " . $changedDatas;
         $log->date = Carbon::now()->addHour(1);
         $log->save();
