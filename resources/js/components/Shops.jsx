@@ -221,12 +221,14 @@ function Shops() {
                                 color="primary"
                                 onChange={(e, value) => {
                                     if (pagination.next_page_url == null) {
+                                        setLoading(true);
                                         getShops(
                                             pagination.prev_page_url
                                                 .split("api")[1]
                                                 .split("=")[0] + `=${value}`
                                         );
                                     } else {
+                                        setLoading(true);
                                         getShops(
                                             pagination.next_page_url
                                                 .split("api")[1]

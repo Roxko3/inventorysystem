@@ -34,6 +34,7 @@ import TabPanel from "./TabPanel";
 import Yourshop from "./Yourshop";
 import Cookies from "js-cookie";
 import { UserContext } from "./App";
+import MyAvatar from "./MyAvatar";
 
 function Home() {
     const { user } = useContext(UserContext);
@@ -74,11 +75,12 @@ function Home() {
                 <Grid2
                     container
                     alignItems="center"
-                    justifyContent="center"
-                    sx={{ mt: 2 }}
+                    justifyContent="flex-start"
+                    sx={{ m: 2 }}
                     spacing={2}
                 >
-                    <CreateShop />
+                    <Typography variant="h2">Üdvözlünk, {user.name}</Typography>
+                    <MyAvatar width={80} height={80} />
                 </Grid2>
             )}
         </Box>

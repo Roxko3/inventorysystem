@@ -3,6 +3,7 @@ import {
     Inventory,
     LightMode,
     Notifications,
+    Storefront,
 } from "@mui/icons-material";
 import {
     AppBar,
@@ -18,13 +19,14 @@ import {
     Tab,
     Tabs,
     Toolbar,
+    Tooltip,
     Typography,
 } from "@mui/material";
 import Image from "mui-image";
 import { useContext, useEffect, useState } from "react";
 import TabPanel from "./TabPanel";
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { deepOrange } from "@mui/material/colors";
 import MenuIcon from "@mui/icons-material/Menu";
 import MyAvatar from "./MyAvatar";
@@ -37,6 +39,7 @@ function Navbar(props) {
     const [isAdmin, setIsAdmin] = useState(false);
     const [value, setValue] = useState(0);
     const [anchorEl, setAnchorEl] = useState(null);
+    const navigate = useNavigate();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -91,14 +94,17 @@ function Navbar(props) {
                 <Toolbar
                     sx={{ display: "flex", justifyContent: "space-between" }}
                 >
-                    <IconButton
-                        sx={{
-                            color: "white",
-                            display: { xs: "block", sm: "none" },
-                        }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+                    <Tooltip title="Boltok" followCursor placement="top">
+                        <IconButton
+                            onClick={() => navigate("/shops")}
+                            sx={{
+                                color: "white",
+                                display: { xs: "block", sm: "none" },
+                            }}
+                        >
+                            <Storefront />
+                        </IconButton>
+                    </Tooltip>
                     <Link to="/home">
                         <Image
                             src="/InventorySystem/public/storage/logo.png"

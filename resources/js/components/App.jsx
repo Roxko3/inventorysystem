@@ -64,6 +64,7 @@ function App() {
                     console.log("response", response.data);
                     console.log("context", user);
                     setLoading(false);
+                    navigate("/home");
                 }
             })
             .catch((response) => {
