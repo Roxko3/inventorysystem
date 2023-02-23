@@ -33,7 +33,7 @@ use Laravel\Sanctum\Sanctum;
 Route::post('/reset-password', [ForgotPasswordController::class, 'ResetPassword'])->name('resetPassword');
 Route::post('/forget-password', [ForgotPasswordController::class, 'ForgetPassword'])->name('forgetPassword');
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
-Route::get('/verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
+Route::get('/verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
