@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OpeningHoursRequest;
+use App\Models\Log;
 use App\Models\OpeningHour;
 use App\Models\Shop;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use InvalidArgumentException;
 
@@ -26,6 +28,13 @@ class OpeningHoursController extends Controller
 
         $daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
+        $user = Auth::user();
+
+        $log = new Log();
+        $log->shop_id = $shop->id;
+        $log->user_id = $user->id;
+        $changedDatas = "";
+
         foreach ($request->get('opening_hours') as $day => $hours) {
             if (!in_array(strtolower($day), $daysOfWeek)) {
                 return response()->json("Kérem adja meg a hét napját és nyitási, illetve zárási időt!", 422);
@@ -40,17 +49,32 @@ class OpeningHoursController extends Controller
                 if ($hours['open_time'] == 0 || $hours['close_time'] == 0) {
                     throw new InvalidArgumentException();
                 } else {
+                    if ($opening->is_open) {
+                        $changedDatas .= "- $day: $opening->open - $opening->close -> $parsedopen - $parsedclose";
+                    } else {
+                        $changedDatas .= "- $day: zárva -> $parsedopen - $parsedclose";
+                    }
                     $opening->is_open = 1;
                     $opening->open = $parsedopen;
                     $opening->close = $parsedclose;
                 }
             } catch (InvalidArgumentException $e) {
+                if ($opening->is_open) {
+                    $changedDatas .= "- $day: $opening->open - $opening->close -> zárva";
+                } else {
+                    $changedDatas .= "- $day: zárva -> zárva";
+                }
                 $opening->is_open = 0;
                 $opening->open = null;
                 $opening->close = null;
             }
             $opening->save();
         }
+
+
+        $log->description = $user->name . " módosította a bolt nyitvatartását:" . $changedDatas;
+        $log->date = Carbon::now()->addHour(1);
+        $log->save();
 
         return response()->json("Nyitvatartás sikeresen módosítva!");
     }
