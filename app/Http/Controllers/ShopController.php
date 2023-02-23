@@ -64,8 +64,10 @@ class ShopController extends Controller
     {
         $user = Auth::user();
         $user = User::where("id", $user->id)->first();
-        $user->permission = 10;
-        $user->save();
+
+        if ($user->shop_id != null) {
+            return response("Csak az hoztak létre új boltot, aki nem tartozik még bolthoz!", 403);
+        }
 
         $shop = new Shop();
         $shop->name = $request->get("name");
@@ -74,6 +76,10 @@ class ShopController extends Controller
         $shop->owner = $request->get("owner");
         $shop->postal_code = $request->get("postal_code");
         $shop->save();
+
+        $user->shop_id = $shop->id;
+        $user->permission = 10;
+        $user->save();
 
         $log = new Log();
         $log->shop_id = $shop->id;
