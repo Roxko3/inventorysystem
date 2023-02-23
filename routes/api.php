@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/myProfile'], function () {
         Route::get('/', [ProfileController::class, 'myProfile'])->name("myProfile");
-        Route::post('/nameEmail', [ProfileController::class, 'nameEmail'])->name("NameOrEmailChange");
+        Route::post('/nameEmail', [ProfileController::class, 'nameEmail'])->name("NameEmailChange");
         Route::post('/passwordChange', [ProfileController::class, 'passwordChange'])->name("passwordChange");
         Route::post('/postalCodeChange', [ProfileController::class, 'postalCodeChange'])->name("postalCodeChange");
     });
