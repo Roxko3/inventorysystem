@@ -25,7 +25,7 @@ import CustomToolbar from "./CustomToolbar";
 import moment from "moment/moment";
 
 function Shop() {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [shop, setShop] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isFound, setIsFound] = useState(false);

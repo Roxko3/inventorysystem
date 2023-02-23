@@ -32,7 +32,7 @@ import Cookies from "js-cookie";
 import { UserContext } from "./App";
 
 function Navbar(props) {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const cookie = Cookies.get("token");
     const [isAdmin, setIsAdmin] = useState(false);
     const [value, setValue] = useState(0);
@@ -158,7 +158,7 @@ function Navbar(props) {
                                 gap: "10px",
                             }}
                         >
-                            <MyAvatar name={user.name} />
+                            <MyAvatar />
                             <Typography
                                 variant="p"
                                 sx={{ display: { xs: "none", sm: "block" } }}

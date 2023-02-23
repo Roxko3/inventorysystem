@@ -13,11 +13,12 @@ import { Box, createTheme, ThemeProvider, useTheme } from "@mui/material";
 import Cookies from "js-cookie";
 
 const ColorModeContext = createContext({ toggleColorMode: () => {} });
-export const UserContext = createContext();
+export const UserContext = createContext({ user: null, setUser: () => {} });
 
 function App() {
     const navigate = useNavigate();
     const [user, setUser] = useState([]);
+    const value = { user, setUser };
     const [loading, setLoading] = useState(true);
     const [mode, setMode] = useState(
         JSON.parse(localStorage.getItem("mode")) || "light"
@@ -55,8 +56,13 @@ function App() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    setUser(response.data[0]);
-                    console.log(response.data[0]);
+                    if (Array.isArray(response.data)) {
+                        setUser(response.data[0]);
+                    } else {
+                        setUser(response.data);
+                    }
+                    console.log("response", response.data);
+                    console.log("context", user);
                     setLoading(false);
                 }
             })
@@ -75,7 +81,7 @@ function App() {
     if (loading) return "Loading...";
 
     return (
-        <UserContext.Provider value={user}>
+        <UserContext.Provider value={value}>
             <ColorModeContext.Provider value={colorMode}>
                 <ThemeProvider theme={theme}>
                     <Box

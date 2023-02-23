@@ -45,7 +45,7 @@ import moment from "moment";
 import { UserContext } from "./App";
 
 function Users() {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [editedRow, setEditedRow] = useState({});

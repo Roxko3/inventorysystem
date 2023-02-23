@@ -10,12 +10,13 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, Navigate, redirect, useNavigate } from "react-router-dom";
 import Image from "mui-image";
 import { Link as MuiLink } from "@mui/material";
 import { ErrorSharp, Visibility, VisibilityOff } from "@mui/icons-material";
 import Cookies from "js-cookie";
+import { UserContext } from "./App";
 
 function Login() {
     const email = useRef("");
@@ -28,6 +29,7 @@ function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
+    const { setUser } = useContext(UserContext);
 
     const login = async () => {
         await axios
@@ -44,6 +46,7 @@ function Login() {
                     setErrors([]);
                     setOpen(true);
                     navigate("/home");
+                    setUser(response.data.user);
                     console.log(response.data.user);
                     Cookies.set("token", response.data.token, {
                         expires: 7,

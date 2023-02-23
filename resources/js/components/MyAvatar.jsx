@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { UserContext } from "./App";
 
 function MyAvatar(props) {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     function stringToColor(string) {
         let hash = 0;
         let i;

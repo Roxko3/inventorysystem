@@ -19,7 +19,7 @@ import CustomToolbar from "./CustomToolbar";
 import { UserContext } from "./App";
 
 function Log() {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [logs, setLogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
