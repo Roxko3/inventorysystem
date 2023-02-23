@@ -25,6 +25,7 @@ import { ShopContext, UserContext } from "./App";
 import Map from "./Map";
 import Cookies from "js-cookie";
 import axios from "axios";
+import moment from "moment";
 
 function ShopData() {
     const user = useContext(UserContext);
@@ -62,6 +63,8 @@ function ShopData() {
     const saturdayClose = useRef(null);
     const sundayOpen = useRef(null);
     const sundayClose = useRef(null);
+    const [openingHoursLoading, setOpeningHoursLoading] = useState(true);
+    const [openingHour, setOpeningHour] = useState([]);
     var formData = new FormData();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -140,7 +143,7 @@ function ShopData() {
         console.log(mondayClose.current.value);
         axios
             .post(
-                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}/OpeningHours`,
+                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}/updateOpeningHours`,
                 {
                     opening_hours: {
                         monday: {
@@ -256,8 +259,29 @@ function ShopData() {
         }
     };
 
+    const getOpeningHours = async () => {
+        axios
+            .get(
+                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}/getOpeningHours`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    setOpeningHour(response.data);
+                    setOpeningHoursLoading(false);
+                }
+            });
+    };
+
     useEffect(() => {
         getTypes();
+        getOpeningHours();
     }, []);
 
     return (
@@ -303,7 +327,7 @@ function ShopData() {
                         <Avatar
                             variant="rounded"
                             sx={{
-                                width: 220,
+                                width: 200,
                                 height: 170,
                                 border: "1px solid black",
                             }}
@@ -406,209 +430,287 @@ function ShopData() {
 
                 <Grid2 container direction="column">
                     <Typography variant="h6">Nyitvatartás</Typography>
-                    <Grid2 item p={0}>
-                        <Grid2
-                            container
-                            direction="row"
-                            justifyContent="flex-start"
-                            alignItems="center"
-                            gap={2}
-                        >
-                            <Typography width={65}>Hétfő</Typography>
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={mondayOpen}
-                            />
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={mondayClose}
-                            />
-                        </Grid2>
-                    </Grid2>
-                    <Grid2 item p={0}>
-                        <Grid2
-                            container
-                            direction="row"
-                            justifyContent="flex-start"
-                            alignItems="center"
-                            gap={2}
-                        >
-                            <Typography width={65}>Kedd</Typography>
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={tuesdayOpen}
-                            />
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={tuesdayClose}
-                            />
-                        </Grid2>
-                    </Grid2>
-                    <Grid2 item p={0}>
-                        <Grid2
-                            container
-                            direction="row"
-                            justifyContent="flex-start"
-                            alignItems="center"
-                            gap={2}
-                        >
-                            <Typography width={65}>Szerda</Typography>
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={wednesdayOpen}
-                            />
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={wednesdayClose}
-                            />
-                        </Grid2>
-                    </Grid2>
-                    <Grid2 item p={0}>
-                        <Grid2
-                            container
-                            direction="row"
-                            justifyContent="flex-start"
-                            alignItems="center"
-                            gap={2}
-                        >
-                            <Typography width={65}>Csütörtök</Typography>
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={thursdayOpen}
-                            />
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={thursdayClose}
-                            />
-                        </Grid2>
-                    </Grid2>
-                    <Grid2 item p={0}>
-                        <Grid2
-                            container
-                            direction="row"
-                            justifyContent="flex-start"
-                            alignItems="center"
-                            gap={2}
-                        >
-                            <Typography width={65}>Péntek</Typography>
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={fridayOpen}
-                            />
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={fridayClose}
-                            />
-                        </Grid2>
-                    </Grid2>
-                    <Grid2 item p={0}>
-                        <Grid2
-                            container
-                            direction="row"
-                            justifyContent="flex-start"
-                            alignItems="center"
-                            gap={2}
-                        >
-                            <Typography width={65}>Szombat</Typography>
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={saturdayOpen}
-                            />
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={saturdayClose}
-                            />
-                        </Grid2>
-                    </Grid2>
-                    <Grid2 item p={0}>
-                        <Grid2
-                            container
-                            direction="row"
-                            justifyContent="flex-start"
-                            alignItems="center"
-                            gap={2}
-                        >
-                            <Typography width={65}>Vasárnap</Typography>
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={sundayOpen}
-                            />
-                            <TextField
-                                variant="outlined"
-                                size="small"
-                                type="time"
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={sundayClose}
-                            />
-                        </Grid2>
-                    </Grid2>
+                    {openingHoursLoading ? (
+                        <CircularProgress />
+                    ) : (
+                        <>
+                            <Grid2 item p={0}>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography width={65}>Hétfő</Typography>
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[0].open,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={mondayOpen}
+                                        onChange={checkChange}
+                                    />
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[0].close,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={mondayClose}
+                                        onChange={checkChange}
+                                    />
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item p={0}>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography width={65}>Kedd</Typography>
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[1].open,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={tuesdayOpen}
+                                        onChange={checkChange}
+                                    />
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[1].close,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={tuesdayClose}
+                                        onChange={checkChange}
+                                    />
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item p={0}>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography width={65}>Szerda</Typography>
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[2].open,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={wednesdayOpen}
+                                        onChange={checkChange}
+                                    />
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[2].close,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={wednesdayClose}
+                                        onChange={checkChange}
+                                    />
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item p={0}>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography width={65}>
+                                        Csütörtök
+                                    </Typography>
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[3].open,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={thursdayOpen}
+                                        onChange={checkChange}
+                                    />
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[3].close,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={thursdayClose}
+                                        onChange={checkChange}
+                                    />
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item p={0}>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography width={65}>Péntek</Typography>
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[4].open,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={fridayOpen}
+                                        onChange={checkChange}
+                                    />
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[4].close,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={fridayClose}
+                                        onChange={checkChange}
+                                    />
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item p={0}>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography width={65}>Szombat</Typography>
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[5].open,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={saturdayOpen}
+                                        onChange={checkChange}
+                                    />
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[5].close,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={saturdayClose}
+                                        onChange={checkChange}
+                                    />
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item p={0}>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography width={65}>Vasárnap</Typography>
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[6].open,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={sundayOpen}
+                                        onChange={checkChange}
+                                    />
+                                    <TextField
+                                        variant="outlined"
+                                        size="small"
+                                        type="time"
+                                        defaultValue={moment(
+                                            openingHour[6].close,
+                                            "HH:mm:ss"
+                                        ).format("HH:mm")}
+                                        InputProps={{
+                                            readOnly: isDisabled,
+                                        }}
+                                        inputRef={sundayClose}
+                                        onChange={checkChange}
+                                    />
+                                </Grid2>
+                            </Grid2>
+                        </>
+                    )}
                 </Grid2>
 
                 <Grid2

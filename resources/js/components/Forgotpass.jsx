@@ -53,13 +53,6 @@ function Forgotpass() {
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                label="Kód"
-                            />
-                        </Grid2>
-                        <Grid2>
-                            <TextField
-                                fullWidth
-                                variant="outlined"
                                 type={showPassword ? "text" : "password"}
                                 label="Új jelszó"
                                 InputProps={{
