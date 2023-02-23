@@ -33,7 +33,7 @@ function Forgotpass() {
         >
             <Grid2>
                 <Image
-                    src="./images/logo.png"
+                    src="/InventorySystem/public/storage/logo.png"
                     duration={1500}
                     alt="Inventory System Logo"
                 />
@@ -48,13 +48,6 @@ function Forgotpass() {
                             <Typography variant="p">
                                 Email elküldve: {email} címre
                             </Typography>
-                        </Grid2>
-                        <Grid2>
-                            <TextField
-                                fullWidth
-                                variant="outlined"
-                                label="Kód"
-                            />
                         </Grid2>
                         <Grid2>
                             <TextField

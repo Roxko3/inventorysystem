@@ -6,6 +6,7 @@ import {
     Box,
     Button,
     CircularProgress,
+    Divider,
     List,
     ListItem,
     ListItemText,
@@ -21,6 +22,7 @@ import Map from "./Map";
 import { UserContext } from "./App";
 import { DataGrid, huHU } from "@mui/x-data-grid";
 import CustomToolbar from "./CustomToolbar";
+import moment from "moment/moment";
 
 function Shop() {
     const user = useContext(UserContext);
@@ -59,7 +61,7 @@ function Shop() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    //console.log(response.data);
+                    console.log(response.data);
                     setShop(response.data.shop);
                     setRating(response.data.ratings);
                     setValue(response.data.your_rating);
@@ -184,6 +186,17 @@ function Shop() {
             <Link to="/shops">
                 <Button>Vissza</Button>
             </Link>
+            <Link to="/home">
+                <Button
+                    sx={
+                        user.shop_id == id
+                            ? { display: "inline" }
+                            : { display: "none" }
+                    }
+                >
+                    Szerkesztés
+                </Button>
+            </Link>
             <Grid2
                 container
                 spacing={1}
@@ -198,101 +211,325 @@ function Shop() {
                     {shop.postal_code}, {shop.address}
                 </Typography>
                 <Grid2 container direction="row" mt={2}>
-                    <Grid2 container direction="column">
-                        <List dense>
-                            <ListItem disablePadding>
-                                <ListItemText primary="Hétfő 6:00-21:00"></ListItemText>
-                            </ListItem>
-                            <ListItem disablePadding>
-                                <ListItemText primary="Kedd 6:00-21:00"></ListItemText>
-                            </ListItem>
-                            <ListItem disablePadding>
-                                <ListItemText primary="Szerda 6:00-21:00"></ListItemText>
-                            </ListItem>
-                            <ListItem disablePadding>
-                                <ListItemText primary="Csütörtök 6:00-21:00"></ListItemText>
-                            </ListItem>
-                            <ListItem disablePadding>
-                                <ListItemText primary="Péntek 6:00-21:00"></ListItemText>
-                            </ListItem>
-                            <ListItem disablePadding>
-                                <ListItemText primary="Szombat 6:00-21:00"></ListItemText>
-                            </ListItem>
-                            <ListItem disablePadding>
-                                <ListItemText primary="Vasárnap 8:00-18:00"></ListItemText>
-                            </ListItem>
-                        </List>
-                    </Grid2>
-                    <Grid2 container direction="column">
-                        <Rating
-                            value={value}
-                            onChange={(event, newValue) => {
-                                setValue(newValue);
-                                if (newValue == null) {
-                                    rate(0);
-                                } else {
-                                    rate(newValue);
-                                }
+                    <Grid2
+                        container
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Grid2 container direction="column">
+                            <Typography variant="h6">Nyitvatartás</Typography>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography sx={{ width: 180 }}>
+                                        Hétfő:{" "}
+                                        {shop.opening_hours[0].is_open == 0 ? (
+                                            "Zárva"
+                                        ) : (
+                                            <>
+                                                {moment(
+                                                    shop.opening_hours[0].open,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}{" "}
+                                                -{" "}
+                                                {moment(
+                                                    shop.opening_hours[0].close,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}
+                                            </>
+                                        )}
+                                    </Typography>
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography sx={{ width: 180 }}>
+                                        Kedd:{" "}
+                                        {shop.opening_hours[1].is_open == 0 ? (
+                                            "Zárva"
+                                        ) : (
+                                            <>
+                                                {moment(
+                                                    shop.opening_hours[1].open,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}{" "}
+                                                -{" "}
+                                                {moment(
+                                                    shop.opening_hours[1].close,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}
+                                            </>
+                                        )}
+                                    </Typography>
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography sx={{ width: 180 }}>
+                                        Szerda:{" "}
+                                        {shop.opening_hours[2].is_open == 0 ? (
+                                            "Zárva"
+                                        ) : (
+                                            <>
+                                                {moment(
+                                                    shop.opening_hours[2].open,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}{" "}
+                                                -{" "}
+                                                {moment(
+                                                    shop.opening_hours[2].close,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}
+                                            </>
+                                        )}
+                                    </Typography>
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography sx={{ width: 180 }}>
+                                        Csütörtök:{" "}
+                                        {shop.opening_hours[3].is_open == 0 ? (
+                                            "Zárva"
+                                        ) : (
+                                            <>
+                                                {moment(
+                                                    shop.opening_hours[3].open,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}{" "}
+                                                -{" "}
+                                                {moment(
+                                                    shop.opening_hours[3].close,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}
+                                            </>
+                                        )}
+                                    </Typography>
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography sx={{ width: 180 }}>
+                                        Péntek:{" "}
+                                        {shop.opening_hours[4].is_open == 0 ? (
+                                            "Zárva"
+                                        ) : (
+                                            <>
+                                                {moment(
+                                                    shop.opening_hours[4].open,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}{" "}
+                                                -{" "}
+                                                {moment(
+                                                    shop.opening_hours[4].close,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}
+                                            </>
+                                        )}
+                                    </Typography>
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography sx={{ width: 180 }}>
+                                        Szombat:{" "}
+                                        {shop.opening_hours[5].is_open == 0 ? (
+                                            "Zárva"
+                                        ) : (
+                                            <>
+                                                {moment(
+                                                    shop.opening_hours[5].open,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}{" "}
+                                                -{" "}
+                                                {moment(
+                                                    shop.opening_hours[5].close,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}
+                                            </>
+                                        )}
+                                    </Typography>
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Typography sx={{ width: 180 }}>
+                                        Vasárnap:{" "}
+                                        {shop.opening_hours[6].is_open == 0 ? (
+                                            "Zárva"
+                                        ) : (
+                                            <>
+                                                {moment(
+                                                    shop.opening_hours[6].open,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}{" "}
+                                                -{" "}
+                                                {moment(
+                                                    shop.opening_hours[6].close,
+                                                    "HH:mm:ss"
+                                                ).format("HH:mm")}
+                                            </>
+                                        )}
+                                    </Typography>
+                                </Grid2>
+                            </Grid2>
+                        </Grid2>
+                        <Divider
+                            orientation="vertical"
+                            sx={{
+                                borderRightWidth: 5,
+                                m: 2,
+                                display: { xs: "none", sm: "flex" },
                             }}
                         />
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                            }}
-                        >
-                            <Rating
-                                value={shop.rating}
-                                readOnly
-                                precision={0.1}
-                            />
-                            <Box sx={{ ml: 2 }}>{shop.rating}</Box>
-                        </Box>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                            }}
-                        >
-                            <Rating value={5} readOnly />
-                            <Box sx={{ ml: 2 }}>{rating.star5} db</Box>
-                        </Box>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                            }}
-                        >
-                            <Rating value={4} readOnly />
-                            <Box sx={{ ml: 2 }}>{rating.star4} db</Box>
-                        </Box>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                            }}
-                        >
-                            <Rating value={3} readOnly />
-                            <Box sx={{ ml: 2 }}>{rating.star3} db</Box>
-                        </Box>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                            }}
-                        >
-                            <Rating value={2} readOnly />
-                            <Box sx={{ ml: 2 }}>{rating.star2} db</Box>
-                        </Box>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                            }}
-                        >
-                            <Rating value={1} readOnly />
-                            <Box sx={{ ml: 2 }}>{rating.star1} db</Box>
-                        </Box>
+                        <Grid2 container direction="column">
+                            <Typography variant="h6">Értékelések</Typography>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    {user.shop_id == id ? (
+                                        <Typography>
+                                            Dolgozók nem értékelhetnek
+                                        </Typography>
+                                    ) : (
+                                        <Rating
+                                            value={value}
+                                            onChange={(event, newValue) => {
+                                                setValue(newValue);
+                                                if (newValue == null) {
+                                                    rate(0);
+                                                } else {
+                                                    rate(newValue);
+                                                }
+                                            }}
+                                        />
+                                    )}
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Rating
+                                        value={shop.rating}
+                                        readOnly
+                                        precision={0.1}
+                                    />
+                                    <Typography>{shop.rating}</Typography>
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Rating value={5} readOnly />
+                                    <Typography>{rating.star5}</Typography>
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Rating value={4} readOnly />
+                                    <Typography>{rating.star4}</Typography>
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Rating value={3} readOnly />
+                                    <Typography>{rating.star3}</Typography>
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Rating value={2} readOnly />
+                                    <Typography>{rating.star2}</Typography>
+                                </Grid2>
+                            </Grid2>
+                            <Grid2 item>
+                                <Grid2
+                                    container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center"
+                                    gap={2}
+                                >
+                                    <Rating value={1} readOnly />
+                                    <Typography>{rating.star1}</Typography>
+                                </Grid2>
+                            </Grid2>
+                        </Grid2>
                     </Grid2>
                 </Grid2>
                 <Grid2

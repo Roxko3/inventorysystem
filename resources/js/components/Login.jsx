@@ -93,7 +93,7 @@ function Login() {
         >
             <Grid2>
                 <Image
-                    src="./images/logo.png"
+                    src="/InventorySystem/public/storage/logo.png"
                     duration={1500}
                     alt="Inventory System Logo"
                 />
