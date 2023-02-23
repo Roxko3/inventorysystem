@@ -13,15 +13,16 @@ use Hash;
 use Notification;
 use Illuminate\Support\Str;
 use App\Notifications\PasswordResetEmail;
+use App\Http\Requests\ForgotPassord;
+use App\Http\Requests\PasswordReset;
 
 class ForgotPasswordController extends Controller
 {
-    public function ForgetPassword(Request $request)
+ 
+    public function ForgetPassword(ForgotPassord $request)
       {
-          $request->validate([
-              'email' => 'required|email|exists:users',
-          ]);
-  
+         
+          DB::table('password_resets')->where(['email'=> $request->email])->delete();
           $token = Str::random(64);
           $user = \App\Models\User::query()
           ->where([
@@ -30,42 +31,36 @@ class ForgotPasswordController extends Controller
           DB::table('password_resets')->insert([
               'email' => $request->email, 
               'token' => $token, 
-              'created_at' => Carbon::now()
+              'created_at' => Carbon::now()->addHour()
             ]);
             
             $passord = [
                 'greeting' => 'Hello '.$user->name.',',
                 'body' => 'Ez a jelszó visszaálitó E-mail.',
-                'thanks' => 'köszönjök hogy minket választotak InventorySystem csapata.',
+                'thanks' => 'Köszönjök hogy minket választotak InventorySystem csapata.',
                 'actionText' => 'Jelszó visszaálitás',
-                'actionURL' => url('/api/reset-password?token='.$token),
+                'actionURL' => url('/InventorySystem/public/forgotpass?token='.$token),
             ];
            
             $user->notify(new PasswordResetEmail($passord));
-          return ['message'=>'Email has been sent'];
+          return ['message'=>'Email el lett küldve.'];
       }
-      public function ResetPassword(Request $request)
+      public function ResetPassword(PasswordReset $request)
       {
-          $request->validate([
-              'token' =>  'required',
-              'email' => 'required|email|exists:users',
-              'password' => 'required|string|min:8',
-              
-          ]);
+          
   
-          $updatePassword = DB::table('password_resets')
-                              ->where([
-                                'email' => $request->email, 
-                                'token' => $request->token
-                              ])
-                              ->first();
+          $email = DB::table('password_resets')
+            ->where([
+            'token' => $request->token
+              ])
+              -> value('email');
   
-         
+          
   
-          $user = User::where('email', $request->email)
+          $user = User::where('email', $email)
                       ->update(['password' => Hash::make($request->password)]);
  
-          DB::table('password_resets')->where(['email'=> $request->email])->delete();
+          DB::table('password_resets')->where(['email'=> $email])->delete();
   
           return ['message', 'Az jelszod megváltozot!'];
       }
