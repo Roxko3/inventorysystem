@@ -28,7 +28,7 @@ import axios from "axios";
 import moment from "moment";
 
 function ShopData() {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [isAdmin, setIsAdmin] = useState(
         user.permission == 10 ? true : false
     );

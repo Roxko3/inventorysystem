@@ -37,8 +37,10 @@ class AuthController extends Controller
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
+        
         $token = $user->createToken('main')->plainTextToken;
         $user['password'] = "";
+        $user = User::with('shop')->where('id', $user->id)->first();
         return response(compact('user', 'token'));
     }
 

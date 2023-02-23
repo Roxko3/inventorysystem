@@ -31,7 +31,7 @@ import Navbar from "./Navbar";
 import Cookies from "js-cookie";
 
 function Shops() {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [shops, setShops] = useState([]);
     const [loading, setLoading] = useState(true);
     const [postalCode, setPostalCode] = useState(user.postal_code);

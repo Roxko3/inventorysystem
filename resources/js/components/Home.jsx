@@ -36,7 +36,7 @@ import Cookies from "js-cookie";
 import { UserContext } from "./App";
 
 function Home() {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [hasShop, setHasShop] = useState(user.shop_id != null);
     const [shop, setShop] = useState([]);
     const [loading, setLoading] = useState(true);

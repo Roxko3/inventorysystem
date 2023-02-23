@@ -41,7 +41,7 @@ import { UserContext } from "./App";
 import axios from "axios";
 
 function Profile() {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [postalCode, setPostalCode] = useState(user.postal_code);
     const [showPassword, setShowPassword] = useState("");
     const [btnDisable, setBtnDisable] = useState(true);

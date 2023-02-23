@@ -57,7 +57,7 @@ import moment from "moment";
 import CustomToolbar from "./CustomToolbar";
 
 function Storage() {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const cookie = Cookies.get("token");
     const [storage, setStorage] = useState([]); // minden
     const [storageDeleted, setStorageDeleted] = useState([]); // töröltek
