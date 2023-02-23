@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\OpeningHoursController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
@@ -54,7 +55,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post("/rate/{shop}", [RatingController::class, "rate"])->name("rateShop");
         Route::post("/{shop}/uploadImage", [ShopController::class, "uploadImage"])->name("uploadImage");
         Route::delete("/{shop}/deleteImage", [ShopController::class, "deleteImage"])->name("deleteImage");
-        Route::post("/{shop}/OpeningHours", [ShopController::class, "OpeningHours"])->name("updateOpeningHours");
+        Route::get("/{shop}/getOpeningHours", [OpeningHoursController::class, "getOpeningHours"])->name("getOpeningHours");
+        Route::post("/{shop}/updateOpeningHours", [OpeningHoursController::class, "updateOpeningHours"])->name("updateOpeningHours");
     });
 
     Route::group(['prefix' => '/storages'], function () {
