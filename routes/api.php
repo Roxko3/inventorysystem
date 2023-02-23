@@ -43,7 +43,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/Logout', [AuthController::class, 'logout'])->name("logout");
     Route::get('/getShop/{shop}', [ShopController::class, 'get']);
-    Route::put("/myShop/{shop}", [ShopController::class, "update"])->name("updateShop");
 
     Route::group(['prefix' => '/shops'], function () {
         Route::get("/", [ShopController::class, "index"])->name("getShops");
