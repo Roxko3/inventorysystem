@@ -25,19 +25,19 @@ class RatingSeeder extends Seeder
                 'id' => 2,
                 'shop_id' => 1,
                 'user_id' => 2,
-                'rating' => "5",
+                'rating' => "4",
             ],
             [
                 'id' => 3,
                 'shop_id' => 1,
                 'user_id' => 3,
-                'rating' => "4",
+                'rating' => "3",
             ],
             [
                 'id' => 4,
                 'shop_id' => 1,
                 'user_id' => 4,
-                'rating' => "5",
+                'rating' => "2",
             ],
             [
                 'id' => 5,
@@ -56,6 +56,12 @@ class RatingSeeder extends Seeder
                 'shop_id' => 2,
                 'user_id' => 3,
                 'rating' => "3",
+            ],
+            [
+                'id' => 8,
+                'shop_id' => 1,
+                'user_id' => 5,
+                'rating' => "1",
             ],
         ];
         foreach ($data as $item) {

@@ -57,18 +57,10 @@ class RatingController extends Controller
             $avgrating += $item->rating;
         }
         $count = $ratings->count();
-        if ($count === 0) {
-            $shop->rating = 0;
-        } else {
-            $avgrating = $avgrating / $count;
-            $shop->rating = $avgrating;
-        }
+        $avgrating = $avgrating / $count;
+        $shop->rating = $avgrating;
         $shop->save();
 
         return response()->json("Értékelés sikeresen felvéve.");
-    }
-
-    public function refreshShopRating(Shop $shop)
-    {
     }
 }

@@ -51,6 +51,14 @@ class UsersSeeder extends Seeder
                 'password' => bcrypt("asd123"),
                 'permission' => 0,
                 'postal_code' => 9730
+            ],
+            [
+                'id' => 5,
+                'email' => "vasarlo3@localhost",
+                'name' => "Kiss János2",
+                'password' => bcrypt("asd123"),
+                'permission' => 0,
+                'postal_code' => 9730
             ]
         ];
         foreach ($data as $item) {
