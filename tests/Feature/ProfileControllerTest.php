@@ -120,9 +120,7 @@ class ProfileControllerTest extends TestCase
         $response->assertStatus(200);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
-            ->json('post', '/api/myProfile/cityChange', [
-                'city' => "Szombathely",
-            ]);
+            ->json('post', '/api/myProfile/cityChange');
 
         $response->assertStatus(422);
     }
