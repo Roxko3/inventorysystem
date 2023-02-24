@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Database\Seeders\RatingErrorSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class ShopControllerTest extends TestCase
@@ -151,6 +152,89 @@ class ShopControllerTest extends TestCase
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->json('delete', '/api/shops/2');
+
+        $response->assertStatus(403);
+    }
+
+    public function test_uploadImage()
+    {
+        $this->seed();
+
+        $response = $this->post('api/login', [
+            'email' => 'admin@localhost',
+            'password' => 'admin'
+        ]);
+
+        $token = json_decode($response->content(), true)['token'];
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/shops/1/uploadImage');
+
+        $response->assertStatus(422);
+
+        $image = UploadedFile::fake()->create('image.jpg', 100);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/shops/1/uploadImage', [
+                'image' => $image,
+            ]);
+
+        $response->assertStatus(200);
+
+        $image = UploadedFile::fake()->create('image.jpg', 100);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/shops/1/uploadImage', [
+                'image' => $image,
+            ]);
+
+        $response->assertStatus(200);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('delete', '/api/shops/1/deleteImage');
+
+        $image = UploadedFile::fake()->create('image.jpg', 100);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/shops/2/uploadImage', [
+                'image' => $image,
+            ]);
+
+        $response->assertStatus(403);
+    }
+
+    public function test_deleteImage()
+    {
+        $this->seed();
+
+        $response = $this->post('api/login', [
+            'email' => 'admin@localhost',
+            'password' => 'admin'
+        ]);
+
+        $token = json_decode($response->content(), true)['token'];
+
+        $image = UploadedFile::fake()->create('image.jpg', 100);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/shops/1/uploadImage', [
+                'image' => $image,
+            ]);
+
+        $response->assertStatus(200);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('delete', '/api/shops/1/deleteImage');
+
+        $response->assertStatus(200);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('delete', '/api/shops/1/deleteImage');
+
+        $response->assertStatus(404);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('delete', '/api/shops/2/deleteImage');
 
         $response->assertStatus(403);
     }
