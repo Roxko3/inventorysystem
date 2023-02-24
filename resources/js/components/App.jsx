@@ -16,8 +16,15 @@ import Shops from "./Shops";
 import Shop from "./Shop";
 import Navbar from "./Navbar";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { Box, createTheme, ThemeProvider, useTheme } from "@mui/material";
+import {
+    Box,
+    CircularProgress,
+    createTheme,
+    ThemeProvider,
+    useTheme,
+} from "@mui/material";
 import Cookies from "js-cookie";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 const ColorModeContext = createContext({ toggleColorMode: () => {} });
 export const UserContext = createContext({ user: null, setUser: () => {} });
@@ -101,7 +108,12 @@ function App() {
         getUser();
     }, []);
 
-    if (loading) return "Loading...";
+    if (loading)
+        return (
+            <Grid2 container justifyContent="center" alignItems="center">
+                <CircularProgress />
+            </Grid2>
+        );
 
     return (
         <UserContext.Provider value={value}>
