@@ -229,8 +229,8 @@ function Users() {
             headerName: "Rang",
         },
         {
-            field: "postal_code",
-            headerName: "Irányítószám",
+            field: "city",
+            headerName: "Város",
         },
         {
             field: "edit",
@@ -507,9 +507,9 @@ function Users() {
                             <Grid2 m={2}>
                                 <TextField
                                     fullWidth
-                                    label="Irányítószám"
+                                    label="Város"
                                     variant="outlined"
-                                    defaultValue={editedRow.postal_code}
+                                    defaultValue={editedRow.city}
                                     InputProps={{
                                         readOnly: true,
                                     }}

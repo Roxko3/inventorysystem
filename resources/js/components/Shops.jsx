@@ -34,7 +34,7 @@ function Shops() {
     const { user } = useContext(UserContext);
     const [shops, setShops] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [postalCode, setPostalCode] = useState(user.postal_code);
+    const [city, setCity] = useState(user.city);
     const [pagination, setPagination] = useState({});
     const cookie = Cookies.get("token");
 
@@ -107,16 +107,16 @@ function Shops() {
                                         justifyContent="center"
                                     >
                                         <TextField
-                                            id="txfPostalCode"
-                                            label="Irányítószám"
+                                            id="txfCity"
+                                            label="Város"
                                             size="small"
-                                            defaultValue={postalCode}
+                                            defaultValue={city}
                                             InputProps={{
                                                 endAdornment: (
                                                     <IconButton
                                                         onClick={() =>
-                                                            setPostalCode(
-                                                                txfPostalCode.value
+                                                            setCity(
+                                                                txfCity.value
                                                             )
                                                         }
                                                     >
@@ -127,8 +127,8 @@ function Shops() {
                                         />
                                     </Grid2>
                                     <Map
-                                        key={postalCode}
-                                        location={postalCode}
+                                        key={city}
+                                        location={city}
                                         width={300}
                                         height={300}
                                     />
@@ -193,7 +193,7 @@ function Shops() {
                                         color="textSecondary"
                                         component="p"
                                     >
-                                        {shops.postal_code}, {shops.address}
+                                        {shops.city}, {shops.address}
                                     </Typography>
                                     <Tooltip
                                         title={shops.rating}

@@ -213,7 +213,7 @@ function Shop() {
                     {shop.name} | {shop.shop_type.name}
                 </Typography>
                 <Typography variant="subtitle2">
-                    {shop.postal_code}, {shop.address}
+                    {shop.city}, {shop.address}
                 </Typography>
                 <Grid2 container direction="row" mt={2}>
                     <Grid2
@@ -569,8 +569,8 @@ function Shop() {
                         </Grid2>
                         <Grid2 sx={{ width: { xs: 300, sm: 376, lg: 500 } }}>
                             <Map
-                                key={shop.postal_code}
-                                location={`${shop.address}+${shop.postal_code}`}
+                                key={shop.city}
+                                location={`${shop.address}+${shop.city}`}
                                 height={330}
                             />
                         </Grid2>

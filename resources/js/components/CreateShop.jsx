@@ -18,7 +18,7 @@ function CreateShop() {
     const shopType = useRef(-1);
     const address = useRef("");
     const owner = useRef("");
-    const postalCode = useRef("");
+    const city = useRef("");
     const [shopTypes, setShopTypes] = useState([]);
     const [type, setType] = useState("");
     const [errors, setErrors] = useState([]);
@@ -40,7 +40,7 @@ function CreateShop() {
                 shop_type_id: shopType.current.value,
                 address: address.current.value,
                 owner: owner.current.value,
-                postal_code: postalCode.current.value,
+                city: city.current.value,
             })
             .then((response) => {
                 if (response.status === 200) {
@@ -49,7 +49,7 @@ function CreateShop() {
                     setType(-1);
                     address.current.value = "";
                     owner.current.value = "";
-                    postalCode.current.value = "";
+                    city.current.value = "";
                     console.log("sikeres");
                 }
             })
@@ -63,7 +63,7 @@ function CreateShop() {
                     setType(-1);
                     address.current.value = "";
                     owner.current.value = "";
-                    postalCode.current.value = "";
+                    city.current.value = "";
                 }
             });
     };
@@ -129,9 +129,9 @@ function CreateShop() {
             </Grid2>
             <Grid2>
                 <TextField
-                    label="Irányítószám"
-                    inputRef={postalCode}
-                    helperText={errors.postal_code}
+                    label="Város"
+                    inputRef={city}
+                    helperText={errors.city}
                 />
             </Grid2>
             <Grid2>

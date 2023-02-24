@@ -21,7 +21,7 @@ function Register() {
     const name = useRef("");
     const password = useRef("");
     const password_repeat = useRef("");
-    const postalCode = useRef("");
+    const city = useRef("");
     const [open, setOpen] = useState(false);
     const [alertMessage, setalertMessage] = useState("");
     const [severity, setseverity] = useState("error");
