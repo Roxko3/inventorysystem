@@ -101,7 +101,7 @@ class ProfileControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_postalCodeChange()
+    public function test_cityChange()
     {
         $this->seed();
 
@@ -113,15 +113,15 @@ class ProfileControllerTest extends TestCase
         $token = json_decode($response->content(), true)['token'];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
-            ->json('post', '/api/myProfile/postalCodeChange', [
-                'postal_code' => 2000,
+            ->json('post', '/api/myProfile/cityChange', [
+                'city' => "Szombathely",
             ]);
 
         $response->assertStatus(200);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
-            ->json('post', '/api/myProfile/postalCodeChange', [
-                'postal_code' => "alma"
+            ->json('post', '/api/myProfile/cityChange', [
+                'city' => "Szombathely",
             ]);
 
         $response->assertStatus(422);

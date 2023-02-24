@@ -38,7 +38,7 @@ class WorkerController extends Controller
                 $query->where('email', 'like', '%' . $request->get("searchString") . '%')
                     ->orWhere('name', 'like', '%' . $request->get("searchString") . '%')
                     ->orWhere('permission', 'like', '%' . $request->get("searchString") . '%')
-                    ->orWhere('postal_code', 'like', '%' . $request->get("searchString") . '%');
+                    ->orWhere('city', 'like', '%' . $request->get("searchString") . '%');
             })
             ->orderBy($ordercolumn, $request->get("order") == "desc" ? "desc" : "asc")
             ->paginate(10);

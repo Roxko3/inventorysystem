@@ -78,7 +78,7 @@ class ShopControllerTest extends TestCase
                 'shop_type_id' => 1,
                 'address' => "utca",
                 'owner' => "Józsi",
-                'postal_code' => "9700"
+                'city' => "Szombathely",
             ]);
 
         $response->assertStatus(200);
@@ -89,7 +89,7 @@ class ShopControllerTest extends TestCase
                 'shop_type_id' => 1,
                 'address' => "utca",
                 'owner' => "Józsi",
-                'postal_code' => "9700"
+                'city' => "Szombathely",
             ]);
 
         $response->assertStatus(403);
@@ -117,7 +117,7 @@ class ShopControllerTest extends TestCase
                 'shop_type_id' => 1,
                 'address' => "utca",
                 'owner' => "Józsi",
-                'postal_code' => "9700"
+                'city' => "Szombathely",
             ]);
 
         $response->assertStatus(403);
@@ -128,7 +128,7 @@ class ShopControllerTest extends TestCase
                 'shop_type_id' => 3,
                 'address' => "utca",
                 'owner' => "Józsi",
-                'postal_code' => "9701"
+                'city' => "Szombathely",
             ]);
 
         $response->assertStatus(200);

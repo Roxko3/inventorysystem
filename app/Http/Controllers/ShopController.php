@@ -70,7 +70,7 @@ class ShopController extends Controller
         $shop->shop_type_id = $request->get("shop_type_id");
         $shop->address = $request->get("address");
         $shop->owner = $request->get("owner");
-        $shop->postal_code = $request->get("postal_code");
+        $shop->city = $request->get("city");
         $shop->save();
 
         $user->shop_id = $shop->id;
@@ -163,9 +163,9 @@ class ShopController extends Controller
             $changedDatas = $changedDatas . " - Bolt tulajdonosa: " . $shop->owner . " -> " . $request->get("owner");
             $shop->owner = $request->get("owner");
         }
-        if ($shop->postal_code != $request->get("postal_code")) {
-            $changedDatas = $changedDatas . " - Bolt irányítószáma: " . $shop->postal_code . " -> " . $request->get("postal_code");
-            $shop->postal_code = $request->get("postal_code");
+        if ($shop->city != $request->get("city")) {
+            $changedDatas = $changedDatas . " - Bolt városa: " . $shop->city . " -> " . $request->get("city");
+            $shop->city = $request->get("city");
         }
         $shop->save();
 

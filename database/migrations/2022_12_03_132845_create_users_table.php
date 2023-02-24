@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string("name");
             $table->string("password");
             $table->Integer("permission")->nullable()->default(0);
-            $table->Integer("postal_code")->nullable();
+            $table->string("city")->nullable();
             $table->foreignId("shop_id")->nullable()->constrained("shops");
             $table->string("image_path")->nullable();
             $table->datetime("email_verified_at")->nullable();

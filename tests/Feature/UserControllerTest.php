@@ -30,7 +30,7 @@ class UserControllerTest extends TestCase
             'name' => "Aladár András",
             'password' => 'password',
             'permission' => 10,
-            'postal_code' => 1234,
+            'city' => "Szombathely",
             'shop_id' => 1,
         ]);
 
@@ -50,7 +50,7 @@ class UserControllerTest extends TestCase
             'name' => "Aladár András",
             'password' => 'password',
             'permission' => 10,
-            'postal_code' => 1234,
+            'city' => "Szombathely",
             'shop_id' => 1,
         ]);
 

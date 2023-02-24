@@ -24,7 +24,7 @@ class UserController extends Controller
         $user->name = $request->get("name");
         $user->password = Hash::make($request->get("password"));
         $user->permission = $request->has("permission") ? $request->get("permission") : null;
-        $user->postal_code = $request->has("postal_code") ? $request->get("postal_code") : null;
+        $user->city = $request->has("city") ? $request->get("city") : null;
         $user->shop_id = $request->has("shop_id") ? $request->get("shop_id") : null;
 
         $user->save();
@@ -37,7 +37,7 @@ class UserController extends Controller
         $user->name = $request->get("name");
         $user->password = Hash::make($request->get("password"));
         $user->permission = $request->has("permission") ? $request->get("permission") : null;
-        $user->postal_code = $request->has("postal_code") ? $request->get("postal_code") : null;
+        $user->city = $request->has("city") ? $request->get("city") : null;
         $user->shop_id = $request->has("shop_id") ? $request->get("shop_id") : null;
 
         $user->save();

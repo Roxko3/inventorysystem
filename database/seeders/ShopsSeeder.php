@@ -21,7 +21,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "2",
                 'address' => "Pogányi út 7",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9730,
+                'city' => "Kőszeg",
                 'image_path' => "tesco1.jpg",
                 'rating' => 4.75
             ],
@@ -31,7 +31,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "1",
                 'address' => "Zanati út 70",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9700,
+                'city' => "Kőszeg",
                 'image_path' => "tesco2.jpg",
                 'rating' => 3.75
             ],
@@ -42,7 +42,7 @@ class ShopsSeeder extends Seeder
                 'address' => "Széchenyi tér 13",
                 'owner' => "Co-op Hungary Zrt.",
                 'image_path' => "coop1.jpg",
-                'postal_code' => 9735,
+                'city' => "Kőszeg",
                 'rating' => 2.37
             ],
             [
@@ -52,7 +52,7 @@ class ShopsSeeder extends Seeder
                 'address' => "Várkör 16",
                 'owner' => "Bestbyte műszaki",
                 'image_path' => "vargapc.jpg",
-                'postal_code' => 9730,
+                'city' => "Kőszeg",
                 'rating' => 3
             ],
             [
@@ -61,7 +61,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "IV. László király u. 39",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9400,
+                'city' => "Kőszeg",
                 'rating' => 1
             ],
             [
@@ -70,7 +70,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Király J. u 3",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9400,
+                'city' => "Kőszeg",
                 'rating' => 4.11
             ],
             [
@@ -79,7 +79,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "2",
                 'address' => "Ipar krt. 30",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9400,
+                'city' => "Kőszeg",
                 'rating' => 5
             ],
             [
@@ -88,7 +88,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Hátsókapu 10",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9400,
+                'city' => "Kőszeg",
                 'rating' => 2
             ],
             [
@@ -97,7 +97,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Végfordulat 9",
                 'owner' => " Peter Gazik",
-                'postal_code' => 9400,
+                'city' => "Kőszeg",
                 'rating' => 5
             ],
             [
@@ -106,7 +106,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => " Ipar krt. 30",
                 'owner' => "Tesco PLC",
-                'postal_code' => 9400,
+                'city' => "Kőszeg",
                 'rating' => 3.33
             ],
         ];

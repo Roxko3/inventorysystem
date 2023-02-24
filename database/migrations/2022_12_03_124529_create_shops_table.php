@@ -19,7 +19,7 @@ class CreateShopsTable extends Migration
             $table->foreignId("shop_type_id")->constrained("shop_types");
             $table->string("address");
             $table->string("owner");
-            $table->Integer("postal_code");
+            $table->string("city");
             $table->string("image_path")->nullable();
             $table->double("rating")->default(0);
             $table->boolean("is_deleted")->default(0);

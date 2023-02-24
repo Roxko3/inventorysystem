@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class PostalCodeRequest extends FormRequest
+class CityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,17 +26,15 @@ class PostalCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'postal_code' => "required|numeric|min:1000|max:9999",
+            'city' => "required|max:255",
         ];
     }
 
     public function messages()
     {
         return [
-            'postal_code.required' => "Irányítószám megadása kötelező!",
-            'postal_code.numeric' => "Az irányítószám csak szám lehet!",
-            'postal_code.min' => "Az irányítószám 1000 és 9999 közötti szám!",
-            'postal_code.max' => "Az irányítószám 1000 és 9999 közötti szám!",
+            'city.required' => "Város megadása kötelező!",
+            'city.max' => "A város maximum 255 karakter hosszú!",
         ];
     }
 
