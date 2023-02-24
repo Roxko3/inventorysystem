@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Database\Seeders\RatingErrorSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -45,6 +46,13 @@ class ShopControllerTest extends TestCase
             ->json('get', '/api/getShop/1');
 
         $response->assertStatus(200);
+
+        $this->seed(RatingErrorSeeder::class);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('get', '/api/getShop/1');
+
+        $response->assertStatus(500);
     }
 
     public function test_create()

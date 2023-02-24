@@ -51,7 +51,6 @@ class ShopController extends Controller
                     break;
                 default:
                     return response()->json("Szerver hiba!", 500);
-                    break;
             }
         }
         $user = Auth::user();
