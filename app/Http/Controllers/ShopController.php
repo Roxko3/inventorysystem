@@ -135,7 +135,7 @@ class ShopController extends Controller
             $shop->save();
             return response()->json("Kép sikeresen törölve!");
         } else {
-            return response()->json("Nem található kép ennél a boltnál!");
+            return response()->json("Nem található kép ennél a boltnál!", 404);
         }
     }
 

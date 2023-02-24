@@ -44,6 +44,14 @@ class StorageSeeder extends Seeder
                 "price" => 50,
                 'expiration' => Carbon::parse("2022-12-6"),
             ],
+            [
+                'id' => 4,
+                'shop_id' => 2,
+                'product_id' => 1,
+                'amount' => 50,
+                "price" => 50,
+                'expiration' => Carbon::parse("2022-12-6"),
+            ],
         ];
 
 

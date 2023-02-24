@@ -89,7 +89,7 @@ class ProfileController extends Controller
             $user->save();
             return response()->json("Kép sikeresen törölve!");
         } else {
-            return response()->json("Nem található kép ennél a felhasználónál!");
+            return response()->json("Nem található kép ennél a felhasználónál!", 404);
         }
     }
 }
