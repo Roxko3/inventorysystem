@@ -51,7 +51,24 @@ class UsersSeeder extends Seeder
                 'password' => bcrypt("asd123"),
                 'permission' => 0,
                 'postal_code' => 9730
-            ]
+            ],
+            [
+                'id' => 5,
+                'email' => "vasarlo3@localhost",
+                'name' => "Kiss János2",
+                'password' => bcrypt("asd123"),
+                'permission' => 0,
+                'postal_code' => 9730
+            ],
+            [
+                'id' => 6,
+                'email' => "dolgozo2@localhost",
+                'name' => "Nagy Tamás2",
+                'password' => bcrypt("asd123"),
+                'permission' => 1,
+                'postal_code' => 9730,
+                'shop_id' => 2
+            ],
         ];
         foreach ($data as $item) {
             $user = User::firstOrNew([

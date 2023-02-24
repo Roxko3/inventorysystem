@@ -18,12 +18,17 @@ class LogController extends Controller
         if (Gate::denies('shop-worker', $shop->id)) {
             return response()->json("Csak a bolt dolgozói kérhetik le a bolt naplóját!", 403);
         }
+
         $logs = Log::with("user")->where('shop_id', $shop->id)->get();
         return response()->json($logs);
     }
 
     public function searchLogs(LogSearchRequest $request, Shop $shop)
     {
+        if (Gate::denies('shop-worker', $shop->id)) {
+            return response()->json("Csak a bolt dolgozói kérhetik le a bolt naplóját!", 403);
+        }
+
         if ($request->get("column") == "name") {
             $storage = DB::table('logs')
                 ->select('logs.*', 'users.name')

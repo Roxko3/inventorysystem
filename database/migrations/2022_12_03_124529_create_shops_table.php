@@ -22,6 +22,7 @@ class CreateShopsTable extends Migration
             $table->Integer("postal_code");
             $table->string("image_path")->nullable();
             $table->double("rating")->default(0);
+            $table->boolean("is_deleted")->default(0);
         });
     }
 
