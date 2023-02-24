@@ -75,10 +75,13 @@ function Shops() {
                 justifyContent="center"
             >
                 {loading ? (
-                    <CircularProgress
-                        disableShrink
-                        sx={{ animationDuration: "300ms" }}
-                    />
+                    <Grid2
+                        container
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <CircularProgress />
+                    </Grid2>
                 ) : (
                     <Grid2
                         container

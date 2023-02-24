@@ -37,13 +37,31 @@ function Map(props) {
         getCoords();
     }, []);
 
-    if (loading) return <CircularProgress />;
+    if (loading)
+        return (
+            <Grid2 container justifyContent="center" alignItems="center">
+                <CircularProgress />
+            </Grid2>
+        );
 
     if (coords == null)
         return (
-            <Grid2 container direction="row">
+            <Grid2
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                    border: "1px solid red",
+                    borderRadius: 5,
+                    height: props.height,
+                }}
+                height="100%"
+            >
                 <Error color="error" />
-                <Typography sx={{ color: "red" }}>Hiba!</Typography>
+                <Typography sx={{ color: "red" }} variant="h4">
+                    Hiba!
+                </Typography>
             </Grid2>
         );
 

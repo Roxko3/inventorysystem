@@ -181,9 +181,6 @@ function Profile() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    oldPassword.current.value = "";
-                    newPassword.current.value = "";
-                    againPassword.current.value = "";
                     setPassDisabled(true);
                     setErrors([]);
                     setOpenAlert(true);
@@ -215,8 +212,6 @@ function Profile() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    email.current.value = "";
-                    name.current.value = "";
                     setPassDisabled(true);
                     setErrors([]);
                     setOpenAlert(true);
@@ -251,7 +246,6 @@ function Profile() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    postal_code.current.value = "";
                     setPassDisabled(true);
                     setErrors([]);
                     setSeverity("success");

@@ -203,6 +203,9 @@ function ShopData() {
                 if (response.status === 200) {
                     setShopTypes(response.data);
                 }
+                if (response.status === 500) {
+                    getTypes();
+                }
             });
     };
 
@@ -227,11 +230,6 @@ function ShopData() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    shopName.current.value = "";
-                    shopType.current.value = "";
-                    owner.current.value = "";
-                    shopPostalCode.current.value = "";
-                    shopAddress.current.value = "";
                     console.log(response.data);
                     setErrors([]);
                     setOpenAlert(true);
@@ -275,6 +273,9 @@ function ShopData() {
                     console.log(response.data);
                     setOpeningHour(response.data);
                     setOpeningHoursLoading(false);
+                }
+                if (response.status === 500) {
+                    getOpeningHours();
                 }
             });
     };
@@ -431,7 +432,13 @@ function ShopData() {
                 <Grid2 container direction="column">
                     <Typography variant="h6">Nyitvatartás</Typography>
                     {openingHoursLoading ? (
-                        <CircularProgress />
+                        <Grid2
+                            container
+                            justifyContent="center"
+                            alignItems="center"
+                        >
+                            <CircularProgress />
+                        </Grid2>
                     ) : (
                         <>
                             <Grid2 item p={0}>

@@ -38,6 +38,7 @@ import MyAvatar from "./MyAvatar";
 
 function Home() {
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
     const [hasShop, setHasShop] = useState(user.shop_id != null);
     const [shop, setShop] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -64,7 +65,7 @@ function Home() {
     };
 
     useEffect(() => {
-        document.title = "Inventory System - Home";
+        document.title = "Inventory System - Főoldal";
     }, []);
 
     return (

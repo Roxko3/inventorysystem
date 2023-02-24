@@ -1,4 +1,11 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import {
+    matchRoutes,
+    redirect,
+    Route,
+    Routes,
+    useLocation,
+    useNavigate,
+} from "react-router-dom";
 import Forgotpass from "./Forgotpass";
 import Home from "./Home";
 import Login from "./Login";
@@ -45,6 +52,7 @@ function App() {
     );
 
     const cookie = Cookies.get("token");
+    const location = useLocation();
 
     const getUser = async () => {
         axios
@@ -64,13 +72,27 @@ function App() {
                     console.log("response", response.data);
                     console.log("context", user);
                     setLoading(false);
-                    navigate("/home");
+                    if (
+                        location.pathname == "/login" ||
+                        location.pathname == "/register" ||
+                        location.pathname == "/forgotpass"
+                    ) {
+                        navigate("/home", { replace: true });
+                    }
+                    console.log("location", location);
                 }
             })
             .catch((response) => {
                 if (response.response.status == 401) {
-                    navigate("/login");
                     setLoading(false);
+                    console.log("location", location);
+                    if (
+                        location.pathname != "/login" &&
+                        location.pathname != "/register" &&
+                        location.pathname != "/forgotpass"
+                    ) {
+                        navigate("/login", { replace: true });
+                    }
                 }
             });
     };

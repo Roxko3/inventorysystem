@@ -165,7 +165,12 @@ function Shop() {
         },
     ];
 
-    if (loading || gridLoading) return <CircularProgress />;
+    if (loading || gridLoading)
+        return (
+            <Grid2 container justifyContent="center" alignItems="center">
+                <CircularProgress />
+            </Grid2>
+        );
 
     if (!isFound)
         return (
