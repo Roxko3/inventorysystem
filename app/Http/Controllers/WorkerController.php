@@ -126,7 +126,7 @@ class WorkerController extends Controller
 
             $deleteuser = User::where('email', $item)->first();
             if ($deleteuser == null) {
-                return response()->json(['email' => 'Nem található felhasználó a megadott email címmel (' . $deleteuser->email . ')!'], 404);
+                return response()->json(['email' => 'Nem található felhasználó a megadott email címmel (' . $item . ')!'], 404);
             }
             if ($deleteuser->shop_id != $user->shop_id) {
                 return response()->json(['email' => 'A megadott felhasználó (' . $deleteuser->email . ') nem ehhez a bolthoz tartozik!'], 409);
