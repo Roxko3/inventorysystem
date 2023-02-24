@@ -94,6 +94,45 @@ class ShopControllerTest extends TestCase
         $response->assertStatus(403);
     }
 
+    public function test_update()
+    {
+        $this->seed();
+
+        $response = $this->post('api/login', [
+            'email' => 'admin@localhost',
+            'password' => 'admin'
+        ]);
+
+        $token = json_decode($response->content(), true)['token'];
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('put', '/api/shops/1');
+
+        $response->assertStatus(422);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('put', '/api/shops/2', [
+                'name' => "bolt",
+                'shop_type_id' => 1,
+                'address' => "utca",
+                'owner' => "Józsi",
+                'postal_code' => "9700"
+            ]);
+
+        $response->assertStatus(403);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('put', '/api/shops/1', [
+                'name' => "bolt",
+                'shop_type_id' => 3,
+                'address' => "utca",
+                'owner' => "Józsi",
+                'postal_code' => "9701"
+            ]);
+
+        $response->assertStatus(200);
+    }
+
     public function test_delete()
     {
         $this->seed();
