@@ -48,7 +48,6 @@ class ShopController extends Controller
                     break;
                 default:
                     return response()->json("Szerver hiba!", 500);
-                    break;
             }
         }
         $user = Auth::user();
@@ -61,16 +60,22 @@ class ShopController extends Controller
     {
         $user = Auth::user();
         $user = User::where("id", $user->id)->first();
-        $user->permission = 10;
-        $user->save();
+
+        if ($user->shop_id != null) {
+            return response("Csak az hoztak létre új boltot, aki nem tartozik még bolthoz!", 403);
+        }
 
         $shop = new Shop();
         $shop->name = $request->get("name");
         $shop->shop_type_id = $request->get("shop_type_id");
         $shop->address = $request->get("address");
         $shop->owner = $request->get("owner");
-        $shop->postal_code = $request->get("postal_code");
+        $shop->city = $request->get("city");
         $shop->save();
+
+        $user->shop_id = $shop->id;
+        $user->permission = 10;
+        $user->save();
 
         $log = new Log();
         $log->shop_id = $shop->id;
@@ -130,7 +135,7 @@ class ShopController extends Controller
             $shop->save();
             return response()->json("Kép sikeresen törölve!");
         } else {
-            return response()->json("Nem található kép ennél a boltnál!");
+            return response()->json("Nem található kép ennél a boltnál!", 404);
         }
     }
 
@@ -158,9 +163,9 @@ class ShopController extends Controller
             $changedDatas = $changedDatas . " - Bolt tulajdonosa: " . $shop->owner . " -> " . $request->get("owner");
             $shop->owner = $request->get("owner");
         }
-        if ($shop->postal_code != $request->get("postal_code")) {
-            $changedDatas = $changedDatas . " - Bolt irányítószáma: " . $shop->postal_code . " -> " . $request->get("postal_code");
-            $shop->postal_code = $request->get("postal_code");
+        if ($shop->city != $request->get("city")) {
+            $changedDatas = $changedDatas . " - Bolt városa: " . $shop->city . " -> " . $request->get("city");
+            $shop->city = $request->get("city");
         }
         $shop->save();
 

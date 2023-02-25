@@ -229,8 +229,8 @@ function Users() {
             headerName: "Rang",
         },
         {
-            field: "postal_code",
-            headerName: "Irányítószám",
+            field: "city",
+            headerName: "Város",
         },
         {
             field: "edit",
@@ -251,10 +251,9 @@ function Users() {
 
     if (isLoading) {
         return (
-            <CircularProgress
-                disableShrink
-                sx={{ animationDuration: "300ms" }}
-            />
+            <Grid2 container justifyContent="center" alignItems="center">
+                <CircularProgress />
+            </Grid2>
         );
     }
 
@@ -508,9 +507,9 @@ function Users() {
                             <Grid2 m={2}>
                                 <TextField
                                     fullWidth
-                                    label="Irányítószám"
+                                    label="Város"
                                     variant="outlined"
-                                    defaultValue={editedRow.postal_code}
+                                    defaultValue={editedRow.city}
                                     InputProps={{
                                         readOnly: true,
                                     }}

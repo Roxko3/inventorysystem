@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Rating;
 use Illuminate\Database\Seeder;
 
-class RatingSeeder extends Seeder
+class RatingErrorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +19,7 @@ class RatingSeeder extends Seeder
                 'id' => 1,
                 'shop_id' => 1,
                 'user_id' => 1,
-                'rating' => "5",
+                'rating' => "123",
             ],
             [
                 'id' => 2,

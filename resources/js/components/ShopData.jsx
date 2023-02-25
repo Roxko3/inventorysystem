@@ -34,7 +34,7 @@ function ShopData() {
     );
     const cookie = Cookies.get("token");
     const [address, setAddress] = useState(user.shop.address);
-    const [postalCode, setPostalCode] = useState(user.shop.postal_code);
+    const [city, setCity] = useState(user.shop.city);
     const [shopTypes, setShopTypes] = useState([]);
     const [isDisabled, setIsDisabled] = useState(true);
     const [type, setType] = useState(user.shop.shop_type_id);
@@ -43,7 +43,7 @@ function ShopData() {
     const shopType = useRef("");
     const owner = useRef("");
     const shopAddress = useRef("");
-    const shopPostalCode = useRef("");
+    const shopCity = useRef("");
     const [isChanged, setIsChanged] = useState(false);
     const [errors, setErrors] = useState([]);
     const [openAlert, setOpenAlert] = useState(false);
@@ -98,6 +98,7 @@ function ShopData() {
                     setSeverity("success");
                     setalertMessage("Kép sikeresen megváltoztatva!");
                     setOpenAlert(true);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -126,6 +127,7 @@ function ShopData() {
                     setSeverity("success");
                     setalertMessage("Kép sikeresen törölve!");
                     setOpenAlert(true);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -184,7 +186,13 @@ function ShopData() {
                 }
             )
             .then((response) => {
-                console.log(response.data);
+                if (response.status === 200) {
+                    console.log(response.data);
+                    setSeverity("success");
+                    setalertMessage("Nyitvatartás sikeresen megváltoztatva!");
+                    setOpenAlert(true);
+                    window.location.reload();
+                }
             });
     };
 
@@ -203,6 +211,9 @@ function ShopData() {
                 if (response.status === 200) {
                     setShopTypes(response.data);
                 }
+                if (response.status === 500) {
+                    getTypes();
+                }
             });
     };
 
@@ -215,7 +226,7 @@ function ShopData() {
                     name: shopName.current.value,
                     shop_type_id: shopType.current.value,
                     owner: owner.current.value,
-                    postal_code: shopPostalCode.current.value,
+                    city: shopCity.current.value,
                     address: shopAddress.current.value,
                 },
                 {
@@ -227,16 +238,12 @@ function ShopData() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    shopName.current.value = "";
-                    shopType.current.value = "";
-                    owner.current.value = "";
-                    shopPostalCode.current.value = "";
-                    shopAddress.current.value = "";
                     console.log(response.data);
                     setErrors([]);
                     setOpenAlert(true);
                     setSeverity("success");
                     setalertMessage("Változtatások sikeresen elmentve!");
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -275,6 +282,9 @@ function ShopData() {
                     console.log(response.data);
                     setOpeningHour(response.data);
                     setOpeningHoursLoading(false);
+                }
+                if (response.status === 500) {
+                    getOpeningHours();
                 }
             });
     };
@@ -431,7 +441,13 @@ function ShopData() {
                 <Grid2 container direction="column">
                     <Typography variant="h6">Nyitvatartás</Typography>
                     {openingHoursLoading ? (
-                        <CircularProgress />
+                        <Grid2
+                            container
+                            justifyContent="center"
+                            alignItems="center"
+                        >
+                            <CircularProgress />
+                        </Grid2>
                     ) : (
                         <>
                             <Grid2 item p={0}>
@@ -742,24 +758,24 @@ function ShopData() {
                         </Grid2>
                         <Grid2>
                             <TextField
-                                id="txfPostalCode"
-                                label="Irányítószám"
+                                id="txfCity"
+                                label="Város"
                                 size="small"
-                                defaultValue={postalCode}
+                                defaultValue={city}
                                 InputProps={{
                                     readOnly: isDisabled,
                                 }}
-                                inputRef={shopPostalCode}
+                                inputRef={shopCity}
                                 onChange={checkChange}
-                                helperText={errors.postal_code}
-                                error={errors.postal_code != null}
+                                helperText={errors.city}
+                                error={errors.city != null}
                             />
                         </Grid2>
                         <Grid2>
                             <IconButton
                                 color="primary"
                                 onClick={() => {
-                                    setPostalCode(txfPostalCode.value);
+                                    setCity(txfCity.value);
                                     setAddress(txfAddress.value);
                                 }}
                                 disabled={isDisabled}
@@ -770,8 +786,8 @@ function ShopData() {
                     </Grid2>
                     <Grid2 sx={{ width: { xs: 300, sm: 500 } }}>
                         <Map
-                            key={postalCode}
-                            location={`${address}+${postalCode}`}
+                            key={city}
+                            location={`${address}+${city}`}
                             height={300}
                         />
                     </Grid2>

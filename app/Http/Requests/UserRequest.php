@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
             'name' => "required",
             'password' => "required",
             'permission' => "numeric",
-            'postal_code' => "numeric",
+            'city' => "string",
             'shop_id' => "numeric",
             'email_verified_at' => "datetime"
         ];

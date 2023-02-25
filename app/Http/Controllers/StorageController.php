@@ -136,7 +136,7 @@ class StorageController extends Controller
 
     public function update(Storage $storage, StorageRequest $request)
     {
-        if (Gate::denies('shop-cashier')) {
+        if (Gate::denies('shop-cashier') || Gate::denies('shop-worker', $storage->shop_id)) {
             return response()->json("Csak a megfelelő jogokkal lehet szerkeszteni a bolt termékein!", 403);
         }
         $storage->amount = $request->get("amount");
@@ -168,6 +168,12 @@ class StorageController extends Controller
         }
         foreach ($request->get("ids") as $item) {
             $storage = Storage::where('id', $item)->first();
+
+            //Más boltjához tartozik-e a termék
+            if (Gate::denies('shop-worker', $storage->shop_id)) {
+                return response()->json("Csak a megfelelő jogokkal lehet törölni terméket a boltból!", 403);
+            }
+
             if ($storage->is_deleted == 0) {
                 $user = Auth::user();
                 $log = new Log();

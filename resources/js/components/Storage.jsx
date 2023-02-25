@@ -359,10 +359,9 @@ function Storage() {
 
     if (isLoading) {
         return (
-            <CircularProgress
-                disableShrink
-                sx={{ animationDuration: "300ms" }}
-            />
+            <Grid2 container justifyContent="center" alignItems="center">
+                <CircularProgress />
+            </Grid2>
         );
     }
 

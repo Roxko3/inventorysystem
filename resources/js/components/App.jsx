@@ -1,4 +1,11 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import {
+    matchRoutes,
+    redirect,
+    Route,
+    Routes,
+    useLocation,
+    useNavigate,
+} from "react-router-dom";
 import Forgotpass from "./Forgotpass";
 import Home from "./Home";
 import Login from "./Login";
@@ -9,8 +16,15 @@ import Shops from "./Shops";
 import Shop from "./Shop";
 import Navbar from "./Navbar";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { Box, createTheme, ThemeProvider, useTheme } from "@mui/material";
+import {
+    Box,
+    CircularProgress,
+    createTheme,
+    ThemeProvider,
+    useTheme,
+} from "@mui/material";
 import Cookies from "js-cookie";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 const ColorModeContext = createContext({ toggleColorMode: () => {} });
 export const UserContext = createContext({ user: null, setUser: () => {} });
@@ -45,6 +59,7 @@ function App() {
     );
 
     const cookie = Cookies.get("token");
+    const location = useLocation();
 
     const getUser = async () => {
         axios
@@ -64,13 +79,27 @@ function App() {
                     console.log("response", response.data);
                     console.log("context", user);
                     setLoading(false);
-                    navigate("/home");
+                    if (
+                        location.pathname == "/login" ||
+                        location.pathname == "/register" ||
+                        location.pathname == "/forgotpass"
+                    ) {
+                        navigate("/home", { replace: true });
+                    }
+                    console.log("location", location);
                 }
             })
             .catch((response) => {
                 if (response.response.status == 401) {
-                    navigate("/login");
                     setLoading(false);
+                    console.log("location", location);
+                    if (
+                        location.pathname != "/login" &&
+                        location.pathname != "/register" &&
+                        location.pathname != "/forgotpass"
+                    ) {
+                        navigate("/login", { replace: true });
+                    }
                 }
             });
     };
@@ -79,7 +108,12 @@ function App() {
         getUser();
     }, []);
 
-    if (loading) return "Loading...";
+    if (loading)
+        return (
+            <Grid2 container justifyContent="center" alignItems="center">
+                <CircularProgress />
+            </Grid2>
+        );
 
     return (
         <UserContext.Provider value={value}>

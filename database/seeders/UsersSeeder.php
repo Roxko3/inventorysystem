@@ -22,7 +22,7 @@ class UsersSeeder extends Seeder
                 'name' => "Teszt Elek",
                 'password' => bcrypt('admin'),
                 'permission' => 10,
-                'postal_code' => 9730,
+                'city' => "Kőszeg",
                 'shop_id' => 1,
                 'email_verified_at' => Carbon::parse("2022-12-30")
             ],
@@ -32,7 +32,7 @@ class UsersSeeder extends Seeder
                 'name' => "Balázs Benedek",
                 'password' => bcrypt("password"),
                 'permission' => 0,
-                'postal_code' => 9730,
+                'city' => "Kőszeg",
                 'email_verified_at' => Carbon::parse("2022-12-30")
             ],
             [
@@ -41,7 +41,7 @@ class UsersSeeder extends Seeder
                 'name' => "Nagy Tamás",
                 'password' => bcrypt("asd123"),
                 'permission' => 1,
-                'postal_code' => 9730,
+                'city' => "Kőszeg",
                 'shop_id' => 1
             ],
             [
@@ -50,8 +50,25 @@ class UsersSeeder extends Seeder
                 'name' => "Kiss János",
                 'password' => bcrypt("asd123"),
                 'permission' => 0,
-                'postal_code' => 9730
-            ]
+                'city' => "Kőszeg",
+            ],
+            [
+                'id' => 5,
+                'email' => "vasarlo3@localhost",
+                'name' => "Kiss János2",
+                'password' => bcrypt("asd123"),
+                'permission' => 0,
+                'city' => "Kőszeg",
+            ],
+            [
+                'id' => 6,
+                'email' => "dolgozo2@localhost",
+                'name' => "Nagy Tamás2",
+                'password' => bcrypt("asd123"),
+                'permission' => 1,
+                'city' => "Kőszeg",
+                'shop_id' => 2
+            ],
         ];
         foreach ($data as $item) {
             $user = User::firstOrNew([

@@ -42,15 +42,15 @@ import axios from "axios";
 
 function Profile() {
     const { user } = useContext(UserContext);
-    const [postalCode, setPostalCode] = useState(user.postal_code);
+    const [City, setCity] = useState(user.city);
     const [showPassword, setShowPassword] = useState("");
     const [btnDisable, setBtnDisable] = useState(true);
     const [passDisabled, setPassDisabled] = useState(true);
-    const [postalCodeDisabled, setPostalCodeDisabled] = useState(true);
+    const [cityDisabled, setcityDisabled] = useState(true);
     const oldPassword = useRef("");
     const newPassword = useRef("");
     const againPassword = useRef("");
-    const postal_code = useRef("");
+    const city = useRef("");
     const name = useRef("");
     const email = useRef("");
     const [errors, setErrors] = useState([]);
@@ -91,6 +91,7 @@ function Profile() {
                     setSeverity("success");
                     setalertMessage("Kép sikeresen megváltoztatva!");
                     setOpenAlert(true);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -119,6 +120,7 @@ function Profile() {
                     setSeverity("success");
                     setalertMessage("Kép sikeresen törölve!");
                     setOpenAlert(true);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -147,11 +149,11 @@ function Profile() {
         }
     };
 
-    const handlePostalCodeChange = (e) => {
+    const handleCityChange = (e) => {
         if (e.target.value == e.target.defaultValue) {
-            setPostalCodeDisabled(true);
+            setCityDisabled(true);
         } else {
-            setPostalCodeDisabled(false);
+            setCityDisabled(false);
         }
     };
 
@@ -181,14 +183,12 @@ function Profile() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    oldPassword.current.value = "";
-                    newPassword.current.value = "";
-                    againPassword.current.value = "";
                     setPassDisabled(true);
                     setErrors([]);
                     setOpenAlert(true);
                     setSeverity("success");
                     setalertMessage(response.data);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -215,13 +215,12 @@ function Profile() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    email.current.value = "";
-                    name.current.value = "";
                     setPassDisabled(true);
                     setErrors([]);
                     setOpenAlert(true);
                     setSeverity("success");
                     setalertMessage(response.data);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -235,12 +234,12 @@ function Profile() {
             });
     };
 
-    const changePostalCode = async () => {
+    const changeCity = async () => {
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/myProfile/postalCodeChange",
+                "http://127.0.0.1/InventorySystem/public/api/myProfile/cityChange",
                 {
-                    postal_code: postal_code.current.value,
+                    city: city.current.value,
                 },
                 {
                     headers: {
@@ -251,12 +250,12 @@ function Profile() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    postal_code.current.value = "";
                     setPassDisabled(true);
                     setErrors([]);
                     setSeverity("success");
                     setOpenAlert(true);
                     setalertMessage(response.data);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -625,8 +624,7 @@ function Profile() {
                                         color="textSecondary"
                                         component="p"
                                     >
-                                        {user.shop.postal_code},{" "}
-                                        {user.shop.address}
+                                        {user.shop.city}, {user.shop.address}
                                     </Typography>
                                     <Rating
                                         name="read-only"
@@ -646,43 +644,37 @@ function Profile() {
                     >
                         <Grid2>
                             <TextField
-                                inputRef={postal_code}
-                                error={errors.postal_code != null}
-                                helperText={errors.postal_code}
-                                id="txfPostalCode"
-                                label="Irányítószám"
+                                inputRef={city}
+                                error={errors.city != null}
+                                helperText={errors.city}
+                                id="txfCity"
+                                label="Város"
                                 size="small"
-                                defaultValue={postalCode}
+                                defaultValue={City}
                                 InputProps={{
                                     endAdornment: (
                                         <IconButton
                                             onClick={() =>
-                                                setPostalCode(
-                                                    txfPostalCode.value
-                                                )
+                                                setCity(txfCity.value)
                                             }
                                         >
                                             <Search />
                                         </IconButton>
                                     ),
                                 }}
-                                onChange={handlePostalCodeChange}
+                                onChange={handleCityChange}
                             />
                         </Grid2>
                         <Grid2 sx={{ width: 330 }}>
-                            <Map
-                                key={postalCode}
-                                location={postalCode}
-                                height={330}
-                            />
+                            <Map key={City} location={City} height={330} />
                         </Grid2>
                         <Grid2>
                             <Button
                                 variant="contained"
-                                disabled={postalCodeDisabled}
-                                onClick={changePostalCode}
+                                disabled={cityDisabled}
+                                onClick={changeCity}
                             >
-                                Irányítószám megváltoztatása
+                                Város megváltoztatása
                             </Button>
                         </Grid2>
                     </Grid2>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ImageRequest;
 use App\Http\Requests\NameEmailRequest;
 use App\Http\Requests\PasswordChangeRequest;
-use App\Http\Requests\PostalCodeRequest;
+use App\Http\Requests\CityRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,14 +49,14 @@ class ProfileController extends Controller
         return response()->json("Jelszó sikeresen megváltoztatva!");
     }
 
-    public function postalCodeChange(PostalCodeRequest $request)
+    public function cityChange(CityRequest $request)
     {
         $user = Auth::user();
         $user = User::where('id', $user->id)->first();
-        $user->postal_code = $request->has("postal_code") ? $request->get("postal_code") : null;
+        $user->city = $request->has("city") ? $request->get("city") : null;
 
         $user->save();
-        return response()->json("Irányítószám sikeresen megváltoztatva!");
+        return response()->json("Város sikeresen megváltoztatva!");
     }
 
     public function uploadImage(ImageRequest $request)
@@ -89,7 +89,7 @@ class ProfileController extends Controller
             $user->save();
             return response()->json("Kép sikeresen törölve!");
         } else {
-            return response()->json("Nem található kép ennél a felhasználónál!");
+            return response()->json("Nem található kép ennél a felhasználónál!", 404);
         }
     }
 }

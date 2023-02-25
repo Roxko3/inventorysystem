@@ -36,7 +36,7 @@
     "..."*/
                     }
                 </Typography>
-                <Typography variant="legend">{shops.postal_code}</Typography>
+                <Typography variant="legend">{shops.city}</Typography>
                 <br />
                 <Rating
                     value={shops.rating == null ? 0 : shops.ratings[0].rating}
@@ -111,9 +111,7 @@ function ShopCard({ shops }) {
                     </Grid>
                     <CardContent>
                         <Typography variant="h6">{shops.name}</Typography>
-                        <Typography variant="legend">
-                            {shops.postal_code}
-                        </Typography>
+                        <Typography variant="legend">{shops.city}</Typography>
                         <br />
                         <Rating
                             value={

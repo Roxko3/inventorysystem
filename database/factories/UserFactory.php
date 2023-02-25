@@ -19,8 +19,8 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->email(),
             'name' => $this->faker->unique()->name(),
             'password' => bcrypt($this->faker->word()),
-            'permission' => $this->faker->numberBetween(0,10),
-            'postal_code' =>$this->faker->randomNumber(4 ,true),
+            'permission' => $this->faker->numberBetween(0, 10),
+            //'postal_code' =>$this->faker->randomNumber(4 ,true),
             'shop_id' => Shop::all()->random()->id,
             'email_verified_at' => $this->faker->optional($weight = 70)->dateTimeBetween('-1 years', '+8 years'),
         ];

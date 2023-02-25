@@ -41,9 +41,9 @@ Route::get('/verify-email/{id}/{hash}', [EmailVerificationController::class, 've
 Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/myProfile'], function () {
         Route::get('/', [ProfileController::class, 'myProfile'])->name("myProfile");
-        Route::post('/nameEmail', [ProfileController::class, 'nameEmail'])->name("NameOrEmailChange");
+        Route::post('/nameEmail', [ProfileController::class, 'nameEmail'])->name("NameEmailChange");
         Route::post('/passwordChange', [ProfileController::class, 'passwordChange'])->name("passwordChange");
-        Route::post('/postalCodeChange', [ProfileController::class, 'postalCodeChange'])->name("postalCodeChange");
+        Route::post('/cityChange', [ProfileController::class, 'cityChange'])->name("cityChange");
         Route::post("/uploadImage", [ProfileController::class, "uploadImage"])->name("uploadImage");
         Route::delete("/deleteImage", [ProfileController::class, "deleteImage"])->name("deleteImage");
     });

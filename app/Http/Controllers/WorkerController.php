@@ -38,7 +38,7 @@ class WorkerController extends Controller
                 $query->where('email', 'like', '%' . $request->get("searchString") . '%')
                     ->orWhere('name', 'like', '%' . $request->get("searchString") . '%')
                     ->orWhere('permission', 'like', '%' . $request->get("searchString") . '%')
-                    ->orWhere('postal_code', 'like', '%' . $request->get("searchString") . '%');
+                    ->orWhere('city', 'like', '%' . $request->get("searchString") . '%');
             })
             ->orderBy($ordercolumn, $request->get("order") == "desc" ? "desc" : "asc")
             ->paginate(10);
@@ -126,7 +126,7 @@ class WorkerController extends Controller
 
             $deleteuser = User::where('email', $item)->first();
             if ($deleteuser == null) {
-                return response()->json(['email' => 'Nem található felhasználó a megadott email címmel (' . $deleteuser->email . ')!'], 404);
+                return response()->json(['email' => 'Nem található felhasználó a megadott email címmel (' . $item . ')!'], 404);
             }
             if ($deleteuser->shop_id != $user->shop_id) {
                 return response()->json(['email' => 'A megadott felhasználó (' . $deleteuser->email . ') nem ehhez a bolthoz tartozik!'], 409);
