@@ -98,6 +98,7 @@ function ShopData() {
                     setSeverity("success");
                     setalertMessage("Kép sikeresen megváltoztatva!");
                     setOpenAlert(true);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -126,6 +127,7 @@ function ShopData() {
                     setSeverity("success");
                     setalertMessage("Kép sikeresen törölve!");
                     setOpenAlert(true);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -184,7 +186,13 @@ function ShopData() {
                 }
             )
             .then((response) => {
-                console.log(response.data);
+                if (response.status === 200) {
+                    console.log(response.data);
+                    setSeverity("success");
+                    setalertMessage("Nyitvatartás sikeresen megváltoztatva!");
+                    setOpenAlert(true);
+                    window.location.reload();
+                }
             });
     };
 
@@ -235,6 +243,7 @@ function ShopData() {
                     setOpenAlert(true);
                     setSeverity("success");
                     setalertMessage("Változtatások sikeresen elmentve!");
+                    window.location.reload();
                 }
             })
             .catch((response) => {

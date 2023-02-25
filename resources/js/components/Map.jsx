@@ -18,23 +18,23 @@ function Map(props) {
     const [loading, setLoading] = useState(true);
     const [mapHeight, setMapHeight] = useState(0);
 
-    const getCoords = async () => {
+    const getCoords = async (location) => {
         await axios
             .get(
-                `https://nominatim.openstreetmap.org/search?q=${props.location}&format=json&polygon=1&addressdetails=1`
+                `https://nominatim.openstreetmap.org/search?q=${location}&format=json&polygon=1&addressdetails=1`
             )
             .then((response) => {
                 if (response.status === 200) {
                     setCoords(response.data[0]);
-                    console.log(response.data);
+                    console.log("map response", response.data);
                     setLoading(false);
-                    console.log(props.location);
+                    console.log("map location", location);
                 }
             });
     };
 
     useEffect(() => {
-        getCoords();
+        getCoords(props.location);
     }, []);
 
     if (loading)
@@ -76,7 +76,7 @@ function Map(props) {
             <MapContainer
                 center={[coords.lat, coords.lon]}
                 zoom={15}
-                scrollWheelZoom={false}
+                //scrollWheelZoom={false}
                 style={{
                     height: "100%",
                     border: "0.3px black solid",
@@ -88,8 +88,7 @@ function Map(props) {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 <Marker position={[coords.lat, coords.lon]}>
-                    <Popup>Itt vagy</Popup>
-                    <Tooltip>Tooltip for Marker</Tooltip>
+                    <Popup></Popup>
                 </Marker>
             </MapContainer>
         </Grid2>

@@ -53,7 +53,7 @@ function Shops() {
                 if (response.status === 200) {
                     setShops(response.data.data);
                     setPagination(response.data);
-                    console.log(response.data);
+                    console.log("test", response.data.data);
                     setLoading(false);
                 }
             });
@@ -128,7 +128,7 @@ function Shops() {
                                     </Grid2>
                                     <Map
                                         key={city}
-                                        location={city}
+                                        location={pagination.data}
                                         width={300}
                                         height={300}
                                     />

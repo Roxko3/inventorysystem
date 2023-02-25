@@ -91,6 +91,7 @@ function Profile() {
                     setSeverity("success");
                     setalertMessage("Kép sikeresen megváltoztatva!");
                     setOpenAlert(true);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -119,6 +120,7 @@ function Profile() {
                     setSeverity("success");
                     setalertMessage("Kép sikeresen törölve!");
                     setOpenAlert(true);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -186,6 +188,7 @@ function Profile() {
                     setOpenAlert(true);
                     setSeverity("success");
                     setalertMessage(response.data);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -217,6 +220,7 @@ function Profile() {
                     setOpenAlert(true);
                     setSeverity("success");
                     setalertMessage(response.data);
+                    window.location.reload();
                 }
             })
             .catch((response) => {
@@ -251,6 +255,7 @@ function Profile() {
                     setSeverity("success");
                     setOpenAlert(true);
                     setalertMessage(response.data);
+                    window.location.reload();
                 }
             })
             .catch((response) => {

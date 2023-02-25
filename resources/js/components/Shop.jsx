@@ -133,7 +133,7 @@ function Shop() {
     };
 
     useEffect(() => {
-        document.title = "Inventory System - Boltok";
+        document.title = `Inventory System - ${shop.name || "Nincs találat"}`;
         getShop();
         getStorage(`shops/searchStorage/${id}`);
     }, [order, field, search, value]);
