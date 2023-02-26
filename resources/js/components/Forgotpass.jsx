@@ -64,6 +64,11 @@ function Forgotpass() {
             )
             .then((response) => {
                 console.log(response.data);
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    setErrors(response.response.data);
+                }
             });
     };
 
@@ -101,6 +106,8 @@ function Forgotpass() {
                                 type={showPassword ? "text" : "password"}
                                 label="Új jelszó"
                                 inputRef={password}
+                                error={errors.password != null}
+                                helperText={errors.password}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -130,6 +137,8 @@ function Forgotpass() {
                                 type={showPassword ? "text" : "password"}
                                 label="Új jelszó újra"
                                 inputRef={passwordAgain}
+                                error={errors["password-repeat"] != null}
+                                helperText={errors["password-repeat"]}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
