@@ -54,8 +54,7 @@ class ForgotPasswordController extends Controller
             'token' => $request->token
               ])
               -> value('email');
-  
-          
+        
   
           $user = User::where('email', $email)
                       ->update(['password' => Hash::make($request->password)]);

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\PasswordMixedCase;
-use App\Rules\PasswordNumber;
+use App\Rules\PasswordMixedCaseRule;
+use App\Rules\PasswordNumberRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Contracts\Validation\Validator as Validator;
@@ -29,9 +29,9 @@ class PasswordReset extends FormRequest
     public function rules()
     {
         return [
-            'token' => 'required',
-            'password' => ['required', 'min:8', new PasswordMixedCase, new PasswordNumber],
-            'password-repeat' => 'required|same:password'
+            'token' => 'required|exists:password_resets',
+            'password' => ['required', 'min:8' , new PasswordMixedCaseRule, new PasswordNumberRule  ],
+            'password-repeat' => ['required|same:password'],
         ];
     }
     public function messages()
@@ -41,7 +41,8 @@ class PasswordReset extends FormRequest
             'password.required' => 'Jelszó megadása kötelező.',
             'password.min' => 'Jelszó legalább 8 karakter hosszúságú.',
             'password-repeat.required' => 'Jelszó ismétlés megadása kötelező.',
-            'password-repeat.same' => 'Jelszó ismétlés nem eggyezik.'
+            'password-repeat.same' => 'Jelszó ismétlés nem eggyezik.',
+            'token.exists' => 'A megadott token nem létezik a redszerben.',
           
         ];
     }
