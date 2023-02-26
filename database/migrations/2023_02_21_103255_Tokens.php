@@ -13,10 +13,12 @@ class PasswordResets extends Migration
      */
     public function up()
     {
-        Schema::create('password_resets', function (Blueprint $table) {
+        Schema::create('Tokens', function (Blueprint $table) {
             $table->string('email')->index();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
+            $table->string('tokenPassword')->nullable();
+            $table->timestamp('created_atPassword')->nullable();
+            $table->string('tokenEmail')->nullable();
+            $table->timestamp('created_atEmail')->nullable();
         });
     }
 
@@ -27,6 +29,6 @@ class PasswordResets extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('Tokens');
     }
 }

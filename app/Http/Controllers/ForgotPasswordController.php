@@ -21,18 +21,28 @@ class ForgotPasswordController extends Controller
  
     public function ForgetPassword(ForgotPassord $request)
       {
+        $token = Str::random(64);
+        if (DB::table('Tokens')->where('email', '=', $request->email)->exists()) 
+        {
+            DB::table('Tokens')
+            ->where('email','LIKE', $request->email)
+            ->update(['tokenPassword' =>  $token, 'created_atPassword' => Carbon::now()->addHour()]);
+        } 
+        else 
+        {
+          DB::table('Tokens')->insert([
+            'email' => $request->email, 
+            'tokenPassword' => $token, 
+            'created_atPassword' => Carbon::now()->addHour()
+          ]);
+        }
+          
          
-          DB::table('password_resets')->where(['email'=> $request->email])->delete();
-          $token = Str::random(64);
           $user = \App\Models\User::query()
           ->where([
             'email' => $request->email,]) ->first();
 
-          DB::table('password_resets')->insert([
-              'email' => $request->email, 
-              'token' => $token, 
-              'created_at' => Carbon::now()->addHour()
-            ]);
+         
             
             $passord = [
                 'greeting' => 'Hello '.$user->name.',',
@@ -49,9 +59,9 @@ class ForgotPasswordController extends Controller
       {
           
   
-          $email = DB::table('password_resets')
+          $email = DB::table('Tokens')
             ->where([
-            'token' => $request->token
+            'tokenPassword' => $request->token
               ])
               -> value('email');
         
@@ -59,7 +69,7 @@ class ForgotPasswordController extends Controller
           $user = User::where('email', $email)
                       ->update(['password' => Hash::make($request->password)]);
  
-          DB::table('password_resets')->where(['email'=> $email])->delete();
+                      DB::table('Tokens')->where(['email'=> $email])->update(['tokenPassword' =>  null, 'created_atPassword' => null]);;
   
           return ['message', 'Az jelszod megváltozot!'];
       }
