@@ -36,7 +36,18 @@ function Shops() {
     const [loading, setLoading] = useState(true);
     const [city, setCity] = useState(user.city);
     const [pagination, setPagination] = useState({});
+    const [isExpanded, setIsExpanded] = useState(false);
     const cookie = Cookies.get("token");
+
+    const accordionChange = (state) => {
+        if (state == "text") {
+            console.log("textfield");
+            setIsExpanded(isExpanded);
+        } else {
+            setIsExpanded(!isExpanded);
+            console.log("other");
+        }
+    };
 
     const getShops = async (url) => {
         const axiosInstance = axios.create({
@@ -94,19 +105,32 @@ function Shops() {
                             container
                             alignItems="center"
                             justifyContent="center"
-                            sx={{ width: "90%" }}
+                            sx={{ width: "81%" }}
                         >
-                            <Accordion>
-                                <AccordionSummary expandIcon={<ExpandMore />}>
-                                    <Typography>Térkép</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
+                            <Accordion
+                                sx={{ width: "100%" }}
+                                expanded={isExpanded}
+                            >
+                                <AccordionSummary
+                                    expandIcon={<ExpandMore />}
+                                    onClick={(e) => {
+                                        accordionChange("");
+                                    }}
+                                >
                                     <Grid2
                                         container
-                                        alignItems="center"
+                                        direction="row"
+                                        gap={2}
                                         justifyContent="center"
+                                        alignItems="center"
                                     >
+                                        <Typography variant="body1">
+                                            Térkép
+                                        </Typography>
                                         <TextField
+                                            onClick={(e) =>
+                                                accordionChange("text")
+                                            }
                                             id="txfCity"
                                             label="Város"
                                             size="small"
@@ -126,12 +150,15 @@ function Shops() {
                                             }}
                                         />
                                     </Grid2>
-                                    <Map
-                                        key={city}
-                                        location={pagination.data}
-                                        width={300}
-                                        height={300}
-                                    />
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Grid2>
+                                        <Map
+                                            key={city}
+                                            location={city}
+                                            height={300}
+                                        />
+                                    </Grid2>
                                 </AccordionDetails>
                             </Accordion>
                         </Grid2>
