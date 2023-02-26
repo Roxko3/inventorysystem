@@ -1,6 +1,5 @@
 import {
     matchRoutes,
-    redirect,
     Route,
     Routes,
     useLocation,
@@ -93,7 +92,12 @@ function App() {
                 if (response.response.status == 401) {
                     setLoading(false);
                     console.log("location", location);
-                    if (
+                    if (location.pathname.includes("forgotpass")) {
+                        navigate("/forgotpass", {
+                            replace: true,
+                            state: { token: location.search.split("=")[1] },
+                        });
+                    } else if (
                         location.pathname != "/login" &&
                         location.pathname != "/register" &&
                         location.pathname != "/forgotpass"
