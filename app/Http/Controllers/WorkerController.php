@@ -28,7 +28,7 @@ class WorkerController extends Controller
         if (Gate::denies('shop-worker', $shop->id)) {
             return response()->json("Csak a bolt dolgozói kérhetik le a bolt dolgozóit!", 403);
         }
-        if ($request->get("column") == null) {
+        if ($request->get("column") == null || $request->get("column") == "edit") {
             $ordercolumn = "id";
         } else {
             $ordercolumn = $request->get("column");
