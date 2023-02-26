@@ -188,6 +188,7 @@ function Navbar(props) {
                     }}
                 >
                     <Typography
+                        align="center"
                         variant="body1"
                         sx={{ display: { xs: "block", sm: "none" } }}
                     >
