@@ -33,6 +33,7 @@ use Laravel\Sanctum\Sanctum;
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
+
 Route::post('/reset-password', [ForgotPasswordController::class, 'ResetPassword'])->name('resetPassword');
 Route::post('/forget-password', [ForgotPasswordController::class, 'ForgetPassword'])->name('forgetPassword');
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
@@ -109,16 +110,5 @@ Route::group(['prefix' => '/products'], function () {
     Route::put("/{product}", [ProductController::class, "update"])->name("updateproduct");
     Route::delete("/{product}", [ProductController::class, "delete"])->name("deleteproduct");
 });
-<<<<<<< HEAD
 
 Route::get("/storages", [StorageController::class, "index"])->name("getstorages");
-=======
-Route::group(['prefix' => '/storage'], function () {
-    Route::get("/", [StorageController::class, "index"])->name("getstorages");
-    Route::post("/create", [StorageController::class, "create"])->name("createstorage");
-    Route::put("/{storage}", [StorageController::class, "update"])->name("updatestorage");
-    Route::delete("/{storage}", [StorageController::class, "delete"])->name("deletestorage");
-});
-
-
->>>>>>> EmailVerify
