@@ -29,7 +29,7 @@ class PasswordReset extends FormRequest
     public function rules()
     {
         return [
-            'token' => 'required|exists:password_resets',
+            'token' => 'required|exists:Tokens',
             'password' => ['required', 'min:8' , new PasswordMixedCaseRule, new PasswordNumberRule  ],
             'password-repeat' => 'required|same:password',
         ];

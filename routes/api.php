@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogController;
@@ -36,8 +36,8 @@ use Laravel\Sanctum\Sanctum;
 
 Route::post('/reset-password', [ForgotPasswordController::class, 'ResetPassword'])->name('resetPassword');
 Route::post('/forget-password', [ForgotPasswordController::class, 'ForgetPassword'])->name('forgetPassword');
-Route::post('/email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
-Route::get('/verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
+Route::post('/email/verification-notification', [EmailVerificationController::class, 'EmailVerifyMail']);
+Route::get('/verify-email', [EmailVerificationController::class, 'EmailVerify'])->name('verification');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/myProfile'], function () {
@@ -84,6 +84,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get("/{shop}", [LogController::class, "index"])->name("getlogs");
         Route::get("/searchLogs/{shop}", [LogController::class, "searchLogs"])->name("searchlogs");
     });
+    Route::post('/invite', [InviteController::class, 'SendInvite'])->name('invite');
 });
 
 Route::post("/login", [AuthController::class, "login"])->name("login");
