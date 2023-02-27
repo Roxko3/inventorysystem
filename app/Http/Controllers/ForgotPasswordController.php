@@ -46,9 +46,9 @@ class ForgotPasswordController extends Controller
             
             $passord = [
                 'greeting' => 'Hello '.$user->name.',',
-                'body' => 'Ez a jelszó visszaálitó E-mail.',
-                'thanks' => 'Köszönjök hogy minket választotak InventorySystem csapata.',
-                'actionText' => 'Jelszó visszaálitás',
+                'body' => 'Ez a jelszó visszaállító E-mail.',
+                'thanks' => 'Köszönjűk, hogy minket választottak, InventorySystem csapata.',
+                'actionText' => 'Jelszó visszaállítás',
                 'actionURL' => url('/InventorySystem/public/forgotpass?token='.$token),
             ];
            

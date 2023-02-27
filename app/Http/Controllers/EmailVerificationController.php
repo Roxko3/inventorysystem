@@ -47,8 +47,8 @@ class EmailVerificationController extends Controller
           'email' => $request->email,]) ->first();
           $verify = [
               'greeting' => 'Hello '.$user->name.',',
-              'body' => 'Ez a E-mail megerősítő.',
-              'thanks' => 'Köszönjök hogy minket választotak InventorySystem csapata.',
+              'body' => 'E-mail megerősítő.',
+              'thanks' => 'Köszönjűk, hogy minket választottak, InventorySystem csapata.',
               'actionText' => 'E-mail megerősítés.',
               'actionURL' => url('/api/verify-email?tokenEmail='.$token),
           ];

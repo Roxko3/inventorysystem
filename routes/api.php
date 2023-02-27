@@ -33,7 +33,7 @@ use Laravel\Sanctum\Sanctum;
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
-Route::post('/invite', [InviteController::class, 'SendInvite'])->name('invite');
+
 Route::post('/reset-password', [ForgotPasswordController::class, 'ResetPassword'])->name('resetPassword');
 Route::post('/forget-password', [ForgotPasswordController::class, 'ForgetPassword'])->name('forgetPassword');
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'EmailVerifyMail']);
@@ -84,6 +84,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get("/{shop}", [LogController::class, "index"])->name("getlogs");
         Route::get("/searchLogs/{shop}", [LogController::class, "searchLogs"])->name("searchlogs");
     });
+    Route::post('/invite', [InviteController::class, 'SendInvite'])->name('invite');
 });
 
 Route::post("/login", [AuthController::class, "login"])->name("login");

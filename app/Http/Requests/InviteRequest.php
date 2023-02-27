@@ -27,6 +27,7 @@ class InviteRequest extends FormRequest
     {
         return [
             'email' => 'required|string|email|max:255',
+    
         ];
     }
     public function messages()
@@ -36,7 +37,7 @@ class InviteRequest extends FormRequest
             'email.required' => 'Email megadása kötelező.',
             'email.email' => 'Helytelen Email.',
             'email.max' => 'Az email maximum 255 karakter hosszúságú.',
-          
+      
         ];
     }
     public function failedValidation(Validator $validator)
