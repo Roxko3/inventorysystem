@@ -12,6 +12,7 @@ import {
     InputLabel,
     Menu,
     MenuItem,
+    Paper,
     Rating,
     Select,
     Snackbar,
@@ -211,9 +212,6 @@ function ShopData() {
                 if (response.status === 200) {
                     setShopTypes(response.data);
                 }
-                if (response.status === 500) {
-                    getTypes();
-                }
             });
     };
 
@@ -282,9 +280,6 @@ function ShopData() {
                     console.log(response.data);
                     setOpeningHour(response.data);
                     setOpeningHoursLoading(false);
-                }
-                if (response.status === 500) {
-                    getOpeningHours();
                 }
             });
     };
@@ -735,62 +730,65 @@ function ShopData() {
                     alignItems="center"
                     justifyContent="center"
                 >
-                    <Grid2
-                        container
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="center"
-                    >
-                        <Grid2>
-                            <TextField
-                                id="txfAddress"
-                                label="Cím"
-                                size="small"
-                                defaultValue={address}
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={shopAddress}
-                                onChange={checkChange}
-                                helperText={errors.address}
-                                error={errors.address != null}
+                    <Paper elevation={0}>
+                        <Grid2
+                            container
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <Grid2>
+                                <TextField
+                                    id="txfAddress"
+                                    label="Cím"
+                                    size="small"
+                                    defaultValue={address}
+                                    InputProps={{
+                                        readOnly: isDisabled,
+                                    }}
+                                    inputRef={shopAddress}
+                                    onChange={checkChange}
+                                    helperText={errors.address}
+                                    error={errors.address != null}
+                                />
+                            </Grid2>
+                            <Grid2>
+                                <TextField
+                                    id="txfCity"
+                                    label="Város"
+                                    size="small"
+                                    defaultValue={city}
+                                    InputProps={{
+                                        readOnly: isDisabled,
+                                    }}
+                                    inputRef={shopCity}
+                                    onChange={checkChange}
+                                    helperText={errors.city}
+                                    error={errors.city != null}
+                                />
+                            </Grid2>
+                            <Grid2>
+                                <IconButton
+                                    color="primary"
+                                    onClick={() => {
+                                        setCity(txfCity.value);
+                                        setAddress(txfAddress.value);
+                                    }}
+                                    disabled={isDisabled}
+                                >
+                                    <Search />
+                                </IconButton>
+                            </Grid2>
+                        </Grid2>
+                        <Grid2 //sx={{ width: { xs: 300, sm: 500 } }}
+                        >
+                            <Map
+                                key={city}
+                                location={`${address}+${city}`}
+                                height={300}
                             />
                         </Grid2>
-                        <Grid2>
-                            <TextField
-                                id="txfCity"
-                                label="Város"
-                                size="small"
-                                defaultValue={city}
-                                InputProps={{
-                                    readOnly: isDisabled,
-                                }}
-                                inputRef={shopCity}
-                                onChange={checkChange}
-                                helperText={errors.city}
-                                error={errors.city != null}
-                            />
-                        </Grid2>
-                        <Grid2>
-                            <IconButton
-                                color="primary"
-                                onClick={() => {
-                                    setCity(txfCity.value);
-                                    setAddress(txfAddress.value);
-                                }}
-                                disabled={isDisabled}
-                            >
-                                <Search />
-                            </IconButton>
-                        </Grid2>
-                    </Grid2>
-                    <Grid2 sx={{ width: { xs: 300, sm: 500 } }}>
-                        <Map
-                            key={city}
-                            location={`${address}+${city}`}
-                            height={300}
-                        />
-                    </Grid2>
+                    </Paper>
                 </Grid2>
             </Grid2>
             <Grid2

@@ -64,7 +64,7 @@ class StorageController extends Controller
                 ->orderBy($ordercolumn, $request->get("order") == "desc" ? "desc" : "asc")
                 ->paginate(10);
         } else {
-            if ($request->get("column") == null) {
+            if ($request->get("column") == null || $request->get("column") == "edit") {
                 $ordercolumn = "storages.id";
             } else {
                 $ordercolumn = "storages." . $request->get("column");

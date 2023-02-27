@@ -10,6 +10,7 @@ import {
     List,
     ListItem,
     ListItemText,
+    Paper,
     Rating,
     Snackbar,
     Typography,
@@ -565,6 +566,7 @@ function Shop() {
                                     borderRadius: 16,
                                 }}
                                 height={330}
+                                fit="cover"
                             />
                         </Grid2>
                         <Grid2 sx={{ width: { xs: 300, sm: 376, lg: 500 } }}>

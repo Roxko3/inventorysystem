@@ -26,7 +26,7 @@ class WorkerSearchColumnRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (Schema::hasColumn("users", $value)) {
+        if (Schema::hasColumn("users", $value) || $value == "edit") {
             return true;
         } else {
             return false;
