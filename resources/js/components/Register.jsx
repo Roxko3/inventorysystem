@@ -122,7 +122,7 @@ function Register() {
                     <TextField
                         required
                         fullWidth
-                        label="Felhasználónév"
+                        label="Saját név"
                         variant="outlined"
                         inputRef={name}
                         helperText={errors.name}
@@ -137,7 +137,9 @@ function Register() {
                         type={showPassword ? "text" : "password"}
                         variant="outlined"
                         inputRef={password}
-                        helperText={errors.password}
+                        helperText={
+                            errors.password == null ? "" : errors.password[0]
+                        }
                         error={errors.password != null}
                         InputProps={{
                             endAdornment: (

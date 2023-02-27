@@ -559,7 +559,68 @@ function Profile() {
                     alignItems="center"
                 >
                     {user.shop == null ? (
-                        "Nincs bolt"
+                        <Grid2
+                            container
+                            direction="column"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <Typography sx={{ fontWeight: "bold" }}>
+                                Nem vagy boltnak a tagja!
+                            </Typography>
+                            <Card
+                                variant="outlined"
+                                key={user.id}
+                                sx={{
+                                    m: 2,
+                                    width: 300,
+                                    height: 300,
+                                }}
+                            >
+                                <CardActionArea>
+                                    <CardMedia
+                                        sx={{
+                                            width: 300,
+                                            height: 180,
+                                        }}
+                                        component="img"
+                                        image={
+                                            "/InventorySystem/public/storage/template.png"
+                                        }
+                                    />
+                                </CardActionArea>
+                                <CardContent>
+                                    <Typography
+                                        gutterBottom
+                                        variant="h5"
+                                        component="h2"
+                                        sx={{
+                                            ":hover": {
+                                                cursor: "default",
+                                            },
+                                            whiteSpace: "nowrap",
+                                            width: { xs: 210, md: 310 },
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                        }}
+                                    >
+                                        Bolt neve
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        color="textSecondary"
+                                        component="p"
+                                    >
+                                        Város, cím
+                                    </Typography>
+                                    <Rating
+                                        name="read-only"
+                                        value={0}
+                                        readOnly
+                                    />
+                                </CardContent>
+                            </Card>
+                        </Grid2>
                     ) : (
                         <Grid2
                             container
