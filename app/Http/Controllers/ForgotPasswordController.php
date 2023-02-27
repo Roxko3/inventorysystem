@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request; 
 use DB; 
 use Carbon\Carbon; 
 use App\Models\User; 
-use Mail; 
 use Hash;
-use Notification;
 use Illuminate\Support\Str;
 use App\Notifications\PasswordResetEmail;
 use App\Http\Requests\ForgotPassord;
@@ -65,7 +62,6 @@ class ForgotPasswordController extends Controller
               ])
               -> value('email');
         
-  
           $user = User::where('email', $email)
                       ->update(['password' => Hash::make($request->password)]);
  

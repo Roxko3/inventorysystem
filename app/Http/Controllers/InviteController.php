@@ -23,7 +23,7 @@ class InviteController extends Controller
         'body' => $user->name .' szertné hogy csatlakozz az InventorySystem-hez.',
         'thanks' => 'Reméljük hogy oldalunkat hasznosnak találják.',
         'actionText' => 'Csatlakozás!',
-        'actionURL' => url('/InventorySystem/public/register'),
+        'actionURL' => url('/register'),
     ];  
     
     Notification::route('mail', $request->email)
