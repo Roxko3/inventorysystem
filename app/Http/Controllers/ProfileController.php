@@ -42,6 +42,10 @@ class ProfileController extends Controller
             return response()->json(['old-password' => 'A régi jelszó nem egyezik az ön jelszavával!'], 422);
         }
 
+        if (Hash::check($request->get("new-password"), auth()->user()->password)) {
+            return response()->json(['new-password' => 'Az új jelszó nem egyezhet az ön jelenlegi jelszavával!'], 422);
+        }
+
         User::whereId(auth()->user()->id)->update([
             'password' => Hash::make($request->get("new-password"))
         ]);

@@ -22,8 +22,7 @@ class AuthController extends Controller
             'password' => bcrypt($data['password'])
         ]);
 
-        $token = $user->createToken('main')->plainTextToken;
-        return response(compact('user', 'token'));
+        return response()->json("Sikeres regisztráció!");
     }
 
     public function login(LoginRequest $request)
@@ -37,7 +36,7 @@ class AuthController extends Controller
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        
+
         $token = $user->createToken('main')->plainTextToken;
         $user['password'] = "";
         $user = User::with('shop')->where('id', $user->id)->first();

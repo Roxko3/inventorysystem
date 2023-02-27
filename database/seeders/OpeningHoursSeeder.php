@@ -67,6 +67,58 @@ class OpeningHoursSeeder extends Seeder
                 'shop_id' => 1,
                 'day' => "Sunday",
                 'is_open' => false
+            ],
+            [
+                'id' => 8,
+                'shop_id' => 2,
+                'day' => "Monday",
+                'is_open' => false,
+            ],
+            [
+                'id' => 9,
+                'shop_id' => 2,
+                'day' => "Tuesday",
+                'is_open' => true,
+                'open' => "08:00",
+                'close' => "16:00",
+            ],
+            [
+                'id' => 10,
+                'shop_id' => 2,
+                'day' => "Wednesday",
+                'is_open' => true,
+                'open' => "08:00",
+                'close' => "16:00",
+            ],
+            [
+                'id' => 11,
+                'shop_id' => 2,
+                'day' => "Thursday",
+                'is_open' => true,
+                'open' => "08:00",
+                'close' => "16:00",
+            ],
+            [
+                'id' => 12,
+                'shop_id' => 2,
+                'day' => "Friday",
+                'is_open' => true,
+                'open' => "08:00",
+                'close' => "16:00",
+            ],
+            [
+                'id' => 13,
+                'shop_id' => 2,
+                'day' => "Saturday",
+                'is_open' => true,
+                'open' => "08:00",
+                'close' => "20:00",
+            ],
+            [
+                'id' => 14,
+                'shop_id' => 2,
+                'day' => "Sunday",
+                'is_open' => false
             ]
         ];
 
