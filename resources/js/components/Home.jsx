@@ -60,6 +60,7 @@ function Home() {
     const address = useRef("");
     const owner = useRef("");
     const city = useRef("");
+    const email = useRef("");
     const [shopAddress, setShopAddress] = useState("");
     const [shopCity, setShopCity] = useState("");
     const [shopTypes, setShopTypes] = useState([]);
@@ -69,6 +70,7 @@ function Home() {
     const [shop, setShop] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isCreating, setIsCreating] = useState(false);
+    const [isInviting, setIsinviting] = useState(false);
     const cookie = Cookies.get("token");
 
     const getShop = async () => {
@@ -143,6 +145,25 @@ function Home() {
                     owner.current.value = "";
                     city.current.value = "";
                 }
+            });
+    };
+
+    const invite = async () => {
+        axios
+            .post(
+                "http://127.0.0.1/InventorySystem/public/api/invite",
+                {
+                    email: email.current.value,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                console.log(response.data);
             });
     };
 
@@ -251,7 +272,14 @@ function Home() {
                                 felettese hozzáadja a bolthoz az oldalon vagy
                                 szóljon nekik, hogy hozzanak létre egyet.
                             </Typography>
-                            <Button variant="contained">Megosztás</Button>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setIsinviting(true);
+                                }}
+                            >
+                                Meghívás
+                            </Button>
                         </Grid2>
                     </Grid2>
                 </>
@@ -383,6 +411,54 @@ function Home() {
                             onClick={() => {
                                 setIsCreating(false);
                                 setType("");
+                            }}
+                        >
+                            Mégse
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            )}
+
+            {isInviting && (
+                <Dialog
+                    open={isInviting}
+                    onClose={(e) => {
+                        setIsinviting(false);
+                    }}
+                >
+                    <DialogTitle>Megívás</DialogTitle>
+                    <DialogContent>
+                        <Grid2 m={2}>
+                            <Typography variant="body1">
+                                Az alábbi email címre küldünk a nevében egy
+                                emailt amiben egy meghívás szerepel a
+                                címzettnek.
+                            </Typography>
+                        </Grid2>
+                        <Grid2 m={2}>
+                            <TextField
+                                label="Email"
+                                variant="outlined"
+                                inputRef={email}
+                                helperText={errors.email}
+                                error={errors.address != null}
+                            />
+                        </Grid2>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            variant="contained"
+                            onClick={() => {
+                                invite();
+                            }}
+                        >
+                            Meghívás
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => {
+                                setIsinviting(false);
                             }}
                         >
                             Mégse
