@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogController;
@@ -33,6 +33,7 @@ use Laravel\Sanctum\Sanctum;
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
+Route::post('/invite', [InviteController::class, 'SendInvite'])->name('invite');
 Route::post('/reset-password', [ForgotPasswordController::class, 'ResetPassword'])->name('resetPassword');
 Route::post('/forget-password', [ForgotPasswordController::class, 'ForgetPassword'])->name('forgetPassword');
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'EmailVerifyMail']);
