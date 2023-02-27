@@ -4,6 +4,7 @@ import {
     BusinessCenter,
     Inventory,
     Notifications,
+    Search,
     ShoppingCart,
 } from "@mui/icons-material";
 import {
@@ -24,6 +25,7 @@ import {
     FormControl,
     FormHelperText,
     Grid,
+    IconButton,
     InputLabel,
     MenuItem,
     Paper,
@@ -58,6 +60,8 @@ function Home() {
     const address = useRef("");
     const owner = useRef("");
     const city = useRef("");
+    const [shopAddress, setShopAddress] = useState("");
+    const [shopCity, setShopCity] = useState("");
     const [shopTypes, setShopTypes] = useState([]);
     const [type, setType] = useState("");
     const [errors, setErrors] = useState([]);
@@ -263,7 +267,12 @@ function Home() {
                 >
                     <DialogTitle>Bolt létrehozása</DialogTitle>
                     <DialogContent>
-                        <Grid2 container>
+                        <Grid2
+                            container
+                            direction="column"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
                             <Grid2 container direction="column">
                                 <Grid2 m={2}>
                                     <TextField
@@ -315,39 +324,48 @@ function Home() {
                                     </FormControl>
                                 </Grid2>
                             </Grid2>
-                            <Grid2 container direction="column">
-                                <Grid2 container direction="row">
-                                    <Grid2 m={2}>
-                                        <TextField
-                                            fullWidth
-                                            label="Város"
-                                            variant="outlined"
-                                            inputRef={address}
-                                            helperText={errors.address}
-                                            error={errors.address != null}
-                                            required
-                                        />
-                                    </Grid2>
-                                    <Grid2 m={2}>
-                                        <TextField
-                                            fullWidth
-                                            label="Cím"
-                                            variant="outlined"
-                                            inputRef={city}
-                                            helperText={errors.city}
-                                            error={errors.city != null}
-                                            required
-                                        />
-                                    </Grid2>
-                                </Grid2>
-                                <Grid2>
-                                    <Map
-                                        key={user.city}
-                                        location={user.city}
-                                        height={200}
-                                    />
-                                </Grid2>
+                            <Grid2 m={2}>
+                                <TextField
+                                    id="txfCity"
+                                    fullWidth
+                                    label="Város"
+                                    variant="outlined"
+                                    inputRef={city}
+                                    helperText={errors.city}
+                                    error={errors.city != null}
+                                    required
+                                />
                             </Grid2>
+                            <Grid2 m={2}>
+                                <TextField
+                                    id="txfAddress"
+                                    fullWidth
+                                    label="Cím"
+                                    variant="outlined"
+                                    inputRef={address}
+                                    helperText={errors.address}
+                                    error={errors.address != null}
+                                    required
+                                />
+                            </Grid2>
+                            <Grid2>
+                                <IconButton
+                                    color="primary"
+                                    onClick={() => {
+                                        setShopCity(txfCity.value);
+                                        setShopAddress(txfAddress.value);
+                                    }}
+                                >
+                                    <Search />
+                                </IconButton>
+                            </Grid2>
+                        </Grid2>
+                        <Grid2>
+                            <Map
+                                key={(shopCity, shopAddress)}
+                                location={`${shopAddress}+${shopCity}`}
+                                height={200}
+                            />
                         </Grid2>
                     </DialogContent>
                     <DialogActions>

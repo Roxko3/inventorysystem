@@ -783,7 +783,7 @@ function ShopData() {
                         <Grid2 //sx={{ width: { xs: 300, sm: 500 } }}
                         >
                             <Map
-                                key={city}
+                                key={(city, address)}
                                 location={`${address}+${city}`}
                                 height={300}
                             />

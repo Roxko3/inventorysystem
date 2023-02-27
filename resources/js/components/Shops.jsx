@@ -14,6 +14,7 @@ import {
     List,
     ListItem,
     Pagination,
+    Paper,
     Rating,
     TextField,
     Tooltip,
@@ -40,12 +41,12 @@ function Shops() {
     const cookie = Cookies.get("token");
 
     const accordionChange = (state) => {
-        if (state == "text") {
-            console.log("textfield");
-            setIsExpanded(isExpanded);
-        } else {
+        if (state != "text") {
+            //console.log("textfield");
             setIsExpanded(!isExpanded);
-            console.log("other");
+        } else {
+            setIsExpanded(isExpanded);
+            //console.log("other");
         }
     };
 
@@ -127,6 +128,7 @@ function Shops() {
                                         <Typography variant="body1">
                                             Térkép
                                         </Typography>
+
                                         <TextField
                                             onClick={(e) =>
                                                 accordionChange("text")

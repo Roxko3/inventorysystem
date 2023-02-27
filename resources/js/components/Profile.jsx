@@ -151,9 +151,9 @@ function Profile() {
 
     const handleCityChange = (e) => {
         if (e.target.value == e.target.defaultValue) {
-            setCityDisabled(true);
+            setcityDisabled(true);
         } else {
-            setCityDisabled(false);
+            setcityDisabled(false);
         }
     };
 

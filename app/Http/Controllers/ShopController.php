@@ -89,6 +89,7 @@ class ShopController extends Controller
             $opening = new OpeningHour();
             $opening->shop_id = $shop->id;
             $opening->day = $day;
+            $opening->save();
         }
 
         return response()->json($shop->id);
