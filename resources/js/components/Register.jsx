@@ -23,6 +23,7 @@ function Register() {
     const password_repeat = useRef("");
     const city = useRef("");
     const [open, setOpen] = useState(false);
+    const [registered, setRegistered] = useState(false);
     const [alertMessage, setalertMessage] = useState("");
     const [severity, setseverity] = useState("error");
     const [errors, setErrors] = useState([]);
@@ -32,6 +33,7 @@ function Register() {
     const navigate = useNavigate();
 
     const register = async () => {
+        setRegistered(false);
         await axios
             .post("http://127.0.0.1/InventorySystem/public/api/register", {
                 email: email.current.value,
@@ -49,12 +51,13 @@ function Register() {
                     setseverity("success");
                     setErrors([]);
                     setOpen(true);
-                    navigate("/login");
-                    Cookies.set("token", response.data.token, {
+                    setRegistered(true);
+                    //navigate("/login");
+                    /*Cookies.set("token", response.data.token, {
                         expires: 7,
                         path: "/",
                         sameSite: "strict",
-                    });
+                    });*/
                 }
             })
             .catch((response) => {
@@ -62,10 +65,10 @@ function Register() {
                     setErrors(response.response.data);
                     console.log(response.response.data);
                 } else {
-                    email.current.value = "";
-                    password.current.value = "";
-                    password_repeat.current.value = "";
-                    name.current.value = "";
+                    //email.current.value = "";
+                    //password.current.value = "";
+                    //password_repeat.current.value = "";
+                    //name.current.value = "";
                     setalertMessage(response.response.data.error);
                     setseverity("error");
                     setOpen(true);
@@ -181,6 +184,15 @@ function Register() {
                             ),
                         }}
                     />
+                </Grid2>
+                <Grid2>
+                    {registered ? (
+                        <Alert severity="success">
+                            Hitelesítő email el lett küldve a címre.
+                        </Alert>
+                    ) : (
+                        <span></span>
+                    )}
                 </Grid2>
                 <Grid2>
                     <Button variant="contained" onClick={register}>

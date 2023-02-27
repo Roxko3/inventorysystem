@@ -28,6 +28,6 @@ class InviteController extends Controller
     
     Notification::route('mail', $request->email)
     ->notify(new InviteMail($invite));
-    return ['message', 'Az Email elküldve!'];
+    return ['message'=> 'Az Email elküldve!'];
     }
 }

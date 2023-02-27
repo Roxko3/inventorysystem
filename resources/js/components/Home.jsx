@@ -8,6 +8,7 @@ import {
     ShoppingCart,
 } from "@mui/icons-material";
 import {
+    Alert,
     AppBar,
     Avatar,
     Badge,
@@ -17,6 +18,7 @@ import {
     CardActionArea,
     CardContent,
     CardMedia,
+    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
@@ -68,7 +70,7 @@ function Home() {
     const [errors, setErrors] = useState([]);
     const [hasShop, setHasShop] = useState(user.shop_id != null);
     const [shop, setShop] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
     const [isInviting, setIsinviting] = useState(false);
     const cookie = Cookies.get("token");
@@ -149,6 +151,8 @@ function Home() {
     };
 
     const invite = async () => {
+        setLoading(true);
+        setErrors([]);
         axios
             .post(
                 "http://127.0.0.1/InventorySystem/public/api/invite",
@@ -163,7 +167,17 @@ function Home() {
                 }
             )
             .then((response) => {
-                console.log(response.data);
+                if (response.status === 200) {
+                    console.log(response.data);
+                    setErrors(response.data);
+                    setLoading(false);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    setErrors(response.response.data);
+                    setLoading(false);
+                }
             });
     };
 
@@ -391,7 +405,11 @@ function Home() {
                         <Grid2>
                             <Map
                                 key={(shopCity, shopAddress)}
-                                location={`${shopAddress}+${shopCity}`}
+                                location={
+                                    `${shopAddress}+${shopCity}` == "+"
+                                        ? user.city
+                                        : `${shopAddress}+${shopCity}`
+                                }
                                 height={200}
                             />
                         </Grid2>
@@ -423,7 +441,10 @@ function Home() {
                 <Dialog
                     open={isInviting}
                     onClose={(e) => {
-                        setIsinviting(false);
+                        setErrors([]);
+                        loading
+                            ? setIsinviting(isInviting)
+                            : setIsinviting(false);
                     }}
                 >
                     <DialogTitle>Megívás</DialogTitle>
@@ -437,32 +458,45 @@ function Home() {
                         </Grid2>
                         <Grid2 m={2}>
                             <TextField
+                                disabled={loading}
                                 label="Email"
                                 variant="outlined"
                                 inputRef={email}
                                 helperText={errors.email}
-                                error={errors.address != null}
+                                error={errors.email != null}
                             />
                         </Grid2>
+                        {errors.message != null ? (
+                            <Alert severity="success">{errors.message}</Alert>
+                        ) : (
+                            <span></span>
+                        )}
                     </DialogContent>
                     <DialogActions>
-                        <Button
-                            variant="contained"
-                            onClick={() => {
-                                invite();
-                            }}
-                        >
-                            Meghívás
-                        </Button>
-                        <Button
-                            variant="contained"
-                            color="error"
-                            onClick={() => {
-                                setIsinviting(false);
-                            }}
-                        >
-                            Mégse
-                        </Button>
+                        {loading ? (
+                            <CircularProgress />
+                        ) : (
+                            <>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => {
+                                        invite();
+                                    }}
+                                >
+                                    Meghívás
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    onClick={() => {
+                                        setIsinviting(false);
+                                        setErrors([]);
+                                    }}
+                                >
+                                    Mégse
+                                </Button>
+                            </>
+                        )}
                     </DialogActions>
                 </Dialog>
             )}

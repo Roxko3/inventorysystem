@@ -37,7 +37,7 @@ use Laravel\Sanctum\Sanctum;
 Route::post('/reset-password', [ForgotPasswordController::class, 'ResetPassword'])->name('resetPassword');
 Route::post('/forget-password', [ForgotPasswordController::class, 'ForgetPassword'])->name('forgetPassword');
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'EmailVerifyMail']);
-Route::get('/verify-email', [EmailVerificationController::class, 'EmailVerify'])->name('verification');
+Route::post('/verify-email', [EmailVerificationController::class, 'EmailVerify'])->name('verification');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => '/myProfile'], function () {

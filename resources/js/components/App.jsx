@@ -24,6 +24,7 @@ import {
 } from "@mui/material";
 import Cookies from "js-cookie";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import Verification from "./Verification";
 
 const ColorModeContext = createContext({ toggleColorMode: () => {} });
 export const UserContext = createContext({ user: null, setUser: () => {} });
@@ -81,7 +82,8 @@ function App() {
                     if (
                         location.pathname == "/login" ||
                         location.pathname == "/register" ||
-                        location.pathname == "/forgotpass"
+                        location.pathname == "/forgotpass" ||
+                        location.pathname == "/verification"
                     ) {
                         navigate("/home", { replace: true });
                     }
@@ -100,7 +102,8 @@ function App() {
                     } else if (
                         location.pathname != "/login" &&
                         location.pathname != "/register" &&
-                        location.pathname != "/forgotpass"
+                        location.pathname != "/forgotpass" &&
+                        location.pathname != "/verification"
                     ) {
                         navigate("/login", { replace: true });
                     }
@@ -144,6 +147,10 @@ function App() {
                             <Route
                                 path="/forgotpass"
                                 element={<Forgotpass />}
+                            />
+                            <Route
+                                path="/verification"
+                                element={<Verification />}
                             />
                             <Route path="*" element={<Notfound />} />
                         </Routes>

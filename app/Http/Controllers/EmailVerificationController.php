@@ -78,7 +78,7 @@ class EmailVerificationController extends Controller
 
         DB::table('Tokens')->where(['email'=> $email])->update(['tokenEmail' =>  null, 'created_atEmail' => null]);;
 
-        return ['message', 'Az Email megerősitve!'];
+        return ['message'=> 'Az Email megerősitve!'];
     }
 
 }

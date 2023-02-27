@@ -1,4 +1,5 @@
 import {
+    Alert,
     Button,
     CircularProgress,
     IconButton,
@@ -11,11 +12,12 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useRef, useState } from "react";
 import Image from "mui-image";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Forgotpass() {
     const location = useLocation();
+    const navigate = useNavigate();
     const [emailSent, setEmailSent] = useState(
         location.state.token != undefined
     );
@@ -29,6 +31,7 @@ function Forgotpass() {
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
     const sendEmail = async () => {
+        setErrors([]);
         axios
             .post(
                 `http://127.0.0.1/InventorySystem/public/api/forget-password`,
@@ -39,8 +42,8 @@ function Forgotpass() {
             .then((response) => {
                 if (response.status === 200) {
                     console.log(response.data);
-                    setEmailSent(true);
-                    setErrors([]);
+                    //setEmailSent(true);
+                    setErrors(response.data);
                     setLoading(false);
                 }
             })
@@ -53,6 +56,7 @@ function Forgotpass() {
     };
 
     const resetPassword = async () => {
+        setErrors([]);
         axios
             .post(
                 `http://127.0.0.1/InventorySystem/public/api/reset-password`,
@@ -64,6 +68,7 @@ function Forgotpass() {
             )
             .then((response) => {
                 console.log(response.data);
+                navigate("/login", { replace: true });
             })
             .catch((response) => {
                 if (response.response.status === 422) {
@@ -161,8 +166,16 @@ function Forgotpass() {
                                 }}
                             />
                         </Grid2>
+                        {errors.token != null ? (
+                            <Alert severity="error">
+                                Ez a link már nem érvényes!
+                            </Alert>
+                        ) : (
+                            <span></span>
+                        )}
                         <Grid2>
                             <Button
+                                disabled={errors.token != null}
                                 variant="contained"
                                 onClick={() => {
                                     resetPassword();
@@ -175,33 +188,42 @@ function Forgotpass() {
                 ) : (
                     <>
                         <Grid2>
-                            <TextField
-                                disabled={loading}
-                                fullWidth
-                                variant="outlined"
-                                label="Email cím"
-                                inputRef={email}
-                                error={errors.email != null}
-                                helperText={errors.email}
-                            />
+                            {errors.message != null ? (
+                                <Alert severity="success">
+                                    {errors.message}
+                                </Alert>
+                            ) : (
+                                <TextField
+                                    disabled={loading}
+                                    fullWidth
+                                    variant="outlined"
+                                    label="Email cím"
+                                    inputRef={email}
+                                    error={errors.email != null}
+                                    helperText={errors.email}
+                                />
+                            )}
                         </Grid2>
                         <Grid2>
                             {loading ? (
                                 <CircularProgress />
                             ) : (
-                                <Button
-                                    variant="contained"
-                                    onClick={() => {
-                                        sendEmail();
-                                        setLoading(true);
-                                    }}
-                                >
-                                    Küldés
-                                </Button>
+                                <>
+                                    <Button
+                                        disabled={errors.message != null}
+                                        variant="contained"
+                                        onClick={() => {
+                                            sendEmail();
+                                            setLoading(true);
+                                        }}
+                                    >
+                                        Küldés
+                                    </Button>
+                                    <Link to="/login">
+                                        <Button>Vissza</Button>
+                                    </Link>
+                                </>
                             )}
-                            <Link to="/login">
-                                <Button>Vissza</Button>
-                            </Link>
                         </Grid2>
                     </>
                 )}
