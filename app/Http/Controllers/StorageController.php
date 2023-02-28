@@ -69,7 +69,7 @@ class StorageController extends Controller
             } else {
                 if ($request->get("column") == "stock") {
                     $ordercolumn = "amount";
-                } {
+                } else{
                     $ordercolumn = "storages." . $request->get("column");
                 }
             }
