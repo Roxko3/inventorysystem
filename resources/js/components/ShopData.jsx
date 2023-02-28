@@ -5,6 +5,10 @@ import {
     Badge,
     Button,
     CircularProgress,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
     FormControl,
     FormControlLabel,
     FormHelperText,
@@ -62,6 +66,7 @@ function ShopData() {
     const saturdayClose = useRef(null);
     const sundayOpen = useRef(null);
     const sundayClose = useRef(null);
+    const [isDeleting, setIsDeleting] = useState(false);
     const [openingHoursLoading, setOpeningHoursLoading] = useState(true);
     const [openingHour, setOpeningHour] = useState([]);
     var formData = new FormData();
@@ -815,6 +820,18 @@ function ShopData() {
                         Változtatások mentése
                     </Button>
                 </Grid2>
+                <Grid2>
+                    <Button
+                        color="error"
+                        variant="contained"
+                        disabled={isDisabled}
+                        onClick={() => {
+                            setIsDeleting(true);
+                        }}
+                    >
+                        Törlés
+                    </Button>
+                </Grid2>
             </Grid2>
             <Snackbar
                 open={openAlert}
@@ -829,6 +846,34 @@ function ShopData() {
                     {alertMessage}
                 </Alert>
             </Snackbar>
+
+            {isDeleting && (
+                <Dialog open={isDeleting} onClose={() => setIsDeleting(false)}>
+                    <DialogTitle>Bolt törlése</DialogTitle>
+                    <DialogContent>
+                        Biztosan törölné szeretné a boltot?
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            variant="contained"
+                            onClick={() => {
+                                setIsDeleting(false);
+                            }}
+                        >
+                            Törlés
+                        </Button>
+                        <Button
+                            variant="contained"
+                            onClick={() => {
+                                setIsDeleting(false);
+                            }}
+                            color="error"
+                        >
+                            Mégse
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            )}
         </Grid2>
     );
 }

@@ -17,6 +17,10 @@ import {
     CardActionArea,
     CardContent,
     CardMedia,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
     Divider,
     IconButton,
     InputAdornment,
@@ -58,6 +62,7 @@ function Profile() {
     const [alertMessage, setalertMessage] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
     const [severity, setSeverity] = useState("success");
+    const [isQuitting, setIsQuitting] = useState(false);
     var formData = new FormData();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -701,6 +706,15 @@ function Profile() {
                                     />
                                 </CardContent>
                             </Card>
+                            <Button
+                                variant="contained"
+                                color="error"
+                                onClick={() => {
+                                    setIsQuitting(true);
+                                }}
+                            >
+                                Kilépés a boltból
+                            </Button>
                         </Grid2>
                     )}
 
@@ -760,6 +774,37 @@ function Profile() {
                         {alertMessage}
                     </Alert>
                 </Snackbar>
+
+                {isQuitting && (
+                    <Dialog
+                        open={isQuitting}
+                        onClose={() => setIsQuitting(false)}
+                    >
+                        <DialogTitle>Kilépés a boltból</DialogTitle>
+                        <DialogContent>
+                            Biztosan ki szeretne lépni a boltból?
+                        </DialogContent>
+                        <DialogActions>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setIsQuitting(false);
+                                }}
+                            >
+                                Kilépés
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setIsQuitting(false);
+                                }}
+                                color="error"
+                            >
+                                Mégse
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                )}
             </Grid2>
         </Box>
     );
