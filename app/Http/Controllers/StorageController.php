@@ -6,6 +6,7 @@ use App\Http\Requests\StorageSearchRequest;
 use App\Http\Requests\StorageRequest;
 use App\Http\Requests\UpdateStorageRequest;
 use App\Models\Log;
+use App\Models\Product;
 use App\Models\Shop;
 use App\Models\Storage;
 use Carbon\Carbon;
@@ -69,7 +70,7 @@ class StorageController extends Controller
             } else {
                 if ($request->get("column") == "stock") {
                     $ordercolumn = "amount";
-                } else{
+                } else {
                     $ordercolumn = "storages." . $request->get("column");
                 }
             }
@@ -125,7 +126,7 @@ class StorageController extends Controller
 
 
         $log = new Log();
-        $product = DB::table("products")->where("id", '=', $request->get("product_id"))->first();
+        $product = Product::where("id", '=', $request->get("product_id"))->first();
 
         $log->shop_id = $storage->shop_id;
         $log->user_id = $user->id;
@@ -153,7 +154,7 @@ class StorageController extends Controller
 
         $user = Auth::user();
         $log = new Log();
-        $product = DB::table("products")->where("id", '=', $request->get("product_id"))->first();
+        $product = Product::where("id", '=', $request->get("product_id"))->first();
 
         $log->shop_id = $storage->shop_id;
         $log->user_id = $user->id;
@@ -181,7 +182,7 @@ class StorageController extends Controller
             if ($storage->is_deleted == 0) {
                 $user = Auth::user();
                 $log = new Log();
-                $product = DB::table("products")->where("id", '=', $storage->product_id)->first();
+                $product = Product::where("id", '=', $storage->product_id)->first();
                 $log->shop_id = $storage->shop_id;
                 $log->user_id = $user->id;
                 $log->description = "Törölt egy terméket a raktárból: "
