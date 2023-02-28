@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Shop;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+
 
 class UserFactory extends Factory
 {
@@ -15,17 +15,19 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $faker = \Faker\Factory::create('hu_HU');
+        
         return [
             'email' => $this->faker->unique()->email(),
-            'name' => $this->faker->unique()->name(),
+            'name' =>$faker->lastName . ' ' . $faker->firstName,
             'password' => bcrypt($this->faker->word()),
             'permission' => $this->faker->numberBetween(0, 10),
-            //'postal_code' =>$this->faker->randomNumber(4 ,true),
-            'shop_id' => Shop::all()->random()->id,
-            'email_verified_at' => $this->faker->optional($weight = 70)->dateTimeBetween('-1 years', '+8 years'),
+            'city' => $faker->city(),
+            'shop_id' => rand(0, 1) < 0.9 ? null :Shop::all()->random()->id,
+            'email_verified_at' => $this->faker->optional($weight = 50)->dateTimeBetween('-1 years', '+8 years'),
         ];
     }
-
+    //Shop::all()->random()->id
     /**
      * Indicate that the model's email address should be unverified.
      *

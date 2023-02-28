@@ -75,5 +75,6 @@ class RatingSeeder extends Seeder
 
             $rating->save();
         }
+        Rating::factory()->count(50)->create();
     }
 }

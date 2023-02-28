@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
-use DB; 
 use Carbon\Carbon; 
 use App\Models\User; 
-use Hash;
 use Illuminate\Support\Str;
 use App\Notifications\PasswordResetEmail;
 use App\Http\Requests\ForgotPassord;
 use App\Http\Requests\PasswordReset;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ForgotPasswordController extends Controller
 {
@@ -54,20 +54,19 @@ class ForgotPasswordController extends Controller
       }
       public function ResetPassword(PasswordReset $request)
       {
-          
-  
-          $email = DB::table('Tokens')
-            ->where([
-            'tokenPassword' => $request->token
-              ])
-              -> value('email');
-        
-          $user = User::where('email', $email)
-                      ->update(['password' => Hash::make($request->password)]);
- 
-                      DB::table('Tokens')->where(['email'=> $email])->update(['tokenPassword' =>  null, 'created_atPassword' => null]);;
-  
-          return ['message', 'Az jelszod megváltozot!'];
+        $email = DB::table('Tokens')
+        ->where([
+        'tokenPassword' => $request->token
+        ])
+        -> value('email');
+        if ($request->password == User::where('email', $email)->value('password')) {
+          return ['message', 'A jelszod nem lehet a már meglévő!'];
+        }
+        else { User::where('email', $email)
+          ->update(['password' => Hash::make($request->password)]);
+   
+          DB::table('Tokens')->where(['email'=> $email])->update(['tokenPassword' =>  null, 'created_atPassword' => null]);
+          return ['message', 'A jelszod megváltozot!'];}
       }
      
 }
