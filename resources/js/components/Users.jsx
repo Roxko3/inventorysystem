@@ -84,7 +84,7 @@ function Users() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setPagination(response.data);
                     setUsers(response.data.data);
                     setIsLoading(false);
@@ -225,7 +225,7 @@ function Users() {
             width: 200,
         },
         {
-            field: "permission",
+            field: "rank",
             headerName: "Rang",
         },
         {
@@ -242,7 +242,15 @@ function Users() {
                         placement="top"
                         followCursor
                     >
-                        <b style={{ color: "#1976d2" }}>{params.value}</b>
+                        <b
+                            style={{
+                                color: "#1976d2",
+                                display:
+                                    user["permission"] >= 5 ? "flex" : "none",
+                            }}
+                        >
+                            {params.value}
+                        </b>
                     </Tooltip>
                 );
             },
@@ -272,6 +280,10 @@ function Users() {
                         followCursor
                     >
                         <IconButton
+                            sx={{
+                                display:
+                                    user["permission"] >= 5 ? "flex" : "none",
+                            }}
                             color="primary"
                             onClick={(e) => {
                                 setIsAdding(true);
@@ -289,6 +301,12 @@ function Users() {
                     >
                         <span>
                             <IconButton
+                                sx={{
+                                    display:
+                                        user["permission"] == 10
+                                            ? "flex"
+                                            : "none",
+                                }}
                                 color="primary"
                                 disabled={deletedRows.length === 0}
                                 onClick={(e) => {
@@ -305,18 +323,27 @@ function Users() {
                 <Box>
                     <DataGrid
                         rows={users.map((users) => {
+                            users["rank"] =
+                                users["permission"] == 10
+                                    ? "Tulajdonos"
+                                    : users["permission"] == 5
+                                    ? "Menedzser"
+                                    : "Eladó";
                             users["edit"] = "Szerkesztés";
                             return users;
                         })}
                         onCellClick={(e) => {
-                            const rowID = users.findIndex(
-                                (a) => a.id == e["id"]
-                            );
-                            const field = e["field"];
-                            if (field != "__check__") {
-                                setEditedRow(users[rowID]);
-                                setRole(users[rowID].permission);
-                                setIsEditing(true);
+                            if (user.permission >= 5) {
+                                const rowID = users.findIndex(
+                                    (a) => a.id == e["id"]
+                                );
+                                const field = e["field"];
+                                if (field != "__check__") {
+                                    setEditedRow(users[rowID]);
+                                    console.log(users[rowID]);
+                                    setRole(users[rowID].permission);
+                                    setIsEditing(true);
+                                }
                             }
                         }}
                         onSelectionModelChange={(ids) => {
@@ -333,7 +360,7 @@ function Users() {
                         autoHeight={true}
                         autoPageSize={true}
                         pageSize={pagination.per_page}
-                        checkboxSelection
+                        checkboxSelection={user.permission == 10}
                         page={pagination.current_page - 1}
                         loading={isGridLoading}
                         paginationMode="server"
@@ -420,8 +447,11 @@ function Users() {
                                         onChange={handleChange}
                                         inputRef={permission}
                                     >
-                                        <MenuItem value={1}>1</MenuItem>
-                                        <MenuItem value={5}>5</MenuItem>
+                                        <MenuItem value={1}>Eladó</MenuItem>
+                                        <MenuItem value={5}>Menedzser</MenuItem>
+                                        <MenuItem value={10} disabled>
+                                            Tulajdonos
+                                        </MenuItem>
                                     </Select>
                                     <FormHelperText>
                                         {errors.permission}
@@ -496,8 +526,11 @@ function Users() {
                                         onChange={handleChange}
                                         inputRef={permission}
                                     >
-                                        <MenuItem value={1}>1</MenuItem>
-                                        <MenuItem value={5}>5</MenuItem>
+                                        <MenuItem value={1}>Eladó</MenuItem>
+                                        <MenuItem value={5}>Menedzser</MenuItem>
+                                        <MenuItem value={10} disabled>
+                                            Tulajdonos
+                                        </MenuItem>
                                     </Select>
                                     <FormHelperText>
                                         {errors.permission}

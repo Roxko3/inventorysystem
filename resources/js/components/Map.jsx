@@ -60,7 +60,7 @@ function Map(props) {
             >
                 <Error color="error" />
                 <Typography sx={{ color: "red" }} variant="h4">
-                    Hiba!
+                    Nem található a megadott hely!
                 </Typography>
             </Grid2>
         );

@@ -30,9 +30,7 @@ import moment from "moment";
 
 function ShopData() {
     const { user } = useContext(UserContext);
-    const [isAdmin, setIsAdmin] = useState(
-        user.permission == 10 ? true : false
-    );
+    const [isAdmin, setIsAdmin] = useState(user.permission >= 5 ? true : false);
     const cookie = Cookies.get("token");
     const [address, setAddress] = useState(user.shop.address);
     const [city, setCity] = useState(user.shop.city);
@@ -378,7 +376,7 @@ function ShopData() {
                     <Grid2>
                         <TextField
                             sx={{ mt: 2 }}
-                            label="Név"
+                            label="Bolt név"
                             defaultValue={user.shop.name}
                             size="small"
                             InputProps={{
@@ -783,7 +781,7 @@ function ShopData() {
                         <Grid2 //sx={{ width: { xs: 300, sm: 500 } }}
                         >
                             <Map
-                                key={(city, address)}
+                                key={city + address}
                                 location={`${address}+${city}`}
                                 height={300}
                             />

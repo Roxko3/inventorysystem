@@ -5,6 +5,7 @@ import {
     Inventory,
     Notifications,
     Search,
+    Share,
     ShoppingCart,
 } from "@mui/icons-material";
 import {
@@ -228,7 +229,7 @@ function Home() {
                             </Typography>
                             <Typography variant="body1">
                                 Ha nem dolgozik semmilyen boltan sem nézzen meg
-                                különféle boltok publikus információit.
+                                különféle boltokat.
                             </Typography>
                             <Link to="/shops">
                                 <Button variant="contained">Boltok</Button>
@@ -279,12 +280,11 @@ function Home() {
                             <Typography
                                 sx={{ typography: { sm: "h4", xs: "h5" } }}
                             >
-                                Dolgozó <AssignmentInd />
+                                Megosztás <Share />
                             </Typography>
                             <Typography variant="body1">
-                                Ha ön egy boltban dolgozik várja meg míg egy
-                                felettese hozzáadja a bolthoz az oldalon vagy
-                                szóljon nekik, hogy hozzanak létre egyet.
+                                Amennyiben tetszik az oldal megoszhatja másokkal
+                                is.
                             </Typography>
                             <Button
                                 variant="contained"
@@ -292,7 +292,7 @@ function Home() {
                                     setIsinviting(true);
                                 }}
                             >
-                                Meghívás
+                                Megosztás
                             </Button>
                         </Grid2>
                     </Grid2>
@@ -301,10 +301,13 @@ function Home() {
 
             {isCreating && (
                 <Dialog
+                    fullWidth
+                    maxWidth="md"
                     open={isCreating}
                     onClose={(e) => {
                         setIsCreating(false);
                         setType("");
+                        setErrors([]);
                     }}
                 >
                     <DialogTitle>Bolt létrehozása</DialogTitle>
@@ -315,103 +318,125 @@ function Home() {
                             alignItems="center"
                             justifyContent="center"
                         >
-                            <Grid2 container direction="column">
-                                <Grid2 m={2}>
-                                    <TextField
-                                        fullWidth
-                                        label="Bolt név"
-                                        variant="outlined"
-                                        inputRef={name}
-                                        helperText={errors.name}
-                                        error={errors.name != null}
-                                        required
-                                    />
-                                </Grid2>
-                                <Grid2 m={2}>
-                                    <TextField
-                                        fullWidth
-                                        label="Tulajdonos"
-                                        variant="outlined"
-                                        inputRef={owner}
-                                        helperText={errors.owner}
-                                        error={errors.owner != null}
-                                        required
-                                    />
-                                </Grid2>
-                                <Grid2 m={2}>
-                                    <FormControl
-                                        fullWidth
-                                        error={errors.shop_type_id != null}
-                                        required
-                                    >
-                                        <InputLabel>Bolt típus</InputLabel>
-                                        <Select
-                                            onChange={handleChange}
-                                            value={type}
-                                            label="Bolt típus"
-                                            inputRef={shopType}
+                            <Grid2
+                                container
+                                direction="row"
+                                alignItems="center"
+                                justifyContent="center"
+                            >
+                                <Grid2 container direction="column">
+                                    <Grid2 m={2}>
+                                        <TextField
+                                            fullWidth
+                                            label="Bolt név"
+                                            variant="outlined"
+                                            inputRef={name}
+                                            helperText={errors.name}
+                                            error={errors.name != null}
+                                            required
+                                        />
+                                    </Grid2>
+                                    <Grid2 m={2}>
+                                        <TextField
+                                            fullWidth
+                                            label="Tulajdonos"
+                                            variant="outlined"
+                                            inputRef={owner}
+                                            helperText={errors.owner}
+                                            error={errors.owner != null}
+                                            required
+                                        />
+                                    </Grid2>
+                                    <Grid2 m={2}>
+                                        <FormControl
+                                            fullWidth
+                                            error={errors.shop_type_id != null}
+                                            required
                                         >
-                                            {shopTypes.map((shopTypes) => (
-                                                <MenuItem
-                                                    value={shopTypes.id}
-                                                    key={shopTypes.id}
-                                                >
-                                                    {shopTypes.name}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                        <FormHelperText>
-                                            {errors.shop_type_id}
-                                        </FormHelperText>
-                                    </FormControl>
+                                            <InputLabel>Bolt típus</InputLabel>
+                                            <Select
+                                                onChange={handleChange}
+                                                value={type}
+                                                label="Bolt típus"
+                                                inputRef={shopType}
+                                            >
+                                                {shopTypes.map((shopTypes) => (
+                                                    <MenuItem
+                                                        value={shopTypes.id}
+                                                        key={shopTypes.id}
+                                                    >
+                                                        {shopTypes.name}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                            <FormHelperText>
+                                                {errors.shop_type_id}
+                                            </FormHelperText>
+                                        </FormControl>
+                                    </Grid2>
+                                </Grid2>
+
+                                <Grid2 container direction="column">
+                                    <Grid2
+                                        container
+                                        direction="row"
+                                        alignItems="center"
+                                        justifyContent="center"
+                                    >
+                                        <Grid2 m={1}>
+                                            <TextField
+                                                size="small"
+                                                id="txfCity"
+                                                fullWidth
+                                                label="Város"
+                                                variant="outlined"
+                                                inputRef={city}
+                                                helperText={errors.city}
+                                                error={errors.city != null}
+                                                required
+                                            />
+                                        </Grid2>
+                                        <Grid2 m={1}>
+                                            <TextField
+                                                size="small"
+                                                id="txfAddress"
+                                                fullWidth
+                                                label="Cím"
+                                                variant="outlined"
+                                                inputRef={address}
+                                                helperText={errors.address}
+                                                error={errors.address != null}
+                                                required
+                                            />
+                                        </Grid2>
+                                        <Grid2>
+                                            <IconButton
+                                                color="primary"
+                                                onClick={() => {
+                                                    setShopCity(txfCity.value);
+                                                    setShopAddress(
+                                                        txfAddress.value
+                                                    );
+                                                }}
+                                            >
+                                                <Search />
+                                            </IconButton>
+                                        </Grid2>
+                                    </Grid2>
+                                    <Grid2>
+                                        <Map
+                                            key={(shopCity, shopAddress)}
+                                            location={
+                                                `${shopAddress}+${shopCity}` ==
+                                                "+"
+                                                    ? user.city
+                                                    : `${shopAddress}+${shopCity}`
+                                            }
+                                            height={180}
+                                        />
+                                    </Grid2>
                                 </Grid2>
                             </Grid2>
-                            <Grid2 m={2}>
-                                <TextField
-                                    id="txfCity"
-                                    fullWidth
-                                    label="Város"
-                                    variant="outlined"
-                                    inputRef={city}
-                                    helperText={errors.city}
-                                    error={errors.city != null}
-                                    required
-                                />
-                            </Grid2>
-                            <Grid2 m={2}>
-                                <TextField
-                                    id="txfAddress"
-                                    fullWidth
-                                    label="Cím"
-                                    variant="outlined"
-                                    inputRef={address}
-                                    helperText={errors.address}
-                                    error={errors.address != null}
-                                    required
-                                />
-                            </Grid2>
-                            <Grid2>
-                                <IconButton
-                                    color="primary"
-                                    onClick={() => {
-                                        setShopCity(txfCity.value);
-                                        setShopAddress(txfAddress.value);
-                                    }}
-                                >
-                                    <Search />
-                                </IconButton>
-                            </Grid2>
-                        </Grid2>
-                        <Grid2>
-                            <Map
-                                key={(shopCity, shopAddress)}
-                                location={
-                                    `${shopAddress}+${shopCity}` == "+"
-                                        ? user.city
-                                        : `${shopAddress}+${shopCity}`
-                                }
-                                height={200}
-                            />
                         </Grid2>
                     </DialogContent>
                     <DialogActions>
@@ -429,6 +454,7 @@ function Home() {
                             onClick={() => {
                                 setIsCreating(false);
                                 setType("");
+                                setErrors([]);
                             }}
                         >
                             Mégse
@@ -447,13 +473,12 @@ function Home() {
                             : setIsinviting(false);
                     }}
                 >
-                    <DialogTitle>Megívás</DialogTitle>
+                    <DialogTitle>Megosztás</DialogTitle>
                     <DialogContent>
                         <Grid2 m={2}>
                             <Typography variant="body1">
                                 Az alábbi e-mail címre küldünk a nevében egy
-                                e-mailt amiben egy meghívás szerepel a
-                                címzettnek.
+                                e-mailt amivel megosztja az oldalt a címzettel.
                             </Typography>
                         </Grid2>
                         <Grid2 m={2}>
@@ -483,7 +508,7 @@ function Home() {
                                         invite();
                                     }}
                                 >
-                                    Meghívás
+                                    Megosztás
                                 </Button>
                                 <Button
                                     variant="contained"

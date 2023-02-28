@@ -603,7 +603,6 @@ function Profile() {
                                                 cursor: "default",
                                             },
                                             whiteSpace: "nowrap",
-                                            width: { xs: 210, md: 310 },
                                             overflow: "hidden",
                                             textOverflow: "ellipsis",
                                         }}
@@ -633,7 +632,12 @@ function Profile() {
                             justifyContent="center"
                         >
                             <Typography sx={{ fontWeight: "bold" }}>
-                                Rangod: {user.permission}
+                                Rangod:{" "}
+                                {user["permission"] == 10
+                                    ? "Tulajdonos"
+                                    : user["permission"] == 5
+                                    ? "Menedzser"
+                                    : "Eladó"}
                             </Typography>
                             <Card
                                 variant="outlined"
@@ -676,7 +680,6 @@ function Profile() {
                                                     cursor: "default",
                                                 },
                                                 whiteSpace: "nowrap",
-                                                width: { xs: 210, md: 310 },
                                                 overflow: "hidden",
                                                 textOverflow: "ellipsis",
                                             }}

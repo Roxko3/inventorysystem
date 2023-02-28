@@ -185,7 +185,6 @@ function Shops() {
                                                     cursor: "default",
                                                 },
                                                 whiteSpace: "nowrap",
-                                                width: { xs: 210, md: 310 },
                                                 overflow: "hidden",
                                                 textOverflow: "ellipsis",
                                             }}

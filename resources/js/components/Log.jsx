@@ -81,7 +81,17 @@ function Log() {
             renderCell: (params) => {
                 return (
                     <Tooltip title={params.value} placement="top" followCursor>
-                        <span>{params.value}</span>
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                ":hover": { cursor: "pointer" },
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                            }}
+                        >
+                            {params.value}
+                        </Typography>
                     </Tooltip>
                 );
             },

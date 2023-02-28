@@ -216,7 +216,7 @@ function Shop() {
                 <Typography variant="subtitle2">
                     {shop.city}, {shop.address}
                 </Typography>
-                <Grid2 container direction="row" mt={2}>
+                <Grid2 container direction="row" m={2}>
                     <Grid2
                         container
                         direction="row"
@@ -541,102 +541,114 @@ function Shop() {
                 <Grid2
                     mt={2}
                     container
-                    direction={{ sm: "column", md: "row" }}
+                    //direction={{ sm: "column", md: "row" }}
                     alignItems="center"
                     justifyContent="center"
                 >
                     <Grid2
                         container
-                        direction={{ sm: "row", md: "column" }}
+                        //direction={{ sm: "row", md: "column" }}
                         alignItems="center"
                         justifyContent="center"
                         m={2}
                     >
-                        <Grid2 sx={{ width: { xs: 300, sm: 376, lg: 500 } }}>
-                            <Image
-                                src={
-                                    shop.image_path == null
-                                        ? "/InventorySystem/public/storage/template.png"
-                                        : `/InventorySystem/public/storage/${shop.image_path}`
-                                }
-                                duration={1500}
-                                alt="Bolt képe"
-                                style={{
-                                    border: "1px solid black",
-                                    borderRadius: 16,
-                                }}
-                                height={330}
-                                fit="cover"
-                            />
-                        </Grid2>
-                        <Grid2 sx={{ width: { xs: 300, sm: 376, lg: 500 } }}>
-                            <Map
-                                key={shop.city}
-                                location={`${shop.address}+${shop.city}`}
-                                height={330}
-                            />
-                        </Grid2>
+                        <Paper elevation={0}>
+                            <Grid2 //sx={{ width: { xs: 300, sm: 376, lg: 500 } }}
+                            >
+                                <Image
+                                    src={
+                                        shop.image_path == null
+                                            ? "/InventorySystem/public/storage/template.png"
+                                            : `/InventorySystem/public/storage/${shop.image_path}`
+                                    }
+                                    duration={1500}
+                                    alt="Bolt képe"
+                                    style={{
+                                        border: "1px solid black",
+                                        borderRadius: 16,
+                                        minWidth: "40vw",
+                                    }}
+                                    height={330}
+                                    fit="cover"
+                                    //width="40vw"
+                                />
+                            </Grid2>
+                            <Grid2 //sx={{ width: { xs: 300, sm: 376, lg: 500 } }}
+                            >
+                                <Map
+                                    key={shop.city}
+                                    location={`${shop.address}+${shop.city}`}
+                                    height={330}
+                                />
+                            </Grid2>
+                        </Paper>
                     </Grid2>
-                    <DataGrid
-                        rows={storage.map((storage) => {
-                            return storage;
-                        })}
-                        columns={columns}
-                        disableSelectionOnClick
-                        autoHeight={true}
-                        autoPageSize={true}
-                        pageSize={pagination.per_page}
-                        page={pagination.current_page - 1}
-                        loading={isGridLoading}
-                        isRowSelectable={(params) => params.row.is_deleted != 1}
-                        paginationMode="server"
-                        rowCount={pagination.total}
-                        onPageChange={(e) => {
-                            if (pagination.next_page_url == null) {
-                                getStorage(
-                                    pagination.prev_page_url
-                                        .split("api")[1]
-                                        .split("=")[0] + `=${e + 1}`
-                                );
-                            } else {
-                                getStorage(
-                                    pagination.next_page_url
-                                        .split("api")[1]
-                                        .split("=")[0] + `=${e + 1}`
-                                );
+                    <Paper elevation={0}>
+                        <DataGrid
+                            sx={{ maxWidth: "100vw", margin: "20px" }}
+                            rows={storage.map((storage) => {
+                                return storage;
+                            })}
+                            columns={columns}
+                            disableSelectionOnClick
+                            autoHeight={true}
+                            autoPageSize={true}
+                            pageSize={pagination.per_page}
+                            page={pagination.current_page - 1}
+                            loading={isGridLoading}
+                            isRowSelectable={(params) =>
+                                params.row.is_deleted != 1
                             }
-                            setIsGridLoading(true);
-                        }}
-                        components={{ Toolbar: CustomToolbar }}
-                        localeText={
-                            huHU.components.MuiDataGrid.defaultProps.localeText
-                        }
-                        disableColumnMenu
-                        filterMode="server"
-                        onFilterModelChange={(e) => {
-                            if (e.quickFilterValues.length != 0) {
-                                setSearch(
-                                    e.quickFilterValues
-                                        .toString()
-                                        .replaceAll(",", " ")
-                                );
-                            } else {
-                                setSearch("");
+                            paginationMode="server"
+                            rowCount={pagination.total}
+                            onPageChange={(e) => {
+                                if (pagination.next_page_url == null) {
+                                    getStorage(
+                                        pagination.prev_page_url
+                                            .split("api")[1]
+                                            .split("=")[0] + `=${e + 1}`
+                                    );
+                                } else {
+                                    getStorage(
+                                        pagination.next_page_url
+                                            .split("api")[1]
+                                            .split("=")[0] + `=${e + 1}`
+                                    );
+                                }
+                                setIsGridLoading(true);
+                            }}
+                            components={{ Toolbar: CustomToolbar }}
+                            localeText={
+                                huHU.components.MuiDataGrid.defaultProps
+                                    .localeText
                             }
-                            setIsGridLoading(true);
-                        }}
-                        sortingMode="server"
-                        onSortModelChange={(e) => {
-                            if (e.length != 0) {
-                                setOrder(e[0].sort);
-                                setField(e[0].field.replace("name", "id"));
-                            } else {
-                                setOrder("");
-                                setField("");
-                            }
-                            setIsGridLoading(true);
-                        }}
-                    />
+                            disableColumnMenu
+                            filterMode="server"
+                            onFilterModelChange={(e) => {
+                                if (e.quickFilterValues.length != 0) {
+                                    setSearch(
+                                        e.quickFilterValues
+                                            .toString()
+                                            .replaceAll(",", " ")
+                                    );
+                                } else {
+                                    setSearch("");
+                                }
+                                setIsGridLoading(true);
+                            }}
+                            sortingMode="server"
+                            onSortModelChange={(e) => {
+                                if (e.length != 0) {
+                                    setOrder(e[0].sort);
+                                    setField(e[0].field.replace("name", "id"));
+                                } else {
+                                    setOrder("");
+                                    setField("");
+                                }
+                                setIsGridLoading(true);
+                            }}
+                        />
+                    </Paper>
                 </Grid2>
             </Grid2>
             <Snackbar
