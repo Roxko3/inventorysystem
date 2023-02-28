@@ -111,7 +111,7 @@ function Register() {
                     <TextField
                         required
                         fullWidth
-                        label="Email cím"
+                        label="E-mail cím"
                         variant="outlined"
                         inputRef={email}
                         helperText={errors.email}
@@ -190,7 +190,7 @@ function Register() {
                 <Grid2>
                     {registered ? (
                         <Alert severity="success">
-                            Hitelesítő email el lett küldve a címre.
+                            Hitelesítő e-mail el lett küldve a címre.
                         </Alert>
                     ) : (
                         <span></span>

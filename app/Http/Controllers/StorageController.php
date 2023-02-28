@@ -67,7 +67,11 @@ class StorageController extends Controller
             if ($request->get("column") == null || $request->get("column") == "edit") {
                 $ordercolumn = "storages.id";
             } else {
-                $ordercolumn = "storages." . $request->get("column");
+                if ($request->get("column") == "stock") {
+                    $ordercolumn = "amount";
+                } else{
+                    $ordercolumn = "storages." . $request->get("column");
+                }
             }
             $storage = DB::table('storages')
                 ->select('storages.*', 'products.name', 'products.packaging', 'products.unit_of_measure', 'products.type')

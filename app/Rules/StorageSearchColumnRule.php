@@ -27,7 +27,7 @@ class StorageSearchColumnRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (Schema::hasColumn("storages", $value) || Schema::hasColumn("products", $value) || $value == "edit") {
+        if (Schema::hasColumn("storages", $value) || Schema::hasColumn("products", $value) || $value == "edit" || $value == "stock") {
             return true;
         }
         return false;
