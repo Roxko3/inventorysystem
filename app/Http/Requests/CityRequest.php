@@ -26,14 +26,15 @@ class CityRequest extends FormRequest
     public function rules()
     {
         return [
-            'city' => "required|max:255",
+            //'city' => "required|max:255",
+            'city' => "max:255",
         ];
     }
 
     public function messages()
     {
         return [
-            'city.required' => "Város megadása kötelező!",
+            //'city.required' => "Város megadása kötelező!",
             'city.max' => "A város maximum 255 karakter hosszú!",
         ];
     }
