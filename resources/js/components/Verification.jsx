@@ -1,11 +1,14 @@
 import { Verified, Warning } from "@mui/icons-material";
+import { Button, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import Image from "mui-image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 
 function Verification() {
     const location = useLocation();
+    const [isSucces, setIsSuccess] = useState(false);
 
     const verify = async (token) => {
         axios
@@ -13,10 +16,14 @@ function Verification() {
                 tokenEmail: token,
             })
             .then((response) => {
-                console.log(response.data);
+                if (response.status === 200) {
+                    setIsSuccess(true);
+                    console.log(response.data);
+                }
             })
             .catch((response) => {
                 if (response.response.status === 422) {
+                    setIsSuccess(false);
                     console.log("error", token);
                 }
             });
@@ -44,8 +51,36 @@ function Verification() {
                 />
             </Grid2>
             <Grid2>
-                <Verified color="success" sx={{ fontSize: "80px" }} />
-                <Warning color="warning" sx={{ fontSize: "80px" }} />
+                {isSucces ? (
+                    <Grid2
+                        container
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
+                        <Verified color="success" sx={{ fontSize: "100px" }} />
+                        <Typography variant="h4" color="#2e7d32">
+                            Sikeres hitelesítés!
+                        </Typography>
+                        <Link to="/login" replace>
+                            <Button variant="contained" color="success">
+                                Tovább a bejelentkezéshez
+                            </Button>
+                        </Link>
+                    </Grid2>
+                ) : (
+                    <Grid2
+                        container
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
+                        <Warning color="warning" sx={{ fontSize: "100px" }} />
+                        <Typography variant="h4" color="#ed6c02">
+                            A link nem érvényes!
+                        </Typography>
+                    </Grid2>
+                )}
             </Grid2>
         </Grid2>
     );
