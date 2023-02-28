@@ -42,6 +42,8 @@ class OpeningHoursController extends Controller
             }
 
             $opening = OpeningHour::where('shop_id', $shop->id)->where('day', 'LIKE', $day)->first();
+            $parsednowopen = Carbon::parse($opening->open, 'UTC')->format('H:i');
+            $parsednowclose = Carbon::parse($opening->close, 'UTC')->format('H:i');
             $dayhungary = $daysOfWeekHungary[array_search($day, $daysOfWeek)];
 
             try {
@@ -51,21 +53,25 @@ class OpeningHoursController extends Controller
                 if ($hours['open_time'] == 0 || $hours['close_time'] == 0) {
                     throw new InvalidArgumentException();
                 } else {
-                    if ($opening->is_open) {
+                    if ($opening->is_open && ($parsednowopen != $parsedopen ||  $parsednowclose != $parsedclose)) {
                         $changedDatas .= "- $dayhungary: $opening->open - $opening->close -> $parsedopen - $parsedclose ";
                     } else {
-                        $changedDatas .= "- $dayhungary: Zárva -> $parsedopen - $parsedclose ";
+                        if ($parsednowopen != $parsedopen ||  $parsednowclose != $parsedclose) {
+                            $changedDatas .= "- $dayhungary: Zárva -> $parsedopen - $parsedclose ";
+                        }
                     }
                     $opening->is_open = 1;
                     $opening->open = $parsedopen;
                     $opening->close = $parsedclose;
                 }
             } catch (InvalidArgumentException $e) {
-                if ($opening->is_open) {
+                if ($opening->is_open && ($parsednowopen != $parsedopen ||  $parsednowclose != $parsedclose)) {
                     $changedDatas .= "- $dayhungary: $opening->open - $opening->close -> Zárva ";
-                } else {
-                    $changedDatas .= "- $dayhungary: Zárva -> Zárva ";
-                }
+                } /*else {
+                    if ($parsednowopen != $parsedopen ||  $parsednowclose != $parsedclose) {
+                        $changedDatas .= "- $dayhungary: Zárva -> Zárva ";
+                    }
+                }*/
                 $opening->is_open = 0;
                 $opening->open = null;
                 $opening->close = null;
@@ -73,9 +79,11 @@ class OpeningHoursController extends Controller
             $opening->save();
         }
 
-        $log->description = $user->name . " módosította a bolt nyitvatartását " . $changedDatas;
-        $log->date = Carbon::now()->addHour(1);
-        $log->save();
+        if ($changedDatas != null) {
+            $log->description = $user->name . " módosította a bolt nyitvatartását " . $changedDatas;
+            $log->date = Carbon::now()->addHour(1);
+            $log->save();
+        }
 
         return response()->json("Nyitvatartás sikeresen módosítva!");
     }
