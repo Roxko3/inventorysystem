@@ -216,7 +216,7 @@ function Users() {
     const columns = [
         {
             field: "email",
-            headerName: "Email",
+            headerName: "E-mail",
             width: 200,
         },
         {

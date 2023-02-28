@@ -69,7 +69,7 @@ function Log() {
         {
             field: "description",
             headerName: "Leírás",
-            width: 1000,
+            width: 500,
         },
         {
             field: "date",

@@ -301,7 +301,7 @@ function Storage() {
                 ? pagination.total
                 : prevRowCountState
         );
-    }, [order, field, search, alignment, setRowCountState]);
+    }, [order, field, search, alignment, isEditing, setRowCountState]);
 
     const columns = [
         {
@@ -309,7 +309,7 @@ function Storage() {
             headerName: "Termék",
         },
         {
-            field: "amount",
+            field: "stock",
             headerName: "Mennyiség",
         },
         {
@@ -436,7 +436,7 @@ function Storage() {
                     <DataGrid
                         rows={filter.map((storage) => {
                             storage[
-                                "amount"
+                                "stock"
                             ] = `${storage["amount"]} ${storage["unit_of_measure"]}`;
                             storage["edit"] = "Szerkesztés";
                             return storage;

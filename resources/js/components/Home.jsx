@@ -451,15 +451,15 @@ function Home() {
                     <DialogContent>
                         <Grid2 m={2}>
                             <Typography variant="body1">
-                                Az alábbi email címre küldünk a nevében egy
-                                emailt amiben egy meghívás szerepel a
+                                Az alábbi e-mail címre küldünk a nevében egy
+                                e-mailt amiben egy meghívás szerepel a
                                 címzettnek.
                             </Typography>
                         </Grid2>
                         <Grid2 m={2}>
                             <TextField
                                 disabled={loading}
-                                label="Email"
+                                label="E-mail"
                                 variant="outlined"
                                 inputRef={email}
                                 helperText={errors.email}
