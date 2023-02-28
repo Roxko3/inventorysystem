@@ -197,7 +197,7 @@ function Forgotpass() {
                                     disabled={loading}
                                     fullWidth
                                     variant="outlined"
-                                    label="Email cím"
+                                    label="E-mail cím"
                                     inputRef={email}
                                     error={errors.email != null}
                                     helperText={errors.email}

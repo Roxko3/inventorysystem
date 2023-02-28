@@ -107,7 +107,7 @@ function Login() {
                 </Grid2>
                 <Grid2>
                     <TextField
-                        label="Email cím"
+                        label="E-mail cím"
                         fullWidth
                         variant="outlined"
                         inputRef={email}

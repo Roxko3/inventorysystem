@@ -366,7 +366,7 @@ function Profile() {
                         </Grid2>
                         <Grid2>
                             <TextField
-                                label="Email cím"
+                                label="E-mail cím"
                                 defaultValue={user.email}
                                 size="small"
                                 onChange={handleChange}
@@ -446,7 +446,11 @@ function Profile() {
                         <Grid2>
                             <TextField
                                 error={errors["new-password"] != null}
-                                helperText={errors["new-password"]}
+                                helperText={
+                                    errors["new-password"] == null
+                                        ? ""
+                                        : errors["new-password"][0]
+                                }
                                 inputRef={newPassword}
                                 onChange={handlePassChange}
                                 label="Új jelszó"
