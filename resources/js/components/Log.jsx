@@ -1,6 +1,11 @@
 import {
     Box,
+    Button,
     CircularProgress,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
     Paper,
     Table,
     TableBody,
@@ -8,6 +13,7 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    Tooltip,
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -27,6 +33,8 @@ function Log() {
     const [field, setField] = useState("");
     const [pagination, setPagination] = useState({});
     const [isGridLoading, setIsGridLoading] = useState(true);
+    const [isLog, setIsLog] = useState(false);
+    const [logValue, setLogValue] = useState({});
     const cookie = Cookies.get("token");
 
     const getlogs = (url) => {
@@ -70,6 +78,13 @@ function Log() {
             field: "description",
             headerName: "Leírás",
             width: 500,
+            renderCell: (params) => {
+                return (
+                    <Tooltip title={params.value} placement="top" followCursor>
+                        <span>{params.value}</span>
+                    </Tooltip>
+                );
+            },
         },
         {
             field: "date",
@@ -97,6 +112,14 @@ function Log() {
                             autoPageSize={true}
                             pageSize={pagination.per_page}
                             page={pagination.current_page - 1}
+                            onCellClick={(e) => {
+                                const field = e["field"];
+                                if (field != "__check__") {
+                                    setLogValue(e.row);
+                                    setIsLog(true);
+                                    //console.log(e.row);
+                                }
+                            }}
                             loading={isGridLoading}
                             paginationMode="server"
                             rowCount={pagination.total}
@@ -149,6 +172,35 @@ function Log() {
                         />
                     </Box>
                 </Grid2>
+            )}
+
+            {isLog && (
+                <Dialog
+                    open={isLog}
+                    onClose={(e) => {
+                        setIsLog(false);
+                        setLogValue(null);
+                    }}
+                >
+                    <DialogTitle>
+                        {logValue.name}, {logValue.date}
+                    </DialogTitle>
+                    <DialogContent>
+                        <Typography>{logValue.description}</Typography>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => {
+                                setIsLog(false);
+                                setLogValue(null);
+                            }}
+                        >
+                            Bezárás
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             )}
         </Grid2>
     );
