@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import Cookies from "js-cookie";
 import {
     Alert,
@@ -43,6 +43,7 @@ function Shop() {
     const [gridLoading, setGridLoading] = useState(true);
     const { id } = useParams();
     const cookie = Cookies.get("token");
+    const location = useLocation();
 
     const handleCloseAlert = (event, reason) => {
         if (reason === "clickaway") {
@@ -189,7 +190,7 @@ function Shop() {
 
     return (
         <Grid2>
-            <Link to="/shops">
+            <Link to="/shops" state={{ page: location.state.page }}>
                 <Button>Vissza</Button>
             </Link>
             <Link to="/home">

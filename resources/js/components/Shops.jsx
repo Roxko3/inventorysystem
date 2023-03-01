@@ -25,7 +25,7 @@ import { Box } from "@mui/system";
 import axios from "axios";
 import { useContext } from "react";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "./App";
 import Map from "./Map";
 import Navbar from "./Navbar";
@@ -38,6 +38,7 @@ function Shops() {
     const [city, setCity] = useState(user.city);
     const [pagination, setPagination] = useState({});
     const cookie = Cookies.get("token");
+    const location = useLocation();
 
     const getShops = async (url) => {
         const axiosInstance = axios.create({
@@ -54,7 +55,7 @@ function Shops() {
                 if (response.status === 200) {
                     setShops(response.data.data);
                     setPagination(response.data);
-                    console.log("test", response.data.data);
+                    console.log("test", response.data);
                     setLoading(false);
                 }
             });
@@ -62,7 +63,12 @@ function Shops() {
 
     useEffect(() => {
         document.title = "Inventory System - Boltok";
-        getShops("shops");
+        console.log(location);
+        if (location.state == null) {
+            getShops("shops");
+        } else {
+            getShops(`shops?page=${location.state.page}`);
+        }
     }, []);
 
     return (
@@ -150,7 +156,10 @@ function Shops() {
                                     height: { xs: 240, md: 340 },
                                 }}
                             >
-                                <Link to={`/shops/${shops.id}`}>
+                                <Link
+                                    to={`/shops/${shops.id}`}
+                                    state={{ page: pagination.current_page }}
+                                >
                                     <CardActionArea>
                                         <CardMedia
                                             sx={{
