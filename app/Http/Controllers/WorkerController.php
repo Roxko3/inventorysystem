@@ -97,18 +97,37 @@ class WorkerController extends Controller
             return response()->json(['email' => 'A megadott felhasználó nem ehhez a bolthoz tartozik!'], 409);
         }
 
-        $log = new Log();
-        $log->shop_id = $user->shop_id;
-        $log->user_id = $user->id;
-        $log->description = $user->name . " módosította " . $worker->name . " jogosultságait: "
-            . $worker->permission . " -> " . $request->get("permission");
-        $log->date = Carbon::now()->addHour(1);
-        $log->save();
+        if ($request->get("permission") == 10 && Gate::allows('shop-owner')) {
+            $worker->permission = 10;
+            $worker->save();
 
-        $worker->permission = $request->get("permission");
+            $user = User::where('id', $user->id)->first();
+            $user->permission = 5;
+            $user->save();
 
-        $worker->save();
-        return response()->json("Dolgozó módosítás sikeresen felvéve!");
+            $log = new Log();
+            $log->shop_id = $user->shop_id;
+            $log->user_id = $user->id;
+            $log->description = "A bolt tulajdonosa megváltozott: " . $user->name . " -> " . $worker->name;
+            $log->date = Carbon::now()->addHour(1);
+            $log->save();
+
+            return response()->json("Bolt sikeresen átadva!");
+        } else {
+            $log = new Log();
+            $log->shop_id = $user->shop_id;
+            $log->user_id = $user->id;
+            $log->description = $user->name . " módosította " . $worker->name . " jogosultságait: "
+                . $worker->permission . " -> " . $request->get("permission");
+            $log->date = Carbon::now()->addHour(1);
+            $log->save();
+
+            $worker->permission = $request->get("permission");
+
+            $worker->save();
+
+            return response()->json("Dolgozó módosítás sikeresen felvéve!");
+        }
     }
 
     public function delete(Request $request)

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateLogsTable extends Migration
@@ -18,7 +19,7 @@ class CreateLogsTable extends Migration
             $table->foreignId("shop_id")->constrained("shops");
             $table->foreignId("user_id")->constrained("users");
             $table->text("description");
-            $table->timestamp("date")->default(now());
+            $table->timestamp("date")->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 

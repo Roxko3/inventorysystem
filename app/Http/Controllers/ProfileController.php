@@ -122,6 +122,9 @@ class ProfileController extends Controller
     public function leaveShop()
     {
         $user = Auth::user();
+        if ($user->shop_id == null) {
+            return response()->json("Nem tartozik egy bolthoz sem", 403);
+        }
 
         if (Gate::allows('shop-owner')) {
             return response()->json("A bolt tulajdonosa nem hagyhatja el a boltot!", 403);

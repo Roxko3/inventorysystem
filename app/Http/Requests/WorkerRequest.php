@@ -27,7 +27,7 @@ class WorkerRequest extends FormRequest
     {
         return [
             'email' => "required|exists:users,email",
-            'permission' => "required|numeric|min:1|max:5",
+            'permission' => "required|numeric|min:1|max:10",
         ];
     }
 
@@ -38,7 +38,7 @@ class WorkerRequest extends FormRequest
             'email.exists' => "Nem található felhasználó a megadott email címmel!",
             'permission.numeric' => "A hozzáférés csak szám lehet!",
             'permission.min' => "Hozzáférés minimum értéke 0!",
-            'permission.max' => "Hozzáférés maximum értéke 9999!",
+            'permission.max' => "Hozzáférés maximum értéke 10!",
             'permission.required' => "Hozzáférés megadása kötelező!",
         ];
     }
