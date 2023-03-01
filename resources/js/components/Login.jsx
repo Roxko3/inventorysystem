@@ -71,6 +71,12 @@ function Login() {
                     setErrors([]);
                     console.log(response.response.data);
                 }
+                if (response.response.status === 403) {
+                    setalertMessage(response.response.data.message);
+                    setseverity("error");
+                    setOpen(true);
+                    setErrors([]);
+                }
             });
     };
 
