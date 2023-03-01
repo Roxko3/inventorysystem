@@ -1,14 +1,16 @@
 import { Verified, Warning } from "@mui/icons-material";
-import { Button, Typography } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import Image from "mui-image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 
 function Verification() {
     const location = useLocation();
     const [isSucces, setIsSuccess] = useState(false);
+    const [errors, setErrors] = useState([]);
+    const email = useRef("");
 
     const verify = async (token) => {
         axios
@@ -25,6 +27,30 @@ function Verification() {
                 if (response.response.status === 422) {
                     setIsSuccess(false);
                     console.log("error", token);
+                }
+            });
+    };
+
+    const resend = async () => {
+        axios
+            .post(
+                "http://127.0.0.1/InventorySystem/public/api/email/verification-notification",
+                {
+                    email: email.current.value,
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    setErrors([]);
+                    setIsSuccess(true);
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    //setIsSuccess(false);
+                    console.log(response.response.data);
+                    setErrors(response.response.data);
                 }
             });
     };
@@ -79,6 +105,25 @@ function Verification() {
                         <Typography variant="h4" color="#ed6c02">
                             A link nem érvényes!
                         </Typography>
+                        <Grid2>
+                            <TextField
+                                label="E-mail cím"
+                                inputRef={email}
+                                size="small"
+                                error={errors.email != null}
+                                helperText={errors.email}
+                            />
+                        </Grid2>
+                        <Grid2>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    resend();
+                                }}
+                            >
+                                Új küldése
+                            </Button>
+                        </Grid2>
                     </Grid2>
                 )}
             </Grid2>

@@ -63,6 +63,7 @@ function Profile() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [severity, setSeverity] = useState("success");
     const [isQuitting, setIsQuitting] = useState(false);
+    const [isDeleteing, setIsDeleteing] = useState(false);
     var formData = new FormData();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -761,6 +762,17 @@ function Profile() {
                         </Grid2>
                     </Grid2>
                 </Grid2>
+                <Grid2>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        onClick={() => {
+                            setIsDeleteing(true);
+                        }}
+                    >
+                        Fiók törlése
+                    </Button>
+                </Grid2>
                 <Snackbar
                     open={openAlert}
                     autoHideDuration={6000}
@@ -792,6 +804,37 @@ function Profile() {
                                 }}
                             >
                                 Kilépés
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setIsQuitting(false);
+                                }}
+                                color="error"
+                            >
+                                Mégse
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                )}
+
+                {isDeleteing && (
+                    <Dialog
+                        open={isDeleteing}
+                        onClose={() => setIsDeleteing(false)}
+                    >
+                        <DialogTitle>Fiók törlése</DialogTitle>
+                        <DialogContent>
+                            Biztosan törölni szeretné a fiókját?
+                        </DialogContent>
+                        <DialogActions>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setIsQuitting(false);
+                                }}
+                            >
+                                Trölés
                             </Button>
                             <Button
                                 variant="contained"
