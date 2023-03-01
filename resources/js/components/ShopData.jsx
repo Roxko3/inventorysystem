@@ -69,6 +69,7 @@ function ShopData() {
     const [isDeleting, setIsDeleting] = useState(false);
     const [openingHoursLoading, setOpeningHoursLoading] = useState(true);
     const [openingHour, setOpeningHour] = useState([]);
+    const [openingReady, setOpeningReady] = useState(false);
     var formData = new FormData();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -145,8 +146,7 @@ function ShopData() {
     };
 
     const openingHours = async () => {
-        console.log(mondayOpen.current.value);
-        console.log(mondayClose.current.value);
+        setOpeningReady(false);
         axios
             .post(
                 `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}/updateOpeningHours`,
@@ -192,10 +192,11 @@ function ShopData() {
             .then((response) => {
                 if (response.status === 200) {
                     console.log(response.data);
-                    setSeverity("success");
-                    setalertMessage("Nyitvatartás sikeresen megváltoztatva!");
-                    setOpenAlert(true);
-                    window.location.reload();
+                    //setSeverity("success");
+                    //setalertMessage("Nyitvatartás sikeresen megváltoztatva!");
+                    //setOpenAlert(true);
+                    setOpeningReady(true);
+                    //window.location.reload();
                 }
             });
     };
@@ -244,7 +245,9 @@ function ShopData() {
                     setOpenAlert(true);
                     setSeverity("success");
                     setalertMessage("Változtatások sikeresen elmentve!");
-                    window.location.reload();
+                    //window.location.reload();
+                    setIsDisabled(true);
+                    setIsChanged(false);
                 }
             })
             .catch((response) => {
@@ -290,7 +293,7 @@ function ShopData() {
     useEffect(() => {
         getTypes();
         getOpeningHours();
-    }, []);
+    }, [openingReady]);
 
     return (
         <Grid2
@@ -803,6 +806,7 @@ function ShopData() {
                     <FormControlLabel
                         control={
                             <Switch
+                                checked={!isDisabled}
                                 onClick={() => setIsDisabled(!isDisabled)}
                             />
                         }

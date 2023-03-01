@@ -79,7 +79,7 @@ function Home() {
     const getShop = async () => {
         await axios
             .get(
-                `http://127.0.0.1/InventorySystem/public/api/getShop/${user.shop_id}`,
+                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}`,
                 {
                     headers: {
                         "Content-Type": "application/json",
