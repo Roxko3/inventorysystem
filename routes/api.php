@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\InviteController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\AuthController;
@@ -30,16 +31,15 @@ use Laravel\Sanctum\Sanctum;
 |
 */
 
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
+Route::post("/login", [AuthController::class, "login"])->name("login");
+Route::post("/register", [AuthController::class, "register"])->name("register");
 
 Route::post('/reset-password', [ForgotPasswordController::class, 'ResetPassword'])->name('resetPassword');
 Route::post('/forget-password', [ForgotPasswordController::class, 'ForgetPassword'])->name('forgetPassword');
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'EmailVerifyMail']);
 Route::post('/verify-email', [EmailVerificationController::class, 'EmailVerify'])->name('verification');
 
-Route::middleware('auth:sanctum' , 'checkVerify')->group(function () {
+Route::middleware('auth:sanctum', 'checkVerify')->group(function () {
     Route::group(['prefix' => '/myProfile'], function () {
         Route::get('/', [ProfileController::class, 'myProfile'])->name("myProfile");
         Route::post('/nameEmail', [ProfileController::class, 'nameEmail'])->name("NameEmailChange");
@@ -54,16 +54,19 @@ Route::middleware('auth:sanctum' , 'checkVerify')->group(function () {
 
     Route::group(['prefix' => '/shops'], function () {
         Route::get("/", [ShopController::class, "index"])->name("getShops");
-        Route::get('/getStorage/{shop}', [StorageController::class, 'getStorage'])->name("getStorage");
-        Route::get('/searchStorage/{shop}', [StorageController::class, 'searchStorage'])->name("searchStorage");
         Route::post("/create", [ShopController::class, "create"])->name("createShop");
-        Route::put("/{shop}", [ShopController::class, "update"])->name("updateShop");
-        Route::delete("/{shop}", [ShopController::class, "delete"])->name("deleteShop");
-        Route::post("/rate/{shop}", [RatingController::class, "rate"])->name("rateShop");
-        Route::post("/{shop}/uploadImage", [ShopController::class, "uploadImage"])->name("uploadImage");
-        Route::delete("/{shop}/deleteImage", [ShopController::class, "deleteImage"])->name("deleteImage");
-        Route::get("/{shop}/getOpeningHours", [OpeningHoursController::class, "getOpeningHours"])->name("getOpeningHours");
-        Route::post("/{shop}/updateOpeningHours", [OpeningHoursController::class, "updateOpeningHours"])->name("updateOpeningHours");
+        Route::middleware('checkShopIsDeleted')->group(function () {
+            Route::get('/{shop}', [ShopController::class, 'get']);
+            Route::get('/getStorage/{shop}', [StorageController::class, 'getStorage'])->name("getStorage");
+            Route::get('/searchStorage/{shop}', [StorageController::class, 'searchStorage'])->name("searchStorage");
+            Route::put("/{shop}", [ShopController::class, "update"])->name("updateShop");
+            Route::delete("/{shop}", [ShopController::class, "delete"])->name("deleteShop");
+            Route::post("/rate/{shop}", [RatingController::class, "rate"])->name("rateShop");
+            Route::post("/{shop}/uploadImage", [ShopController::class, "uploadImage"])->name("uploadImage");
+            Route::delete("/{shop}/deleteImage", [ShopController::class, "deleteImage"])->name("deleteImage");
+            Route::get("/{shop}/getOpeningHours", [OpeningHoursController::class, "getOpeningHours"])->name("getOpeningHours");
+            Route::post("/{shop}/updateOpeningHours", [OpeningHoursController::class, "updateOpeningHours"])->name("updateOpeningHours");
+        });
     });
 
     Route::group(['prefix' => '/storages'], function () {
@@ -73,23 +76,21 @@ Route::middleware('auth:sanctum' , 'checkVerify')->group(function () {
     });
 
     Route::group(['prefix' => '/workers'], function () {
-        Route::get('/{shop}', [WorkerController::class, 'workers'])->name("showWorkers");
-        Route::get('/searchWorkers/{shop}', [WorkerController::class, 'searchWorkers'])->name("showWorkers");
+        Route::middleware('checkShopIsDeleted')->group(function () {
+            Route::get('/{shop}', [WorkerController::class, 'workers'])->name("showWorkers");
+            Route::get('/searchWorkers/{shop}', [WorkerController::class, 'searchWorkers'])->name("showWorkers");
+        });
         Route::post('/add', [WorkerController::class, 'add'])->name("addWorker");
         Route::post('/update', [WorkerController::class, 'update'])->name("updateWorker");
         Route::post('/delete', [WorkerController::class, 'delete'])->name("deleteWorker");
     });
 
-    Route::group(['prefix' => '/logs'], function () {
+    Route::prefix('/logs')->middleware('checkShopIsDeleted')->group(function () {
         Route::get("/{shop}", [LogController::class, "index"])->name("getlogs");
         Route::get("/searchLogs/{shop}", [LogController::class, "searchLogs"])->name("searchlogs");
     });
     Route::post('/invite', [InviteController::class, 'SendInvite'])->name('invite');
 });
-
-Route::post("/login", [AuthController::class, "login"])->name("login");
-Route::post("/register", [AuthController::class, "register"])->name("register");
-
 
 Route::group(['prefix' => '/users'], function () {
     Route::get("/", [UserController::class, "index"])->name("getUsers");
