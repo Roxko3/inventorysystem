@@ -54,7 +54,7 @@ function Shop() {
 
     const getShop = async () => {
         await axios
-            .get(`http://127.0.0.1/InventorySystem/public/api/getShop/${id}`, {
+            .get(`http://127.0.0.1/InventorySystem/public/api/shops/${id}`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + cookie,
@@ -472,7 +472,9 @@ function Shop() {
                                         readOnly
                                         precision={0.1}
                                     />
-                                    <Typography>{shop.rating}</Typography>
+                                    <Typography>
+                                        {shop.rating.toFixed(2)}
+                                    </Typography>
                                 </Grid2>
                             </Grid2>
                             <Grid2 item>
@@ -566,7 +568,7 @@ function Shop() {
                                     style={{
                                         border: "1px solid black",
                                         borderRadius: 16,
-                                        minWidth: "40vw",
+                                        minWidth: "30vw",
                                     }}
                                     height={330}
                                     fit="cover"
@@ -585,7 +587,7 @@ function Shop() {
                     </Grid2>
                     <Paper elevation={0}>
                         <DataGrid
-                            sx={{ maxWidth: "100vw", margin: "20px" }}
+                            sx={{ minWidth: "40vw", margin: "20px" }}
                             rows={storage.map((storage) => {
                                 return storage;
                             })}

@@ -52,7 +52,6 @@ Route::middleware('auth:sanctum', 'checkVerify')->group(function () {
     });
 
     Route::post('/Logout', [AuthController::class, 'logout'])->name("logout");
-    Route::get('/getShop/{shop}', [ShopController::class, 'get']);
 
     Route::group(['prefix' => '/shops'], function () {
         Route::get("/", [ShopController::class, "index"])->name("getShops");
