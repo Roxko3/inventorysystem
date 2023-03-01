@@ -20,7 +20,9 @@ class StorageController extends Controller
 {
     public function index()
     {
-        $storage = Storage::with("shop", "product")->get();
+        $storage = Storage::with("shop", "product")->whereHas('shop', function ($query) {
+            $query->where('is_deleted', false);
+        })->get();
         return response()->json($storage);
     }
 
