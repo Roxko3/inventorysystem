@@ -42,15 +42,17 @@ class ProfileController extends Controller
 
     public function passwordChange(PasswordChangeRequest $request)
     {
-        if (!Hash::check($request->get("old-password"), auth()->user()->password)) {
+        $user = Auth::user();
+        $user = User::whereId($user->id)->first();
+        if (!Hash::check($request->get("old-password"), $user->password)) {
             return response()->json(['old-password' => 'A régi jelszó nem egyezik az ön jelszavával!'], 422);
         }
 
-        if (Hash::check($request->get("new-password"), auth()->user()->password)) {
+        if (Hash::check($request->get("new-password"), $user->password)) {
             return response()->json(['new-password' => 'Az új jelszó nem egyezhet az ön jelenlegi jelszavával!'], 422);
         }
 
-        User::whereId(auth()->user()->id)->update([
+        User::whereId($user->id)->update([
             'password' => Hash::make($request->get("new-password"))
         ]);
 
@@ -101,7 +103,7 @@ class ProfileController extends Controller
         }
     }
 
-    public function deleteProfil(Request $request)
+    public function deleteProfile(Request $request)
     {
         $user = $request->user();
         if (Gate::allows('shop-owner')) {

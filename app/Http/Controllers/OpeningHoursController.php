@@ -51,7 +51,7 @@ class OpeningHoursController extends Controller
                 $parsedclose = Carbon::parse($hours['close_time'], 'UTC')->format('H:i');
 
                 if ($parsedopen > $parsedclose) {
-                    return response()->json("A zárási idő nem lehet előbb, mint a nyitási idő!");
+                    return response()->json("A zárási idő nem lehet előbb, mint a nyitási idő!", 422);
                 }
                 //$parsedopen->format('H:i') != $hours['open_time'] || $parsedclose->format('H:i') != $hours['close_time'] || 
                 if ($hours['open_time'] == 0 || $hours['close_time'] == 0) {

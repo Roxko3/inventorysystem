@@ -48,7 +48,7 @@ Route::middleware('auth:sanctum', 'checkVerify')->group(function () {
         Route::post("/uploadImage", [ProfileController::class, "uploadImage"])->name("uploadImage");
         Route::post("/leaveShop", [ProfileController::class, "leaveShop"])->name("leaveShop");
         Route::delete("/deleteImage", [ProfileController::class, "deleteImage"])->name("deleteImage");
-        Route::delete("/deleteProfil", [ProfileController::class, "deleteProfil"])->name("deleteProfil");
+        Route::delete("/deleteProfile", [ProfileController::class, "deleteProfile"])->name("deleteProfile");
     });
 
     Route::post('/Logout', [AuthController::class, 'logout'])->name("logout");

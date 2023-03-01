@@ -92,6 +92,13 @@ class StorageControllerTest extends TestCase
             ]);
 
         $response->assertStatus(422);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('get', '/api/shops/searchStorage/1', [
+                'column' => "stock"
+            ]);
+
+        $response->assertStatus(200);
     }
 
     public function test_add_user1()

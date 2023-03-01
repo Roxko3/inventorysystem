@@ -58,46 +58,63 @@ class OpeningHoursControllerTest extends TestCase
 
         $response->assertStatus(403);
 
-        /*$response = $this->withHeader('Authorization', 'Bearer ' . $token)
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->json('post', '/api/shops/1/updateOpeningHours', [
                 "opening_hours" => [
                     "Monday" => [
-                        "open_time" => "alma",
+                        "open_time" => "12:00",
                         "close_time" => "17:00"
                     ],
                     "tuesday" => [
-                        "open_time" => "asd",
-                        "close_time" => "17:00"
+                        "open_time" => "12:00",
+                        "close_time" => "Alma"
                     ],
                     "wednesday" => [
-                        "open_time" => 0,
+                        "open_time" => "12:00",
                         "close_time" => "17:00"
                     ],
                     "thursday" => [
                         "open_time" => "12:00",
                         "close_time" => "17:00"
-                    ], "friday" => [
+                    ],
+                    "friday" => [
                         "open_time" => "12:00",
-                        "close_time" => null
+                        "close_time" => "17:00"
                     ],
                     "saturday" => [
                         "open_time" => "12:00",
                         "close_time" => "17:00"
                     ],
                     "sunday" => [
-                        "open_time" => "12:00",
+                        "open_time" => 0,
                         "close_time" => "17:00"
                     ]
                 ]
             ]);
 
-        $response->assertStatus(200);*/
+        $response->assertStatus(200);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->json('post', '/api/shops/1/updateOpeningHours', [
                 "opening_hours" => [
-                    "Hiba" => [
-                        "open_time" => -1,
+                    "Monday" => [
+                        "open_time" => "12:00",
+                        "close_time" => "17:00"
+                    ],
+                    "Sunday" => [
+                        "open_time" => "17:00",
+                        "close_time" => "12:00"
+                    ]
+                ]
+            ]);
+
+        $response->assertStatus(422);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/shops/1/updateOpeningHours', [
+                "opening_hours" => [
+                    "Valami" => [
+                        "open_time" => "12:00",
                         "close_time" => "17:00"
                     ]
                 ]

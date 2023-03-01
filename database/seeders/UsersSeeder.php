@@ -56,7 +56,7 @@ class UsersSeeder extends Seeder
                 'permission' => 0,
                 'city' => "Kőszeg",
                 'email_verified_at' => Carbon::parse("2022-12-30"),
-                'is_deleted' => 0
+                'is_deleted' => 1
             ],
             [
                 'id' => 5,
@@ -65,7 +65,6 @@ class UsersSeeder extends Seeder
                 'password' => bcrypt("asd123"),
                 'permission' => 0,
                 'city' => "Kőszeg",
-                'email_verified_at' => Carbon::parse("2022-12-30")
 
             ],
             [

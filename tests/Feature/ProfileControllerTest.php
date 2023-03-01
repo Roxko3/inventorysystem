@@ -57,6 +57,13 @@ class ProfileControllerTest extends TestCase
             ]);
 
         $response->assertStatus(409);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/myProfile/nameEmail', [
+                'name' => 'admin',
+            ]);
+
+        $response->assertStatus(422);
     }
 
     public function test_passwordChange()
@@ -92,6 +99,15 @@ class ProfileControllerTest extends TestCase
             ]);
 
         $response->assertStatus(200);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/myProfile/passwordChange', [
+                'old-password' => "TesztElek1",
+                'new-password' => "TesztElek1",
+                'new-password-repeat' => "TesztElek1"
+            ]);
+
+        $response->assertStatus(422);
     }
 
     public function test_cityChange()
@@ -111,6 +127,13 @@ class ProfileControllerTest extends TestCase
             ]);
 
         $response->assertStatus(200);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/myProfile/cityChange', [
+                'city' => "123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432123432532523432",
+            ]);
+
+        $response->assertStatus(422);
     }
 
     public function test_uploadImage()
@@ -177,5 +200,56 @@ class ProfileControllerTest extends TestCase
             ->json('delete', '/api/myProfile/deleteImage');
 
         $response->assertStatus(404);;
+    }
+
+    public function test_deleteProfile()
+    {
+        $this->seed();
+
+        $response = $this->post('api/login', [
+            'email' => 'admin@localhost',
+            'password' => 'admin'
+        ]);
+
+        $token = json_decode($response->content(), true)['token'];
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('delete', '/api/myProfile/deleteProfile');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_leaveShop_user1()
+    {
+        $this->seed();
+
+        $response = $this->post('api/login', [
+            'email' => 'admin@localhost',
+            'password' => 'admin'
+        ]);
+
+        $token = json_decode($response->content(), true)['token'];
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/myProfile/leaveShop');
+
+        $response->assertStatus(403);
+    }
+
+    public function test_leaveShop_user2()
+    {
+        $this->seed();
+
+        $response = $this->post('api/login', [
+            'email' => 'dolgozo@localhost',
+            'password' => 'asd123'
+        ]);
+
+        $token = json_decode($response->content(), true)['token'];
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/myProfile/leaveShop');
+
+        $response->assertStatus(200);
     }
 }

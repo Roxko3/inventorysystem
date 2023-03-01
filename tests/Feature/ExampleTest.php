@@ -14,7 +14,7 @@ class ExampleTest extends TestCase
      */
     public function test_example()
     {
-        $this->refreshApplication();
+        //$this->refreshApplication();
 
         $response = $this->get('/');
 

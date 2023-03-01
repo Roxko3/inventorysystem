@@ -15,7 +15,7 @@ class AuthControllerTest extends TestCase
      * @return void
      */
 
-    public function test_login()
+    public function test_login_user1()
     {
         $this->seed();
 
@@ -38,6 +38,30 @@ class AuthControllerTest extends TestCase
         ]);
 
         $response->assertStatus(200);
+    }
+
+    public function test_login_user2()
+    {
+        $this->seed();
+
+        $response = $this->post('api/login', [
+            'email' => 'vasarlo3@localhost',
+            'password' => 'asd123'
+        ]);
+
+        $response->assertStatus(403);
+    }
+
+    public function test_login_user3()
+    {
+        $this->seed();
+
+        $response = $this->post('api/login', [
+            'email' => 'vasarlo2@localhost',
+            'password' => 'asd123'
+        ]);
+
+        $response->assertStatus(409);
     }
 
     public function test_register()

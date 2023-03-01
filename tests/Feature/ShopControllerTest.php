@@ -44,14 +44,14 @@ class ShopControllerTest extends TestCase
         $token = json_decode($response->content(), true)['token'];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
-            ->json('get', '/api/getShop/1');
+            ->json('get', '/api/shops/1');
 
         $response->assertStatus(200);
 
         $this->seed(RatingErrorSeeder::class);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
-            ->json('get', '/api/getShop/1');
+            ->json('get', '/api/shops/1');
 
         $response->assertStatus(500);
     }
