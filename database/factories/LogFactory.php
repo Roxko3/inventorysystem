@@ -19,7 +19,7 @@ class LogFactory extends Factory
             'shop_id' =>Shop::all()->random()->id, 
             'user_id' =>User::all()->random()->id, 
             'description' =>$this->faker->sentence, 
-            'date' =>$this->faker->dateTimeBetween('-1 week', '+1 week'),
+            'date' =>$this->faker->dateTimeBetween('-8 week', '+8 week'),
         ];
     }
 }

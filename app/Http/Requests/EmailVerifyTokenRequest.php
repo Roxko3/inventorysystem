@@ -27,7 +27,7 @@ class EmailVerifyTokenRequest extends FormRequest
     public function rules()
     {
         return [
-            'tokenEmail' => 'required|exists:Tokens',
+            'tokenEmail' => 'required|exists:Tokens , tokenEmail',
         ];
     }
     public function messages()

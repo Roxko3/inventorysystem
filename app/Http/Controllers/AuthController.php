@@ -37,6 +37,12 @@ class AuthController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
+        if ($user->email_verified_at === null) {
+            return response([
+                'message' => 'Az email cím nincs hitelesítve'
+            ], 403);
+        }
+
         $token = $user->createToken('main')->plainTextToken;
         $user['password'] = "";
         $user = User::with('shop')->where('id', $user->id)->first();

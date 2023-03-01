@@ -39,7 +39,7 @@ Route::post('/forget-password', [ForgotPasswordController::class, 'ForgetPasswor
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'EmailVerifyMail']);
 Route::post('/verify-email', [EmailVerificationController::class, 'EmailVerify'])->name('verification');
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum' , 'checkVerify')->group(function () {
     Route::group(['prefix' => '/myProfile'], function () {
         Route::get('/', [ProfileController::class, 'myProfile'])->name("myProfile");
         Route::post('/nameEmail', [ProfileController::class, 'nameEmail'])->name("NameEmailChange");
