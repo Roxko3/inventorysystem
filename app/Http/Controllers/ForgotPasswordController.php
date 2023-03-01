@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Notifications\PasswordResetEmail;
 use App\Http\Requests\ForgotPassord;
 use App\Http\Requests\PasswordReset;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -53,8 +54,9 @@ class ForgotPasswordController extends Controller
         'tokenPassword' => $request->token
         ])
         -> value('email');
-        if ($request->password == User::where('email', $email)->value('password')) {
-          return ['password'=> 'A jelszód nem lehet a már meglévő!',422];
+        
+        if (Hash::check($request->password, User::where('email', $email)->value('password'))) {
+          return response(['password'=> 'A jelszód nem lehet a már meglévő!'],422);
         }
         else { User::where('email', $email)
           ->update(['password' => Hash::make($request->password)]);
