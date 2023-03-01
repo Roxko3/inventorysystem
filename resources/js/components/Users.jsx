@@ -31,7 +31,6 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useContext, useEffect, useRef, useState } from "react";
 import { DataGrid, huHU } from "@mui/x-data-grid";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-import BasicModal from "./BasicModal";
 import Cookies from "js-cookie";
 import {
     Add,
@@ -151,6 +150,9 @@ function Users() {
                     //console.log(response);
                     getUsers(`workers/searchWorkers/${user.shop_id}`);
                     setIsEditing(false);
+                    setOpen(true);
+                    setalertMessage("Dolgozó sikeresen módosítva!");
+                    console.log("update worker", response.data);
                 }
             })
             .catch((response) => {
@@ -528,8 +530,11 @@ function Users() {
                                     >
                                         <MenuItem value={1}>Eladó</MenuItem>
                                         <MenuItem value={5}>Menedzser</MenuItem>
-                                        <MenuItem value={10} disabled>
-                                            Tulajdonos
+                                        <MenuItem
+                                            value={10}
+                                            disabled={user.permission != 10}
+                                        >
+                                            Tulajdonos átadása
                                         </MenuItem>
                                     </Select>
                                     <FormHelperText>

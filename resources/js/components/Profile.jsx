@@ -227,7 +227,9 @@ function Profile() {
                     setOpenAlert(true);
                     setSeverity("success");
                     setalertMessage(response.data);
-                    window.location.reload();
+                    //window.location.reload();
+                    console.log("email,name", response.data);
+                    //todo
                 }
             })
             .catch((response) => {

@@ -45,7 +45,6 @@ import {
     SelectAll,
 } from "@mui/icons-material";
 import Searchbar from "./Searchbar";
-import BasicModal from "./BasicModal";
 import { useContext } from "react";
 import { UserContext } from "./App";
 import Cookies from "js-cookie";

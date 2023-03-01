@@ -133,7 +133,9 @@ function Home() {
                     owner.current.value = "";
                     city.current.value = "";
                     console.log("sikeres");
-                    window.location.reload();
+                    //window.location.reload();
+                    console.log("shop create", response.data);
+                    //todo
                 }
             })
             .catch((response) => {

@@ -33,7 +33,7 @@ import axios from "axios";
 import moment from "moment";
 
 function ShopData() {
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [isAdmin, setIsAdmin] = useState(user.permission >= 5 ? true : false);
     const cookie = Cookies.get("token");
     const [address, setAddress] = useState(user.shop.address);
@@ -70,6 +70,7 @@ function ShopData() {
     const [openingHoursLoading, setOpeningHoursLoading] = useState(true);
     const [openingHour, setOpeningHour] = useState([]);
     const [openingReady, setOpeningReady] = useState(false);
+    const [newUser, setNewUser] = useState(user);
     var formData = new FormData();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -103,7 +104,8 @@ function ShopData() {
                     setSeverity("success");
                     setalertMessage("Kép sikeresen megváltoztatva!");
                     setOpenAlert(true);
-                    window.location.reload();
+                    //window.location.reload();
+                    console.log("upload iamge", response.data);
                 }
             })
             .catch((response) => {
@@ -250,14 +252,16 @@ function ShopData() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
                     setErrors([]);
                     setOpenAlert(true);
                     setSeverity("success");
                     setalertMessage("Változtatások sikeresen elmentve!");
-                    window.location.reload();
+                    //window.location.reload();
+                    console.log("update shop", response.data);
+                    setNewUser(response.data.user);
                     setIsDisabled(true);
                     setIsChanged(false);
+                    //todo in good state
                 }
             })
             .catch((response) => {
@@ -322,7 +326,9 @@ function ShopData() {
     useEffect(() => {
         getTypes();
         getOpeningHours();
-    }, [openingReady]);
+        console.log("useeffect");
+        setUser(newUser);
+    }, [openingReady, newUser]);
 
     return (
         <Grid2
