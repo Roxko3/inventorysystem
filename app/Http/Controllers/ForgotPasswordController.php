@@ -54,7 +54,7 @@ class ForgotPasswordController extends Controller
         ])
         -> value('email');
         if ($request->password == User::where('email', $email)->value('password')) {
-          return ['message', 'A jelszód nem lehet a már meglévő!'];
+          return ['password'=> 'A jelszód nem lehet a már meglévő!',422];
         }
         else { User::where('email', $email)
           ->update(['password' => Hash::make($request->password)]);
