@@ -179,7 +179,9 @@ class ShopController extends Controller
             $log->save();
         }
 
-        return response()->json($shop->toArray());
+        $response = User::with('shop')->where('id', $user->id)->first();
+
+        return response()->json(["message" => "A bolt adatai sikeresen megváltoztak", "user" => $response]);
     }
 
     public function delete(Shop $shop)
