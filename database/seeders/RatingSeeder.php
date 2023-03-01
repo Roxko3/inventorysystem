@@ -14,7 +14,7 @@ class RatingSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
+       /* $data = [
             [
                 'id' => 1,
                 'shop_id' => 1,
@@ -74,7 +74,12 @@ class RatingSeeder extends Seeder
             };
 
             $rating->save();
+        }*/
+        for ($i=0; $i < 50; $i++) { 
+           Rating::factory()->create();
+            
         }
-        Rating::factory()->count(50)->create();
+        
+       
     }
 }
