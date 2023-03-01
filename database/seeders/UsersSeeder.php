@@ -24,7 +24,8 @@ class UsersSeeder extends Seeder
                 'permission' => 10,
                 'city' => "Kőszeg",
                 'shop_id' => 1,
-                'email_verified_at' => Carbon::parse("2022-12-30")
+                'email_verified_at' => Carbon::parse("2022-12-30"),
+                'is_deleted' => 0
             ],
             [
                 'id' => 2,
@@ -33,7 +34,8 @@ class UsersSeeder extends Seeder
                 'password' => bcrypt("password"),
                 'permission' => 0,
                 'city' => "Kőszeg",
-                'email_verified_at' => Carbon::parse("2022-12-30")
+                'email_verified_at' => Carbon::parse("2022-12-30"),
+                'is_deleted' => 0
             ],
             [
                 'id' => 3,
@@ -42,7 +44,9 @@ class UsersSeeder extends Seeder
                 'password' => bcrypt("asd123"),
                 'permission' => 1,
                 'city' => "Kőszeg",
-                'shop_id' => 1
+                'shop_id' => 1,
+                'email_verified_at' => Carbon::parse("2022-12-30"),
+                'is_deleted' => 0
             ],
             [
                 'id' => 4,
@@ -51,6 +55,8 @@ class UsersSeeder extends Seeder
                 'password' => bcrypt("asd123"),
                 'permission' => 0,
                 'city' => "Kőszeg",
+                'email_verified_at' => Carbon::parse("2022-12-30"),
+                'is_deleted' => 0
             ],
             [
                 'id' => 5,
@@ -59,6 +65,8 @@ class UsersSeeder extends Seeder
                 'password' => bcrypt("asd123"),
                 'permission' => 0,
                 'city' => "Kőszeg",
+                'email_verified_at' => Carbon::parse("2022-12-30")
+
             ],
             [
                 'id' => 6,
@@ -67,7 +75,8 @@ class UsersSeeder extends Seeder
                 'password' => bcrypt("asd123"),
                 'permission' => 1,
                 'city' => "Kőszeg",
-                'shop_id' => 2
+                'shop_id' => 2,
+                'email_verified_at' => Carbon::parse("2022-12-30")
             ],
         ];
         foreach ($data as $item) {
@@ -81,6 +90,6 @@ class UsersSeeder extends Seeder
 
             $user->save();
         }
-        User::factory()->count(30)->create();
+        //User::factory()->count(30)->create();
     }
 }

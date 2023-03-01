@@ -66,7 +66,7 @@ class StorageSeeder extends Seeder
 
             $storage->save();
         }
-        Storage::factory()->count(50)->create();
+        //Storage::factory()->count(50)->create();
 
 
         /*DB::table('Storage')->insert([

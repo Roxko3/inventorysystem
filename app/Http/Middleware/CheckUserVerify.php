@@ -20,7 +20,7 @@ class CheckUserVerify
     {
         $user = Auth::user();
         $verify = DB::table('users')->where('email', $user->email)->value('email_verified_at');
-        if ( $verify != null) {
+        if ($user->email_verified_at != null) {
             return $next($request);
         }
 

@@ -16,7 +16,7 @@ class OpeningHoursSeeder extends Seeder
      */
     public function run()
     {
-       /* $data = [
+        $data = [
             [
                 'id' => 1,
                 'shop_id' => 1,
@@ -133,13 +133,9 @@ class OpeningHoursSeeder extends Seeder
             };
 
             $openingHour->save();
-
-
-           
-        }*/
-        for ($i=0; $i <Shop::count(); $i++) { 
-            OpeningHour::factory()->create();
         }
-        
+        /*for ($i=0; $i <Shop::count(); $i++) { 
+            OpeningHour::factory()->create();
+        }*/
     }
 }

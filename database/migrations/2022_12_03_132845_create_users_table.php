@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string("city")->nullable();
             $table->foreignId("shop_id")->nullable()->constrained("shops");
             $table->string("image_path")->nullable();
+            $table->boolean("is_deleted")->default(false);
             $table->datetime("email_verified_at")->nullable();
             $table->rememberToken();
         });

@@ -23,7 +23,8 @@ class ShopsSeeder extends Seeder
                 'owner' => "Tesco PLC",
                 'city' => "Kőszeg",
                 'image_path' => "tesco1.jpg",
-                'rating' => 4.75
+                'rating' => 4.75,
+                'is_deleted' => false
             ],
             [
                 'id' => 2,
@@ -33,7 +34,8 @@ class ShopsSeeder extends Seeder
                 'owner' => "Tesco PLC",
                 'city' => "Kőszeg",
                 'image_path' => "tesco2.jpg",
-                'rating' => 3.75
+                'rating' => 3.75,
+                'is_deleted' => false
             ],
             [
                 'id' => 3,
@@ -43,7 +45,8 @@ class ShopsSeeder extends Seeder
                 'owner' => "Co-op Hungary Zrt.",
                 'image_path' => "coop1.jpg",
                 'city' => "Kőszeg",
-                'rating' => 2.37
+                'rating' => 2.37,
+                'is_deleted' => false
             ],
             [
                 'id' => 4,
@@ -53,7 +56,8 @@ class ShopsSeeder extends Seeder
                 'owner' => "Bestbyte műszaki",
                 'image_path' => "vargapc.jpg",
                 'city' => "Kőszeg",
-                'rating' => 3
+                'rating' => 3,
+                'is_deleted' => false
             ],
             [
                 'id' => 5,
@@ -62,7 +66,8 @@ class ShopsSeeder extends Seeder
                 'address' => "IV. László király u. 39",
                 'owner' => "Tesco PLC",
                 'city' => "Kőszeg",
-                'rating' => 1
+                'rating' => 1,
+                'is_deleted' => false
             ],
             [
                 'id' => 6,
@@ -71,7 +76,8 @@ class ShopsSeeder extends Seeder
                 'address' => "Király J. u 3",
                 'owner' => "Tesco PLC",
                 'city' => "Kőszeg",
-                'rating' => 4.11
+                'rating' => 4.11,
+                'is_deleted' => false
             ],
             [
                 'id' => 7,
@@ -80,7 +86,8 @@ class ShopsSeeder extends Seeder
                 'address' => "Ipar krt. 30",
                 'owner' => "Tesco PLC",
                 'city' => "Kőszeg",
-                'rating' => 5
+                'rating' => 5,
+                'is_deleted' => false
             ],
             [
                 'id' => 8,
@@ -89,7 +96,8 @@ class ShopsSeeder extends Seeder
                 'address' => "Hátsókapu 10",
                 'owner' => "Tesco PLC",
                 'city' => "Kőszeg",
-                'rating' => 2
+                'rating' => 2,
+                'is_deleted' => false
             ],
             [
                 'id' => 9,
@@ -121,6 +129,6 @@ class ShopsSeeder extends Seeder
 
             $shop->save();
         }
-        Shop::factory()->count(10)->create();
+        //Shop::factory()->count(10)->create();
     }
 }

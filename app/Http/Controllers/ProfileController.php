@@ -6,9 +6,13 @@ use App\Http\Requests\ImageRequest;
 use App\Http\Requests\NameEmailRequest;
 use App\Http\Requests\PasswordChangeRequest;
 use App\Http\Requests\CityRequest;
+use App\Models\Log;
+use App\Models\Shop;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -95,5 +99,44 @@ class ProfileController extends Controller
         } else {
             return response()->json("Nem található kép ennél a felhasználónál!", 404);
         }
+    }
+
+    public function deleteProfil(Request $request)
+    {
+        $user = $request->user();
+        if (Gate::allows('shop-owner')) {
+            $shop = Shop::where('id', $user->shop_id)->first();
+            (new ShopController)->delete($shop);
+        }
+        $user->currentAccessToken()->delete();
+        $user->shop_id = null;
+        $user->permission = null;
+        $user->is_deleted = true;
+        $user->save();
+
+        return response('Felhasználói fiók sikeresen törölve', 200);
+    }
+
+    public function leaveShop()
+    {
+        $user = Auth::user();
+
+        if (Gate::allows('shop-owner')) {
+            return response()->json("A bolt tulajdonosa nem hagyhatja el a boltot!", 403);
+        }
+
+        $user = User::where('id', $user->id)->first();
+        $log = new Log();
+        $log->shop_id = $user->shop_id;
+        $log->user_id = $user->id;
+        $log->description = $user->name . " elhagyta a boltot";
+        $log->date = Carbon::now()->addHour(1);
+        $log->save();
+
+        $user->shop_id = null;
+        $user->permission = 0;
+        $user->save();
+
+        return response()->json("Sikeresen kilépett a boltból!");
     }
 }

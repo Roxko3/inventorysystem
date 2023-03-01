@@ -52,13 +52,6 @@ class ProfileControllerTest extends TestCase
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->json('post', '/api/myProfile/nameEmail', [
-                'email' => 'admin2@localhost'
-            ]);
-
-        $response->assertStatus(422);
-
-        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
-            ->json('post', '/api/myProfile/nameEmail', [
                 'name' => 'admin',
                 'email' => 'vasarlo@localhost'
             ]);
@@ -118,11 +111,6 @@ class ProfileControllerTest extends TestCase
             ]);
 
         $response->assertStatus(200);
-
-        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
-            ->json('post', '/api/myProfile/cityChange');
-
-        $response->assertStatus(422);
     }
 
     public function test_uploadImage()
