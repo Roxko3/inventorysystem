@@ -41,7 +41,7 @@ class StorageRequest extends FormRequest
             'product_id.exists' => "A megadott termék nem létezik!",
             'amount.required' => "Mennyiség megadása kötelező!",
             'amount.numeric' => "A mennyiség csak szám lehet!",
-            'amount.min' => "Mennyiség minimum értéke 0!",
+            'amount.min' => "Mennyiség minimum értéke 1!",
             'amount.max' => "Mennyiség maximum értéke 9999!",
             'price.required' => "Ár megadása kötelező!",
             'price.numeric' => "Az ár csak szám lehet!",
