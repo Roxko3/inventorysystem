@@ -171,6 +171,15 @@ class WorkerControllerTest extends TestCase
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->json('post', '/api/workers/update', [
+                'email' => "dolgozo@localhost",
+                'permission' => 10,
+            ]);
+
+        $response->assertStatus(200);
+
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/workers/update', [
                 'email' => "admin@localhost",
                 'permission' => 5,
             ]);

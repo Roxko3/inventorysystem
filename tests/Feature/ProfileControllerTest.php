@@ -251,5 +251,10 @@ class ProfileControllerTest extends TestCase
             ->json('post', '/api/myProfile/leaveShop');
 
         $response->assertStatus(200);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('post', '/api/myProfile/leaveShop');
+
+        $response->assertStatus(403);
     }
 }
