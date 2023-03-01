@@ -196,7 +196,17 @@ function ShopData() {
                     //setalertMessage("Nyitvatartás sikeresen megváltoztatva!");
                     //setOpenAlert(true);
                     setOpeningReady(true);
+                    updateShop();
                     //window.location.reload();
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 422) {
+                    setOpeningReady(false);
+                    console.log(response.data);
+                    setSeverity("error");
+                    setalertMessage(response.response.data);
+                    setOpenAlert(true);
                 }
             });
     };
@@ -245,7 +255,7 @@ function ShopData() {
                     setOpenAlert(true);
                     setSeverity("success");
                     setalertMessage("Változtatások sikeresen elmentve!");
-                    //window.location.reload();
+                    window.location.reload();
                     setIsDisabled(true);
                     setIsChanged(false);
                 }
@@ -286,6 +296,25 @@ function ShopData() {
                     console.log(response.data);
                     setOpeningHour(response.data);
                     setOpeningHoursLoading(false);
+                }
+            });
+    };
+
+    const deleteShop = async () => {
+        axios
+            .delete(
+                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    window.location.reload();
                 }
             });
     };
@@ -807,7 +836,9 @@ function ShopData() {
                         control={
                             <Switch
                                 checked={!isDisabled}
-                                onClick={() => setIsDisabled(!isDisabled)}
+                                onClick={() => {
+                                    setIsDisabled(!isDisabled);
+                                }}
                             />
                         }
                         label="Szerkesztés"
@@ -818,7 +849,7 @@ function ShopData() {
                         variant="contained"
                         disabled={!isChanged}
                         onClick={() => {
-                            updateShop(), openingHours();
+                            openingHours();
                         }}
                     >
                         Változtatások mentése
@@ -826,6 +857,9 @@ function ShopData() {
                 </Grid2>
                 <Grid2>
                     <Button
+                        sx={{
+                            display: user["permission"] == 10 ? "flex" : "none",
+                        }}
                         color="error"
                         variant="contained"
                         disabled={isDisabled}
@@ -861,7 +895,7 @@ function ShopData() {
                         <Button
                             variant="contained"
                             onClick={() => {
-                                setIsDeleting(false);
+                                deleteShop();
                             }}
                         >
                             Törlés

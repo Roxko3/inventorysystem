@@ -46,6 +46,7 @@ import axios from "axios";
 
 function Profile() {
     const { user } = useContext(UserContext);
+    const cookie = Cookies.get("token");
     const [City, setCity] = useState(user.city);
     const [showPassword, setShowPassword] = useState("");
     const [btnDisable, setBtnDisable] = useState(true);
@@ -271,7 +272,55 @@ function Profile() {
             });
     };
 
-    const cookie = Cookies.get("token");
+    const deleteProfile = async () => {
+        axios
+            .delete(
+                "http://127.0.0.1/InventorySystem/public/api/myProfile/deleteProfile",
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    window.location.reload();
+                }
+            });
+    };
+
+    const leaveShop = async () => {
+        axios
+            .post(
+                "http://127.0.0.1/InventorySystem/public/api/myProfile/leaveShop",
+                {},
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookie,
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    setalertMessage(response.data);
+                    setOpenAlert(true);
+                    setSeverity("success");
+                    window.location.reload();
+                }
+            })
+            .catch((response) => {
+                if (response.response.status === 403) {
+                    setalertMessage(response.response.data);
+                    setOpenAlert(true);
+                    setSeverity("error");
+                    setIsQuitting(false);
+                }
+            });
+    };
 
     useEffect(() => {
         document.title = "Inventory System - Profil";
@@ -800,7 +849,7 @@ function Profile() {
                             <Button
                                 variant="contained"
                                 onClick={() => {
-                                    setIsQuitting(false);
+                                    leaveShop();
                                 }}
                             >
                                 Kilépés
@@ -831,10 +880,10 @@ function Profile() {
                             <Button
                                 variant="contained"
                                 onClick={() => {
-                                    setIsQuitting(false);
+                                    deleteProfile();
                                 }}
                             >
-                                Trölés
+                                Törlés
                             </Button>
                             <Button
                                 variant="contained"
