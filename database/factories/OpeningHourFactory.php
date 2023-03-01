@@ -20,11 +20,18 @@ class OpeningHourFactory extends Factory
             $shop_id = $this->faker->numberBetween(1, Shop::count());
             $now = OpeningHour::where('shop_id','=', $shop_id)->first();
         } while ($now);
-        $day ='Monday';
+        $day ='Sunday';
         $is_open = $this->faker->boolean(80);
         $open = '09:00';
         $close = '20:00' ;
         DB::table('Opening_Hours')->insert([
+            'shop_id' => $shop_id, 
+            'day' => 'Monday', 
+            'is_open' =>  $is_open = $this->faker->boolean(80),
+            'open' => ($is_open?$open: null),
+            'close' => ($is_open?$close: null) ,
+          ]);
+          DB::table('Opening_Hours')->insert([
             'shop_id' => $shop_id, 
             'day' => 'Tuesday', 
             'is_open' =>  $is_open = $this->faker->boolean(80),
@@ -43,25 +50,18 @@ class OpeningHourFactory extends Factory
             'day' => 'Thursday', 
             'is_open' =>  $is_open = $this->faker->boolean(80),
             'open' => ($is_open?$open: null),
-            'close' => ($is_open?$close: null) ,
-          ]);
-          DB::table('Opening_Hours')->insert([
-            'shop_id' => $shop_id, 
-            'day' => 'Friday', 
-            'is_open' =>  $is_open = $this->faker->boolean(80),
-            'open' => ($is_open?$open: null),
             'close' =>($is_open?$close: null) ,
           ]);
           DB::table('Opening_Hours')->insert([
             'shop_id' => $shop_id, 
-            'day' => 'Saturday', 
+            'day' => 'Friday', 
             'is_open' =>  $is_open = $this->faker->boolean(30),
             'open' => ($is_open?$open: null),
             'close' => ($is_open?$close: null),
           ]);
           DB::table('Opening_Hours')->insert([
             'shop_id' => $shop_id, 
-            'day' => 'Sunday', 
+            'day' => 'Saturday', 
             'is_open' =>  $is_open = $this->faker->boolean(30),
             'open' => ($is_open?$open: null),
             'close' => ($is_open?$close: null) ,
