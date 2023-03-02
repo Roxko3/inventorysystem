@@ -17,7 +17,7 @@ class TokenSeeder extends Seeder
         $data = [
             [
                 'id' => 1,
-                'email' => 'vasarlo3@localhost',
+                'email' => 'dolgozo3@localhost',
                 'tokenPassword' => 'pVaUA5fyKyuBYxjgaiEDyd5TFHyBNgsWBcRtdudzFJtjAw2SOkaatZbTrzLKRL9u',
                 'created_atPassword' => null,
                 'tokenEmail' => 'FVxOkXg7t9rDRx1ID8VdVGBtrlxZLps13poQBr690cMb16n6MF2CrJglUISuzERC',
