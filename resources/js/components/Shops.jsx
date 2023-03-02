@@ -64,11 +64,7 @@ function Shops() {
     useEffect(() => {
         document.title = "Inventory System - Boltok";
         console.log(location);
-        if (location.state == null) {
-            getShops("shops");
-        } else {
-            getShops(`shops?page=${location.state.page}`);
-        }
+        getShops(`shops${location.search}`);
     }, []);
 
     return (
@@ -161,8 +157,10 @@ function Shops() {
                                 }}
                             >
                                 <Link
-                                    to={`/shops/${shops.id}`}
-                                    state={{ page: pagination.current_page }}
+                                    to={{
+                                        pathname: `/shops/${shops.id}`,
+                                        search: `?page=${pagination.current_page}`,
+                                    }}
                                 >
                                     <CardActionArea>
                                         <CardMedia

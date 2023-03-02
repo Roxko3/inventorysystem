@@ -142,9 +142,9 @@ function Map(props) {
                                                 {coords[1].address}
                                             </Typography>
                                             <Link
-                                                to={`/shops/${coords[1].id}`}
-                                                state={{
-                                                    page: props.currentPage,
+                                                to={{
+                                                    pathname: `/shops/${coords[1].id}`,
+                                                    search: `?page=${props.currentPage}`,
                                                 }}
                                             >
                                                 <Typography

@@ -190,7 +190,7 @@ function Shop() {
 
     return (
         <Grid2>
-            <Link to="/shops" state={{ page: location.state.page }}>
+            <Link to={{ pathname: "/shops", search: `${location.search}` }}>
                 <Button>Vissza</Button>
             </Link>
             <Link to="/home">
