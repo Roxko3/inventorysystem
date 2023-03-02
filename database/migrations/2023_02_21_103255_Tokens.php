@@ -20,6 +20,10 @@ class Tokens extends Migration
             $table->timestamp('created_atPassword')->nullable();
             $table->string('tokenEmail')->nullable();
             $table->timestamp('created_atEmail')->nullable();
+
+            $table->foreign('email') // a column on posts table
+                ->references('email') //name of the column on users (referenced) table
+                ->on('users');
         });
     }
 

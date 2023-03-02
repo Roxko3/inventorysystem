@@ -13,4 +13,9 @@ class Token extends Model
     protected $fillable = [
         'email'
     ];
+
+    public function email()
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
+    }
 }
