@@ -894,7 +894,7 @@ function Profile() {
                             <Button
                                 variant="contained"
                                 onClick={() => {
-                                    setIsQuitting(false);
+                                    setIsDeleteing(false);
                                 }}
                                 color="error"
                             >
