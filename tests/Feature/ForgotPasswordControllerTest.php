@@ -102,6 +102,12 @@ class ForgotPasswordControllerTest extends TestCase
             'password-repeat' => '',
         ]);
         $response->assertStatus(422);
+        $response = $this->post('/api/reset-password',[
+            'token' => 'pVaUA5fyKyuBYxjgaiEDyd5TFHyBNgsWBcRtdudzFJtjAw2SOkaatZbTrzLKRL9u',
+            'password' => 'ASDf1234',
+            'password-repeat' => 'ASDf1234',
+        ]);
+        $response->assertStatus(409);
 
         $response = $this->post('/api/reset-password',[
             'token' => 'pVaUA5fyKyuBYxjgaiEDyd5TFHyBNgsWBcRtdudzFJtjAw2SOkaatZbTrzLKRL9u',

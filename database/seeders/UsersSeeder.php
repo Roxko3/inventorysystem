@@ -81,7 +81,7 @@ class UsersSeeder extends Seeder
                 'id' => 7,
                 'email' => "dolgozo3@localhost",
                 'name' => "Nagy Tamás3",
-                'password' => bcrypt("asd123"),
+                'password' => bcrypt("ASDf1234"),
                 'permission' => 2,
                 'city' => "Kőszeg",
                 'shop_id' => 1,
