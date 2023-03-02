@@ -140,6 +140,7 @@ function Shops() {
                                         <Map
                                             key={city}
                                             location={city}
+                                            shops={pagination.data}
                                             height={300}
                                         />
                                     </Grid2>
