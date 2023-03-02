@@ -14,6 +14,7 @@ class Tokens extends Migration
     public function up()
     {
         Schema::create('Tokens', function (Blueprint $table) {
+            $table->id();
             $table->string('email')->index();
             $table->string('tokenPassword')->nullable();
             $table->timestamp('created_atPassword')->nullable();

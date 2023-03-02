@@ -25,12 +25,12 @@ class EmailVerificationController extends Controller
     {
         if (DB::table('users')->where('email', '=', $request->email)->value('email_verified_at') === null) {
             $token = Str::random(64);
-            if (DB::table('Tokens')->where('email', '=', $request->email)->exists()) {
-                DB::table('Tokens')
+            if (DB::table('tokens')->where('email', '=', $request->email)->exists()) {
+                DB::table('tokens')
                     ->where('email', 'LIKE', $request->email)
                     ->update(['tokenEmail' =>  $token, 'created_atEmail' => Carbon::now()->addHour()]);
             } else {
-                DB::table('Tokens')->insert([
+                DB::table('tokens')->insert([
                     'email' => $request->email,
                     'tokenEmail' => $token,
                     'created_atEmail' => Carbon::now()->addHour()
@@ -52,22 +52,22 @@ class EmailVerificationController extends Controller
             $user->notify(new EmailVerifyMail($verify));
             return ['message' => 'Email el lett küldve.'];
         } else {
-            return ['message' => 'Az Email már megvan erösitve.'];
+            return response(['message' => 'Az Email már megvan erösitve.'], 400);
         }
     }
 
     public function EmailVerify(EmailVerifyTokenRequest $request)
     {
-        $email = DB::table('Tokens')
+        $email = DB::table('tokens')
             ->where([
                 'tokenEmail' => $request->tokenEmail
             ])
             ->value('email');
 
-        $user = User::where('email', $email)
+        User::where('email', $email)
             ->update(['email_verified_at' => Carbon::now()->addHour()]);
 
-        DB::table('Tokens')->where(['email' => $email])->update(['tokenEmail' =>  null, 'created_atEmail' => null]);;
+        DB::table('tokens')->where(['email' => $email])->update(['tokenEmail' =>  null, 'created_atEmail' => null]);;
 
         return ['message' => 'Az Email megerősitve!'];
     }

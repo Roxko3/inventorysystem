@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             StorageSeeder::class,
             RatingSeeder::class,
             OpeningHoursSeeder::class,
+            TokenSeeder::class,
         ]);
     }
 }
