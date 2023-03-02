@@ -324,6 +324,7 @@ function Users() {
                 </Grid2>
                 <Box>
                     <DataGrid
+                        keepNonExistentRowsSelected
                         rows={users.map((users) => {
                             users["rank"] =
                                 users["permission"] == 10

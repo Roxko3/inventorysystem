@@ -433,6 +433,7 @@ function Storage() {
 
                 <Box>
                     <DataGrid
+                        keepNonExistentRowsSelected
                         rows={filter.map((storage) => {
                             storage[
                                 "stock"

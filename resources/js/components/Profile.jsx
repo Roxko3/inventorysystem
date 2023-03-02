@@ -800,7 +800,11 @@ function Profile() {
                             />
                         </Grid2>
                         <Grid2 sx={{ width: 330 }}>
-                            <Map key={City} location={City} height={330} />
+                            <Map
+                                key={City}
+                                location={City || ""}
+                                height={330}
+                            />
                         </Grid2>
                         <Grid2>
                             <Button

@@ -140,7 +140,7 @@ function Shops() {
                                             currentPage={
                                                 pagination.current_page
                                             }
-                                            height={300}
+                                            height={400}
                                         />
                                     </Grid2>
                                 </AccordionDetails>

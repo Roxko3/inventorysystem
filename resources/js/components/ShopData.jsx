@@ -103,7 +103,7 @@ function ShopData() {
                     setSeverity("success");
                     setalertMessage("Kép sikeresen megváltoztatva!");
                     setOpenAlert(true);
-                    //window.location.reload();
+                    window.location.reload();
                     console.log("upload iamge", response.data);
                 }
             })

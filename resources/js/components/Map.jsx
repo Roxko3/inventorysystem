@@ -163,7 +163,7 @@ function Map(props) {
                 <Marker position={[coords.lat, coords.lon]}>
                     <Popup>
                         {`${
-                            props.shop == undefined ? "" : props.shop
+                            props.shop == undefined || null ? "" : props.shop
                         } ${props.location.replace("+", ", ")}`}
                     </Popup>
                 </Marker>
