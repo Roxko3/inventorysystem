@@ -580,7 +580,8 @@ function Shop() {
                             >
                                 <Map
                                     key={shop.city}
-                                    location={`${shop.address}+${shop.city}`}
+                                    location={`${shop.city}+${shop.address}`}
+                                    shop={shop.name}
                                     height={330}
                                 />
                             </Grid2>

@@ -18,7 +18,7 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $shops = Shop::with("shopType")->where('is_deleted', 0)->paginate(8);
+        $shops = Shop::with("shopType")->where('is_deleted', 0)->paginate(4);
         return response()->json($shops);
     }
 

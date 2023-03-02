@@ -70,7 +70,6 @@ function ShopData() {
     const [openingHoursLoading, setOpeningHoursLoading] = useState(true);
     const [openingHour, setOpeningHour] = useState([]);
     const [openingReady, setOpeningReady] = useState(false);
-    const [newUser, setNewUser] = useState(user);
     var formData = new FormData();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -256,9 +255,8 @@ function ShopData() {
                     setOpenAlert(true);
                     setSeverity("success");
                     setalertMessage("Változtatások sikeresen elmentve!");
-                    //window.location.reload();
+                    window.location.reload();
                     console.log("update shop", response.data);
-                    setNewUser(response.data.user);
                     setIsDisabled(true);
                     setIsChanged(false);
                     //todo in good state
@@ -327,8 +325,7 @@ function ShopData() {
         getTypes();
         getOpeningHours();
         console.log("useeffect");
-        setUser(newUser);
-    }, [openingReady, newUser]);
+    }, [openingReady]);
 
     return (
         <Grid2
@@ -825,7 +822,8 @@ function ShopData() {
                         >
                             <Map
                                 key={city + address}
-                                location={`${address}+${city}`}
+                                location={`${city}+${address}`}
+                                shop={user.shop.name}
                                 height={300}
                             />
                         </Grid2>

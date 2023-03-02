@@ -27,7 +27,10 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import Verification from "./Verification";
 
 const ColorModeContext = createContext({ toggleColorMode: () => {} });
-export const UserContext = createContext({ user: null, setUser: () => {} });
+export const UserContext = createContext({
+    user: null,
+    setUser: () => {},
+});
 
 function App() {
     const navigate = useNavigate();

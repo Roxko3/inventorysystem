@@ -16,7 +16,9 @@ import {
 function Map(props) {
     const [coords, setCoords] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [shopsLoading, setShopsLoading] = useState(true);
     const [mapHeight, setMapHeight] = useState(0);
+    const [shopCoords, setShopCoords] = useState([]);
 
     const getCoords = async (location) => {
         await axios
@@ -33,11 +35,41 @@ function Map(props) {
             });
     };
 
+    let i = 0;
+    const getShopsCoords = async (location) => {
+        await axios
+            .get(
+                `https://nominatim.openstreetmap.org/search?q=${location}&format=json&polygon=1&addressdetails=1`
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    //shopCoords.push(response.data[0]);
+                    setShopCoords((oldArray) => [
+                        ...oldArray,
+                        response.data[0],
+                    ]);
+                    console.log("boltok", shopCoords);
+                    console.log(i);
+                    i++;
+                    if (i == props.shops.length) {
+                        setShopsLoading(false);
+                    }
+                }
+            });
+    };
+
     useEffect(() => {
         getCoords(props.location);
+        if (props.shops != undefined) {
+            props.shops.map((shops) => {
+                getShopsCoords(`${shops.city}+${shops.address}`);
+            });
+        } else {
+            setShopsLoading(false);
+        }
     }, []);
 
-    if (loading)
+    if (loading || shopsLoading)
         return (
             <Grid2 container justifyContent="center" alignItems="center">
                 <CircularProgress />
@@ -87,8 +119,23 @@ function Map(props) {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                {shopCoords.length > 0 &&
+                    shopCoords.map((coords) => {
+                        console.log(coords);
+                        <Marker position={[coords.lat, coords.lon]}>
+                            <Popup>
+                                {`${
+                                    props.shop == undefined ? "" : props.shop
+                                } ${props.location.replace("+", ", ")}`}
+                            </Popup>
+                        </Marker>;
+                    })}
                 <Marker position={[coords.lat, coords.lon]}>
-                    <Popup></Popup>
+                    <Popup>
+                        {`${
+                            props.shop == undefined ? "" : props.shop
+                        } ${props.location.replace("+", ", ")}`}
+                    </Popup>
                 </Marker>
             </MapContainer>
         </Grid2>
