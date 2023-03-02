@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Cookies from "js-cookie";
+import { delay } from "lodash";
 
 function Register() {
     const email = useRef("");
@@ -33,8 +34,7 @@ function Register() {
     const navigate = useNavigate();
 
     const register = async () => {
-        setRegistered(false);
-        await axios
+        axios
             .post("http://127.0.0.1/InventorySystem/public/api/register", {
                 email: email.current.value,
                 password: password.current.value,
@@ -51,7 +51,7 @@ function Register() {
                     setseverity("success");
                     setErrors([]);
                     setOpen(true);
-                    setRegistered(true);
+                    delay(verification(), 500);
                     //navigate("/login");
                     /*Cookies.set("token", response.data.token, {
                         expires: 7,
@@ -74,6 +74,25 @@ function Register() {
                     setOpen(true);
                 }
             });
+    };
+
+    const verification = async () => {
+        setRegistered(false);
+        axios
+            .post(
+                "http://127.0.0.1/InventorySystem/public/api/email/verification-notification",
+                {
+                    email: email.current.value,
+                }
+            )
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    setErrors([]);
+                    setRegistered(true);
+                }
+            })
+            .catch(() => {});
     };
 
     const handleClose = (reason) => {
@@ -197,7 +216,12 @@ function Register() {
                     )}
                 </Grid2>
                 <Grid2>
-                    <Button variant="contained" onClick={register}>
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            register();
+                        }}
+                    >
                         Regisztráció
                     </Button>
                 </Grid2>

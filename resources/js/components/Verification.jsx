@@ -47,6 +47,11 @@ function Verification() {
                 }
             })
             .catch((response) => {
+                if (response.response.status === 400) {
+                    //setIsSuccess(false);
+                    console.log(response.response.data);
+                    setErrors(response.response.data);
+                }
                 if (response.response.status === 422) {
                     //setIsSuccess(false);
                     console.log(response.response.data);
