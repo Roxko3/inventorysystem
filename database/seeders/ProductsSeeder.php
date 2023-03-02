@@ -17,21 +17,21 @@ class ProductsSeeder extends Seeder
         $data = [
             [
                 'id' => 1,
-                'name' => "tej",
+                'name' => "Tej",
                 'packaging' => "karton",
-                "unit_of_measure" => "liter",
+                "unit_of_measure" => "rekesz",
                 'type' => "élelmiszer"
             ],
             [
                 'id' => 2,
-                'name' => "sör",
+                'name' => "Bor",
                 'packaging' => "üveg",
-                "unit_of_measure" => "liter",
+                "unit_of_measure" => "darab",
                 'type' => "élelmiszer"
             ],
             [
                 'id' => 3,
-                'name' => "semle",
+                'name' => "Zsemle",
                 'packaging' => "nincs",
                 "unit_of_measure" => "darab",
                 'type' => "élelmiszer"
@@ -49,6 +49,6 @@ class ProductsSeeder extends Seeder
 
             $product->save();
         }
-        //Product::factory()->count(100)->create();
+        Product::factory()->count(500)->create();
     }
 }

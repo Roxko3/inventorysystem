@@ -56,6 +56,6 @@ class LogsSeeder extends Seeder
 
             $log->save();
         }
-        //Log::factory()->count(100)->create();
+        Log::factory()->count(200)->create();
     }
 }

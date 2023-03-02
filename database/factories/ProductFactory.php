@@ -16,13 +16,16 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->lexify('Product-???????'),
             'packaging' => $this->faker->randomElement([
+                'papír',
+                'műanyag',
                 'karton',
                 'üveg',
                 'nincs',
             ]),
             'unit_of_measure' => $this->faker->randomElement([
                 'darab',
-                'liter',
+                'karton',
+                'rekesz',
             ]),
             'type' => $this->faker->randomElement([
                 'élelmiszer',

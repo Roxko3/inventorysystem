@@ -129,6 +129,6 @@ class ShopsSeeder extends Seeder
 
             $shop->save();
         }
-        //Shop::factory()->count(10)->create();
+        Shop::factory()->count(10)->create();
     }
 }
