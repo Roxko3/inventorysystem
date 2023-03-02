@@ -12,6 +12,7 @@ import {
     Rectangle,
     Tooltip,
 } from "react-leaflet";
+import { Link } from "react-router-dom";
 
 function Map(props) {
     const [coords, setCoords] = useState([]);
@@ -46,7 +47,7 @@ function Map(props) {
                     //shopCoords.push(response.data[0]);
                     setShopCoords((oldArray) => [
                         ...oldArray,
-                        [response.data[0], data.name],
+                        [response.data[0], data],
                     ]);
                     console.log("boltok", shopCoords);
                     console.log(i);
@@ -130,7 +131,32 @@ function Map(props) {
                                 position={[coords[0].lat, coords[0].lon]}
                                 key={coords[0].lat + coords[0].lon}
                             >
-                                <Popup>{`${coords[1]}`}</Popup>
+                                <Popup>
+                                    {
+                                        <div>
+                                            <Typography variant="subtitle1">
+                                                {coords[1].name}
+                                            </Typography>
+                                            <Typography variant="body2">
+                                                {coords[1].city},{" "}
+                                                {coords[1].address}
+                                            </Typography>
+                                            <Link
+                                                to={`/shops/${coords[1].id}`}
+                                                state={{
+                                                    page: props.currentPage,
+                                                }}
+                                            >
+                                                <Typography
+                                                    variant="button"
+                                                    color="blue"
+                                                >
+                                                    Megtekintés
+                                                </Typography>
+                                            </Link>
+                                        </div>
+                                    }
+                                </Popup>
                             </Marker>
                         );
                     })}

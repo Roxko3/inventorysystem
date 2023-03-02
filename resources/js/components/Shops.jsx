@@ -141,6 +141,9 @@ function Shops() {
                                             key={city}
                                             location={city}
                                             shops={pagination.data}
+                                            currentPage={
+                                                pagination.current_page
+                                            }
                                             height={300}
                                         />
                                     </Grid2>
