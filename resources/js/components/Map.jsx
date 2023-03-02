@@ -1,4 +1,4 @@
-import { Error } from "@mui/icons-material";
+import { Error, KeyboardReturnOutlined } from "@mui/icons-material";
 import { Button, CircularProgress, Typography, useTheme } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
@@ -36,7 +36,7 @@ function Map(props) {
     };
 
     let i = 0;
-    const getShopsCoords = async (location) => {
+    const getShopsCoords = async (location, data) => {
         await axios
             .get(
                 `https://nominatim.openstreetmap.org/search?q=${location}&format=json&polygon=1&addressdetails=1`
@@ -46,7 +46,7 @@ function Map(props) {
                     //shopCoords.push(response.data[0]);
                     setShopCoords((oldArray) => [
                         ...oldArray,
-                        response.data[0],
+                        [response.data[0], data.name],
                     ]);
                     console.log("boltok", shopCoords);
                     console.log(i);
@@ -62,7 +62,7 @@ function Map(props) {
         getCoords(props.location);
         if (props.shops != undefined) {
             props.shops.map((shops) => {
-                getShopsCoords(`${shops.city}+${shops.address}`);
+                getShopsCoords(`${shops.city}+${shops.address}`, shops);
             });
         } else {
             setShopsLoading(false);
@@ -122,13 +122,17 @@ function Map(props) {
                 {shopCoords.length > 0 &&
                     shopCoords.map((coords) => {
                         console.log(coords);
-                        <Marker position={[coords.lat, coords.lon]}>
-                            <Popup>
-                                {`${
-                                    props.shop == undefined ? "" : props.shop
-                                } ${props.location.replace("+", ", ")}`}
-                            </Popup>
-                        </Marker>;
+                        if (coords[0] == undefined) {
+                            return;
+                        }
+                        return (
+                            <Marker
+                                position={[coords[0].lat, coords[0].lon]}
+                                key={coords[0].lat + coords[0].lon}
+                            >
+                                <Popup>{`${coords[1]}`}</Popup>
+                            </Marker>
+                        );
                     })}
                 <Marker position={[coords.lat, coords.lon]}>
                     <Popup>
