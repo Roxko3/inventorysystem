@@ -36,6 +36,14 @@ class EmailVerificationControllerTest extends TestCase
             'email' => 'admin@localhost'
         ]);
         $response->assertStatus(400);
+        $response = $this->post('/api/email/verification-notification', [
+            'email' => 'dolgozo3@localhost'
+        ]);
+        $response->assertStatus(200);
+
+
+
+        
     }
     public function test_Email_verify()
     {

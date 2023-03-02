@@ -77,6 +77,16 @@ class UsersSeeder extends Seeder
                 'shop_id' => 2,
                 'email_verified_at' => Carbon::parse("2022-12-30")
             ],
+            [
+                'id' => 7,
+                'email' => "dolgozo3@localhost",
+                'name' => "Nagy Tamás3",
+                'password' => bcrypt("asd123"),
+                'permission' => 2,
+                'city' => "Kőszeg",
+                'shop_id' => 1,
+                
+            ],
         ];
         foreach ($data as $item) {
             $user = User::firstOrNew([

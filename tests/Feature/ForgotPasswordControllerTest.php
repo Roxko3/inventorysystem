@@ -39,6 +39,10 @@ class ForgotPasswordControllerTest extends TestCase
             'email' => 'vasarlo3@localhost'
         ]);
         $response->assertStatus(200);
+        $response = $this->post('/api/forget-password',[
+            'email' => 'dolgozo3@localhost'
+        ]);
+        $response->assertStatus(200);
     }
     public function test_use_password_token()
     {
