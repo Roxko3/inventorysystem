@@ -15,7 +15,6 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Cookies from "js-cookie";
-import { delay } from "lodash";
 
 function Register() {
     const email = useRef("");
@@ -51,7 +50,9 @@ function Register() {
                     setseverity("success");
                     setErrors([]);
                     setOpen(true);
-                    delay(verification(), 500);
+                    setTimeout(() => {
+                        verification();
+                    }, 500);
                     //navigate("/login");
                     /*Cookies.set("token", response.data.token, {
                         expires: 7,

@@ -105,7 +105,7 @@ function Navbar(props) {
                             <Storefront />
                         </IconButton>
                     </Tooltip>
-                    <Link to="/home">
+                    <Link to={{ pathname: "/home", search: "?page=0" }}>
                         <Image
                             src="/InventorySystem/public/storage/logo.png"
                             width="150px"

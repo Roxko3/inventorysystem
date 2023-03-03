@@ -9,6 +9,7 @@ import {
     Tabs,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { useEffect } from "react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Log from "./Log";
@@ -28,6 +29,12 @@ function Yourshop() {
         navigate({ pathname: "/home", search: `?page=${newValue}` });
         setValue(newValue);
     };
+
+    useEffect(() => {
+        if (location.search == "") {
+            navigate({ pathname: "/home", search: `?page=0` });
+        }
+    }, []);
 
     return (
         <Box>
