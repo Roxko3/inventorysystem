@@ -146,7 +146,7 @@ function Shop() {
         document.title = `Inventory System - ${shop.name || "Nincs találat"}`;
         getShop();
         getStorage(`shops/searchStorage/${id}`);
-    }, [order, field, search, value]);
+    }, [order, field, search, value, ratingDisabled]);
 
     const columns = [
         {
@@ -499,7 +499,7 @@ function Shop() {
                                         precision={0.1}
                                     />
                                     <Typography>
-                                        {shop.rating.toFixed(2)}
+                                        Átlag: {shop.rating.toFixed(2)}
                                     </Typography>
                                 </Grid2>
                             </Grid2>
@@ -512,7 +512,7 @@ function Shop() {
                                     gap={2}
                                 >
                                     <Rating value={5} readOnly />
-                                    <Typography>{rating.star5}</Typography>
+                                    <Typography>{rating.star5} db</Typography>
                                 </Grid2>
                             </Grid2>
                             <Grid2 item>
@@ -524,7 +524,7 @@ function Shop() {
                                     gap={2}
                                 >
                                     <Rating value={4} readOnly />
-                                    <Typography>{rating.star4}</Typography>
+                                    <Typography>{rating.star4} db</Typography>
                                 </Grid2>
                             </Grid2>
                             <Grid2 item>
@@ -536,7 +536,7 @@ function Shop() {
                                     gap={2}
                                 >
                                     <Rating value={3} readOnly />
-                                    <Typography>{rating.star3}</Typography>
+                                    <Typography>{rating.star3} db</Typography>
                                 </Grid2>
                             </Grid2>
                             <Grid2 item>
@@ -548,7 +548,7 @@ function Shop() {
                                     gap={2}
                                 >
                                     <Rating value={2} readOnly />
-                                    <Typography>{rating.star2}</Typography>
+                                    <Typography>{rating.star2} db</Typography>
                                 </Grid2>
                             </Grid2>
                             <Grid2 item>
@@ -560,7 +560,7 @@ function Shop() {
                                     gap={2}
                                 >
                                     <Rating value={1} readOnly />
-                                    <Typography>{rating.star1}</Typography>
+                                    <Typography>{rating.star1} db</Typography>
                                 </Grid2>
                             </Grid2>
                         </Grid2>
