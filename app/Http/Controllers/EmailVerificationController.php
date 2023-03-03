@@ -43,16 +43,16 @@ class EmailVerificationController extends Controller
                 ])->first();
             $verify = [
                 'greeting' => 'Hello ' . $user->name . ',',
-                'body' => 'E-mail megerősítő.',
-                'thanks' => 'Köszönjűk, hogy minket választottak, InventorySystem csapata.',
-                'actionText' => 'E-mail megerősítés.',
+                'body' => 'Az alábbi gombra kattintva tudja e-mail címét megerősíteni:',
+                'thanks' => 'Köszönjük, hogy minket választottak, InventorySystem csapata.',
+                'actionText' => 'E-mail megerősítés',
                 'actionURL' => url('/verification?tokenEmail=' . $token),
             ];
 
             $user->notify(new EmailVerifyMail($verify));
-            return ['message' => 'Email el lett küldve.'];
+            return ['message' => 'E-mail sikeresen elküldve.'];
         } else {
-            return response(['message' => 'Az Email már megvan erösitve.'], 400);
+            return response(['message' => 'Az E-mail cím már meg van erősítve.'], 400);
         }
     }
 
@@ -69,6 +69,6 @@ class EmailVerificationController extends Controller
 
         DB::table('tokens')->where(['email' => $email])->update(['tokenEmail' =>  null, 'created_atEmail' => null]);;
 
-        return ['message' => 'Az Email megerősitve!'];
+        return ['message' => 'E-mail sikeresen megerősitve!'];
     }
 }

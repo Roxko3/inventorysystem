@@ -38,14 +38,14 @@ class ForgotPasswordController extends Controller
 
     $password = [
       'greeting' => 'Hello ' . $user->name . ',',
-      'body' => 'Ez a jelszó visszaállító E-mail.',
+      'body' => 'Az alábbi gombra kattintva tudja elfelejtett jelszavát megváltoztatni:',
       'thanks' => 'Köszönjük, hogy minket választottak, InventorySystem csapata.',
       'actionText' => 'Jelszó visszaállítás',
       'actionURL' => url('/forgotpass?token=' . $token),
     ];
 
     $user->notify(new PasswordResetEmail($password));
-    return ['message' => 'Email el lett küldve.'];
+    return ['message' => 'E-mail sikeresen elküldve.'];
   }
 
   public function ResetPassword(PasswordReset $request)
@@ -53,17 +53,17 @@ class ForgotPasswordController extends Controller
     $email = DB::table('Tokens')
       ->where([
         'tokenPassword' => $request->token
-        ])
-        -> value('email');
-        
-        if (Hash::check($request->password, User::where('email', $email)->value('password'))) {
-          return response(['password'=> 'A jelszód nem lehet a már meglévő!'],409);
-        }
-        else { User::where('email', $email)
-          ->update(['password' => Hash::make($request->password)]);
-   
-          DB::table('Tokens')->where(['email'=> $email])->update(['tokenPassword' =>  null, 'created_atPassword' => null]);
-          return ['message', 'A jelszód megváltozot!'];}
-      }
-     
+      ])
+      ->value('email');
+
+    if (Hash::check($request->password, User::where('email', $email)->value('password'))) {
+      return response(['password' => 'Az új jelszó nem egyezhet az ön jelenlegi jelszavával!'], 409);
+    } else {
+      User::where('email', $email)
+        ->update(['password' => Hash::make($request->password)]);
+
+      DB::table('Tokens')->where(['email' => $email])->update(['tokenPassword' =>  null, 'created_atPassword' => null]);
+      return ['message', 'Jelszó sikeresen megváltoztatva!'];
+    }
+  }
 }
