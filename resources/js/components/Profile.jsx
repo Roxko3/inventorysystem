@@ -705,7 +705,12 @@ function Profile() {
                                     height: 300,
                                 }}
                             >
-                                <Link to={`/shops/${user.shop.id}`}>
+                                <Link
+                                    to={{
+                                        pathname: `/shops/${user.shop.id}`,
+                                        search: `?page=profile`,
+                                    }}
+                                >
                                     <CardActionArea>
                                         <CardMedia
                                             sx={{
