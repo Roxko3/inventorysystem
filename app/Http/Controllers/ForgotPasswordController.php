@@ -41,7 +41,7 @@ class ForgotPasswordController extends Controller
       'body' => 'Ez a jelszó visszaállító E-mail.',
       'thanks' => 'Köszönjük, hogy minket választottak, InventorySystem csapata.',
       'actionText' => 'Jelszó visszaállítás',
-      'actionURL' => url('/InventorySystem/public/forgotpass?token=' . $token),
+      'actionURL' => url('/forgotpass?token=' . $token),
     ];
 
     $user->notify(new PasswordResetEmail($password));
