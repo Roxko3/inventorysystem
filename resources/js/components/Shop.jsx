@@ -41,6 +41,7 @@ function Shop() {
     const [alertMessage, setalertMessage] = useState("");
     const [isGridLoading, setIsGridLoading] = useState(true);
     const [gridLoading, setGridLoading] = useState(true);
+    const [ratingDisabled, setRatingDisabled] = useState(false);
     const { id } = useParams();
     const cookie = Cookies.get("token");
     const location = useLocation();
@@ -113,7 +114,8 @@ function Shop() {
             });
     };
 
-    const rate = (value) => {
+    const rate = async (value) => {
+        setRatingDisabled(true);
         axios
             .post(
                 `http://127.0.0.1/InventorySystem/public/api/shops/rate/${id}`,
@@ -127,7 +129,13 @@ function Shop() {
                     },
                 }
             )
-            .then((response) => {})
+            .then((response) => {
+                if (response.status === 200) {
+                    setTimeout(() => {
+                        setRatingDisabled(false);
+                    }, 5000);
+                }
+            })
             .catch((response) => {
                 setOpenAlert(true);
                 setalertMessage(response.response.data);
@@ -446,17 +454,34 @@ function Shop() {
                                             Dolgozók nem értékelhetnek
                                         </Typography>
                                     ) : (
-                                        <Rating
-                                            value={value}
-                                            onChange={(event, newValue) => {
-                                                setValue(newValue);
-                                                if (newValue == null) {
-                                                    rate(0);
-                                                } else {
-                                                    rate(newValue);
-                                                }
-                                            }}
-                                        />
+                                        <Grid2 item>
+                                            <Grid2
+                                                container
+                                                direction="row"
+                                                justifyContent="flex-start"
+                                                alignItems="center"
+                                                gap={2}
+                                            >
+                                                <Rating
+                                                    disabled={ratingDisabled}
+                                                    value={value}
+                                                    onChange={(
+                                                        event,
+                                                        newValue
+                                                    ) => {
+                                                        setValue(newValue);
+                                                        if (newValue == null) {
+                                                            rate(0);
+                                                        } else {
+                                                            rate(newValue);
+                                                        }
+                                                    }}
+                                                />
+                                                <Typography>
+                                                    Saját Értékelés
+                                                </Typography>
+                                            </Grid2>
+                                        </Grid2>
                                     )}
                                 </Grid2>
                             </Grid2>
