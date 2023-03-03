@@ -44,6 +44,7 @@ class InviteMail extends Notification
     {
        
         return (new MailMessage)
+        ->subject("Meghívó")
         ->greeting($this->Invite['greeting'])
         ->line($this->Invite['body'])
         ->action($this->Invite['actionText'], $this->Invite['actionURL'])

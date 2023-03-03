@@ -41,6 +41,7 @@ class PasswordResetEmail extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+        ->subject("Jelszó visszaállítás")
         ->greeting($this->resetpassword['greeting'])
         ->line($this->resetpassword['body'])
         ->action($this->resetpassword['actionText'], $this->resetpassword['actionURL'])

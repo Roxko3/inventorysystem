@@ -41,6 +41,7 @@ class EmailVerifyMail extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+        ->subject("Megerősítő e-mail")
         ->greeting($this->EmailVerify['greeting'])
         ->line($this->EmailVerify['body'])
         ->action($this->EmailVerify['actionText'], $this->EmailVerify['actionURL'])
