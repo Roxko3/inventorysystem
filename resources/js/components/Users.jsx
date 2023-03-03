@@ -153,6 +153,9 @@ function Users() {
                     setOpen(true);
                     setalertMessage("Dolgozó sikeresen módosítva!");
                     console.log("update worker", response.data);
+                    if (permission.current.value == 10) {
+                        window.location.reload();
+                    }
                 }
             })
             .catch((response) => {

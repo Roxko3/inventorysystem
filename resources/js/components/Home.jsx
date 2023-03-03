@@ -427,7 +427,7 @@ function Home() {
                                     </Grid2>
                                     <Grid2>
                                         <Map
-                                            key={(shopCity, shopAddress)}
+                                            key={shopCity + shopAddress}
                                             location={
                                                 `${shopAddress}+${shopCity}` ==
                                                 "+"

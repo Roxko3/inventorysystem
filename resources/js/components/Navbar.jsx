@@ -165,12 +165,20 @@ function Navbar(props) {
                             }}
                         >
                             <MyAvatar />
-                            <Typography
-                                variant="p"
-                                sx={{ display: { xs: "none", sm: "block" } }}
-                            >
-                                {user.name}
-                            </Typography>
+                            <Tooltip title={user.name}>
+                                <Typography
+                                    variant="p"
+                                    sx={{
+                                        display: { xs: "none", sm: "block" },
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        maxWidth: "130px",
+                                    }}
+                                >
+                                    {user.name}
+                                </Typography>
+                            </Tooltip>
                         </Box>
                     </Box>
                 </Toolbar>
@@ -190,7 +198,13 @@ function Navbar(props) {
                     <Typography
                         align="center"
                         variant="body1"
-                        sx={{ display: { xs: "block", sm: "none" } }}
+                        sx={{
+                            display: { xs: "block", sm: "none" },
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            maxWidth: "130px",
+                        }}
                     >
                         {user.name}
                     </Typography>
