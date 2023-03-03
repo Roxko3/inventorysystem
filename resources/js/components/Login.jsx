@@ -45,7 +45,7 @@ function Login() {
                     setseverity("success");
                     setErrors([]);
                     setOpen(true);
-                    navigate("/home");
+                    navigate({ pathname: "/home", search: `?page=0` });
                     setUser(response.data.user);
                     console.log(response.data.user);
                     Cookies.set("token", response.data.token, {
