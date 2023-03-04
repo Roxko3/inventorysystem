@@ -158,7 +158,7 @@ function Login() {
                         <Button variant="text">Regisztráció</Button>
                     </Link>
                     <br />
-                    <Link to="/forgotpass" reloadDocument>
+                    <Link to="/forgotpass">
                         <Button variant="text">Elfelejtett jelszó</Button>
                     </Link>
                 </Grid2>

@@ -1,5 +1,11 @@
 import { Error, KeyboardReturnOutlined } from "@mui/icons-material";
-import { Button, CircularProgress, Typography, useTheme } from "@mui/material";
+import {
+    Button,
+    CircularProgress,
+    LinearProgress,
+    Typography,
+    useTheme,
+} from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
 import {
@@ -20,6 +26,7 @@ function Map(props) {
     const [shopsLoading, setShopsLoading] = useState(true);
     const [mapHeight, setMapHeight] = useState(0);
     const [shopCoords, setShopCoords] = useState([]);
+    const [progress, setProgress] = useState(0);
 
     const getCoords = async (location) => {
         await axios
@@ -52,6 +59,7 @@ function Map(props) {
                     console.log("boltok", shopCoords);
                     console.log(i);
                     i++;
+                    setProgress((i / props.shops.length) * 100);
                     if (i == props.shops.length) {
                         setShopsLoading(false);
                     }
@@ -72,8 +80,23 @@ function Map(props) {
 
     if (loading || shopsLoading)
         return (
-            <Grid2 container justifyContent="center" alignItems="center">
-                <CircularProgress />
+            <Grid2>
+                {props.shops != null ? (
+                    <Grid2>
+                        <LinearProgress
+                            variant="determinate"
+                            value={progress}
+                        />
+                    </Grid2>
+                ) : (
+                    <Grid2
+                        container
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <CircularProgress />
+                    </Grid2>
+                )}
             </Grid2>
         );
 
@@ -91,10 +114,21 @@ function Map(props) {
                 }}
                 height="100%"
             >
-                <Error color="error" />
-                <Typography sx={{ color: "red" }} variant="h4">
-                    Nem található a megadott hely!
-                </Typography>
+                <Grid2
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <Error color="error" />
+                    <Typography
+                        sx={{ color: "red" }}
+                        variant="h4"
+                        align="center"
+                    >
+                        Nem található a megadott hely!
+                    </Typography>
+                </Grid2>
             </Grid2>
         );
 

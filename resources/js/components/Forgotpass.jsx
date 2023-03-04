@@ -18,9 +18,7 @@ import axios from "axios";
 function Forgotpass() {
     const location = useLocation();
     const navigate = useNavigate();
-    const [emailSent, setEmailSent] = useState(
-        location.state.token != undefined
-    );
+    const [emailSent, setEmailSent] = useState(location.search != "");
     const email = useRef("");
     const password = useRef("");
     const passwordAgain = useRef("");
@@ -61,7 +59,7 @@ function Forgotpass() {
             .post(
                 `http://127.0.0.1/InventorySystem/public/api/reset-password`,
                 {
-                    token: location.state.token,
+                    token: location.search.split("=")[1],
                     password: password.current.value,
                     "password-repeat": passwordAgain.current.value,
                 }
@@ -79,7 +77,7 @@ function Forgotpass() {
 
     useEffect(() => {
         document.title = "Inventory System - Elfelejtett jelszó";
-        console.log(location.state.token);
+        console.log(location.search.split("=")[1]);
         //window.sessionStorage.setItem("token", location.state.token);
     }, []);
 
