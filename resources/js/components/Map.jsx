@@ -68,7 +68,35 @@ function Map(props) {
     };
 
     useEffect(() => {
-        getCoords(props.location);
+        if (props.location == null) {
+            setCoords({
+                place_id: 307735273,
+                licence:
+                    "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+                osm_type: "relation",
+                osm_id: 21335,
+                boundingbox: [
+                    "45.737128",
+                    "48.585257",
+                    "16.1138866",
+                    "22.8977094",
+                ],
+                lat: "47.1817585",
+                lon: "19.5060937",
+                display_name: "Magyarország",
+                class: "boundary",
+                type: "administrative",
+                importance: 0.8082845952630475,
+                icon: "https://nominatim.openstreetmap.org/ui/mapicons/poi_boundary_administrative.p.20.png",
+                address: {
+                    country: "Magyarország",
+                    country_code: "hu",
+                },
+            });
+            setLoading(false);
+        } else {
+            getCoords(props.location);
+        }
         if (props.shops != undefined) {
             props.shops.map((shops) => {
                 getShopsCoords(`${shops.city}+${shops.address}`, shops);
@@ -132,12 +160,6 @@ function Map(props) {
             </Grid2>
         );
 
-    const rectangle = [
-        [coords.boundingbox[0], coords.boundingbox[2]],
-        [coords.boundingbox[1], coords.boundingbox[3]],
-    ];
-    const purpleOptions = { color: "purple" };
-
     return (
         <Grid2 height="100%" sx={{ height: props.height }}>
             <MapContainer
@@ -196,9 +218,13 @@ function Map(props) {
                     })}
                 <Marker position={[coords.lat, coords.lon]}>
                     <Popup>
-                        {`${
-                            props.shop == undefined || null ? "" : props.shop
-                        } ${props.location.replace("+", ", ")}`}
+                        {props.location != null
+                            ? `${
+                                  props.shop == undefined || null
+                                      ? ""
+                                      : props.shop
+                              } ${props.location.replace("+", ", ")}`
+                            : `${coords.display_name}`}
                     </Popup>
                 </Marker>
             </MapContainer>

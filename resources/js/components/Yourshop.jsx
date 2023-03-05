@@ -50,7 +50,7 @@ function Yourshop() {
                         {/*<Tab label="Termékek"></Tab>*/}
                         <Tab label="Raktár"></Tab>
                         <Tab label="Dolgozók"></Tab>
-                        <Tab label="Logok"></Tab>
+                        <Tab label="Napló"></Tab>
                     </Tabs>
                 </Box>
                 <TabPanel

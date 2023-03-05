@@ -1,10 +1,4 @@
-import {
-    matchRoutes,
-    Route,
-    Routes,
-    useLocation,
-    useNavigate,
-} from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Forgotpass from "./Forgotpass";
 import Home from "./Home";
 import Login from "./Login";
@@ -14,13 +8,12 @@ import Register from "./Register";
 import Shops from "./Shops";
 import Shop from "./Shop";
 import Navbar from "./Navbar";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import {
     Box,
     CircularProgress,
     createTheme,
     ThemeProvider,
-    useTheme,
 } from "@mui/material";
 import Cookies from "js-cookie";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -86,7 +79,8 @@ function App() {
                         location.pathname == "/login" ||
                         location.pathname == "/register" ||
                         location.pathname == "/forgotpass" ||
-                        location.pathname == "/verification"
+                        location.pathname == "/verification" ||
+                        location.pathname == "/"
                     ) {
                         navigate("/home", { replace: true });
                     }
@@ -97,12 +91,7 @@ function App() {
                 if (response.response.status == 401) {
                     setLoading(false);
                     console.log("location", location);
-                    if (location.pathname.includes("forgotpass")) {
-                        navigate("/forgotpass", {
-                            replace: true,
-                            state: { token: location.search.split("=")[1] },
-                        });
-                    } else if (
+                    if (
                         location.pathname != "/login" &&
                         location.pathname != "/register" &&
                         location.pathname != "/forgotpass" &&
@@ -132,7 +121,10 @@ function App() {
                     <Box
                         bgcolor={"background.default"}
                         color={"text.primary"}
-                        sx={{ overflow: "hidden", overflowY: "auto" }}
+                        sx={{
+                            overflow: "hidden",
+                            overflowY: "auto",
+                        }}
                     >
                         <Routes>
                             <Route
@@ -155,7 +147,7 @@ function App() {
                                 path="/verification"
                                 element={<Verification />}
                             />
-                            <Route path="*" element={<Notfound />} />
+                            <Route path="*" element={<Notfound />} />{" "}
                         </Routes>
                     </Box>
                 </ThemeProvider>
