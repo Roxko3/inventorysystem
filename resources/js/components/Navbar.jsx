@@ -105,13 +105,15 @@ function Navbar(props) {
                             <Storefront />
                         </IconButton>
                     </Tooltip>
-                    <Link to={{ pathname: "/home", search: "?page=0" }}>
-                        <Image
-                            src="/InventorySystem/public/storage/logo.png"
-                            width="150px"
-                            duration={500}
-                        />
-                    </Link>
+                    <Tooltip title="Főoldal" followCursor placement="top">
+                        <Link to={{ pathname: "/home", search: "?page=0" }}>
+                            <Image
+                                src="/InventorySystem/public/storage/logo.png"
+                                width="150px"
+                                duration={500}
+                            />
+                        </Link>
+                    </Tooltip>
                     <Box sx={{ display: { xs: "none", sm: "block" } }}>
                         <Link to="/shops">
                             <Button sx={{ color: "white" }}>Boltok</Button>
@@ -195,19 +197,21 @@ function Navbar(props) {
                         horizontal: "right",
                     }}
                 >
-                    <Typography
-                        align="center"
-                        variant="body1"
-                        sx={{
-                            display: { xs: "block", sm: "none" },
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            maxWidth: "130px",
-                        }}
-                    >
-                        {user.name}
-                    </Typography>
+                    <Tooltip title={user.name}>
+                        <Typography
+                            align="center"
+                            variant="body1"
+                            sx={{
+                                display: { xs: "block", sm: "none" },
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                maxWidth: "130px",
+                            }}
+                        >
+                            {user.name}
+                        </Typography>
+                    </Tooltip>
                     <Divider sx={{ display: { xs: "block", sm: "none" } }} />
                     <Link to="/profile">
                         <MenuItem onClick={handleClose}>Profil</MenuItem>
