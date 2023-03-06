@@ -165,7 +165,6 @@ class StorageControllerTest extends TestCase
 
     public function test_update()
     {
-        //$this->artisan('migrate:fresh');
         $this->seed();
 
         $response = $this->post('api/login', [
