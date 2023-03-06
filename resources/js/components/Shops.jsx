@@ -246,7 +246,7 @@ function Shops() {
                                                 .split("api")[1]
                                                 .split("=")[0] + `=${value}`
                                         );
-                                        setSearchParams(value);
+                                        etSearchParams(`?page=${value}`);
                                     } else {
                                         setLoading(true);
                                         getShops(
@@ -254,7 +254,7 @@ function Shops() {
                                                 .split("api")[1]
                                                 .split("=")[0] + `=${value}`
                                         );
-                                        setSearchParams(value);
+                                        setSearchParams(`?page=${value}`);
                                     }
                                 }}
                             />
