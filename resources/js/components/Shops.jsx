@@ -56,7 +56,7 @@ function Shops() {
                 if (response.status === 200) {
                     setShops(response.data.data);
                     setPagination(response.data);
-                    console.log("test", response.data);
+                    //console.log("test", response.data);
                     setLoading(false);
                 }
             });
@@ -64,7 +64,7 @@ function Shops() {
 
     useEffect(() => {
         document.title = "Inventory System - Boltok";
-        console.log(location);
+        //console.log(location);
         getShops(`shops?${searchParams}`);
     }, []);
 

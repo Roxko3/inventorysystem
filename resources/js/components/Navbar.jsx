@@ -81,10 +81,10 @@ function Navbar(props) {
             )
             .then((response) => {
                 Cookies.remove("token");
-                console.log("Sikeres kijelentkezés!");
+                //console.log("Sikeres kijelentkezés!");
             })
             .catch((response) => {
-                console.log("Sikertelen kijelentkezés!");
+                //console.log("Sikertelen kijelentkezés!");
             });
     };
 

@@ -76,7 +76,7 @@ function Profile() {
 
     const upload = (e) => {
         handleClose();
-        console.log(e.target.files[0]);
+        //console.log(e.target.files[0]);
         formData.append("image", e.target.files[0]);
         uploadImage();
     };
@@ -123,7 +123,7 @@ function Profile() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setSeverity("success");
                     setalertMessage("Kép sikeresen törölve!");
                     setOpenAlert(true);
@@ -132,7 +132,7 @@ function Profile() {
             })
             .catch((response) => {
                 if (response.response.status === 422) {
-                    console.log(response.response.data);
+                    //console.log(response.response.data);
                     setSeverity("error");
                     setalertMessage("Valami hiba történt!");
                     setOpenAlert(true);
@@ -228,14 +228,14 @@ function Profile() {
                     setSeverity("success");
                     setalertMessage(response.data);
                     window.location.reload();
-                    console.log("email,name", response.data);
+                    //console.log("email,name", response.data);
                     //todo
                 }
             })
             .catch((response) => {
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
-                    console.log(response.response.data);
+                    //console.log(response.response.data);
                 }
                 if (response.response.status === 409) {
                     setErrors(response.response.data);
@@ -287,7 +287,7 @@ function Profile() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     window.location.reload();
                 }
             });
@@ -307,7 +307,7 @@ function Profile() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setalertMessage(response.data);
                     setOpenAlert(true);
                     setSeverity("success");

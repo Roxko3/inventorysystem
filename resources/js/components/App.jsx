@@ -72,8 +72,8 @@ function App() {
                     } else {
                         setUser(response.data);
                     }
-                    console.log("response", response.data);
-                    console.log("context", user);
+                    //console.log("response", response.data);
+                    //console.log("context", user);
                     setLoading(false);
                     if (
                         location.pathname == "/login" ||
@@ -84,13 +84,13 @@ function App() {
                     ) {
                         navigate("/home", { replace: true });
                     }
-                    console.log("location", location);
+                    //console.log("location", location);
                 }
             })
             .catch((response) => {
                 if (response.response.status == 401) {
                     setLoading(false);
-                    console.log("location", location);
+                    //console.log("location", location);
                     if (
                         location.pathname != "/login" &&
                         location.pathname != "/register" &&

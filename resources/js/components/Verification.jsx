@@ -20,13 +20,13 @@ function Verification() {
             .then((response) => {
                 if (response.status === 200) {
                     setIsSuccess(true);
-                    console.log(response.data);
+                    //console.log(response.data);
                 }
             })
             .catch((response) => {
                 if (response.response.status === 422) {
                     setIsSuccess(false);
-                    console.log("error", token);
+                    //console.log("error", token);
                 }
             });
     };
@@ -41,7 +41,7 @@ function Verification() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setErrors([]);
                     setIsSuccess(true);
                 }
@@ -49,12 +49,12 @@ function Verification() {
             .catch((response) => {
                 if (response.response.status === 400) {
                     //setIsSuccess(false);
-                    console.log(response.response.data);
+                    //console.log(response.response.data);
                     setErrors(response.response.data);
                 }
                 if (response.response.status === 422) {
                     //setIsSuccess(false);
-                    console.log(response.response.data);
+                    //console.log(response.response.data);
                     setErrors(response.response.data);
                 }
             });
@@ -63,7 +63,7 @@ function Verification() {
     useEffect(() => {
         document.title = "Inventory System - Hitelesítés";
         verify(location.search.split("=")[1]);
-        console.log(location.search.split("=")[1]);
+        //console.log(location.search.split("=")[1]);
     }, []);
 
     return (

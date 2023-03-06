@@ -39,7 +39,7 @@ function Forgotpass() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     //setEmailSent(true);
                     setErrors(response.data);
                     setLoading(false);
@@ -65,7 +65,7 @@ function Forgotpass() {
                 }
             )
             .then((response) => {
-                console.log(response.data);
+                //console.log(response.data);
                 navigate("/login", { replace: true });
             })
             .catch((response) => {
@@ -77,7 +77,7 @@ function Forgotpass() {
 
     useEffect(() => {
         document.title = "Inventory System - Elfelejtett jelszó";
-        console.log(location.search.split("=")[1]);
+        //console.log(location.search.split("=")[1]);
         //window.sessionStorage.setItem("token", location.state.token);
     }, []);
 

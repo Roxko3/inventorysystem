@@ -36,9 +36,9 @@ function Map(props) {
             .then((response) => {
                 if (response.status === 200) {
                     setCoords(response.data[0]);
-                    console.log("map response", response.data);
+                    //console.log("map response", response.data);
                     setLoading(false);
-                    console.log("map location", location);
+                    //console.log("map location", location);
                 }
             });
     };
@@ -56,8 +56,8 @@ function Map(props) {
                         ...oldArray,
                         [response.data[0], data],
                     ]);
-                    console.log("boltok", shopCoords);
-                    console.log(i);
+                    //console.log("boltok", shopCoords);
+                    //console.log(i);
                     i++;
                     setProgress((i / props.shops.length) * 100);
                     if (i == props.shops.length) {
@@ -178,7 +178,7 @@ function Map(props) {
                 />
                 {shopCoords.length > 0 &&
                     shopCoords.map((coords) => {
-                        console.log(coords);
+                        //console.log(coords);
                         if (coords[0] == undefined) {
                             return;
                         }

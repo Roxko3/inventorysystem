@@ -47,7 +47,7 @@ function Login() {
                     setOpen(true);
                     navigate({ pathname: "/home", search: `?page=0` });
                     setUser(response.data.user);
-                    console.log(response.data.user);
+                    //console.log(response.data.user);
                     Cookies.set("token", response.data.token, {
                         expires: 7,
                         path: "/",
@@ -63,13 +63,13 @@ function Login() {
                     response.response.data.message == null
                 ) {
                     setErrors(response.response.data);
-                    console.log(response.response.data);
+                    //console.log(response.response.data);
                 } else {
                     setalertMessage(response.response.data.message);
                     setseverity("error");
                     setOpen(true);
                     setErrors([]);
-                    console.log(response.response.data);
+                    //console.log(response.response.data);
                 }
                 if (response.response.status === 403) {
                     setalertMessage(response.response.data.message);
