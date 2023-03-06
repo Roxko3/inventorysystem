@@ -64,7 +64,7 @@ function Shop() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setShop(response.data.shop);
                     setRating(response.data.ratings);
                     setValue(response.data.your_rating);

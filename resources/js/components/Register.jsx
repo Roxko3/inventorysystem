@@ -64,7 +64,7 @@ function Register() {
             .catch((response) => {
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
-                    console.log(response.response.data);
+                    //console.log(response.response.data);
                 } else {
                     //email.current.value = "";
                     //password.current.value = "";
@@ -88,7 +88,7 @@ function Register() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setErrors([]);
                     setRegistered(true);
                 }

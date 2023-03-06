@@ -50,13 +50,13 @@ function CreateShop() {
                     address.current.value = "";
                     owner.current.value = "";
                     city.current.value = "";
-                    console.log("sikeres");
+                    //console.log("sikeres");
                 }
             })
             .catch((response) => {
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
-                    console.log(response.response.data);
+                    //console.log(response.response.data);
                 } else {
                     name.current.value = "";
                     shopType.current.value = -1;

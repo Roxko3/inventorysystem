@@ -90,7 +90,7 @@ function Home() {
             .then((response) => {
                 if (response.status === 200) {
                     setShop(response.data);
-                    console.log(response.data);
+                    //console.log(response.data);
                     setLoading(false);
                 }
             });
@@ -132,16 +132,16 @@ function Home() {
                     address.current.value = "";
                     owner.current.value = "";
                     city.current.value = "";
-                    console.log("sikeres");
+                    //console.log("sikeres");
                     window.location.reload();
-                    console.log("shop create", response.data);
+                    //console.log("shop create", response.data);
                     //todo
                 }
             })
             .catch((response) => {
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
-                    console.log(response.response.data);
+                    //console.log(response.response.data);
                 } else {
                     name.current.value = "";
                     shopType.current.value = -1;
@@ -171,7 +171,7 @@ function Home() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setErrors(response.data);
                     setLoading(false);
                 }

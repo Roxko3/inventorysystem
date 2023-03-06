@@ -81,7 +81,7 @@ function ShopData() {
 
     const upload = (e) => {
         handleClose();
-        console.log(e.target.files[0]);
+        //console.log(e.target.files[0]);
         formData.append("image", e.target.files[0]);
         uploadImage();
     };
@@ -104,7 +104,7 @@ function ShopData() {
                     setalertMessage("Kép sikeresen megváltoztatva!");
                     setOpenAlert(true);
                     window.location.reload();
-                    console.log("upload iamge", response.data);
+                    //console.log("upload iamge", response.data);
                 }
             })
             .catch((response) => {
@@ -129,7 +129,7 @@ function ShopData() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setSeverity("success");
                     setalertMessage("Kép sikeresen törölve!");
                     setOpenAlert(true);
@@ -138,7 +138,7 @@ function ShopData() {
             })
             .catch((response) => {
                 if (response.response.status === 422) {
-                    console.log(response.response.data);
+                    //console.log(response.response.data);
                     setSeverity("error");
                     setalertMessage("Valami hiba történt!");
                     setOpenAlert(true);
@@ -192,7 +192,7 @@ function ShopData() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     //setSeverity("success");
                     //setalertMessage("Nyitvatartás sikeresen megváltoztatva!");
                     //setOpenAlert(true);
@@ -204,7 +204,7 @@ function ShopData() {
             .catch((response) => {
                 if (response.response.status === 422) {
                     setOpeningReady(false);
-                    console.log(response.data);
+                    //console.log(response.data);
                     setSeverity("error");
                     setalertMessage(response.response.data);
                     setOpenAlert(true);
@@ -256,7 +256,7 @@ function ShopData() {
                     setSeverity("success");
                     setalertMessage("Változtatások sikeresen elmentve!");
                     window.location.reload();
-                    console.log("update shop", response.data);
+                    //console.log("update shop", response.data);
                     setIsDisabled(true);
                     setIsChanged(false);
                     //todo in good state
@@ -264,7 +264,7 @@ function ShopData() {
             })
             .catch((response) => {
                 if (response.response.status === 422) {
-                    console.log(response.response.data);
+                    //console.log(response.response.data);
                     setErrors(response.response.data);
                 }
             });
@@ -295,7 +295,7 @@ function ShopData() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setOpeningHour(response.data);
                     setOpeningHoursLoading(false);
                 }
@@ -315,7 +315,7 @@ function ShopData() {
             )
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     window.location.reload();
                 }
             });
@@ -324,7 +324,7 @@ function ShopData() {
     useEffect(() => {
         getTypes();
         getOpeningHours();
-        console.log("useeffect");
+        //console.log("useeffect");
     }, [openingReady]);
 
     return (

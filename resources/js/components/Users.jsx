@@ -155,7 +155,7 @@ function Users() {
                     setOpen(true);
                     setSeverity("success");
                     setalertMessage("Dolgozó sikeresen módosítva!");
-                    console.log("update worker", response.data);
+                    //console.log("update worker", response.data);
                     if (permission.current.value == 10) {
                         window.location.reload();
                     }
@@ -354,7 +354,7 @@ function Users() {
                                 const field = e["field"];
                                 if (field != "__check__") {
                                     setEditedRow(users[rowID]);
-                                    console.log(users[rowID]);
+                                    //console.log(users[rowID]);
                                     setRole(users[rowID].permission);
                                     setIsEditing(true);
                                 }
