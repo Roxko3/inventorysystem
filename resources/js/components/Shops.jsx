@@ -25,7 +25,7 @@ import { Box } from "@mui/system";
 import axios from "axios";
 import { useContext } from "react";
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { UserContext } from "./App";
 import Map from "./Map";
 import Navbar from "./Navbar";
@@ -37,6 +37,7 @@ function Shops() {
     const [loading, setLoading] = useState(true);
     const [city, setCity] = useState(user.city);
     const [pagination, setPagination] = useState({});
+    let [searchParams, setSearchParams] = useSearchParams();
     const cookie = Cookies.get("token");
     const location = useLocation();
 
@@ -64,7 +65,7 @@ function Shops() {
     useEffect(() => {
         document.title = "Inventory System - Boltok";
         console.log(location);
-        getShops(`shops${location.search}`);
+        getShops(`shops?${searchParams}`);
     }, []);
 
     return (
@@ -245,6 +246,7 @@ function Shops() {
                                                 .split("api")[1]
                                                 .split("=")[0] + `=${value}`
                                         );
+                                        setSearchParams(value);
                                     } else {
                                         setLoading(true);
                                         getShops(
@@ -252,6 +254,7 @@ function Shops() {
                                                 .split("api")[1]
                                                 .split("=")[0] + `=${value}`
                                         );
+                                        setSearchParams(value);
                                     }
                                 }}
                             />
