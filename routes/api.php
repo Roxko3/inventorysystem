@@ -71,6 +71,7 @@ Route::middleware('auth:sanctum', 'checkVerify')->group(function () {
     });
 
     Route::group(['prefix' => '/storages'], function () {
+        Route::get("/", [StorageController::class, "index"])->name("getstorages");
         Route::post("/add", [StorageController::class, "add"])->name("addItem");
         Route::put("/{storage}", [StorageController::class, "update"])->name("updatestorage");
         Route::delete("/delete", [StorageController::class, "delete"])->name("deletestorage");
@@ -113,5 +114,3 @@ Route::group(['prefix' => '/products'], function () {
     Route::put("/{product}", [ProductController::class, "update"])->name("updateproduct");
     Route::delete("/{product}", [ProductController::class, "delete"])->name("deleteproduct");
 });
-
-Route::get("/storages", [StorageController::class, "index"])->name("getstorages");

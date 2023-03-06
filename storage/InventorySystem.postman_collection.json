@@ -54,8 +54,8 @@
 									"type": "default"
 								},
 								{
-									"key": "postal_code",
-									"value": "9730",
+									"key": "city",
+									"value": "Szombathely",
 									"type": "default"
 								},
 								{
@@ -137,13 +137,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/users/8",
+							"raw": "{{URL}}/users/7",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"users",
-								"8"
+								"7"
 							]
 						}
 					},
@@ -157,6 +157,16 @@
 				{
 					"name": "getShops",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -179,7 +189,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|ytoaVmU8uHQDHJGqaoeafT1CVeTkU1n5me1pwGMp",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
 									"type": "string"
 								}
 							]
@@ -187,13 +197,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/getShop/2",
+							"raw": "{{URL}}/shops/1",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"getShop",
-								"2"
+								"shops",
+								"1"
 							]
 						}
 					},
@@ -207,7 +217,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|r5lnMBx2PCwJU8gU65WFZljA9bA8hefYdwIIAzCR",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
 									"type": "string"
 								}
 							]
@@ -219,7 +229,7 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "create teszt2222",
+									"value": "create",
 									"type": "default"
 								},
 								{
@@ -229,16 +239,16 @@
 								},
 								{
 									"key": "address",
-									"value": "createplease",
+									"value": "create",
 									"type": "default"
 								},
 								{
 									"key": "owner",
-									"value": "createowner",
+									"value": "create",
 									"type": "default"
 								},
 								{
-									"key": "postal_code",
+									"key": "city",
 									"value": "9730",
 									"type": "default"
 								}
@@ -260,78 +270,12 @@
 				{
 					"name": "updateShop",
 					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Update teszt",
-									"type": "default"
-								},
-								{
-									"key": "shop_type_id",
-									"value": "1",
-									"type": "default"
-								},
-								{
-									"key": "address",
-									"value": "createplease",
-									"type": "default"
-								},
-								{
-									"key": "owner",
-									"value": "createowner",
-									"type": "default"
-								},
-								{
-									"key": "postal_code",
-									"value": "9730",
-									"type": "default"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{URL}}/shops/5",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"shops",
-								"5"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "deleteShop",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/shops/6",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"shops",
-								"6"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "updateMyShop/{id}",
-					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|LTAQ4SSZfkngMPbw741QJZaB398URKpXV1YduCeZ",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
 									"type": "string"
 								}
 							]
@@ -343,7 +287,7 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Update teszt",
+									"value": "Update",
 									"type": "default"
 								},
 								{
@@ -353,28 +297,56 @@
 								},
 								{
 									"key": "address",
-									"value": "createplease",
+									"value": "create2",
 									"type": "default"
 								},
 								{
 									"key": "owner",
-									"value": "createowner",
+									"value": "create2",
 									"type": "default"
 								},
 								{
-									"key": "postal_code",
+									"key": "city",
 									"value": "9730",
 									"type": "default"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{URL}}/myShop/1",
+							"raw": "{{URL}}/shops/1",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"myShop",
+								"shops",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteShop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shops/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
 								"1"
 							]
 						}
@@ -392,7 +364,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|b56lQxjE59nXGDNTpezfX6m9gDWk4H21yvoZYnRb",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
 									"type": "string"
 								}
 							]
@@ -405,19 +377,55 @@
 								{
 									"key": "image",
 									"type": "file",
-									"src": "/D:/AModok/ahegao.png"
+									"src": "/C:/Users/hkevi/Downloads/aasd.png"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{URL}}/myShop/1/uploadImage",
+							"raw": "{{URL}}/shops/1/uploadImage",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"myShop",
+								"shops",
 								"1",
 								"uploadImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteImage",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/shops/1/deleteImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"1",
+								"deleteImage"
 							]
 						}
 					},
@@ -431,7 +439,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|73GvlflER1f3HwQSce1ucjoIea4mCb1zlNR2ZAYO",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
 									"type": "string"
 								}
 							]
@@ -442,11 +450,6 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "shop_id",
-									"value": "1",
-									"type": "default"
-								},
-								{
 									"key": "rating",
 									"value": "5",
 									"type": "default"
@@ -454,13 +457,81 @@
 							]
 						},
 						"url": {
-							"raw": "{{URL}}/shops/rate",
+							"raw": "{{URL}}/shops/rate/2",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"shops",
-								"rate"
+								"rate",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOpeningHour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shops/1/getOpeningHours",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"1",
+								"getOpeningHours"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOpeningHour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"opening_hours\": {\r\n        \"Monday\": {\r\n            \"open_time\": \"\",\r\n            \"close_time\": \"\"\r\n        },\r\n        \"tuesday\": {\r\n            \"open_time\": \"\",\r\n            \"close_time\": \"\"\r\n        },\r\n        \"wednesday\": {\r\n            \"open_time\": \"13:00\",\r\n            \"close_time\": \"17:00\"\r\n        },\r\n        \"thursday\": {\r\n            \"open_time\": \"12am\",\r\n            \"close_time\": \"12pM\"\r\n        },\"friday\": {\r\n            \"open_time\": \"12:00\",\r\n            \"close_time\": null\r\n        },\r\n        \"saturday\": {\r\n            \"open_time\": \"10:00\",\r\n            \"close_time\": \"17:00\"\r\n        },\r\n        \"sunday\": {\r\n            \"open_time\": \"12:00\",\r\n            \"close_time\": \"17:00\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/shops/1/updateOpeningHours",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"1",
+								"updateOpeningHours"
 							]
 						}
 					},
@@ -552,13 +623,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{URL}}/shops/5",
+							"raw": "{{URL}}/shoptypes/4",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"shops",
-								"5"
+								"shoptypes",
+								"4"
 							]
 						}
 					},
@@ -570,13 +641,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/shoptypes/5",
+							"raw": "{{URL}}/shoptypes/4",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"shoptypes",
-								"5"
+								"4"
 							]
 						}
 					},
@@ -590,71 +661,69 @@
 				{
 					"name": "getLogs",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/logs",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"logs"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "createLog",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "shop_id",
-									"value": "1",
-									"type": "default"
-								},
-								{
-									"key": "user_id",
-									"value": "1",
-									"type": "default"
-								},
-								{
-									"key": "description",
-									"value": "teszt",
-									"type": "default"
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
 								}
 							]
 						},
+						"method": "GET",
+						"header": [],
 						"url": {
-							"raw": "{{URL}}/logs/create",
+							"raw": "{{URL}}/logs/1",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"logs",
-								"create"
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "deleteLog",
+					"name": "searchLogs",
 					"request": {
-						"method": "DELETE",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/logs/6",
+							"raw": "{{URL}}/logs/searchLogs/1?searchString=Teszt Elek&order=asc&column=name",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"logs",
-								"6"
+								"searchLogs",
+								"1"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "Teszt Elek"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								},
+								{
+									"key": "column",
+									"value": "name"
+								}
 							]
 						}
 					},
@@ -714,7 +783,7 @@
 								},
 								{
 									"key": "type",
-									"value": "pontolyan",
+									"value": "valami",
 									"type": "default"
 								}
 							]
@@ -763,13 +832,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{URL}}/products/4",
+							"raw": "{{URL}}/products/1004",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"products",
-								"4"
+								"1004"
 							]
 						}
 					},
@@ -781,13 +850,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/products/5",
+							"raw": "{{URL}}/products/1004",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"products",
-								"5"
+								"1004"
 							]
 						}
 					},
@@ -801,6 +870,16 @@
 				{
 					"name": "GetStorages",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -824,7 +903,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|k2h4yD6OjI1ySlziEP45B9pbViKtkvib1Jl5VM3A",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
 									"type": "string"
 								}
 							]
@@ -846,37 +925,47 @@
 					"response": []
 				},
 				{
-					"name": "searchStorage/{shop}/{searchString}",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "searchStorage/{shop}",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|k2h4yD6OjI1ySlziEP45B9pbViKtkvib1Jl5VM3A",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
 									"type": "string"
 								}
 							]
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": []
-						},
 						"url": {
-							"raw": "{{URL}}/shops/searchStorage/1/élel",
+							"raw": "{{URL}}/shops/searchStorage/1?searchString=Product&column=amount&order=desc&is_deleted=0",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"shops",
 								"searchStorage",
-								"1",
-								"élel"
+								"1"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "Product"
+								},
+								{
+									"key": "column",
+									"value": "amount"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "is_deleted",
+									"value": "0"
+								}
 							]
 						}
 					},
@@ -885,6 +974,16 @@
 				{
 					"name": "AddItem",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -892,12 +991,12 @@
 							"urlencoded": [
 								{
 									"key": "shop_id",
-									"value": "3",
+									"value": "1",
 									"type": "default"
 								},
 								{
 									"key": "product_id",
-									"value": "3",
+									"value": "1",
 									"type": "default"
 								},
 								{
@@ -907,12 +1006,12 @@
 								},
 								{
 									"key": "price",
-									"value": "54325661",
+									"value": "201",
 									"type": "default"
 								},
 								{
 									"key": "expiration",
-									"value": "2022-12-30 00:00:02",
+									"value": "2022-12-31",
 									"type": "default"
 								}
 							]
@@ -933,24 +1032,29 @@
 				{
 					"name": "UpdateItem",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "shop_id",
-									"value": "3",
-									"type": "default"
-								},
-								{
 									"key": "product_id",
-									"value": "3",
+									"value": "1",
 									"type": "default"
 								},
 								{
 									"key": "amount",
-									"value": "50",
+									"value": "1",
 									"type": "default"
 								},
 								{
@@ -960,19 +1064,19 @@
 								},
 								{
 									"key": "expiration",
-									"value": "2022-12-30 00:00:01",
+									"value": "2022-12-29",
 									"type": "default"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{URL}}/storages/12",
+							"raw": "{{URL}}/storages/900",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"storages",
-								"12"
+								"900"
 							]
 						}
 					},
@@ -981,16 +1085,543 @@
 				{
 					"name": "DeleteItem",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\":[\r\n        1,\r\n        900\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{URL}}/storages/12",
+							"raw": "{{URL}}/storages/delete",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"storages",
-								"12"
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MyProfile",
+			"item": [
+				{
+					"name": "MyProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/myProfile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NameEmail",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Admin",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "admin@localhost",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/nameEmail",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"nameEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CityChange",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "city",
+									"value": "Budapest",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/cityChange",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"cityChange"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "old-password",
+									"value": "admin",
+									"type": "default"
+								},
+								{
+									"key": "new-password",
+									"value": "TesztElek1",
+									"type": "default"
+								},
+								{
+									"key": "new-password-repeat",
+									"value": "TesztElek1",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/passwordChange",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"passwordChange"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "leaveShop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|39hU7AQ1NqvXktfpCo5jWFrDLwYYRiL7qKOQXj5v",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/myProfile/leaveShop",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"leaveShop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadImage",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/hkevi/Downloads/aasd.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/uploadImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"uploadImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteImage",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/deleteImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"deleteImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProfile",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/deleteProfile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"deleteProfile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Workers",
+			"item": [
+				{
+					"name": "GetWorkers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/workers/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"workers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchWorkers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/workers/searchWorkers/1?searchString=Teszt Elek&column=name&order=asc",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"workers",
+								"searchWorkers",
+								"1"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "Teszt Elek"
+								},
+								{
+									"key": "column",
+									"value": "name"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddWorker",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "vasarlo@localhost",
+									"type": "default"
+								},
+								{
+									"key": "permission",
+									"value": "5",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/workers/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"workers",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateWorker",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "vasarlo@localhost",
+									"type": "default"
+								},
+								{
+									"key": "permission",
+									"value": "1",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/workers/update",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"workers",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteWorker",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"emails\":[\r\n        \"vasarlo@localhost\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/workers/delete",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"workers",
+								"delete"
 							]
 						}
 					},
@@ -1013,7 +1644,7 @@
 						},
 						{
 							"key": "password",
-							"value": "Tesztelek1",
+							"value": "admin",
 							"type": "default"
 						}
 					]
@@ -1111,56 +1742,6 @@
 			"response": []
 		},
 		{
-			"name": "changePassword",
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "1|B9pVHSqTtfWqCILsrywrQPoqHQjeXiCfQKgSLqSM",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "old-password",
-							"value": "admin",
-							"type": "default"
-						},
-						{
-							"key": "new-password",
-							"value": "Tesztelek1",
-							"type": "default"
-						},
-						{
-							"key": "new-password-repeat",
-							"value": "Tesztelek1",
-							"type": "default"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{URL}}/changePassword",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"changePassword"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Logout",
 			"request": {
 				"auth": {
@@ -1193,69 +1774,6 @@
 						"public",
 						"api",
 						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "MyProfile",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "1|4X6STHQDXpS3M8xrtNubto4Cbp4YTarqum8qXsBX",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{URL}}/myProfile",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"myProfile"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "MyShop",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true,
-				"disabledSystemHeaders": {}
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "4|mzdVWzrmMTrQgAWQPXxN3oegjNKH1GVkrMjSGd2O",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": []
-				},
-				"url": {
-					"raw": "{{URL}}/getMyShop/3",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"getMyShop",
-						"3"
 					]
 				}
 			},
