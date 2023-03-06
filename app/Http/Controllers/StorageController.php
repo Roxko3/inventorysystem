@@ -146,6 +146,10 @@ class StorageController extends Controller
         if (Gate::denies('shop-cashier') || Gate::denies('shop-worker', $storage->shop_id)) {
             return response()->json("Csak a megfelelő jogokkal lehet szerkeszteni a bolt termékein!", 403);
         }
+        $same = Storage::where('shop_id', $request->get("shop_id"))->where('expiration', $request->has("expiration") ? $request->get("expiration") : null)->first();
+        if ($same != null && $same->id != $storage->id) {
+            return response()->json("van", 409);
+        }
         $storage->amount = $request->get("amount");
         $storage->price = $request->get("price");
         $storage->expiration = $request->has("expiration") ? $request->get("expiration") : null;

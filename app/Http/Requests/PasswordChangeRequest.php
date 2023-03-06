@@ -42,7 +42,7 @@ class PasswordChangeRequest extends FormRequest
             'new-password.min' => 'Jelszó legalább 8 karakter hosszúságú!',
             'new-password.max' => 'Jelszó maximum 255 karakter hosszúságú!',
             'new-password-repeat.required' => 'Jelszó ismétlés megadása kötelező!',
-            'password-repeat.same' => 'Jelszó ismétlés nem eggyezik!'
+            'new-password-repeat.same' => 'Jelszó ismétlés nem eggyezik!'
         ];
     }
 

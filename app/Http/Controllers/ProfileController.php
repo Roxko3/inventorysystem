@@ -49,7 +49,7 @@ class ProfileController extends Controller
         }
 
         if (Hash::check($request->get("new-password"), $user->password)) {
-            return response()->json(['new-password' => 'Az új jelszó nem egyezhet az ön jelenlegi jelszavával!'], 422);
+            return response()->json(['new-password' => ['Az új jelszó nem egyezhet az ön jelenlegi jelszavával!']], 422);
         }
 
         User::whereId($user->id)->update([
@@ -115,6 +115,9 @@ class ProfileController extends Controller
         $user->permission = null;
         $user->is_deleted = true;
         $user->save();
+
+        $user = $request->user();
+        $user->currentAccessToken()->delete();
 
         return response('Felhasználói fiók sikeresen törölve', 200);
     }
