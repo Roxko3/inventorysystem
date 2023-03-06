@@ -148,7 +148,7 @@ class StorageController extends Controller
         }
         $same = Storage::where('shop_id', $request->get("shop_id"))->where('expiration', $request->has("expiration") ? $request->get("expiration") : null)->first();
         if ($same != null && $same->id != $storage->id) {
-            return response()->json("van", 409);
+            return response()->json("A megadott termék már szerepel ezzel a lejárati dátummal!", 409);
         }
         $storage->amount = $request->get("amount");
         $storage->price = $request->get("price");
