@@ -198,7 +198,7 @@ function Storage() {
                 if (response.response.status === 409) {
                     setOpen(true);
                     setalertMessage(response.response.data);
-                    setSeverity("warning");
+                    setSeverity("error");
                 }
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
@@ -247,6 +247,11 @@ function Storage() {
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
                     //console.log(response.response);
+                }
+                if (response.response.status === 409) {
+                    setOpen(true);
+                    setalertMessage(response.response.data);
+                    setSeverity("error");
                 }
             });
     };

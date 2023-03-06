@@ -689,7 +689,7 @@ function Profile() {
                             justifyContent="center"
                         >
                             <Typography sx={{ fontWeight: "bold" }}>
-                                Rangod:{" "}
+                                Beosztás:{" "}
                                 {user["permission"] == 10
                                     ? "Tulajdonos"
                                     : user["permission"] == 5

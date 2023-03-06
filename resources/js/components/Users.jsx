@@ -61,6 +61,7 @@ function Users() {
     const [role, setRole] = useState("");
     const [open, setOpen] = useState(false);
     const [errors, setErrors] = useState([]);
+    const [severity, setSeverity] = useState("");
     const email = useRef("");
     const permission = useRef("");
     const cookie = Cookies.get("token");
@@ -115,6 +116,7 @@ function Users() {
                     setRole("");
                     setIsAdding(false);
                     setOpen(true);
+                    setSeverity("success");
                     setalertMessage("Dolgozó sikeresen hozzáadva!");
                 }
             })
@@ -151,6 +153,7 @@ function Users() {
                     getUsers(`workers/searchWorkers/${user.shop_id}`);
                     setIsEditing(false);
                     setOpen(true);
+                    setSeverity("success");
                     setalertMessage("Dolgozó sikeresen módosítva!");
                     console.log("update worker", response.data);
                     if (permission.current.value == 10) {
@@ -193,11 +196,16 @@ function Users() {
                     setIsGridLoading(false);
                     setDeletedRows([]);
                     setOpen(true);
+                    setSeverity("success");
                     setalertMessage("Sikeres törlés!");
                 }
             })
-            .catch(() => {
-                //console.log("szar van a palacsintában");
+            .catch((response) => {
+                if (response.response.status === 409) {
+                    setOpen(true);
+                    setSeverity("error");
+                    setalertMessage("Nem törölheti saját magát!");
+                }
             });
     };
 
@@ -231,7 +239,7 @@ function Users() {
         },
         {
             field: "rank",
-            headerName: "Rang",
+            headerName: "Beosztás",
         },
         {
             field: "city",
@@ -446,9 +454,9 @@ function Users() {
                                     fullWidth
                                     error={errors.permission != null}
                                 >
-                                    <InputLabel>Rang</InputLabel>
+                                    <InputLabel>Beosztás</InputLabel>
                                     <Select
-                                        label="Rang"
+                                        label="Beosztás"
                                         value={role}
                                         onChange={handleChange}
                                         inputRef={permission}
@@ -493,7 +501,7 @@ function Users() {
                             setRole("");
                         }}
                     >
-                        <DialogTitle>Rang szerkesztése</DialogTitle>
+                        <DialogTitle>Beosztás szerkesztése</DialogTitle>
                         <DialogContent>
                             <Grid2 m={2}>
                                 <TextField
@@ -525,9 +533,9 @@ function Users() {
                                     fullWidth
                                     error={errors.permission != null}
                                 >
-                                    <InputLabel>Rang</InputLabel>
+                                    <InputLabel>Beosztás</InputLabel>
                                     <Select
-                                        label="Rang"
+                                        label="Beosztás"
                                         value={role}
                                         onChange={handleChange}
                                         inputRef={permission}
@@ -616,7 +624,7 @@ function Users() {
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert
                     onClose={handleClose}
-                    severity="success"
+                    severity={severity}
                     sx={{ width: "100%" }}
                 >
                     {alertMessage}
