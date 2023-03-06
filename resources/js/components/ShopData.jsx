@@ -473,6 +473,9 @@ function ShopData() {
 
                 <Grid2 container direction="column">
                     <Typography variant="h6">Nyitvatartás</Typography>
+                    <Typography variant="body2">
+                        Hagyja üresen ha zárva a bolt
+                    </Typography>
                     {openingHoursLoading ? (
                         <Grid2
                             container
