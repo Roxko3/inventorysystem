@@ -15,8 +15,8 @@ class CreateRatingsTable extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('shop_id')->constrained("shops");
-            $table->foreignId('user_id')->constrained("users");
+            $table->foreignId('shop_id')->constrained("shops")->onDelete("CASCADE");
+            $table->foreignId('user_id')->constrained("users")->onDelete("CASCADE");
             $table->Integer("rating");
             $table->unique(['shop_id', 'user_id']);
         });

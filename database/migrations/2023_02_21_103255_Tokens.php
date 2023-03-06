@@ -23,7 +23,7 @@ class Tokens extends Migration
 
             $table->foreign('email') // a column on posts table
                 ->references('email') //name of the column on users (referenced) table
-                ->on('users');
+                ->on('users')->onDelete("CASCADE");
         });
     }
 

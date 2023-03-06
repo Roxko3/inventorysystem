@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string("password");
             $table->Integer("permission")->nullable()->default(0);
             $table->string("city")->nullable();
-            $table->foreignId("shop_id")->nullable()->constrained("shops");
+            $table->foreignId("shop_id")->nullable()->constrained("shops")->onDelete("CASCADE");
             $table->string("image_path")->nullable();
             $table->boolean("is_deleted")->default(false);
             $table->datetime("email_verified_at")->nullable();

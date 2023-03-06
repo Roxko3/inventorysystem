@@ -8,6 +8,7 @@ use Tests\TestCase;
 
 class OpeningHoursControllerTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      *

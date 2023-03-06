@@ -15,8 +15,8 @@ class CreateStorageTable extends Migration
     {
         Schema::create('storages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('shop_id')->constrained("shops");
-            $table->foreignId('product_id')->constrained("products");
+            $table->foreignId('shop_id')->constrained("shops")->onDelete("CASCADE");
+            $table->foreignId('product_id')->constrained("products")->onDelete("CASCADE");
             $table->Integer("amount");
             $table->Integer("price");
             $table->date("expiration")->nullable();

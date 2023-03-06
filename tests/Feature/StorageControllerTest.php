@@ -2,12 +2,14 @@
 
 namespace Tests\Feature;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class StorageControllerTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      *
@@ -163,6 +165,7 @@ class StorageControllerTest extends TestCase
 
     public function test_update()
     {
+        //$this->artisan('migrate:fresh');
         $this->seed();
 
         $response = $this->post('api/login', [
@@ -176,10 +179,20 @@ class StorageControllerTest extends TestCase
             ->json('put', '/api/storages/1', [
                 'product_id' => 1,
                 'amount' => 50,
-                'price' => 1000
+                'price' => 1000,
+                'expiration' => null
             ]);
 
         $response->assertStatus(200);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->json('put', '/api/storages/5', [
+                'product_id' => 1,
+                'amount' => 50,
+                'price' => 1000
+            ]);
+
+        $response->assertStatus(409);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->json('put', '/api/storages/4', [
