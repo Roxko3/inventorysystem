@@ -19,7 +19,6 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useContext, useEffect, useState } from "react";
 import { DataGrid, huHU } from "@mui/x-data-grid";
-import Searchbar from "./Searchbar";
 import Cookies from "js-cookie";
 import CustomToolbar from "./CustomToolbar";
 import { UserContext } from "./App";

@@ -1,0 +1,11 @@
+{
+    "testPathIgnorePatterns": ["node_modules"],
+    "transformIgnorePatterns": ["node_modules"],
+    "testMatch": ["**/tests/frontend/*.test.jsx"],
+    "collectCoverageFrom": ["resources/js/components/*.{js,jsx}"],
+    "collectCoverage": true,
+    "coverageDirectory": "tests/reportFrontend",
+    "testEnvironment": "jsdom",
+    "moduleFileExtensions": ["js", "jsx"],
+    "moduleDirectories": ["node_modules"]
+}

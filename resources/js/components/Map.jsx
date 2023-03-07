@@ -68,6 +68,7 @@ function Map(props) {
     };
 
     useEffect(() => {
+        console.log("alap", props.shops);
         if (props.location == null) {
             setCoords({
                 place_id: 307735273,
@@ -176,46 +177,49 @@ function Map(props) {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {shopCoords.length > 0 &&
-                    shopCoords.map((coords) => {
-                        console.log(coords);
-                        if (coords[0] == undefined) {
-                            return;
-                        }
-                        return (
-                            <Marker
-                                position={[coords[0].lat, coords[0].lon]}
-                                key={coords[0].lat + coords[0].lon}
-                            >
-                                <Popup>
-                                    {
-                                        <div>
-                                            <Typography variant="subtitle1">
-                                                {coords[1].name}
-                                            </Typography>
-                                            <Typography variant="body2">
-                                                {coords[1].city},{" "}
-                                                {coords[1].address}
-                                            </Typography>
-                                            <Link
-                                                to={{
-                                                    pathname: `/shops/${coords[1].id}`,
-                                                    search: `?page=${props.currentPage}`,
-                                                }}
-                                            >
-                                                <Typography
-                                                    variant="button"
-                                                    color="blue"
-                                                >
-                                                    Megtekintés
+                {
+                    (shopCoords.length > 0 &&
+                        shopCoords.map((coords) => {
+                            //console.log(coords);
+                            if (coords[0] == undefined) {
+                                return;
+                            }
+                            return (
+                                <Marker
+                                    position={[coords[0].lat, coords[0].lon]}
+                                    key={coords[0].lat + coords[0].lon}
+                                >
+                                    <Popup>
+                                        {
+                                            <div>
+                                                <Typography variant="subtitle1">
+                                                    {coords[1].name}
                                                 </Typography>
-                                            </Link>
-                                        </div>
-                                    }
-                                </Popup>
-                            </Marker>
-                        );
-                    })}
+                                                <Typography variant="body2">
+                                                    {coords[1].city},{" "}
+                                                    {coords[1].address}
+                                                </Typography>
+                                                <Link
+                                                    to={{
+                                                        pathname: `/shops/${coords[1].id}`,
+                                                        search: `?page=${props.currentPage}`,
+                                                    }}
+                                                >
+                                                    <Typography
+                                                        variant="button"
+                                                        color="blue"
+                                                    >
+                                                        Megtekintés
+                                                    </Typography>
+                                                </Link>
+                                            </div>
+                                        }
+                                    </Popup>
+                                </Marker>
+                            );
+                        }),
+                    console.log(shopCoords))
+                }
                 <Marker position={[coords.lat, coords.lon]}>
                     <Popup>
                         {props.location != null

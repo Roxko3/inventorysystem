@@ -46,7 +46,6 @@ import axios from "axios";
 import Image from "mui-image";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import CreateShop from "./CreateShop";
 import Navbar from "./Navbar";
 import TabPanel from "./TabPanel";
 import Yourshop from "./Yourshop";
