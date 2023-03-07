@@ -57,7 +57,7 @@ class ForgotPasswordController extends Controller
       ->value('email');
 
     if (Hash::check($request->password, User::where('email', $email)->value('password'))) {
-      return response(['password' => 'Az új jelszó nem egyezhet az ön jelenlegi jelszavával!'], 409);
+      return response(['password' => ['Az új jelszó nem egyezhet az ön jelenlegi jelszavával!']], 409);
     } else {
       User::where('email', $email)
         ->update(['password' => Hash::make($request->password)]);

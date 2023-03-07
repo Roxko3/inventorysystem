@@ -72,6 +72,9 @@ function Forgotpass() {
                 if (response.response.status === 422) {
                     setErrors(response.response.data);
                 }
+                if (response.response.status === 409) {
+                    setErrors(response.response.data);
+                }
             });
     };
 
@@ -110,7 +113,11 @@ function Forgotpass() {
                                 label="Új jelszó"
                                 inputRef={password}
                                 error={errors.password != null}
-                                helperText={errors.password}
+                                helperText={
+                                    errors.password != null
+                                        ? errors.password[0]
+                                        : ""
+                                }
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
