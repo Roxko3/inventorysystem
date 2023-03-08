@@ -84,7 +84,7 @@ function Profile() {
     const uploadImage = async () => {
         axios
             .post(
-                `http://127.0.0.1/InventorySystem/public/api/myProfile/uploadImage`,
+                `${process.env.MIX_BACKEND_URL}/myProfile/uploadImage`,
                 formData,
                 {
                     headers: {
@@ -112,15 +112,12 @@ function Profile() {
 
     const removeImage = async () => {
         axios
-            .delete(
-                `http://127.0.0.1/InventorySystem/public/api/myProfile/deleteImage`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + cookie,
-                    },
-                }
-            )
+            .delete(`${process.env.MIX_BACKEND_URL}/myProfile/deleteImage`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + cookie,
+                },
+            })
             .then((response) => {
                 if (response.status === 200) {
                     //console.log(response.data);
@@ -175,7 +172,7 @@ function Profile() {
     const changePassword = async () => {
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/myProfile/passwordChange",
+                `${process.env.MIX_BACKEND_URL}/myProfile/passwordChange`,
                 {
                     "old-password": oldPassword.current.value,
                     "new-password": newPassword.current.value,
@@ -208,7 +205,7 @@ function Profile() {
     const changeNameEmail = async () => {
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/myProfile/nameEmail",
+                `${process.env.MIX_BACKEND_URL}/myProfile/nameEmail`,
                 {
                     email: email.current.value,
                     name: name.current.value,
@@ -246,7 +243,7 @@ function Profile() {
     const changeCity = async () => {
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/myProfile/cityChange",
+                `${process.env.MIX_BACKEND_URL}/myProfile/cityChange`,
                 {
                     city: city.current.value,
                 },
@@ -276,15 +273,12 @@ function Profile() {
 
     const deleteProfile = async () => {
         axios
-            .delete(
-                "http://127.0.0.1/InventorySystem/public/api/myProfile/deleteProfile",
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + cookie,
-                    },
-                }
-            )
+            .delete(`${process.env.MIX_BACKEND_URL}/myProfile/deleteProfile`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + cookie,
+                },
+            })
             .then((response) => {
                 if (response.status === 200) {
                     //console.log(response.data);
@@ -296,7 +290,7 @@ function Profile() {
     const leaveShop = async () => {
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/myProfile/leaveShop",
+                `${process.env.MIX_BACKEND_URL}/myProfile/leaveShop`,
                 {},
                 {
                     headers: {

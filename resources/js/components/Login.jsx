@@ -33,7 +33,7 @@ function Login() {
 
     const login = async () => {
         await axios
-            .post("http://127.0.0.1/InventorySystem/public/api/login", {
+            .post(`${process.env.MIX_BACKEND_URL}/login`, {
                 email: email.current.value,
                 password: password.current.value,
             })

@@ -20,7 +20,7 @@ function AddStorage() {
 
     const getProducts = async () => {
         axios
-            .get("http://127.0.0.1/InventorySystem/public/api/products")
+            .get(`${process.env.MIX_BACKEND_URL}/products`)
             .then((response) => {
                 if (response.status === 200) {
                     setProducts(response.data);

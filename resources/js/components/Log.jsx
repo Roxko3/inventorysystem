@@ -39,7 +39,7 @@ function Log() {
 
     const getlogs = (url) => {
         const axiosInstance = axios.create({
-            baseURL: "http://127.0.0.1/InventorySystem/public/api/",
+            baseURL: `${process.env.MIX_BACKEND_URL}/`,
         });
         axiosInstance
             .get(url, {

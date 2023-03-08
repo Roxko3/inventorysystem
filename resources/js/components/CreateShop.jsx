@@ -25,7 +25,7 @@ function CreateShop() {
 
     const getTypes = async () => {
         axios
-            .get("http://127.0.0.1/InventorySystem/public/api/shoptypes")
+            .get(`${process.env.MIX_BACKEND_URL}/shoptypes`)
             .then((response) => {
                 if (response.status === 200) {
                     setShopTypes(response.data);
@@ -35,7 +35,7 @@ function CreateShop() {
 
     const createShop = async () => {
         await axios
-            .post("http://127.0.0.1/InventorySystem/public/api/shops/create", {
+            .post(`${process.env.MIX_BACKEND_URL}/shops/create`, {
                 name: name.current.value,
                 shop_type_id: shopType.current.value,
                 address: address.current.value,

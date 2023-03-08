@@ -31,12 +31,9 @@ function Forgotpass() {
     const sendEmail = async () => {
         setErrors([]);
         axios
-            .post(
-                `http://127.0.0.1/InventorySystem/public/api/forget-password`,
-                {
-                    email: email.current.value,
-                }
-            )
+            .post(`${process.env.MIX_BACKEND_URL}/forget-password`, {
+                email: email.current.value,
+            })
             .then((response) => {
                 if (response.status === 200) {
                     //console.log(response.data);
@@ -56,14 +53,11 @@ function Forgotpass() {
     const resetPassword = async () => {
         setErrors([]);
         axios
-            .post(
-                `http://127.0.0.1/InventorySystem/public/api/reset-password`,
-                {
-                    token: location.search.split("=")[1],
-                    password: password.current.value,
-                    "password-repeat": passwordAgain.current.value,
-                }
-            )
+            .post(`${process.env.MIX_BACKEND_URL}/reset-password`, {
+                token: location.search.split("=")[1],
+                password: password.current.value,
+                "password-repeat": passwordAgain.current.value,
+            })
             .then((response) => {
                 //console.log(response.data);
                 navigate("/login", { replace: true });

@@ -89,7 +89,7 @@ function ShopData() {
     const uploadImage = async () => {
         axios
             .post(
-                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}/uploadImage`,
+                `${process.env.MIX_BACKEND_URL}/shops/${user.shop_id}/uploadImage`,
                 formData,
                 {
                     headers: {
@@ -119,7 +119,7 @@ function ShopData() {
     const removeImage = async () => {
         axios
             .delete(
-                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}/deleteImage`,
+                `${process.env.MIX_BACKEND_URL}/shops/${user.shop_id}/deleteImage`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -150,7 +150,7 @@ function ShopData() {
         setOpeningReady(false);
         axios
             .post(
-                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}/updateOpeningHours`,
+                `${process.env.MIX_BACKEND_URL}/shops/${user.shop_id}/updateOpeningHours`,
                 {
                     opening_hours: {
                         monday: {
@@ -222,7 +222,7 @@ function ShopData() {
 
     const getTypes = async () => {
         axios
-            .get("http://127.0.0.1/InventorySystem/public/api/shoptypes")
+            .get(`${process.env.MIX_BACKEND_URL}/shoptypes`)
             .then((response) => {
                 if (response.status === 200) {
                     setShopTypes(response.data);
@@ -233,7 +233,7 @@ function ShopData() {
     const updateShop = async () => {
         axios
             .put(
-                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}`,
+                `${process.env.MIX_BACKEND_URL}/shops/${user.shop_id}`,
                 {
                     shop_id: user.shop_id,
                     name: shopName.current.value,
@@ -285,7 +285,7 @@ function ShopData() {
     const getOpeningHours = async () => {
         axios
             .get(
-                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}/getOpeningHours`,
+                `${process.env.MIX_BACKEND_URL}/shops/${user.shop_id}/getOpeningHours`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -304,15 +304,12 @@ function ShopData() {
 
     const deleteShop = async () => {
         axios
-            .delete(
-                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + cookie,
-                    },
-                }
-            )
+            .delete(`${process.env.MIX_BACKEND_URL}/shops/${user.shop_id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + cookie,
+                },
+            })
             .then((response) => {
                 if (response.status === 200) {
                     //console.log(response.data);

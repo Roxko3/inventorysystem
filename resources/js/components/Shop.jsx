@@ -56,7 +56,7 @@ function Shop() {
 
     const getShop = async () => {
         await axios
-            .get(`http://127.0.0.1/InventorySystem/public/api/shops/${id}`, {
+            .get(`${process.env.MIX_BACKEND_URL}/shops/${id}`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + cookie,
@@ -82,7 +82,7 @@ function Shop() {
 
     const getStorage = async (url) => {
         const axiosInstance = axios.create({
-            baseURL: "http://127.0.0.1/InventorySystem/public/api/",
+            baseURL: `${process.env.MIX_BACKEND_URL}/`,
         });
         await axiosInstance
             .get(url, {
@@ -118,7 +118,7 @@ function Shop() {
         setRatingDisabled(true);
         axios
             .post(
-                `http://127.0.0.1/InventorySystem/public/api/shops/rate/${id}`,
+                `${process.env.MIX_BACKEND_URL}/shops/rate/${id}`,
                 {
                     rating: value,
                 },

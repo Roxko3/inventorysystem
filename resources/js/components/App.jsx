@@ -59,7 +59,7 @@ function App() {
 
     const getUser = async () => {
         axios
-            .get("http://127.0.0.1/InventorySystem/public/api/myProfile", {
+            .get(`${process.env.MIX_BACKEND_URL}/myProfile`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + cookie,

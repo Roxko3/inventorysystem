@@ -68,7 +68,7 @@ function Users() {
 
     const getUsers = (url) => {
         const axiosInstance = axios.create({
-            baseURL: "http://127.0.0.1/InventorySystem/public/api/",
+            baseURL: `${process.env.MIX_BACKEND_URL}/`,
         });
         axiosInstance
             .get(url, {
@@ -96,7 +96,7 @@ function Users() {
     const addWorker = async () => {
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/workers/add",
+                `${process.env.MIX_BACKEND_URL}/workers/add`,
                 {
                     email: email.current.value,
                     permission: permission.current.value,
@@ -134,7 +134,7 @@ function Users() {
     const updateWorker = async () => {
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/workers/update",
+                `${process.env.MIX_BACKEND_URL}/workers/update`,
                 {
                     email: email.current.value,
                     permission: permission.current.value,
@@ -176,7 +176,7 @@ function Users() {
         //console.log(deletedRows);
         axios
             .post(
-                `http://127.0.0.1/InventorySystem/public/api/workers/delete`,
+                `${process.env.MIX_BACKEND_URL}/workers/delete`,
                 {
                     emails: deletedRows,
                 },

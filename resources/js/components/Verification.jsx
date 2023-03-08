@@ -14,7 +14,7 @@ function Verification() {
 
     const verify = async (token) => {
         axios
-            .post("http://127.0.0.1/InventorySystem/public/api/verify-email", {
+            .post(`${process.env.MIX_BACKEND_URL}/verify-email`, {
                 tokenEmail: token,
             })
             .then((response) => {
@@ -34,7 +34,7 @@ function Verification() {
     const resend = async () => {
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/email/verification-notification",
+                `${process.env.MIX_BACKEND_URL}/email/verification-notification`,
                 {
                     email: email.current.value,
                 }

@@ -34,7 +34,7 @@ function Register() {
 
     const register = async () => {
         axios
-            .post("http://127.0.0.1/InventorySystem/public/api/register", {
+            .post(`${process.env.MIX_BACKEND_URL}/register`, {
                 email: email.current.value,
                 password: password.current.value,
                 password_repeat: password_repeat.current.value,
@@ -81,7 +81,7 @@ function Register() {
         setRegistered(false);
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/email/verification-notification",
+                `${process.env.MIX_BACKEND_URL}/email/verification-notification`,
                 {
                     email: email.current.value,
                 }

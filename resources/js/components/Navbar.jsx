@@ -71,7 +71,7 @@ function Navbar(props) {
     const logout = async () => {
         await axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/Logout",
+                `${process.env.MIX_BACKEND_URL}/Logout`,
                 {},
                 {
                     headers: {

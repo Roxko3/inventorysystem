@@ -112,7 +112,7 @@ function Storage() {
 
     const getStorage = async (url, index) => {
         const axiosInstance = axios.create({
-            baseURL: "http://127.0.0.1/InventorySystem/public/api/",
+            baseURL: `${process.env.MIX_BACKEND_URL}/`,
         });
         //setIsLoading(true);
         await axiosInstance
@@ -148,7 +148,7 @@ function Storage() {
 
     const getProducts = async () => {
         axios
-            .get("http://127.0.0.1/InventorySystem/public/api/products")
+            .get(`${process.env.MIX_BACKEND_URL}/products`)
             .then((response) => {
                 if (response.status === 200) {
                     setProducts(response.data);
@@ -160,7 +160,7 @@ function Storage() {
     const addProduct = async () => {
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/storages/add",
+                `${process.env.MIX_BACKEND_URL}/storages/add`,
                 {
                     shop_id: user.shop_id,
                     product_id: product.current.value,
@@ -210,7 +210,7 @@ function Storage() {
     const editProduct = async () => {
         axios
             .put(
-                `http://127.0.0.1/InventorySystem/public/api/storages/${editedRow.id}`,
+                `${process.env.MIX_BACKEND_URL}/storages/${editedRow.id}`,
                 {
                     shop_id: user.shop_id,
                     product_id: product.current.value,
@@ -259,18 +259,15 @@ function Storage() {
     const deleteSelectedRows = () => {
         //console.log(deletedRows);
         axios
-            .delete(
-                `http://127.0.0.1/InventorySystem/public/api/storages/delete`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + cookie,
-                    },
-                    data: {
-                        ids: deletedRows,
-                    },
-                }
-            )
+            .delete(`${process.env.MIX_BACKEND_URL}/storages/delete`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + cookie,
+                },
+                data: {
+                    ids: deletedRows,
+                },
+            })
             .then((response) => {
                 if (response.status === 200) {
                     //console.log("félsiker");

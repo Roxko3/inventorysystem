@@ -78,15 +78,12 @@ function Home() {
 
     const getShop = async () => {
         await axios
-            .get(
-                `http://127.0.0.1/InventorySystem/public/api/shops/${user.shop_id}`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + cookie,
-                    },
-                }
-            )
+            .get(`${process.env.MIX_BACKEND_URL}/shops/${user.shop_id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + cookie,
+                },
+            })
             .then((response) => {
                 if (response.status === 200) {
                     setShop(response.data);
@@ -98,7 +95,7 @@ function Home() {
 
     const getTypes = async () => {
         axios
-            .get("http://127.0.0.1/InventorySystem/public/api/shoptypes")
+            .get(`${process.env.MIX_BACKEND_URL}/shoptypes`)
             .then((response) => {
                 if (response.status === 200) {
                     setShopTypes(response.data);
@@ -109,7 +106,7 @@ function Home() {
     const createShop = async () => {
         await axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/shops/create",
+                `${process.env.MIX_BACKEND_URL}/shops/create`,
                 {
                     name: name.current.value,
                     shop_type_id: shopType.current.value,
@@ -158,7 +155,7 @@ function Home() {
         setErrors([]);
         axios
             .post(
-                "http://127.0.0.1/InventorySystem/public/api/invite",
+                `${process.env.MIX_BACKEND_URL}/invite`,
                 {
                     email: email.current.value,
                 },
