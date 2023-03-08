@@ -19,12 +19,12 @@ class ForgotPasswordController extends Controller
   public function ForgetPassword(ForgotPassord $request)
   {
     $token = Str::random(64);
-    if (DB::table('Tokens')->where('email', '=', $request->email)->exists()) {
-      DB::table('Tokens')
+    if (DB::table('tokens')->where('email', '=', $request->email)->exists()) {
+      DB::table('tokens')
         ->where('email', 'LIKE', $request->email)
         ->update(['tokenPassword' =>  $token, 'created_atPassword' => Carbon::now()->addHour()]);
     } else {
-      DB::table('Tokens')->insert([
+      DB::table('tokens')->insert([
         'email' => $request->email,
         'tokenPassword' => $token,
         'created_atPassword' => Carbon::now()->addHour()
@@ -50,7 +50,7 @@ class ForgotPasswordController extends Controller
 
   public function ResetPassword(PasswordReset $request)
   {
-    $email = DB::table('Tokens')
+    $email = DB::table('tokens')
       ->where([
         'tokenPassword' => $request->token
       ])
@@ -62,7 +62,7 @@ class ForgotPasswordController extends Controller
       User::where('email', $email)
         ->update(['password' => Hash::make($request->password)]);
 
-      DB::table('Tokens')->where(['email' => $email])->update(['tokenPassword' =>  null, 'created_atPassword' => null]);
+      DB::table('tokens')->where(['email' => $email])->update(['tokenPassword' =>  null, 'created_atPassword' => null]);
       return ['message', 'Jelszó sikeresen megváltoztatva!'];
     }
   }
