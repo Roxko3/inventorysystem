@@ -108,7 +108,7 @@ function Navbar(props) {
                     <Tooltip title="Főoldal" followCursor placement="top">
                         <Link to={{ pathname: "/home", search: "?page=0" }}>
                             <Image
-                                src="/InventorySystem/public/storage/logo.png"
+                                src="/storage/logo.png"
                                 width="150px"
                                 duration={500}
                             />
