@@ -29,8 +29,8 @@ class PasswordReset extends FormRequest
     public function rules()
     {
         return [
-            'token' => 'required|exists:Tokens,tokenPassword',
-            'password' => ['required', 'min:8' , new PasswordMixedCaseRule, new PasswordNumberRule  ],
+            'token' => 'required|exists:tokens,tokenPassword',
+            'password' => ['required', 'min:8', new PasswordMixedCaseRule, new PasswordNumberRule],
             'password-repeat' => 'required|same:password',
         ];
     }
@@ -43,7 +43,7 @@ class PasswordReset extends FormRequest
             'password-repeat.required' => 'Jelszó ismétlés megadása kötelező.',
             'password-repeat.same' => 'Jelszó ismétlés nem eggyezik.',
             'token.exists' => 'A megadott token nem létezik a redszerben.',
-          
+
         ];
     }
     public function failedValidation(Validator $validator)

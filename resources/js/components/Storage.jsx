@@ -130,7 +130,7 @@ function Storage() {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setPagination(response.data);
                     /*const all = response.data.data;
                     const deleted = all.filter((a) => a.is_deleted == 1);
@@ -435,7 +435,6 @@ function Storage() {
 
                 <Box>
                     <DataGrid
-                        keepNonExistentRowsSelected
                         rows={filter.map((storage) => {
                             storage[
                                 "stock"

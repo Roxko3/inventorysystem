@@ -19,7 +19,7 @@ function Notfound() {
         >
             <Grid2>
                 <Image
-                    src="/InventorySystem/public/storage/logo.png"
+                    src="/storage/logo.png"
                     duration={1500}
                     alt="Inventory System Logo"
                 />

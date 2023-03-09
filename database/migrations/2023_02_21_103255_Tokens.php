@@ -13,7 +13,7 @@ class Tokens extends Migration
      */
     public function up()
     {
-        Schema::create('Tokens', function (Blueprint $table) {
+        Schema::create('tokens', function (Blueprint $table) {
             $table->id();
             $table->string('email')->index();
             $table->string('tokenPassword')->nullable();
@@ -34,6 +34,6 @@ class Tokens extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Tokens');
+        Schema::dropIfExists('tokens');
     }
 }

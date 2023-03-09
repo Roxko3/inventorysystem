@@ -44,7 +44,7 @@ class EmailVerificationController extends Controller
             $verify = [
                 'greeting' => 'Hello ' . $user->name . ',',
                 'body' => 'Az alábbi gombra kattintva tudja e-mail címét megerősíteni:',
-                'thanks' => 'Köszönjük, hogy minket választottak, InventorySystem csapata.',
+                'thanks' => 'Köszönjük, hogy minket választottak,',
                 'actionText' => 'E-mail megerősítés',
                 'actionURL' => url('/verification?tokenEmail=' . $token),
             ];

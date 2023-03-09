@@ -101,8 +101,8 @@ class ShopController extends Controller
             return response()->json("Csak a megfelelő jogokkal lehet képet feltölteni!", 403);
         }
 
-        if ($shop->image_path != null && file_exists(public_path() . "\\storage\\" . $shop->image_path)) {
-            unlink(public_path() . "\\storage\\" . $shop->image_path);
+        if ($shop->image_path != null && file_exists(public_path() . "/storage/" . $shop->image_path)) {
+            unlink(public_path() . "/storage/" . $shop->image_path);
         }
         $newImageName = time() .
             '-' .
@@ -131,7 +131,7 @@ class ShopController extends Controller
         }
 
         if ($shop->image_path != null) {
-            unlink(public_path() . "\\storage\\" . $shop->image_path);
+            unlink(public_path() . "/storage/" . $shop->image_path);
             $shop->image_path = null;
             $shop->save();
             return response()->json("Kép sikeresen törölve!");

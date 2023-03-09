@@ -13,7 +13,7 @@ class CreateOpeningHoursTable extends Migration
      */
     public function up()
     {
-        Schema::create('Opening_Hours', function (Blueprint $table) {
+        Schema::create('opening_Hours', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shop_id')->constrained("shops")->onDelete("CASCADE");
             $table->string("day");
@@ -31,6 +31,6 @@ class CreateOpeningHoursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Opening_Hours');
+        Schema::dropIfExists('opening_Hours');
     }
 }
