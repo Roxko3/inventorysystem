@@ -19,6 +19,9 @@ import {
     Tooltip,
 } from "react-leaflet";
 import { Link } from "react-router-dom";
+import { OpenStreetMapProvider } from "leaflet-geosearch";
+
+const provider = new OpenStreetMapProvider();
 
 function Map(props) {
     const [coords, setCoords] = useState([]);
@@ -30,10 +33,9 @@ function Map(props) {
 
     const getCoords = async (location) => {
         await axios
-            .get(
-                `https://nominatim.openstreetmap.org/search?q=${location}&format=json&polygon=1&addressdetails=1`
-            )
+            .get(`https://geocode.maps.co/search?q=${location}`)
             .then((response) => {
+                //console.log(response);
                 if (response.status === 200) {
                     setCoords(response.data[0]);
                     //console.log("map response", response.data);
@@ -45,26 +47,26 @@ function Map(props) {
 
     let i = 0;
     const getShopsCoords = async (location, data) => {
-        await axios
-            .get(
-                `https://nominatim.openstreetmap.org/search?q=${location}&format=json&polygon=1&addressdetails=1`
-            )
-            .then((response) => {
-                if (response.status === 200) {
-                    //shopCoords.push(response.data[0]);
-                    setShopCoords((oldArray) => [
-                        ...oldArray,
-                        [response.data[0], data],
-                    ]);
-                    //console.log("boltok", shopCoords);
-                    //console.log(i);
-                    i++;
-                    setProgress((i / props.shops.length) * 100);
-                    if (i == props.shops.length) {
-                        setShopsLoading(false);
+        setTimeout(() => {
+            axios
+                .get(`https://geocode.maps.co/search?q=${location}`)
+                .then((response) => {
+                    if (response.status === 200) {
+                        //shopCoords.push(response.data[0]);
+                        setShopCoords((oldArray) => [
+                            ...oldArray,
+                            [response.data[0], data],
+                        ]);
+                        //console.log("boltok", shopCoords);
+                        //console.log(i);
+                        i++;
+                        setProgress((i / props.shops.length) * 100);
+                        if (i == props.shops.length) {
+                            setShopsLoading(false);
+                        }
                     }
-                }
-            });
+                });
+        }, 1000);
     };
 
     useEffect(() => {
@@ -99,7 +101,9 @@ function Map(props) {
         }
         if (props.shops != undefined) {
             props.shops.map((shops) => {
-                getShopsCoords(`${shops.city}+${shops.address}`, shops);
+                setTimeout(() => {
+                    getShopsCoords(`${shops.city}+${shops.address}`, shops);
+                }, 1000);
             });
         } else {
             setShopsLoading(false);
