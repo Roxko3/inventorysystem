@@ -19,8 +19,8 @@ class InviteController extends Controller
 
         $invite = [
             'greeting' => 'Hello ' . $request->email,
-            'body' => $user->name . ' szertné hogy csatlakozz az InventorySystem-hez.',
-            'thanks' => 'Reméljük hogy oldalunkat hasznosnak találja.',
+            'body' => $user->name . ' szeretné, hogy csatlakozz az InventorySystem-hez.',
+            'thanks' => 'Reméljük, hogy oldalunkat hasznosnak találja.',
             'actionText' => 'Csatlakozás!',
             'actionURL' => url('/register'),
         ];

@@ -49,6 +49,6 @@ class ProductsSeeder extends Seeder
 
             $product->save();
         }
-        Product::factory()->count(500)->create();
+        Product::factory()->count(250)->create();
     }
 }

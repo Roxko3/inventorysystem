@@ -32,7 +32,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "1",
                 'address' => "Zanati út 70",
                 'owner' => "Tesco PLC",
-                'city' => "Kőszeg",
+                'city' => "Szombathely",
                 'image_path' => "tesco2.jpg",
                 'rating' => 3.75,
                 'is_deleted' => false
@@ -44,7 +44,7 @@ class ShopsSeeder extends Seeder
                 'address' => "Széchenyi tér 13",
                 'owner' => "Co-op Hungary Zrt.",
                 'image_path' => "coop1.jpg",
-                'city' => "Kőszeg",
+                'city' => "Cepreg",
                 'rating' => 2.37,
                 'is_deleted' => false
             ],
@@ -65,7 +65,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "IV. László király u. 39",
                 'owner' => "Tesco PLC",
-                'city' => "Kőszeg",
+                'city' => "Sopron",
                 'rating' => 1,
                 'is_deleted' => false
             ],
@@ -75,7 +75,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Király J. u 3",
                 'owner' => "Tesco PLC",
-                'city' => "Kőszeg",
+                'city' => "Sopron",
                 'rating' => 4.11,
                 'is_deleted' => false
             ],
@@ -85,7 +85,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "2",
                 'address' => "Ipar krt. 30",
                 'owner' => "Tesco PLC",
-                'city' => "Kőszeg",
+                'city' => "Sopron",
                 'rating' => 5,
                 'is_deleted' => false
             ],
@@ -95,7 +95,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Hátsókapu 10",
                 'owner' => "Tesco PLC",
-                'city' => "Kőszeg",
+                'city' => "Sopron",
                 'rating' => 2,
                 'is_deleted' => false
             ],
@@ -105,7 +105,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => "Végfordulat 9",
                 'owner' => " Peter Gazik",
-                'city' => "Kőszeg",
+                'city' => "Sopron",
                 'rating' => 5
             ],
             [
@@ -114,7 +114,7 @@ class ShopsSeeder extends Seeder
                 'shop_type_id' => "3",
                 'address' => " Ipar krt. 30",
                 'owner' => "Tesco PLC",
-                'city' => "Kőszeg",
+                'city' => "Sopron",
                 'rating' => 3.33
             ],
         ];
