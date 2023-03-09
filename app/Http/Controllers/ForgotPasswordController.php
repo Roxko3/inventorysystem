@@ -39,7 +39,7 @@ class ForgotPasswordController extends Controller
     $password = [
       'greeting' => 'Hello ' . $user->name . ',',
       'body' => 'Az alábbi gombra kattintva tudja elfelejtett jelszavát megváltoztatni:',
-      'thanks' => 'Köszönjük, hogy minket választottak, InventorySystem csapata.',
+      'thanks' => 'Köszönjük, hogy minket választottak,',
       'actionText' => 'Jelszó visszaállítás',
       'actionURL' => url('/forgotpass?token=' . $token),
     ];
