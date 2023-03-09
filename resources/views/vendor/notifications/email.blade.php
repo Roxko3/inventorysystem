@@ -51,8 +51,8 @@ InventorySystem csapata
 @isset($actionText)
 @slot('subcopy')
 @lang(
-"Ha problémád akad a \":actionText\" gombbal, akkor másold ki és illeszd be az alábbi URL-t\n".
-'a böngésződbe:',
+"Ha problémája akad a(z) \":actionText\" gombbal, akkor másolja ki és illessze be az alábbi URL-t\n".
+'a böngészőjébe:',
 [
 'actionText' => $actionText,
 ]
