@@ -88,7 +88,8 @@ class WorkerController extends Controller
             return response()->json("Csak a megfelelő jogokkal lehet változatni a dolgozók jogain!", 403);
         }
 
-        if ($user->email == $request->get("email")) {
+        $owner = User::where('shop_id', $user->shop_id)->where("permission", 10)->first();
+        if ($user->email == $request->get("email") || $request->get("email") == $owner->email) {
             return response()->json(['email' => 'Kérem más email címét adja meg!'], 409);
         }
 
@@ -114,6 +115,7 @@ class WorkerController extends Controller
 
             return response()->json("Bolt sikeresen átadva!");
         } else {
+
             $log = new Log();
             $log->shop_id = $user->shop_id;
             $log->user_id = $user->id;
