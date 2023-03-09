@@ -93,7 +93,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         $user = User::where("id", $user->id)->first();
 
-        if ($user->image_path != null && file_exists(public_path() . "\\storage\\" . $user->image_path)) {
+        if ($user->image_path != null && file_exists(public_path() . "/storage/" . $user->image_path)) {
             unlink(public_path() . "/storage/" . $user->image_path);
             $user->image_path = null;
             $user->save();
