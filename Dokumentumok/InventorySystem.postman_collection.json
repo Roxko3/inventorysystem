@@ -1,0 +1,1810 @@
+{
+	"info": {
+		"_postman_id": "76279e34-6d12-41b7-b9df-52ec4d6ae40a",
+		"name": "InventorySystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "getUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "Nagy@Tamás",
+									"type": "default"
+								},
+								{
+									"key": "name",
+									"value": "Nagy Tamás",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "createplease",
+									"type": "default"
+								},
+								{
+									"key": "permission",
+									"value": "2",
+									"type": "default"
+								},
+								{
+									"key": "city",
+									"value": "Szombathely",
+									"type": "default"
+								},
+								{
+									"key": "shop_id",
+									"value": "3",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/users/create",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "update@teszt",
+									"type": "default"
+								},
+								{
+									"key": "name",
+									"value": "UpdateTeszt",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "updateplease",
+									"type": "default"
+								},
+								{
+									"key": "permission",
+									"value": "3",
+									"type": "default"
+								},
+								{
+									"key": "postal_code",
+									"value": "9735",
+									"type": "default"
+								},
+								{
+									"key": "shop_id",
+									"value": "2",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/users/7",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/users/7",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"users",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shops",
+			"item": [
+				{
+					"name": "getShops",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shops",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getShop/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shops/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createShop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "create",
+									"type": "default"
+								},
+								{
+									"key": "shop_type_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "address",
+									"value": "create",
+									"type": "default"
+								},
+								{
+									"key": "owner",
+									"value": "create",
+									"type": "default"
+								},
+								{
+									"key": "city",
+									"value": "9730",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/shops/create",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateShop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Update",
+									"type": "default"
+								},
+								{
+									"key": "shop_type_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "address",
+									"value": "create2",
+									"type": "default"
+								},
+								{
+									"key": "owner",
+									"value": "create2",
+									"type": "default"
+								},
+								{
+									"key": "city",
+									"value": "9730",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/shops/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteShop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shops/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadImage",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/hkevi/Downloads/aasd.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/shops/1/uploadImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"1",
+								"uploadImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteImage",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/shops/1/deleteImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"1",
+								"deleteImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RateShop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "rating",
+									"value": "5",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/shops/rate/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"rate",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOpeningHour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shops/1/getOpeningHours",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"1",
+								"getOpeningHours"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOpeningHour",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"opening_hours\": {\r\n        \"Monday\": {\r\n            \"open_time\": \"\",\r\n            \"close_time\": \"\"\r\n        },\r\n        \"tuesday\": {\r\n            \"open_time\": \"\",\r\n            \"close_time\": \"\"\r\n        },\r\n        \"wednesday\": {\r\n            \"open_time\": \"13:00\",\r\n            \"close_time\": \"17:00\"\r\n        },\r\n        \"thursday\": {\r\n            \"open_time\": \"12am\",\r\n            \"close_time\": \"12pM\"\r\n        },\"friday\": {\r\n            \"open_time\": \"12:00\",\r\n            \"close_time\": null\r\n        },\r\n        \"saturday\": {\r\n            \"open_time\": \"10:00\",\r\n            \"close_time\": \"17:00\"\r\n        },\r\n        \"sunday\": {\r\n            \"open_time\": \"12:00\",\r\n            \"close_time\": \"17:00\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/shops/1/updateOpeningHours",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"1",
+								"updateOpeningHours"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ShopTypes",
+			"item": [
+				{
+					"name": "getShopTypes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shoptypes",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shoptypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createShopType",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "create",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "create",
+									"type": "default"
+								},
+								{
+									"key": "size",
+									"value": "10cm2",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/shoptypes/create",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shoptypes",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateShopType",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "update",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "update",
+									"type": "default"
+								},
+								{
+									"key": "size",
+									"value": "2cm",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/shoptypes/4",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shoptypes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteShops",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shoptypes/4",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shoptypes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logs",
+			"item": [
+				{
+					"name": "getLogs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/logs/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"logs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchLogs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/logs/searchLogs/1?searchString=Teszt Elek&order=asc&column=name",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"logs",
+								"searchLogs",
+								"1"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "Teszt Elek"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								},
+								{
+									"key": "column",
+									"value": "name"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "getProducts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{URL}}/products",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "termektipus",
+									"type": "default"
+								},
+								{
+									"key": "packaging",
+									"value": "valami",
+									"type": "default"
+								},
+								{
+									"key": "unit_of_measure",
+									"value": "valami",
+									"type": "default"
+								},
+								{
+									"key": "type",
+									"value": "valami",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/products/create",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "update",
+									"type": "default"
+								},
+								{
+									"key": "packaging",
+									"value": "update",
+									"type": "default"
+								},
+								{
+									"key": "unit_of_measure",
+									"value": "update",
+									"type": "default"
+								},
+								{
+									"key": "type",
+									"value": "update",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/products/1004",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products",
+								"1004"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProduct",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/products/1004",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"products",
+								"1004"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Storage",
+			"item": [
+				{
+					"name": "GetStorages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/storages/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"storages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStorage/{shop}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shops/getStorage/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"getStorage",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchStorage/{shop}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/shops/searchStorage/1?searchString=Product&column=amount&order=desc&is_deleted=0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"shops",
+								"searchStorage",
+								"1"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "Product"
+								},
+								{
+									"key": "column",
+									"value": "amount"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "is_deleted",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddItem",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "shop_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "product_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "amount",
+									"value": "50",
+									"type": "default"
+								},
+								{
+									"key": "price",
+									"value": "201",
+									"type": "default"
+								},
+								{
+									"key": "expiration",
+									"value": "2022-12-31",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/storages/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"storages",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateItem",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "product_id",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "amount",
+									"value": "1",
+									"type": "default"
+								},
+								{
+									"key": "price",
+									"value": "5432566",
+									"type": "default"
+								},
+								{
+									"key": "expiration",
+									"value": "2022-12-29",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/storages/900",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"storages",
+								"900"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteItem",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|oiGlw8Vv1N6uOeEtkcS3VGHlFnbR019VFZdqAaZu",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\":[\r\n        1,\r\n        900\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/storages/delete",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"storages",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MyProfile",
+			"item": [
+				{
+					"name": "MyProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/myProfile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NameEmail",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Admin",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "admin@localhost",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/nameEmail",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"nameEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CityChange",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "city",
+									"value": "Budapest",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/cityChange",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"cityChange"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "old-password",
+									"value": "admin",
+									"type": "default"
+								},
+								{
+									"key": "new-password",
+									"value": "TesztElek1",
+									"type": "default"
+								},
+								{
+									"key": "new-password-repeat",
+									"value": "TesztElek1",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/passwordChange",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"passwordChange"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "leaveShop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|39hU7AQ1NqvXktfpCo5jWFrDLwYYRiL7qKOQXj5v",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/myProfile/leaveShop",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"leaveShop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadImage",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/hkevi/Downloads/aasd.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/uploadImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"uploadImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteImage",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/deleteImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"deleteImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProfile",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/myProfile/deleteProfile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"myProfile",
+								"deleteProfile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Workers",
+			"item": [
+				{
+					"name": "GetWorkers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/workers/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"workers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchWorkers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/workers/searchWorkers/1?searchString=Teszt Elek&column=name&order=asc",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"workers",
+								"searchWorkers",
+								"1"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "Teszt Elek"
+								},
+								{
+									"key": "column",
+									"value": "name"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddWorker",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "vasarlo@localhost",
+									"type": "default"
+								},
+								{
+									"key": "permission",
+									"value": "5",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/workers/add",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"workers",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateWorker",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "vasarlo@localhost",
+									"type": "default"
+								},
+								{
+									"key": "permission",
+									"value": "1",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/workers/update",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"workers",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteWorker",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|xn8KMmP7KpeskkwmpAnDvlSIZsY9wNCFRNb3CbTN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"emails\":[\r\n        \"vasarlo@localhost\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/workers/delete",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"workers",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "admin@localhost",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "vasarlo@localhost",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teszt@localhost1",
+							"type": "default"
+						},
+						{
+							"key": "name",
+							"value": "Teszt",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "TESZTELEk1",
+							"type": "default"
+						},
+						{
+							"key": "password-repeat",
+							"value": "TESZTELEk1",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/register",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "1|b56lQxjE59nXGDNTpezfX6m9gDWk4H21yvoZYnRb",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://127.0.0.1/20230112_HaszonK/public/api/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"path": [
+						"20230112_HaszonK",
+						"public",
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://127.0.0.1/InventorySystem/public/api",
+			"type": "default"
+		}
+	]
+}
